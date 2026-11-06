@@ -49,7 +49,7 @@ files. The primary key is `doc_id`. Schema: `hebloc.catalog.DOCUMENTS_SCHEMA`. L
 | `period_status` | string | `in_period` \| `out_of_period` \| `needs_review` |
 | `curation_rule` | string | Id of the rule that assigned the tags |
 | `subperiod` | string | Haskala only: `haskala` (year ≤ cutoff, 1881) or `post_haskala` |
-| `in_full_view` | bool | Full view (primary reference): `file_kind == 'text'` |
+| `in_full_view` | bool | Full view (primary reference): `file_kind == 'text'` and not blank (the file contains text) |
 | `in_curated_view` | bool | Curated view (additional): text, not blank, `in_period`, not a duplicate copy within its scope |
 | `curated_exclusion_reasons` | list<string> | Every reason the file is outside the curated view (empty list ⇔ included) |
 | `inventory_version`, `curation_hash` | string | Provenance: inventory code version, and a hash of the curation YAML |

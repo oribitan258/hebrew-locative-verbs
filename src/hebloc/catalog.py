@@ -4,8 +4,8 @@
 empty, duplicate, auxiliary and out-of-period ones). Two analytical views are defined on it
 (decision D-015):
 
-* FULL view (primary reference)  — ``in_full_view``: every corpus text file exactly as supplied
-  (only non-text files — empty files and 7-Zip logs — are outside it).
+* FULL view (primary reference)  — ``in_full_view``: every corpus file that contains text, exactly
+  as supplied (outside it: 0-byte files, whitespace-only placeholders, 7-Zip logs — no corpus text).
 * CURATED view (additional)      — ``in_curated_view``: full view minus blank files, documents not
   tagged ``in_period`` and exact duplicate copies *within the same stratum and source*.
 

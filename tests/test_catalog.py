@@ -80,7 +80,11 @@ def test_tagging_never_drops_and_is_explained(cat):
     excluded = cat[~cat.in_curated_view]
     assert excluded.curated_exclusion_reasons.map(len).gt(0).all()
     # Curated is a strict subset of full; full = every text file as supplied.
-    assert (cat.in_full_view == (cat.file_kind == "text")).all()
+    assert (cat.in_full_view == ((cat.file_kind == "text") & ~cat.is_blank)).all()
+    # Every file without corpus text (0-byte, whitespace-only, auxiliary) is outside the full view.
+    no_text = cat[(cat.file_kind != "text") | cat.is_blank]
+    assert not no_text.in_full_view.any()
+    assert no_text.groupby("corpus_id").size().to_dict() == {"haskala": 3, "medieval": 91, "modern": 107}
     assert not (cat.in_curated_view & ~cat.in_full_view).any()
     # Out-of-period / needs-review documents are still present with full measurements.
     oop = cat[cat.period_status != "in_period"]

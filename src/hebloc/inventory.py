@@ -157,10 +157,11 @@ def assemble(profiles: list[dict]) -> pa.Table:
                 r.update(dup_count=len(group), dup_rank=rank, is_dup_copy=rank > 0,
                          dup_of=group[0]["doc_id"] if rank > 0 else None)
 
-    # Views (D-015). FULL = every corpus text file as supplied (primary reference).
+    # Views (D-015). FULL = every corpus file that contains text, as supplied (primary reference):
+    # empty (0-byte), whitespace-only and auxiliary files hold no corpus text and are outside it.
     # CURATED = additional analytical view; every exclusion is explained.
     for r in rows:
-        r["in_full_view"] = r["file_kind"] == "text"
+        r["in_full_view"] = r["file_kind"] == "text" and not r["is_blank"]
         reasons = []
         if r["file_kind"] != "text":
             reasons.append(f"file_kind:{r['file_kind']}")
