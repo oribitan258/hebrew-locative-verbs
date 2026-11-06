@@ -17,7 +17,8 @@ Locative extraction, classifiers and LLM work stay in `docs/roadmap.md`.
 ### D-002 · `corpora/` is immutable (2026-11-06) · accepted
 No file under `corpora/` is ever edited, renamed, moved, deleted or written. Cleaning, normalization,
 segmentation, tagging and filtering exist only in derived files under `data/`.
-*Enforcement:* `tests/test_corpora_immutable.py` against a recorded baseline.
+*Enforcement:* `tests/test_corpora_immutable.py` against a recorded baseline, which is itself
+pinned by a git-tracked anchor (D-011).
 
 ### D-003 · Out-of-period texts are tagged, not dropped (2026-11-06) · accepted
 - Later commentaries in `Hazal/`, the 13th-c. Yalkut Shimoni, post-medieval Musar and similar texts are kept, cataloged and parsed.
@@ -52,11 +53,14 @@ research never require re-running Dicta. To test in M3: does the `json` output c
 in `ud`? If not, the `ud` output is stored as well.
 
 ### D-009 · Preprocessing defaults (2026-11-06) · hypothesis (validate in M2/M3)
-| Choice | Default |
+Every row below is a **hypothesis**, not a settled choice. None becomes `accepted` until the M3
+pilot has compared it with its alternative and the user has approved the result.
+
+| Choice | Default (hypothesis) |
 |---|---|
 | Units | Mikra: verse. Modern: source line. Other corpora: paragraph split on `. : ? !` with abbreviation guards; over-length units are chunked |
 | Diacritics | Strip niqqud and cantillation in `text_norm`; keep the vocalized text in `text_raw` |
-| Ketiv/Qere | Qere in `text_norm` |
+| Ketiv/Qere (Mikra) | **HYPOTHESIS, unvalidated:** Qere in `text_norm`; Ketiv preserved in `text_raw` / `norm_flags` so either reading can be re-derived. M3 pilot test: parse the affected verses both ways and compare lemma/POS/tree plausibility (and BHSA agreement), then decide |
 | Maqaf (Mikra `-`) | Replaced by a space |
 | Mikra ASCII `'` `"` | Stripped (accent artifacts; Mikra only) |
 | Markup and URLs | Removed from `text_norm`, and the unit is flagged |
@@ -67,3 +71,36 @@ in `ud`? If not, the `ud` output is stored as well.
 - **Full sha256 re-verification:** marked `slow`, run with `uv run pytest -m slow`.
 
 *Why:* re-hashing ~1 GB / ~404k files on every test run would make the test suite unusable.
+
+### D-011 · Baseline pinned by a git-tracked anchor (2026-11-06) · accepted
+The checksum baseline (`data/catalog/corpora_baseline.parquet`) is gitignored and regenerable, so on
+its own it could be silently replaced. It is therefore pinned by `config/corpora_anchor.json`, which is
+**tracked in git**. The anchor records:
+- the expected file count (404,294),
+- the total bytes (1,126,869,300),
+- per-corpus file and byte counts,
+- a canonical manifest digest: sha256 over the sorted lines `rel_path\tsize\tsha256\n`.
+
+Mtimes are deliberately excluded from the digest, so the anchor identifies corpus *content* and
+still validates a partner's copy.
+
+Enforcement:
+- `hebloc baseline --force` refuses to write a recomputed baseline that disagrees with the anchor.
+- `hebloc anchor` refuses to re-anchor without `--force`.
+- Tests check baseline ↔ anchor agreement, and check the anchor against the file counts measured
+  independently during discovery.
+
+The anchor was created from a baseline whose every checksum had already been re-verified
+against the actual files (slow test, 2026-11-06).
+
+Re-anchoring is allowed only after a deliberate, documented corpus change, recorded as a new
+decision entry.
+
+### D-012 · Backup and sharing strategy for derived data (2026-11-06) · accepted (documentation only)
+`data/` stays out of git. The expensive Dicta outputs will be backed up and shared as verified
+per-corpus bundles: sha256 manifest plus anchor digest, code commit, model revision and
+`norm_version`. Two copies are kept: an external drive and a private cloud folder. Derived data is
+shared privately with the team and lecturer only, because of corpus copyright.
+
+Full strategy: `docs/data_management.md`. Implementation is deferred until after M3 and must be in
+place before M5.

@@ -41,7 +41,8 @@ DOCS_DIR: Path = ROOT / "docs"
 RESULTS_DIR: Path = ROOT / "results"
 ANNOTATION_DIR: Path = ROOT / "annotation"
 
-BASELINE_PATH: Path = CATALOG_DIR / "corpora_baseline.parquet"
+BASELINE_PATH: Path = CATALOG_DIR / "corpora_baseline.parquet"  # gitignored, regenerable
+ANCHOR_PATH: Path = CONFIG_DIR / "corpora_anchor.json"  # git-tracked pin of the baseline
 
 # The five corpora, in chronological order. Keys are the stable corpus_id values.
 CORPORA: dict[str, str] = {

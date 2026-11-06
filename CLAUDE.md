@@ -15,7 +15,11 @@ until the user explicitly opens that scope.
 
 ## Non-negotiable rules
 - `corpora/` is IMMUTABLE: never edit, rename, move, delete, or write into it. Guarded by
-  `tests/test_corpora_immutable.py` against `data/catalog/corpora_baseline.parquet`.
+  `tests/test_corpora_immutable.py` against `data/catalog/corpora_baseline.parquet`, which is itself
+  pinned by the git-tracked `config/corpora_anchor.json` (404,294 files, 1,126,869,300 bytes,
+  manifest sha256). Never edit the anchor by hand; never re-anchor without a documented decision (D-011).
+- `data/` is not in git; expensive outputs are backed up/shared as verified bundles — see
+  `docs/data_management.md` (D-012; to implement before M5).
 - Never silently drop data. Everything is cataloged; filtering = tags (`config/curation.yaml`),
   never deletion. Statistics report *full coverage* and *default filter* side by side.
 - Every derived row is traceable: `sent_id` → `doc_id` → `rel_path` + `line_no` + char offsets (+ sha256).
@@ -39,8 +43,9 @@ Key IDs: `doc_id` = stable hash of rel_path; `sent_id` = `<corpus>:<doc_id>:<lin
 
 ## Corpus pitfalls (measured 2026-11-06)
 - **Mikra** (39 books, 23,206 verses): 1 verse/line, NO chapter:verse labels (refs from an external
-  versification table, count-checked per book); niqqud + te'amim; Ketiv `(…)` / Qere `[…]` → use Qere;
-  maqaf written as `-`; stray ASCII `'` `"` inside words are accent artifacts; `{פ}` `{ס}` markers.
+  versification table, count-checked per book); niqqud + te'amim; Ketiv `(…)` / Qere `[…]` — default
+  Qere in `text_norm` is an UNVALIDATED HYPOTHESIS (D-009) until the M3 pilot compares both readings;
+  always preserve Ketiv so either can be re-derived; maqaf written as `-`; stray ASCII `'` `"` inside words are accent artifacts; `{פ}` `{ס}` markers.
 - **Hazal** (204 files): ~38% of words are 16th–19th c. commentaries; Yalkut Shimoni is a 13th c.
   anthology → stratum tags. Mixed vocalization, abbreviations (אומ'), some Aramaic.
 - **Medieval** (1,128 files): Rambam has 91 empty files and is pre-tokenized; some Musar works are
@@ -57,7 +62,9 @@ Key IDs: `doc_id` = stable hash of rel_path; `sent_id` = `<corpus>:<doc_id>:<lin
 uv sync                                  # create/refresh env from uv.lock
 uv run pytest                            # fast tests (immutability: file list + sizes)
 uv run pytest -m slow                    # full sha256 re-verification of corpora/
-uv run hebloc baseline                   # (re)record corpora checksum baseline — only if missing
+uv run hebloc baseline                   # record baseline if missing / report anchor check;
+                                         #   --force recomputes but refuses if it disagrees with the anchor
+uv run hebloc anchor                     # pin baseline in config/corpora_anchor.json (first time only)
 uv run hebloc <inventory|prepare|pilot|parse|stats|catalog>   # later milestones
 ```
 
@@ -81,7 +88,7 @@ notebooks/     exploration only — never pipeline logic
 
 ## Status
 - [x] M0 foundation (CLAUDE.md, roadmap, decisions, git, uv env, skeleton, immutability guard)
-      Baseline: 404,294 files / 1,074.7 MiB. Fast guard ~17s; deep (`-m slow`) ~5 min.
+      Baseline: 404,294 files / 1,074.7 MiB, pinned by git-tracked anchor. Fast guard ~19s; deep (`-m slow`) ~5 min.
 - [ ] M1 inventory & catalog
 - [ ] M2 unit extraction with provenance
 - [ ] M3 Dicta pilot & benchmark (GATE — needs user approval)

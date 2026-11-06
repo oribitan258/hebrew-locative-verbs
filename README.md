@@ -13,7 +13,8 @@ Requires [uv](https://docs.astral.sh/uv/). Python 3.12 is pinned.
 
 ```
 uv sync                 # create the environment from uv.lock
-uv run hebloc baseline  # one-time: record checksums of the original corpora (read-only)
+uv run hebloc baseline  # record checksums of the original corpora (read-only); must match
+                        # the git-tracked config/corpora_anchor.json or it refuses
 uv run pytest           # fast tests
 uv run pytest -m slow   # full checksum re-verification of corpora/
 ```

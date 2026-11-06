@@ -5,11 +5,23 @@ size in bytes, modification time (ns) and SHA-256. It is the reference against w
 immutability tests verify that no original corpus file was ever changed.
 
 Reading only — this module never opens corpus files for writing.
+
+Trust chain
+-----------
+The baseline itself lives in ``data/`` (gitignored, regenerable). To stop an accidentally
+regenerated baseline from silently becoming the new source of truth, it is pinned by a small,
+**git-tracked anchor** (``config/corpora_anchor.json``) holding the expected file count, total
+bytes and a *canonical manifest digest*: SHA-256 over the sorted lines
+``rel_path<TAB>size<TAB>sha256<LF>`` (UTF-8). The digest deliberately excludes mtimes, so it
+identifies corpus *content* and stays valid on a partner's machine after copying.
+A baseline is trusted only if it matches the anchor; ``hebloc baseline --force`` refuses to write
+a recomputed baseline that disagrees with the anchor.
 """
 
 from __future__ import annotations
 
 import hashlib
+import json
 import os
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
@@ -19,7 +31,7 @@ from typing import Iterator
 import pyarrow as pa
 import pyarrow.parquet as pq
 
-from hebloc.paths import BASELINE_PATH, CORPORA_DIR, assert_not_in_corpora
+from hebloc.paths import ANCHOR_PATH, BASELINE_PATH, CORPORA_DIR, assert_not_in_corpora
 
 _CHUNK = 1 << 20  # 1 MiB
 
@@ -140,3 +152,72 @@ def read_baseline(path: Path = BASELINE_PATH) -> pa.Table:
     if not path.exists():
         raise FileNotFoundError(f"No corpora baseline at {path}. Run: uv run hebloc baseline")
     return pq.read_table(path)
+
+
+# --------------------------------------------------------------------------- anchor
+
+ANCHOR_FORMAT = 1
+DIGEST_RECIPE = "sha256 over sorted lines 'rel_path\\tsize\\tsha256\\n' (UTF-8); mtimes excluded"
+
+
+def canonical_digest(table: pa.Table) -> str:
+    """Content digest of a baseline: independent of row order, mtimes and Parquet encoding."""
+    rows = sorted(
+        zip(
+            table.column("rel_path").to_pylist(),
+            table.column("size").to_pylist(),
+            table.column("sha256").to_pylist(),
+        )
+    )
+    h = hashlib.sha256()
+    for rel, size, sha in rows:
+        h.update(f"{rel}\t{size}\t{sha}\n".encode("utf-8"))
+    return h.hexdigest()
+
+
+def make_anchor(table: pa.Table) -> dict:
+    """Build the git-tracked anchor record for a baseline table."""
+    per_corpus: dict[str, dict[str, int]] = {}
+    for rel, size in zip(table.column("rel_path").to_pylist(), table.column("size").to_pylist()):
+        top = rel.split("/", 1)[0]
+        entry = per_corpus.setdefault(top, {"files": 0, "bytes": 0})
+        entry["files"] += 1
+        entry["bytes"] += size
+    return {
+        "format": ANCHOR_FORMAT,
+        "description": "Pinned identity of the immutable corpora/ tree. Do not edit by hand.",
+        "digest_recipe": DIGEST_RECIPE,
+        "file_count": table.num_rows,
+        "total_bytes": sum(table.column("size").to_pylist()),
+        "manifest_sha256": canonical_digest(table),
+        "per_corpus": dict(sorted(per_corpus.items())),
+    }
+
+
+def read_anchor(path: Path = ANCHOR_PATH) -> dict:
+    if not path.exists():
+        raise FileNotFoundError(f"No corpora anchor at {path}. Run: uv run hebloc anchor")
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def write_anchor(anchor: dict, path: Path = ANCHOR_PATH, force: bool = False) -> Path:
+    assert_not_in_corpora(path)
+    if path.exists() and not force:
+        raise FileExistsError(f"Anchor already exists at {path}; it is the pinned reference.")
+    path.parent.mkdir(parents=True, exist_ok=True)
+    tmp = path.with_suffix(path.suffix + ".tmp")
+    tmp.write_text(json.dumps(anchor, indent=2, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n")
+    os.replace(tmp, path)
+    return path
+
+
+def anchor_mismatches(table: pa.Table, anchor: dict) -> list[str]:
+    """Return human-readable differences between a baseline table and the anchor (empty = OK)."""
+    actual = make_anchor(table)
+    problems = []
+    for key in ("file_count", "total_bytes", "manifest_sha256"):
+        if actual[key] != anchor.get(key):
+            problems.append(f"{key}: anchor={anchor.get(key)!r} baseline={actual[key]!r}")
+    if actual["per_corpus"] != anchor.get("per_corpus"):
+        problems.append(f"per_corpus differs: anchor={anchor.get('per_corpus')} baseline={actual['per_corpus']}")
+    return problems

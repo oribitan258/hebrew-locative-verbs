@@ -1,0 +1,30 @@
+{
+  "format": 1,
+  "description": "Pinned identity of the immutable corpora/ tree. Do not edit by hand.",
+  "digest_recipe": "sha256 over sorted lines 'rel_path\\tsize\\tsha256\\n' (UTF-8); mtimes excluded",
+  "file_count": 404294,
+  "total_bytes": 1126869300,
+  "manifest_sha256": "2fcace7e008eb24038e56f6f326543282419fbef41d34f4a98703189176f0285",
+  "per_corpus": {
+    "Haskala": {
+      "files": 320,
+      "bytes": 51511243
+    },
+    "Hazal": {
+      "files": 204,
+      "bytes": 65993434
+    },
+    "Medieval": {
+      "files": 1128,
+      "bytes": 32829883
+    },
+    "Mikra": {
+      "files": 39,
+      "bytes": 5500654
+    },
+    "Modern": {
+      "files": 402603,
+      "bytes": 971034086
+    }
+  }
+}
