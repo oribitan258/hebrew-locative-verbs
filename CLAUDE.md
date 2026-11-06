@@ -80,7 +80,8 @@ notebooks/     exploration only — never pipeline logic
 - Read corpus files in binary and decode explicitly (UTF-8 strict, else cp1255) — never rely on defaults.
 
 ## Status
-- [ ] M0 foundation (CLAUDE.md, roadmap, decisions, git, uv env, skeleton, immutability guard)
+- [x] M0 foundation (CLAUDE.md, roadmap, decisions, git, uv env, skeleton, immutability guard)
+      Baseline: 404,294 files / 1,074.7 MiB. Fast guard ~17s; deep (`-m slow`) ~5 min.
 - [ ] M1 inventory & catalog
 - [ ] M2 unit extraction with provenance
 - [ ] M3 Dicta pilot & benchmark (GATE — needs user approval)
