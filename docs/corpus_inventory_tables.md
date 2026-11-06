@@ -185,16 +185,16 @@ Definitions: *line* = `\n`-delimited; *token* = whitespace-separated run; *Hebre
 | modern | haaretz | 209,487 | 1,149,769 | 8,906 | 0 | 12,374 | 8,695 | 0 |
 | modern | ynet | 1,899 | 7,368 | 2 | 0 | 19 | 129 | 0 |
 | modern | nrg | 1,120 | 2,075 | 4 | 0 | 9 | 5 | 8 |
-| modern | infomed | 0 | 0 | 0 | 0 | 571 | 2 | 0 |
-| modern | doctors | 0 | 0 | 0 | 0 | 1 | 0 | 0 |
-| modern | tapuz | 0 | 0 | 0 | 0 | 7,679 | 2 | 0 |
-| modern | translated | 0 | 0 | 9 | 0 | 16 | 0 | 0 |
-| modern | questions | 0 | 0 | 0 | 0 | 1 | 108 | 1 |
+| modern | a7 | 0 | 0 | 0 | 115 | 367 | 1,960 | 0 |
 | modern | bari | 0 | 0 | 0 | 0 | 60 | 0 | 0 |
 | modern | blogs | 0 | 0 | 0 | 0 | 1,625 | 510 | 57 |
+| modern | doctors | 0 | 0 | 0 | 0 | 1 | 0 | 0 |
+| modern | infomed | 0 | 0 | 0 | 0 | 571 | 2 | 0 |
 | modern | knesset_16 | 0 | 0 | 0 | 0 | 1 | 0 | 0 |
 | modern | original | 0 | 0 | 1 | 0 | 12 | 0 | 0 |
-| modern | a7 | 0 | 0 | 0 | 115 | 367 | 1,960 | 0 |
+| modern | questions | 0 | 0 | 0 | 0 | 1 | 108 | 1 |
+| modern | tapuz | 0 | 0 | 0 | 0 | 7,679 | 2 | 0 |
+| modern | translated | 0 | 0 | 9 | 0 | 16 | 0 | 0 |
 
 ## Documents awaiting a period decision (excluded from default until decided)
 `results/inventory/needs_review.csv`

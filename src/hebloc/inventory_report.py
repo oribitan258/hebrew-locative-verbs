@@ -53,7 +53,7 @@ QUERIES: dict[str, tuple[str, str]] = {
                round(sum(size_bytes)/1048576.0, 1) AS mib,
                sum(n_nonempty_lines) AS nonempty_lines, sum(n_hebrew_tokens) AS hebrew_tokens,
                round(100.0*sum(n_hebrew_tokens)/sum(sum(n_hebrew_tokens)) OVER (), 1) AS pct_of_modern_tokens
-        FROM docs WHERE corpus_id='modern' GROUP BY subcorpus, coalesce(source, '') ORDER BY hebrew_tokens DESC"""),
+        FROM docs WHERE corpus_id='modern' GROUP BY subcorpus, coalesce(source, '') ORDER BY hebrew_tokens DESC, subcorpus, source"""),
     "haskala_subperiods": ("Haskala: publication year sub-periods (cut-off from config/curation.yaml)", """
         SELECT subperiod, genre, count(*) AS files, min(year) AS min_year, max(year) AS max_year,
                sum(n_hebrew_tokens) AS hebrew_tokens
@@ -94,17 +94,17 @@ QUERIES: dict[str, tuple[str, str]] = {
         FROM docs WHERE file_kind='text' GROUP BY corpus_id, coalesce(source, subcorpus, '')
         HAVING sum(n_prefix_tags)+sum(n_token_tags)+sum(n_img_tags)+sum(n_urls)
                + count(*) FILTER (n_hebrew_tokens <= 15) > 0
-        ORDER BY {CORPUS_ORDER}, prefix_tags DESC"""),
+        ORDER BY {CORPUS_ORDER}, prefix_tags DESC, source"""),
     "needs_review": ("Documents awaiting a period decision (excluded from default until decided)", """
         SELECT corpus_id, rel_path, stratum, n_hebrew_tokens AS hebrew_tokens, n_nonempty_lines AS nonempty_lines
-        FROM docs WHERE period_status='needs_review' ORDER BY hebrew_tokens DESC"""),
+        FROM docs WHERE period_status='needs_review' ORDER BY hebrew_tokens DESC, rel_path"""),
     "out_of_period": ("Out-of-period documents (kept; excluded from default)", f"""
         SELECT corpus_id, stratum, curation_rule, count(*) AS files, sum(n_hebrew_tokens) AS hebrew_tokens
-        FROM docs WHERE period_status='out_of_period' GROUP BY corpus_id, stratum, curation_rule ORDER BY {CORPUS_ORDER}, hebrew_tokens DESC"""),
+        FROM docs WHERE period_status='out_of_period' GROUP BY corpus_id, stratum, curation_rule ORDER BY {CORPUS_ORDER}, hebrew_tokens DESC, stratum, curation_rule"""),
     "exclusion_reasons": ("Why documents are outside the default set (a document may have several reasons)", f"""
         SELECT corpus_id, reason, count(*) AS files, sum(n_hebrew_tokens) AS hebrew_tokens
         FROM (SELECT corpus_id, unnest(exclusion_reasons) AS reason, n_hebrew_tokens FROM docs)
-        GROUP BY corpus_id, reason ORDER BY {CORPUS_ORDER}, files DESC"""),
+        GROUP BY corpus_id, reason ORDER BY {CORPUS_ORDER}, files DESC, reason"""),
 }
 
 
