@@ -84,6 +84,51 @@ def _cmd_inventory(args: argparse.Namespace) -> int:
     return 0
 
 
+SAMPLE_EXTRA = [  # difficult documents always included in --sample runs
+    "Tanakh - Prophets - Ezekiel", "Tanakh - Writings - Daniel", "Tanakh - Writings - Ruth",
+    "Mishnah Beitzah", "Midrash - Halakhah - Sifra", "Pesikta Rabbati",
+    "Rambam/NASHIM/aishowt", "Rambam/AHAVA/brkowt/000001", "Musar - Rishonim - Shaarei Teshuvah",
+    "Ytext1044001", "Ytext1003001",
+    "news/haaretz/0/14178.txt", "news/haaretz/0/15413.txt", "news/a7/news/104500-104599/104506.txt",
+    "blogs/4906.txt", "kneset/16/00133504.txt",
+]
+
+
+def _cmd_prepare(args: argparse.Namespace) -> int:
+    from hebloc.catalog import DOCUMENTS_PATH
+    from hebloc.paths import CORPORA, UNITS_DIR
+    from hebloc.units import SAMPLE_DIR, prepare_corpus
+    from hebloc.units_review import write_review
+
+    corpora = list(CORPORA) if args.corpus == "all" else [args.corpus]
+    out_root = SAMPLE_DIR if args.sample else UNITS_DIR
+    ok = True
+    for c in corpora:
+        m = prepare_corpus(c, out_root=out_root, sample=args.sample, seed=args.seed,
+                           extra=SAMPLE_EXTRA if args.sample else None, workers=args.workers)
+        ok &= m["ok"]
+        print(f"{c:9} docs={m['documents']:,} units={m['units']:,} types={m['unit_types']} "
+              f"coverage_failures={m['coverage_failures']} line_mismatch={m['catalog_line_mismatches']} "
+              f"ok={m['ok']} ({m['runtime_seconds']}s)")
+    if args.sample:
+        from hebloc.paths import DOCS_DIR
+        print("review:", write_review(out_root, DOCUMENTS_PATH, DOCS_DIR / "m2_sample_review.md"))
+    return 0 if ok else 1
+
+
+def _cmd_versification(args: argparse.Namespace) -> int:
+    """(Network, one-off) fetch Tanakh chapter lengths and verify them against the Mikra files."""
+    from hebloc import versification as V
+    from hebloc.catalog import documents
+
+    mikra = documents("mikra", columns=["work", "n_nonempty_lines"])
+    body = V.fetch(sorted(mikra.work))
+    bad = [(w, sum(body["books"][w]), n) for w, n in zip(mikra.work, mikra.n_nonempty_lines)
+           if sum(body["books"][w]) != n]
+    print(f"Wrote {V.VERSIFICATION_PATH}: {len(body['books'])} books; per-book verse-count mismatches: {bad or 'none'}")
+    return 1 if bad else 0
+
+
 def _utf8_console() -> None:
     """Windows consoles default to a legacy code page; paths/text here are Hebrew."""
     for stream in (sys.stdout, sys.stderr):
@@ -110,6 +155,17 @@ def main(argv: list[str] | None = None) -> int:
     p = sub.add_parser("inventory", help="M1: build data/catalog/documents.parquet (+ verification, summary tables).")
     p.add_argument("--workers", type=int, default=None, help="Worker processes (default: cores-2, max 12).")
     p.set_defaults(func=_cmd_inventory)
+
+    p = sub.add_parser("versification", help="(network) fetch Tanakh chapter lengths into config/reference/.")
+    p.set_defaults(func=_cmd_versification)
+
+    p = sub.add_parser("prepare", help="M2: extract sentence/verse units into data/units/<corpus>/.")
+    p.add_argument("--corpus", default="all", help="Corpus id or 'all' (default).")
+    p.add_argument("--sample", type=int, default=None,
+                   help="Validation run: N random docs per corpus + known difficult docs → data/units_sample/.")
+    p.add_argument("--seed", type=int, default=0)
+    p.add_argument("--workers", type=int, default=None)
+    p.set_defaults(func=_cmd_prepare)
 
     args = parser.parse_args(argv)
     return args.func(args)

@@ -12,7 +12,8 @@ until the user explicitly opens that scope.
 
 - Spec (authoritative, Hebrew): `project.pdf`. Paper: `DoronDubnov_revised.pdf`.
 - Decisions log: `docs/decisions.md`. Roadmap: `docs/roadmap.md`. Corpus facts: `docs/corpus_report.md`.
-- Table schemas: `docs/data_dictionary.md`. Catalog API: `hebloc.catalog.documents()`.
+- Table schemas: `docs/data_dictionary.md`. Data API: `hebloc.data` (`units`, `iter_units`, `trace`, `connect`);
+  catalog: `hebloc.catalog.documents()`. M2 methodology: `docs/m2_preprocessing.md`.
 
 ## Non-negotiable rules
 - `corpora/` is IMMUTABLE: never edit, rename, move, delete, or write into it. Guarded by
@@ -75,7 +76,9 @@ uv run hebloc baseline                   # record baseline if missing / report a
                                          #   --force recomputes but refuses if it disagrees with the anchor
 uv run hebloc anchor                     # pin baseline in config/corpora_anchor.json (first time only)
 uv run hebloc inventory                  # M1: rebuild catalog (~75 s; refuses to write if not anchor-consistent)
-uv run hebloc <prepare|pilot|parse|stats|catalog>   # later milestones
+uv run hebloc versification             # (one-off, network) refresh config/reference/tanakh_versification.json
+uv run hebloc prepare [--corpus X] [--sample N]   # M2: units (~5 min all; --sample → data/units_sample + review)
+uv run hebloc <pilot|parse|stats|catalog>   # later milestones
 ```
 
 ## Repo map
@@ -102,7 +105,8 @@ notebooks/     exploration only — never pipeline logic
 - [x] M1 inventory & catalog — `data/catalog/documents.parquet` (404,294 rows, verified vs anchor);
       report `docs/corpus_report.md`; tags approved as operational metadata (D-015). Aggadic midrash is
       in period but heterogeneous; Haskala 1881 = analytical cutoff; 7 Musar files `needs_review`.
-- [ ] M2 unit extraction with provenance
+- [x] M2 unit extraction — `data/units/<corpus>/` (9,714,378 units; verified, deterministic); methodology
+      `docs/m2_preprocessing.md`; open: R5 reorder rule, bidi flag (D-019); M3 must test D-018 hypotheses
 - [ ] M3 Dicta pilot & benchmark (GATE — needs user approval)
 - [ ] M4 data layer & access API
 - [ ] M5 full parsing run

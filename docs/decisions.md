@@ -52,7 +52,7 @@ Raw JSON responses are stored in Parquet (zstd), keyed by `sent_id`, so statisti
 research never require re-running Dicta. To test in M3: does the `json` output contain everything
 in `ud`? If not, the `ud` output is stored as well.
 
-### D-009 · Preprocessing defaults (2026-11-06) · hypothesis (validate in M2/M3)
+### D-009 · Preprocessing defaults (2026-11-06) · hypothesis (validate in M2/M3) · refined by D-018
 Every row below is a **hypothesis**, not a settled choice. None becomes `accepted` until the M3
 pilot has compared it with its alternative and the user has approved the result.
 
@@ -164,3 +164,40 @@ The `prefix=X` / `token=Y` artifacts (1.16M in Modern, 141 in Rambam) will be in
 - Candidate rules are tested on representative and difficult examples before use: abbreviations
   (`prefix=ב token=רח'`), numbers (`prefix=כ - 20`), quotation marks (`prefix=ו ' ' דרילר`), and
   gershayim numerals in Rambam (`prefix=ל " ב`).
+
+### D-017 · Unit table design (M2) (2026-11-06) · accepted
+- **One unit per sentence or verse** for every non-empty line of every full-view document,
+  out-of-period and duplicate documents included. The views are carried as columns.
+- `sent_id = <corpus>:<doc_id>:<line_no>:<k>`.
+- `text_raw` is the exact source slice at (`line_no`, `char_start`, `char_end`). This is asserted
+  for every unit and re-verified independently by tests and by `hebloc.data.trace`.
+- Extraction streams documents in parallel batches into Parquet row groups, writes each corpus
+  folder atomically, and records a manifest (counts, checks, flags, versions, code commit).
+- The pipeline refuses nothing silently: coverage, line counts and Mikra verse counts are checked
+  for every document.
+- The Tanakh versification comes from Sefaria's chapter lengths and is committed to git
+  (`config/reference/tanakh_versification.json`, with source, date and digest). It is verified by an
+  exact per-book verse-count match. Placing it in `config/` rather than `data/external/` refines
+  D-005: the table is small and must be available without network access.
+
+### D-018 · Segmentation and normalization rules v1 (M2) (2026-11-06) · accepted, with hypotheses
+Rules and evidence are in `docs/m2_preprocessing.md`.
+- **Accepted:**
+  - segmentation on `. ? !` with bracket, initial and enumerator guards; the colon is not a terminator;
+  - 200-token chunks;
+  - Mikra accent-quote and paragraph-marker removal;
+  - Haskala markup handling, including the removal of editorial edition notes;
+  - Rambam `+…+` citations converted to parentheses;
+  - Haaretz header removal.
+- **Hypotheses**, still unvalidated and to be tested with Dicta in M3:
+  - diacritic stripping;
+  - Qere in `text_norm` (with the Ketiv kept in `text_norm_alt`);
+  - maqaf → space;
+  - sof pasuq → `.`.
+
+### D-019 · Artifact handling results (M2) (2026-11-06) · accepted; R5 awaiting user decision
+- R1, R2 and R3 rebuilt 854,362 of 1,159,353 `prefix=` tags (73.7%).
+- 304,991 tags (26.3%) are left un-rebuilt and flagged `prefix_unresolved:<class>`, in 250,149
+  units. Only the tag text is removed.
+- Candidate rule R5 (re-ordering a number with its punctuation) and a possible `suspect_bidi` flag
+  for Haaretz, ynet and nrg are **not applied**, pending user approval.

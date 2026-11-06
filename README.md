@@ -16,6 +16,7 @@ uv sync                 # create the environment from uv.lock
 uv run hebloc baseline  # record checksums of the original corpora (read-only); must match
                         # the git-tracked config/corpora_anchor.json or it refuses
 uv run hebloc inventory # M1: build the document catalog (data/catalog/documents.parquet, ~75 s)
+uv run hebloc prepare   # M2: extract sentence/verse units (data/units/, ~5 min)
 uv run pytest           # fast tests
 uv run pytest -m slow   # full checksum re-verification of corpora/
 ```

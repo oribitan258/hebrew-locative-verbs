@@ -1,7 +1,7 @@
 # Data Dictionary
 
-One section per persisted table. Tables are added milestone by milestone: `units` in M2;
-`dicta_raw`, `tokens` and `runs` in M3/M4; statistics in M6.
+One section per persisted table. Tables are added milestone by milestone: `documents` (M1),
+`units` (M2); `dicta_raw`, `tokens` and `runs` in M3/M4; statistics in M6.
 
 ## `documents`: `data/catalog/documents.parquet` (M1, inventory v2)
 
@@ -56,3 +56,35 @@ files. The primary key is `doc_id`. Schema: `hebloc.catalog.DOCUMENTS_SCHEMA`. L
 
 Companion file: `data/catalog/documents.manifest.json` records the creation time, code commit,
 curation hash, per-corpus counts and verification results.
+
+## `units`: `data/units/<corpus>/part-*.parquet` (M2; norm v1, segment v1)
+
+One row per sentence, verse or chunk of every document in the full view. The primary key is
+`sent_id`; `doc_id` links to `documents`. Each corpus folder has a `_manifest.json` (counts,
+checks, flag counts, versions, code commit). Schema: `hebloc.units.UNITS_SCHEMA`. Methodology:
+`docs/m2_preprocessing.md`.
+
+Read with `hebloc.data.units(corpus, view=None|"full"|"curated", columns=[...])` (pandas), or
+`hebloc.data.iter_units(...)` to stream Arrow batches (Modern). `hebloc.data.trace(sent_id)`
+maps a unit back to its source and verifies it. `hebloc.data.connect()` returns DuckDB with the
+views `documents` and `units`.
+
+| Column | Type | Meaning |
+|---|---|---|
+| `sent_id` | string | `<corpus>:<doc_id>:<line_no>:<k>`. Stable unit id |
+| `corpus_id`, `doc_id` | string | Corpus; link to `documents` |
+| `line_no` | int32 | 1-based line in the decoded source file (split on `
+` only) |
+| `k` | int16 | 0-based position of the unit within its line |
+| `unit_type` | string | `verse` (Mikra) \| `sentence` \| `chunk` (part of a unit longer than 200 tokens) |
+| `char_start`, `char_end` | int32 | Offsets in the decoded line: `line[char_start:char_end] == text_raw` |
+| `ref` | string | Human reference: `Genesis 2:7`; `<work> ¶<line>[.<k+1>]`; Rambam `Mishneh Torah/<sefer>/<hilchot>/<chapter> ¶<line>`; Haskala `<Ytext id> ¶…`; Modern `<path> ¶…` |
+| `text_raw` | string | **Exact source text** of the unit, never modified (incl. niqqud and markup) |
+| `text_norm` | string | Normalized model input (rules: `hebloc.normalize`, `hebloc.artifacts`) |
+| `text_norm_alt` | string | Alternative reading where one exists: Mikra **Ketiv** (the Qere is in `text_norm`); otherwise null |
+| `norm_flags` | list<string> | Every normalization rule that fired (e.g. `ketiv_qere`, `diacritics_stripped`, `prefix_R2`, `prefix_unresolved:hyphen_punct`) |
+| `is_empty_norm` | bool | Normalization left no text (separator lines; Joshua 21:36–37 placeholders) |
+| `n_tokens_norm`, `n_hebrew_tokens_norm` | int32 | Whitespace tokens of `text_norm`, and how many contain a Hebrew letter (orthographic; not linguistic word counts) |
+| `aramaic` | string | Mikra only: `aramaic` \| `aramaic_partial` \| null |
+| `stratum`, `in_full_view`, `in_curated_view` | string, bool, bool | Copied from `documents`, for convenient filtering |
+| `norm_version`, `segment_version` | string | Rule versions used |
