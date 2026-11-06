@@ -1,0 +1,41 @@
+# Corpus registry — one entry per corpus, in chronological order.
+# corpus_id values are stable identifiers used in every derived table (documents, units, tokens).
+# `folder` is relative to corpora/ (read-only). Descriptive fields are documentation for the
+# catalog and reports; processing behaviour (readers, normalization) is defined in M2.
+version: 1
+corpora:
+  - corpus_id: mikra
+    folder: Mikra
+    display_name: "Mikra (Biblical Hebrew) — מקרא"
+    period: "Biblical Hebrew, c. 10th–2nd c. BCE (composition); Masoretic text"
+    assignment_sources: ["התנ\"ך"]
+    expected_encoding: utf-8
+    unit_structure: "one verse per line; no chapter:verse labels"
+  - corpus_id: hazal
+    folder: Hazal
+    display_name: "Hazal (Rabbinic Hebrew) — חז\"ל"
+    period: "Tannaitic & Amoraic, c. 1st–5th c. CE (core); later strata present"
+    assignment_sources: ["משנה", "תוספתא", "מדרשים תנאיים", "מדרשים"]
+    expected_encoding: utf-8
+    unit_structure: "one paragraph (mishnah/section) per line"
+  - corpus_id: medieval
+    folder: Medieval
+    display_name: "Medieval Hebrew — ימי הביניים"
+    period: "c. 10th–15th c. CE (Rishonim); later strata present"
+    assignment_sources: ["משנה תורה לרמב\"ם", "ספרי מחשבה", "ספרי מוסר"]
+    expected_encoding: utf-8
+    unit_structure: "Rambam: one halakha per line, one file per chapter; others: paragraph per line"
+  - corpus_id: haskala
+    folder: Haskala
+    display_name: "Haskala literature — ספרות ההשכלה"
+    period: "Haskala c. 1770s–1881; files dated 1755–1934"
+    assignment_sources: ["ספרות ההשכלה"]
+    expected_encoding: utf-8
+    unit_structure: "paragraph per line; metadata in filename"
+  - corpus_id: modern
+    folder: Modern
+    display_name: "Modern Hebrew — עברית מודרנית"
+    period: "c. 2000–2010 web/print sources"
+    assignment_sources: ["ידיעות חדשותיות", "ספרות (מקור ומתורגמת)", "פורום תפוז", "בלוגים", "טקסטים רפואיים", "פרוטוקולי הכנסת"]
+    expected_encoding: cp1255
+    unit_structure: "pre-tokenized, mostly one sentence per line"

@@ -70,6 +70,20 @@ def _cmd_anchor(args: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_inventory(args: argparse.Namespace) -> int:
+    from hebloc.catalog import DOCUMENTS_PATH
+    from hebloc.inventory import run_inventory
+    from hebloc.inventory_report import write_reports
+
+    table, manifest = run_inventory(workers=args.workers)
+    print(f"Catalog: {table.num_rows:,} documents -> {DOCUMENTS_PATH} "
+          f"({manifest['runtime_seconds']}s). Verification: "
+          + ", ".join(f"{k}={v}" for k, v in manifest["verification"].items() if isinstance(v, bool)))
+    for p in write_reports(table):
+        print(f"  wrote {p}")
+    return 0
+
+
 def _utf8_console() -> None:
     """Windows consoles default to a legacy code page; paths/text here are Hebrew."""
     for stream in (sys.stdout, sys.stderr):
@@ -92,6 +106,10 @@ def main(argv: list[str] | None = None) -> int:
     p = sub.add_parser("anchor", help="Pin the existing baseline in git-tracked config/corpora_anchor.json.")
     p.add_argument("--force", action="store_true", help="Overwrite an existing anchor (deliberate re-anchoring).")
     p.set_defaults(func=_cmd_anchor)
+
+    p = sub.add_parser("inventory", help="M1: build data/catalog/documents.parquet (+ verification, summary tables).")
+    p.add_argument("--workers", type=int, default=None, help="Worker processes (default: cores-2, max 12).")
+    p.set_defaults(func=_cmd_inventory)
 
     args = parser.parse_args(argv)
     return args.func(args)

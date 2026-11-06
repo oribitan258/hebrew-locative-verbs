@@ -11,7 +11,8 @@ classification, classifiers, LLM) are roadmap-only: `docs/roadmap.md`. Do not im
 until the user explicitly opens that scope.
 
 - Spec (authoritative, Hebrew): `project.pdf`. Paper: `DoronDubnov_revised.pdf`.
-- Decisions log: `docs/decisions.md`. Roadmap: `docs/roadmap.md`.
+- Decisions log: `docs/decisions.md`. Roadmap: `docs/roadmap.md`. Corpus facts: `docs/corpus_report.md`.
+- Table schemas: `docs/data_dictionary.md`. Catalog API: `hebloc.catalog.documents()`.
 
 ## Non-negotiable rules
 - `corpora/` is IMMUTABLE: never edit, rename, move, delete, or write into it. Guarded by
@@ -48,11 +49,15 @@ Key IDs: `doc_id` = stable hash of rel_path; `sent_id` = `<corpus>:<doc_id>:<lin
   always preserve Ketiv so either can be re-derived; maqaf written as `-`; stray ASCII `'` `"` inside words are accent artifacts; `{פ}` `{ס}` markers.
 - **Hazal** (204 files): ~38% of words are 16th–19th c. commentaries; Yalkut Shimoni is a 13th c.
   anthology → stratum tags. Mixed vocalization, abbreviations (אומ'), some Aramaic.
-- **Medieval** (1,128 files): Rambam has 91 empty files and is pre-tokenized; some Musar works are
-  post-medieval; several Thought works are translations from Arabic.
-- **Haskala** (320 files): metadata in filename `author--title--year--genre--YtextID`; `<…>` `{…}` markup.
-- **Modern** (402,603 files, ~133M words): **Windows-1255, not UTF-8** (incl. folder `text_utf`);
-  pre-tokenized, ~1 sentence/line; haaretz ≈ 75% of words; 99 stray `.7z.log` files.
+- **Medieval** (1,128 files): Rambam has 91 empty files (all hilchot intros) and is pre-tokenized; some Musar
+  works are post-medieval; several Thought works are translations from Arabic; "Letter from Ramban to his Son"
+  content does NOT match its title.
+- **Haskala** (320 files): metadata in filename `author--title--year--genre--YtextID`; `<…>` `{…}` markup;
+  years 1755–1934 — 37% of tokens are post-1881 (`subperiod` tag); 3 one-byte placeholder files.
+- **Modern** (402,603 files, 134.1M Hebrew tokens): **Windows-1255, not UTF-8** (incl. folder `text_utf`);
+  pre-tokenized, ~1 sentence/line; haaretz ≈ 74% of tokens; 100 auxiliary 7-Zip logs (one named `.txt`);
+  6,265 exact-duplicate copies; old-tokenizer artifacts `prefix=X token=Y` (1.16M, also in Rambam) must be
+  reconstructed in M2 (e.g. `prefix=ב token=רח'` → `ברח'`).
 
 ## Stack & commands
 - Python 3.12 via `uv` (system default 3.14 is NOT used). Package: `src/hebloc/`.
@@ -65,7 +70,8 @@ uv run pytest -m slow                    # full sha256 re-verification of corpor
 uv run hebloc baseline                   # record baseline if missing / report anchor check;
                                          #   --force recomputes but refuses if it disagrees with the anchor
 uv run hebloc anchor                     # pin baseline in config/corpora_anchor.json (first time only)
-uv run hebloc <inventory|prepare|pilot|parse|stats|catalog>   # later milestones
+uv run hebloc inventory                  # M1: rebuild catalog (~75 s; refuses to write if not anchor-consistent)
+uv run hebloc <prepare|pilot|parse|stats|catalog>   # later milestones
 ```
 
 ## Repo map
@@ -89,7 +95,8 @@ notebooks/     exploration only — never pipeline logic
 ## Status
 - [x] M0 foundation (CLAUDE.md, roadmap, decisions, git, uv env, skeleton, immutability guard)
       Baseline: 404,294 files / 1,074.7 MiB, pinned by git-tracked anchor. Fast guard ~19s; deep (`-m slow`) ~5 min.
-- [ ] M1 inventory & catalog
+- [x] M1 inventory & catalog — `data/catalog/documents.parquet` (404,294 rows, verified vs anchor);
+      report `docs/corpus_report.md`; tags in `config/curation.yaml` AWAIT USER APPROVAL (D-014)
 - [ ] M2 unit extraction with provenance
 - [ ] M3 Dicta pilot & benchmark (GATE — needs user approval)
 - [ ] M4 data layer & access API

@@ -1,0 +1,8 @@
+corpus_id,stratum,curation_rule,files,hebrew_tokens
+hazal,hazal.commentary,hazal-commentary,54,2465663.0
+hazal,hazal.late_anthology,hazal-yalkut,2,1437008.0
+hazal,hazal.post_talmudic,hazal-seder-olam-zutta,1,2757.0
+medieval,medieval.later_commentary,medieval-thought-later-commentary,3,282839.0
+medieval,medieval.post_medieval,medieval-musar-modern,1,104203.0
+medieval,medieval.post_medieval,medieval-musar-known-later,2,5515.0
+modern,modern.auxiliary,modern-aux-logs,100,0.0

@@ -1,0 +1,11 @@
+corpus_id,reason,files,hebrew_tokens
+hazal,period:out_of_period,57,3905428.0
+medieval,file_kind:empty,91,0.0
+medieval,period:needs_review,7,218404.0
+medieval,period:out_of_period,6,392557.0
+haskala,blank,3,0.0
+haskala,duplicate_copy,2,0.0
+modern,duplicate_copy,6265,1774900.0
+modern,file_kind:auxiliary,100,0.0
+modern,period:out_of_period,100,0.0
+modern,file_kind:empty,7,0.0

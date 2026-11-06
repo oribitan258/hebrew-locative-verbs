@@ -1,0 +1,8 @@
+corpus_id,rel_path,stratum,hebrew_tokens,nonempty_lines
+medieval,Medieval/Musar/Musar - Ahavat David.txt,medieval.musar_unverified,170245,1077
+medieval,Medieval/Musar/Musar - Davar Be'ito.txt,medieval.musar_unverified,23594,81
+medieval,Medieval/Musar/Musar - Shekel HaKodesh.txt,medieval.musar_unverified,8258,1068
+medieval,Medieval/Musar/Musar - Maamar Mezake HaRabim.txt,medieval.musar_unverified,6135,59
+medieval,Medieval/Musar/Musar - Yesod HaYirah.txt,medieval.musar_unverified,5241,574
+medieval,Medieval/Musar/Musar - Shuvah Yisrael.txt,medieval.musar_unverified,3315,40
+medieval,Medieval/Musar/Musar - Letter from Ramban to his Son.txt,medieval.musar_unverified,1616,8

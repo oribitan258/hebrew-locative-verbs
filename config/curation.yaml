@@ -1,0 +1,140 @@
+# Curation rules: assign every catalog document a STRATUM and a PERIOD STATUS (decision D-003).
+#
+# * Tagging never deletes or hides anything: every file stays in the catalog and is parsed.
+# * period_status ∈ {in_period, out_of_period, needs_review}
+#     in_period      — belongs to the period the corpus represents → eligible for the default filter
+#     out_of_period  — kept & reported separately; excluded from the default comparison filter
+#     needs_review   — dating/attribution not verified; excluded from the default filter UNTIL the
+#                      user decides (listed in docs/corpus_report.md)
+# * Rules are matched per corpus, in order; FIRST MATCH WINS. `path_regex` is a Python regex
+#   searched in the path relative to the corpus folder, with '/' separators
+#   (e.g. "Musar/Musar - Rishonim - Shaarei Teshuvah.txt").
+# * Every corpus ends with a catch-all rule → "<corpus>.unclassified / needs_review"; the tests
+#   require that no document actually falls through to it.
+# * The default filter (`include_default`) additionally requires: text file, not blank, and not a
+#   duplicate copy (see docs/corpus_report.md). Those are computed, not configured here.
+#
+# Dating notes are the proposer's (Claude's) assessment for user review — see corpus_report.md.
+version: 1
+
+rules:
+  # ------------------------------------------------------------------ Mikra
+  - {id: mikra-torah,    corpus: mikra, path_regex: '^Tanakh - Torah - ',    stratum: mikra.torah,    period_status: in_period}
+  - {id: mikra-prophets, corpus: mikra, path_regex: '^Tanakh - Prophets - ', stratum: mikra.prophets, period_status: in_period}
+  - {id: mikra-writings, corpus: mikra, path_regex: '^Tanakh - Writings - ', stratum: mikra.writings, period_status: in_period,
+     note: "Daniel and Ezra contain Aramaic sections (handled at unit level in M2)."}
+
+  # ------------------------------------------------------------------ Hazal
+  - id: hazal-commentary
+    corpus: hazal
+    path_regex: ' - Commentary - '
+    stratum: hazal.commentary
+    period_status: out_of_period
+    note: "Commentaries on Midrash Rabbah (Matnot Kehunah, Yefeh To'ar/Anaf/Kol, Yedei Moshe, Etz Yosef, Maharzu, Rashi-attributed, Mishnat DeRabbi Eliezer): medieval to 19th c. rabbinic Hebrew, not Hazal."
+  - id: hazal-yalkut
+    corpus: hazal
+    path_regex: 'Yalkut Shimoni'
+    stratum: hazal.late_anthology
+    period_status: out_of_period
+    note: "Yalkut Shimoni: 13th c. anthology. Mostly quotes earlier midrash (overlaps other files), but compiled in the medieval period."
+  - id: hazal-seder-olam-zutta
+    corpus: hazal
+    path_regex: 'Seder Olam Zutta'
+    stratum: hazal.post_talmudic
+    period_status: out_of_period
+    note: "Seder Olam Zutta: post-Talmudic (Geonic-era) chronicle."
+  - {id: hazal-mishnah,  corpus: hazal, path_regex: '^Mishnah - ',          stratum: hazal.mishnah,           period_status: in_period}
+  - {id: hazal-tosefta,  corpus: hazal, path_regex: '^Tosefta - ',          stratum: hazal.tosefta,           period_status: in_period}
+  - {id: hazal-halakhic, corpus: hazal, path_regex: '^Midrash - Halakhah - ', stratum: hazal.halakhic_midrash, period_status: in_period}
+  - id: hazal-aggadic
+    corpus: hazal
+    path_regex: '^Midrash - Aggad'
+    stratum: hazal.aggadic_midrash
+    period_status: in_period
+    note: "Assignment lists 'מדרשים'. Compilation dates vary widely (Amoraic Bereshit/Vayikra Rabbah … to post-Talmudic Tanchuma, Midrash Tehillim, Pirkei DeRabbi Eliezer, Tanna Debei Eliyahu). Kept in period; flagged in the report as a judgement call."
+
+  # ------------------------------------------------------------------ Medieval
+  - {id: medieval-rambam, corpus: medieval, path_regex: '^Rambam/', stratum: medieval.mishneh_torah, period_status: in_period}
+  - id: medieval-thought-later-commentary
+    corpus: medieval
+    path_regex: '^Thought/.* - Commentary - '
+    stratum: medieval.later_commentary
+    period_status: out_of_period
+    note: "Commentaries on Duties of the Heart (Pat Lechem, Tov haLevanon, Marpeh la'Nefesh): Acharonim (post-medieval)."
+  - id: medieval-thought-translated
+    corpus: medieval
+    path_regex: '^Thought/.*(Guide for the Perplexed|Kuzari|HaEmunot veHaDeot|Duties of the Heart - Duties of the Heart|Eight Chapters)\.txt$'
+    stratum: medieval.thought_translated
+    period_status: in_period
+    note: "Medieval Hebrew translations of Judeo-Arabic originals (Ibn Tibbon school). Medieval Hebrew, but translation style."
+  - {id: medieval-thought, corpus: medieval, path_regex: '^Thought/Jewish Thought - Rishonim - ', stratum: medieval.thought, period_status: in_period}
+  - id: medieval-musar-translated
+    corpus: medieval
+    path_regex: '^Musar/Musar - (Rishonim - The Improvement of the Moral Qualities|Mivchar HaPeninim)\.txt$'
+    stratum: medieval.musar_translated
+    period_status: in_period
+    note: "Ibn Gabirol's Tikkun Middot HaNefesh and Mivchar HaPeninim (attributed to Ibn Gabirol): Hebrew translations of Arabic originals."
+  - id: medieval-musar-rishonim
+    corpus: medieval
+    path_regex: '^Musar/Musar - Rishonim - '
+    stratum: medieval.musar
+    period_status: in_period
+  - id: medieval-musar-orchot-chaim-harosh
+    corpus: medieval
+    path_regex: "^Musar/Musar - Orchot Chaim L'HaRosh\\.txt$"
+    stratum: medieval.musar
+    period_status: in_period
+    note: "Attributed to the Rosh (Asher ben Yehiel, d. 1327)."
+  - id: medieval-musar-modern
+    corpus: medieval
+    path_regex: '^Musar/Musar - Modern - '
+    stratum: medieval.post_medieval
+    period_status: out_of_period
+    note: "Labelled 'Modern' in the source naming (Sichot Avodat Levi)."
+  - id: medieval-musar-known-later
+    corpus: medieval
+    path_regex: "^Musar/Musar - (Tzipita L'Yeshuah|Yesod V'Shoresh HaAvodah)\\.txt$"
+    stratum: medieval.post_medieval
+    period_status: out_of_period
+    note: "Tzipita L'Yeshuah (Chafetz Chaim, 20th c.); Yesod V'Shoresh HaAvodah (R. Alexander Ziskind, 18th c.)."
+  - id: medieval-musar-unverified
+    corpus: medieval
+    path_regex: '^Musar/'
+    stratum: medieval.musar_unverified
+    period_status: needs_review
+    note: "No era label in the source naming and dating not verified (Ahavat David, Davar Be'ito, Maamar Mezake HaRabim, Shekel HaKodesh, Shuvah Yisrael, Yesod HaYirah, and 'Letter from Ramban to his Son', whose content does NOT match its title)."
+
+  # ------------------------------------------------------------------ Haskala
+  # All files are tagged in_period (the corpus as supplied). A derived `subperiod` column
+  # (year <= haskala_cutoff_year → 'haskala', else 'post_haskala') supports a later decision.
+  - {id: haskala-fiction, corpus: haskala, path_regex: '--ספרות יפה--',                     stratum: haskala.belles_lettres, period_status: in_period}
+  - {id: haskala-science, corpus: haskala, path_regex: '--ספרות מדע--',                     stratum: haskala.science,        period_status: in_period}
+  - {id: haskala-essays,  corpus: haskala, path_regex: '--עיון, עיתונות ופובליציסטיקה--', stratum: haskala.essays_press,   period_status: in_period}
+
+  # ------------------------------------------------------------------ Modern
+  - id: modern-aux-logs
+    corpus: modern
+    path_regex: '(\.log|^news/haaretz/6/60\.7z\.txt)$'
+    stratum: modern.auxiliary
+    period_status: out_of_period
+    note: "7-Zip archiving logs left in news/haaretz/6 (99 *.log + one log saved as 60.7z.txt, detected by content) — not corpus text."
+  - {id: modern-haaretz,   corpus: modern, path_regex: '^news/haaretz/',   stratum: modern.news.haaretz,   period_status: in_period}
+  - {id: modern-a7,        corpus: modern, path_regex: '^news/a7/',        stratum: modern.news.a7,        period_status: in_period}
+  - {id: modern-nrg,       corpus: modern, path_regex: '^news/nrg/',       stratum: modern.news.nrg,       period_status: in_period}
+  - {id: modern-themarker, corpus: modern, path_regex: '^news/themarker/', stratum: modern.news.themarker, period_status: in_period}
+  - {id: modern-ynet,      corpus: modern, path_regex: '^news/ynet/',      stratum: modern.news.ynet,      period_status: in_period}
+  - {id: modern-lit-orig,  corpus: modern, path_regex: '^literary/O\.txt$', stratum: modern.literary.original,   period_status: in_period}
+  - {id: modern-lit-trans, corpus: modern, path_regex: '^literary/T\.txt$', stratum: modern.literary.translated, period_status: in_period}
+  - {id: modern-tapuz,     corpus: modern, path_regex: '^tapuz/',          stratum: modern.forum.tapuz,    period_status: in_period}
+  - {id: modern-blogs,     corpus: modern, path_regex: '^blogs/',          stratum: modern.blogs,          period_status: in_period}
+  - {id: modern-medical,   corpus: modern, path_regex: '^medical/',        stratum: modern.medical,        period_status: in_period}
+  - {id: modern-kneset,    corpus: modern, path_regex: '^kneset/',         stratum: modern.knesset,        period_status: in_period}
+
+  # ------------------------------------------------------------------ catch-alls (must stay unused)
+  - {id: mikra-unclassified,    corpus: mikra,    path_regex: '.', stratum: mikra.unclassified,    period_status: needs_review}
+  - {id: hazal-unclassified,    corpus: hazal,    path_regex: '.', stratum: hazal.unclassified,    period_status: needs_review}
+  - {id: medieval-unclassified, corpus: medieval, path_regex: '.', stratum: medieval.unclassified, period_status: needs_review}
+  - {id: haskala-unclassified,  corpus: haskala,  path_regex: '.', stratum: haskala.unclassified,  period_status: needs_review}
+  - {id: modern-unclassified,   corpus: modern,   path_regex: '.', stratum: modern.unclassified,   period_status: needs_review}
+
+haskala_cutoff_year: 1881

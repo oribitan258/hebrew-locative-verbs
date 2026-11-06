@@ -104,3 +104,29 @@ shared privately with the team and lecturer only, because of corpus copyright.
 
 Full strategy: `docs/data_management.md`. Implementation is deferred until after M3 and must be in
 place before M5.
+
+### D-013 · Catalog design (M1) (2026-11-06) · accepted
+- **One row per file**, including empty, duplicate, auxiliary and out-of-period files. `doc_id` is a
+  BLAKE2b-48 hash of the path relative to `corpora/`, so it is stable across machines and runs.
+- **Canonical text definitions** (`hebloc.textstats`), reused by M2 for line numbering:
+  - *line* = `\n`-delimited. Python's `splitlines()` is deliberately not used, because it also
+    splits on U+2028, U+0085 and others.
+  - *token* = a whitespace run.
+  - *Hebrew token* = a token with at least one letter U+05D0–U+05EA.
+- **Encoding detection** is strict and per file: UTF-8, then cp1255, then a lossy fallback that is
+  flagged.
+- **Auxiliary files** are detected by extension *and by content*: the 7-Zip log signature caught
+  `haaretz/6/60.7z.txt`.
+- **Default comparison filter** = text ∧ not blank ∧ `in_period` ∧ not a duplicate copy. Every
+  exclusion is recorded in `exclusion_reasons`.
+- **Exact duplicates**: within a group of identical files, the first by path is canonical.
+- **Write gate**: the catalog is written only if it matches the filesystem, the baseline and the
+  git-tracked anchor.
+
+### D-014 · Proposed curation tags (M1) (2026-11-06) · hypothesis (awaiting user approval)
+`config/curation.yaml` as described in `docs/corpus_report.md` §3 and §6. Open points:
+1. Aggadic midrash stays in period.
+2. Haskala files after 1881 stay in the default set, with a `subperiod` tag.
+3. Seven unlabelled Musar files are `needs_review`.
+4. Duplicates are excluded from the default set.
+5. Modern artifacts (`prefix=`, `token=`, headers, URLs) are reconstructed or cleaned in M2.

@@ -1,0 +1,6 @@
+corpus_id,dup_groups,copies,hebrew_tokens_in_copies,files_in_cross_corpus_groups,largest_group
+mikra,0,0,,0,1
+hazal,0,0,,0,1
+medieval,0,0,,0,1
+haskala,1,2,0.0,0,3
+modern,4295,6265,1774900.0,0,24

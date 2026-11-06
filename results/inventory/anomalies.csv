@@ -1,0 +1,6 @@
+corpus_id,lossy_decoding,utf8_bom,stray_feff,control_chars,odd_line_separators,mixed_line_endings,mostly_non_hebrew,latin1_supplement_chars,metadata_issues,longest_line_chars
+mikra,0,0,0,0,0,0,0,0,0,450
+hazal,0,0,0,0,0,0,0,0,0,29335
+medieval,0,0,2,0,0,0,0,0,0,31474
+haskala,0,0,0,0,0,0,0,0,0,43705
+modern,0,0,0,0,0,0,205,1,0,9977

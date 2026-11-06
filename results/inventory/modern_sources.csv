@@ -1,0 +1,17 @@
+subcorpus,source,files,duplicate_copies,non_text_or_blank,mib,nonempty_lines,hebrew_tokens,pct_of_modern_tokens
+news,haaretz,279459,5146,107,722.7,5843850.0,99351410.0,74.1
+news,a7,92273,370,0,72.0,799437.0,12447305.0,9.3
+kneset,knesset_16,164,0,0,40.9,543228.0,7140457.0,5.3
+blogs,,11176,652,0,30.1,763821.0,5218145.0,3.9
+kneset,knesset_17,118,0,0,25.2,324497.0,4391677.0,3.3
+medical,questions,11123,0,0,8.4,140375.0,1427375.0,1.1
+news,ynet,3069,0,0,5.6,46495.0,764460.0,0.6
+tapuz,,255,11,0,4.6,75919.0,672089.0,0.5
+literary,translated,1,0,0,3.4,43683.0,593519.0,0.4
+news,themarker,837,0,0,3.4,31542.0,569021.0,0.4
+literary,original,1,0,0,3.4,34496.0,565510.0,0.4
+news,nrg,2500,7,0,3.0,24796.0,401446.0,0.3
+medical,doctors,290,61,0,1.1,12315.0,188430.0,0.1
+medical,infomed,1086,1,0,0.9,15045.0,157268.0,0.1
+medical,bari,192,16,0,0.9,12571.0,145920.0,0.1
+medical,ripui,59,1,0,0.4,4883.0,60980.0,0.0
