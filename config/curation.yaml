@@ -1,18 +1,23 @@
-# Curation rules: assign every catalog document a STRATUM and a PERIOD STATUS (decision D-003).
+# Curation rules: assign every catalog document a STRATUM and a PERIOD STATUS (D-003, D-014).
+#
+# STATUS OF THESE TAGS: approved (2026-11-06) as OPERATIONAL RESEARCH METADATA — a transparent,
+# revisable basis for analytical views — NOT as definitive historical/philological truth.
 #
 # * Tagging never deletes or hides anything: every file stays in the catalog and is parsed.
+# * Two views (D-015): FULL view = every corpus text file as supplied (PRIMARY reference);
+#   CURATED view = additional analytical view built from these tags (+ blank/duplicate rules).
 # * period_status ∈ {in_period, out_of_period, needs_review}
-#     in_period      — belongs to the period the corpus represents → eligible for the default filter
-#     out_of_period  — kept & reported separately; excluded from the default comparison filter
-#     needs_review   — dating/attribution not verified; excluded from the default filter UNTIL the
-#                      user decides (listed in docs/corpus_report.md)
+#     in_period      — represents the corpus's period → in the full AND curated views
+#     out_of_period  — in the full view; outside the curated view
+#     needs_review   — dating/attribution unverified; in the full view; outside the curated view
+#                      until verified (listed in docs/corpus_report.md)
 # * Rules are matched per corpus, in order; FIRST MATCH WINS. `path_regex` is a Python regex
 #   searched in the path relative to the corpus folder, with '/' separators
 #   (e.g. "Musar/Musar - Rishonim - Shaarei Teshuvah.txt").
 # * Every corpus ends with a catch-all rule → "<corpus>.unclassified / needs_review"; the tests
 #   require that no document actually falls through to it.
-# * The default filter (`include_default`) additionally requires: text file, not blank, and not a
-#   duplicate copy (see docs/corpus_report.md). Those are computed, not configured here.
+# * The curated view (`in_curated_view`) additionally requires: text file, not blank, and not an
+#   exact duplicate copy within the same stratum|source. Those are computed, not configured here.
 #
 # Dating notes are the proposer's (Claude's) assessment for user review — see corpus_report.md.
 version: 1
@@ -51,7 +56,7 @@ rules:
     path_regex: '^Midrash - Aggad'
     stratum: hazal.aggadic_midrash
     period_status: in_period
-    note: "Assignment lists 'מדרשים'. Compilation dates vary widely (Amoraic Bereshit/Vayikra Rabbah … to post-Talmudic Tanchuma, Midrash Tehillim, Pirkei DeRabbi Eliezer, Tanna Debei Eliyahu). Kept in period; flagged in the report as a judgement call."
+    note: "Kept in period because the assignment explicitly lists 'מדרשים' (user decision 2026-11-06). NOT historically homogeneous: compilation dates range from Amoraic (Bereshit/Vayikra Rabbah) to post-Talmudic (Tanchuma, Midrash Tehillim, Pirkei DeRabbi Eliezer, Tanna Debei Eliyahu). Do not treat this stratum as a single linguistic period; report it separately from the Tannaitic core (Mishnah, Tosefta, halakhic midrash) when relevant."
 
   # ------------------------------------------------------------------ Medieval
   - {id: medieval-rambam, corpus: medieval, path_regex: '^Rambam/', stratum: medieval.mishneh_torah, period_status: in_period}
@@ -102,11 +107,13 @@ rules:
     path_regex: '^Musar/'
     stratum: medieval.musar_unverified
     period_status: needs_review
-    note: "No era label in the source naming and dating not verified (Ahavat David, Davar Be'ito, Maamar Mezake HaRabim, Shekel HaKodesh, Shuvah Yisrael, Yesod HaYirah, and 'Letter from Ramban to his Son', whose content does NOT match its title)."
+    note: "Kept as needs_review by user decision (2026-11-06): in full-corpus analyses, outside the curated historical comparison pending verification. No era label in the source naming and dating not verified (Ahavat David, Davar Be'ito, Maamar Mezake HaRabim, Shekel HaKodesh, Shuvah Yisrael, Yesod HaYirah, and 'Letter from Ramban to his Son', whose content does NOT match its title)."
 
   # ------------------------------------------------------------------ Haskala
-  # All files are tagged in_period (the corpus as supplied). A derived `subperiod` column
-  # (year <= haskala_cutoff_year → 'haskala', else 'post_haskala') supports a later decision.
+  # All files are in_period (the corpus as supplied; user decision 2026-11-06). A derived
+  # `subperiod` column (year <= haskala_cutoff_year → 'haskala', else 'post_haskala') supports
+  # comparisons. 1881 is an ANALYTICAL cutoff (conventional end of the Haskala), not an absolute
+  # linguistic boundary.
   - {id: haskala-fiction, corpus: haskala, path_regex: '--ספרות יפה--',                     stratum: haskala.belles_lettres, period_status: in_period}
   - {id: haskala-science, corpus: haskala, path_regex: '--ספרות מדע--',                     stratum: haskala.science,        period_status: in_period}
   - {id: haskala-essays,  corpus: haskala, path_regex: '--עיון, עיתונות ופובליציסטיקה--', stratum: haskala.essays_press,   period_status: in_period}

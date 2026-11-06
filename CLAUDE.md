@@ -22,7 +22,10 @@ until the user explicitly opens that scope.
 - `data/` is not in git; expensive outputs are backed up/shared as verified bundles — see
   `docs/data_management.md` (D-012; to implement before M5).
 - Never silently drop data. Everything is cataloged; filtering = tags (`config/curation.yaml`),
-  never deletion. Statistics report *full coverage* and *default filter* side by side.
+  never deletion. **Full view** (`in_full_view`, every supplied text file) is the PRIMARY reference
+  for statistics; the **curated view** (`in_curated_view`: in-period, non-blank, deduplicated within
+  stratum|source) is an additional, clearly labelled view (D-015). Curation tags are operational
+  research metadata, not historical truth. Duplicates are never removed across corpora/sources.
 - Every derived row is traceable: `sent_id` → `doc_id` → `rel_path` + `line_no` + char offsets (+ sha256).
 - Keep raw Dicta responses (`dicta_raw`); recomputing statistics must never require re-running Dicta.
 - No large run without an approved pilot (M3 gate). Runs are sharded, resumable, manifest-logged.
@@ -57,7 +60,8 @@ Key IDs: `doc_id` = stable hash of rel_path; `sent_id` = `<corpus>:<doc_id>:<lin
 - **Modern** (402,603 files, 134.1M Hebrew tokens): **Windows-1255, not UTF-8** (incl. folder `text_utf`);
   pre-tokenized, ~1 sentence/line; haaretz ≈ 74% of tokens; 100 auxiliary 7-Zip logs (one named `.txt`);
   6,265 exact-duplicate copies; old-tokenizer artifacts `prefix=X token=Y` (1.16M, also in Rambam) must be
-  reconstructed in M2 (e.g. `prefix=ב token=רח'` → `ברח'`).
+  investigated in M2 (e.g. `prefix=ב token=רח'` ≈ `ברח'`) — no unvalidated reconstruction rules;
+  keep the original text; test on difficult cases first (D-016).
 
 ## Stack & commands
 - Python 3.12 via `uv` (system default 3.14 is NOT used). Package: `src/hebloc/`.
@@ -96,7 +100,8 @@ notebooks/     exploration only — never pipeline logic
 - [x] M0 foundation (CLAUDE.md, roadmap, decisions, git, uv env, skeleton, immutability guard)
       Baseline: 404,294 files / 1,074.7 MiB, pinned by git-tracked anchor. Fast guard ~19s; deep (`-m slow`) ~5 min.
 - [x] M1 inventory & catalog — `data/catalog/documents.parquet` (404,294 rows, verified vs anchor);
-      report `docs/corpus_report.md`; tags in `config/curation.yaml` AWAIT USER APPROVAL (D-014)
+      report `docs/corpus_report.md`; tags approved as operational metadata (D-015). Aggadic midrash is
+      in period but heterogeneous; Haskala 1881 = analytical cutoff; 7 Musar files `needs_review`.
 - [ ] M2 unit extraction with provenance
 - [ ] M3 Dicta pilot & benchmark (GATE — needs user approval)
 - [ ] M4 data layer & access API

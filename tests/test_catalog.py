@@ -75,10 +75,13 @@ def test_counts_match_independent_discovery(cat):
 def test_tagging_never_drops_and_is_explained(cat):
     assert not cat.stratum.str.endswith(".unclassified").any()
     assert set(cat.period_status) <= set(PERIOD_STATUSES)
-    reasons_empty = cat.exclusion_reasons.map(len) == 0
-    assert (cat.include_default == reasons_empty).all()
-    excluded = cat[~cat.include_default]
-    assert excluded.exclusion_reasons.map(len).gt(0).all()
+    reasons_empty = cat.curated_exclusion_reasons.map(len) == 0
+    assert (cat.in_curated_view == reasons_empty).all()
+    excluded = cat[~cat.in_curated_view]
+    assert excluded.curated_exclusion_reasons.map(len).gt(0).all()
+    # Curated is a strict subset of full; full = every text file as supplied.
+    assert (cat.in_full_view == (cat.file_kind == "text")).all()
+    assert not (cat.in_curated_view & ~cat.in_full_view).any()
     # Out-of-period / needs-review documents are still present with full measurements.
     oop = cat[cat.period_status != "in_period"]
     assert len(oop) > 0 and oop.sha256.notna().all() and (oop.n_hebrew_tokens >= 0).all()
@@ -97,16 +100,23 @@ def test_kinds_encodings_and_metadata(cat):
     assert len(aux) == 100 and (aux.stratum == "modern.auxiliary").all()
 
 
-def test_duplicates_consistent(cat):
+def test_duplicates_consistent_and_scoped(cat):
     copies = cat[cat.is_dup_copy]
     canon = cat.set_index("doc_id")
     assert copies.dup_of.isin(canon.index).all()
     assert (canon.loc[copies.dup_of, "sha256"].values == copies.sha256.values).all()
     assert (canon.loc[copies.dup_of, "dup_rank"] == 0).all()
+    # A copy is only ever excluded in favour of a canonical file in the SAME scope.
+    assert (canon.loc[copies.dup_of, "dup_scope"].values == copies.dup_scope.values).all()
+    assert (cat.dup_scope == cat.stratum + "|" + cat.source.fillna("")).all()
 
 
-def test_documents_api_filters():
+def test_documents_api_views():
     d = documents("mikra", columns=["doc_id", "work"])
     assert len(d) == 39 and list(d.columns) == ["doc_id", "work"]
-    default = documents(default_only=True, columns=["include_default"])
-    assert default.include_default.all() and len(default) < 404_294
+    full = documents(view="full", columns=["in_full_view"])
+    curated = documents(view="curated", columns=["in_curated_view"])
+    assert full.in_full_view.all() and curated.in_curated_view.all()
+    assert len(curated) < len(full) < 404_294
+    with pytest.raises(ValueError):
+        documents(view="default")

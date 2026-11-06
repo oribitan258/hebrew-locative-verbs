@@ -1,4 +1,4 @@
-corpus_id,stratum,period_status,files,nonempty_lines,hebrew_tokens,default_files,default_hebrew_tokens
+corpus_id,stratum,period_status,files,nonempty_lines,hebrew_tokens,curated_files,curated_hebrew_tokens
 mikra,mikra.prophets,in_period,21,9296.0,123812.0,21,123812.0
 mikra,mikra.torah,in_period,5,5846.0,69318.0,5,69318.0
 mikra,mikra.writings,in_period,13,8064.0,74736.0,13,74736.0

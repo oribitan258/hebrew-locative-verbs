@@ -1,8 +1,15 @@
 """The document catalog: schema and read access.
 
 ``data/catalog/documents.parquet`` has one row per file under ``corpora/`` (every file, including
-empty, duplicate, auxiliary and out-of-period ones). Later stages select their inputs from it,
-typically with ``documents(default_only=True)`` or by ``file_kind == 'text'``.
+empty, duplicate, auxiliary and out-of-period ones). Two analytical views are defined on it
+(decision D-015):
+
+* FULL view (primary reference)  — ``in_full_view``: every corpus text file exactly as supplied
+  (only non-text files — empty files and 7-Zip logs — are outside it).
+* CURATED view (additional)      — ``in_curated_view``: full view minus blank files, documents not
+  tagged ``in_period`` and exact duplicate copies *within the same stratum and source*.
+
+Load with ``documents(view="full")`` / ``documents(view="curated")``.
 
 Column groups:
   identity     doc_id, corpus_id, rel_path, file_name, ext, size_bytes, sha256
@@ -12,10 +19,12 @@ Column groups:
   size         n_lines, n_nonempty_lines, max_line_chars, n_chars, n_tokens, n_hebrew_tokens,
                n_hebrew_letters, n_niqqud, n_cantillation, n_latin_letters, n_digits,
                hebrew_ratio, niqqud_per_letter
-  duplicates   dup_count, dup_rank, is_dup_copy, dup_of, dup_cross_corpus
+  duplicates   dup_scope, dup_count, dup_rank, is_dup_copy, dup_of (within scope = stratum|source);
+               dup_count_global, dup_cross_scope, dup_cross_corpus (identical bytes elsewhere)
   metadata     subcorpus, source, section, work, base_work, commentary, era_label, author, year,
                genre, ext_id, date, meta_issue, meta_json (corpus-specific extras as JSON)
-  curation     stratum, period_status, curation_rule, subperiod, include_default, exclusion_reasons
+  curation     stratum, period_status, curation_rule, subperiod
+  views        in_full_view, in_curated_view, curated_exclusion_reasons
   provenance   inventory_version, curation_hash
 """
 
@@ -30,9 +39,10 @@ from hebloc.paths import CATALOG_DIR
 
 DOCUMENTS_PATH: Path = CATALOG_DIR / "documents.parquet"
 MANIFEST_PATH: Path = CATALOG_DIR / "documents.manifest.json"
-INVENTORY_VERSION = "1"
+INVENTORY_VERSION = "2"  # v2: scoped duplicates, explicit full/curated views
 
 FILE_KINDS = ("text", "empty", "auxiliary")
+VIEWS = (None, "full", "curated")
 
 DOCUMENTS_SCHEMA = pa.schema(
     [
@@ -71,10 +81,13 @@ DOCUMENTS_SCHEMA = pa.schema(
         ("n_digits", pa.int64()),
         ("hebrew_ratio", pa.float32()),
         ("niqqud_per_letter", pa.float32()),
+        ("dup_scope", pa.string()),
         ("dup_count", pa.int32()),
         ("dup_rank", pa.int32()),
         ("is_dup_copy", pa.bool_()),
         ("dup_of", pa.string()),
+        ("dup_count_global", pa.int32()),
+        ("dup_cross_scope", pa.bool_()),
         ("dup_cross_corpus", pa.bool_()),
         ("subcorpus", pa.string()),
         ("source", pa.string()),
@@ -94,8 +107,9 @@ DOCUMENTS_SCHEMA = pa.schema(
         ("period_status", pa.string()),
         ("curation_rule", pa.string()),
         ("subperiod", pa.string()),
-        ("include_default", pa.bool_()),
-        ("exclusion_reasons", pa.list_(pa.string())),
+        ("in_full_view", pa.bool_()),
+        ("in_curated_view", pa.bool_()),
+        ("curated_exclusion_reasons", pa.list_(pa.string())),
         ("inventory_version", pa.string()),
         ("curation_hash", pa.string()),
     ]
@@ -105,24 +119,23 @@ DOCUMENTS_SCHEMA = pa.schema(
 def documents(
     corpus: str | list[str] | None = None,
     *,
-    default_only: bool = False,
-    text_only: bool = False,
+    view: str | None = None,
     columns: list[str] | None = None,
     path: Path = DOCUMENTS_PATH,
 ):
     """Load the catalog as a pandas DataFrame, optionally filtered.
 
-    ``default_only`` keeps the default comparison set (include_default); ``text_only`` keeps all
-    text files (file_kind == 'text'), regardless of period or duplication.
+    ``view=None`` returns every cataloged file; ``"full"`` the full-corpus view (primary
+    reference); ``"curated"`` the curated historical/deduplicated view (additional analysis).
     """
+    if view not in VIEWS:
+        raise ValueError(f"view must be one of {VIEWS}")
     if not path.exists():
         raise FileNotFoundError(f"No catalog at {path}. Run: uv run hebloc inventory")
     filters = []
     if corpus is not None:
         filters.append(("corpus_id", "in", [corpus] if isinstance(corpus, str) else list(corpus)))
-    if default_only:
-        filters.append(("include_default", "==", True))
-    if text_only:
-        filters.append(("file_kind", "==", "text"))
+    if view is not None:
+        filters.append((f"in_{view}_view", "==", True))
     table = pq.read_table(path, columns=columns, filters=filters or None)
     return table.to_pandas()

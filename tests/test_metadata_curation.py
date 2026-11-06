@@ -77,3 +77,27 @@ def test_curation_rules(corpus, rel, stratum, status):
 def test_doc_id_stable():
     assert doc_id_for("Mikra/Tanakh - Torah - Genesis.txt") == doc_id_for("Mikra/Tanakh - Torah - Genesis.txt")
     assert len(doc_id_for("x")) == 12
+
+
+def test_duplicate_scope_keeps_cross_category_copies(tmp_path):
+    """Identical files: excluded only within the same stratum|source; kept across categories/corpora."""
+    from hebloc.inventory import _profile_one, assemble
+
+    same = "שורה זהה לגמרי .\n".encode("cp1255")
+    files = {
+        "Modern/news/haaretz/0/a.txt": same,
+        "Modern/news/haaretz/0/b.txt": same,            # same scope as a → copy
+        "Modern/news/a7/news/x/c.txt": same,            # other source → kept
+        "Modern/blogs/d.txt": same,                     # other stratum → kept
+        "Hazal/Mishnah - Seder Moed - Mishnah X.txt": same.decode("cp1255").encode("utf-8"),  # different bytes
+    }
+    for rel, data in files.items():
+        (tmp_path / rel).parent.mkdir(parents=True, exist_ok=True)
+        (tmp_path / rel).write_bytes(data)
+    t = assemble([_profile_one(r, str(tmp_path)) for r in files]).to_pandas().set_index("rel_path")
+    assert t.loc["Modern/news/haaretz/0/b.txt", "is_dup_copy"]
+    assert "duplicate_copy_within_scope" in t.loc["Modern/news/haaretz/0/b.txt", "curated_exclusion_reasons"]
+    for kept in ("Modern/news/haaretz/0/a.txt", "Modern/news/a7/news/x/c.txt", "Modern/blogs/d.txt"):
+        assert not t.loc[kept, "is_dup_copy"] and t.loc[kept, "in_curated_view"]
+        assert t.loc[kept, "dup_cross_scope"] and t.loc[kept, "dup_count_global"] == 4
+    assert t.in_full_view.all()

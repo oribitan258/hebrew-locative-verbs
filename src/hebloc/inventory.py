@@ -4,8 +4,8 @@ Steps:
  1. enumerate every file (same walker as the checksum baseline);
  2. in parallel, read each file's bytes ONCE (read-only) → sha256 + text profile;
  3. attach parsed path metadata and curation tags (stratum, period status);
- 4. detect exact duplicates (identical sha256, non-empty files);
- 5. derive the default comparison filter with explicit exclusion reasons;
+ 4. detect exact duplicates (identical sha256, non-empty files), scoped to stratum|source;
+ 5. derive the full view (primary) and the curated view (with explicit exclusion reasons);
  6. VERIFY against the baseline and the git-tracked anchor — refuse to write on any mismatch;
  7. write ``documents.parquet`` + a JSON manifest atomically.
 """
@@ -78,7 +78,7 @@ def build_rows(root: Path = CORPORA_DIR, workers: int | None = None, progress: b
 
 
 def assemble(profiles: list[dict]) -> pa.Table:
-    """Add identity, metadata, duplicates, curation and default-filter columns."""
+    """Add identity, metadata, duplicates, curation and view columns."""
     curation = load_curation()
     rows = []
     for p in profiles:
@@ -130,24 +130,37 @@ def assemble(profiles: list[dict]) -> pa.Table:
         }
         rows.append(row)
 
-    # Exact duplicates: identical bytes among non-empty files. Rank by rel_path; rank 0 = canonical.
-    groups: dict[str, list[dict]] = defaultdict(list)
+    # Exact duplicates (identical bytes, non-empty files) — decision D-015.
+    # A copy is excluded from the curated view ONLY if an identical file exists in the same
+    # DUPLICATE SCOPE (same stratum and same source category). Identical files in different
+    # scopes/corpora are all kept and merely flagged (dup_cross_scope / dup_cross_corpus).
+    for r in rows:
+        r["dup_scope"] = f"{r['stratum']}|{r['source'] or ''}"
+        r.update(dup_count=1, dup_rank=0, is_dup_copy=False, dup_of=None,
+                 dup_count_global=1, dup_cross_scope=False, dup_cross_corpus=False)
+    global_groups: dict[str, list[dict]] = defaultdict(list)
     for r in rows:
         if r["size_bytes"] > 0:
-            groups[r["sha256"]].append(r)
-    for r in rows:
-        r.update(dup_count=1, dup_rank=0, is_dup_copy=False, dup_of=None, dup_cross_corpus=False)
-    for members in groups.values():
+            global_groups[r["sha256"]].append(r)
+    for members in global_groups.values():
         if len(members) < 2:
             continue
-        members.sort(key=lambda r: r["rel_path"])
-        cross = len({m["corpus_id"] for m in members}) > 1
-        for rank, r in enumerate(members):
-            r.update(dup_count=len(members), dup_rank=rank, is_dup_copy=rank > 0,
-                     dup_of=members[0]["doc_id"] if rank > 0 else None, dup_cross_corpus=cross)
+        cross_scope = len({m["dup_scope"] for m in members}) > 1
+        cross_corpus = len({m["corpus_id"] for m in members}) > 1
+        scoped: dict[str, list[dict]] = defaultdict(list)
+        for m in members:
+            m.update(dup_count_global=len(members), dup_cross_scope=cross_scope, dup_cross_corpus=cross_corpus)
+            scoped[m["dup_scope"]].append(m)
+        for group in scoped.values():
+            group.sort(key=lambda r: r["rel_path"])  # rank 0 = canonical (first path)
+            for rank, r in enumerate(group):
+                r.update(dup_count=len(group), dup_rank=rank, is_dup_copy=rank > 0,
+                         dup_of=group[0]["doc_id"] if rank > 0 else None)
 
-    # Default comparison filter, with explicit reasons for every exclusion.
+    # Views (D-015). FULL = every corpus text file as supplied (primary reference).
+    # CURATED = additional analytical view; every exclusion is explained.
     for r in rows:
+        r["in_full_view"] = r["file_kind"] == "text"
         reasons = []
         if r["file_kind"] != "text":
             reasons.append(f"file_kind:{r['file_kind']}")
@@ -156,9 +169,9 @@ def assemble(profiles: list[dict]) -> pa.Table:
         if r["period_status"] != "in_period":
             reasons.append(f"period:{r['period_status']}")
         if r["is_dup_copy"]:
-            reasons.append("duplicate_copy")
-        r["exclusion_reasons"] = reasons
-        r["include_default"] = not reasons
+            reasons.append("duplicate_copy_within_scope")
+        r["curated_exclusion_reasons"] = reasons
+        r["in_curated_view"] = not reasons
 
     rows.sort(key=lambda r: r["rel_path"])
     return pa.Table.from_pylist(rows, schema=DOCUMENTS_SCHEMA)

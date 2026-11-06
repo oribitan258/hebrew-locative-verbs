@@ -118,15 +118,49 @@ place before M5.
 - **Auxiliary files** are detected by extension *and by content*: the 7-Zip log signature caught
   `haaretz/6/60.7z.txt`.
 - **Default comparison filter** = text ∧ not blank ∧ `in_period` ∧ not a duplicate copy. Every
-  exclusion is recorded in `exclusion_reasons`.
+  exclusion is recorded in `exclusion_reasons`. *(Replaced by the full and curated views, D-015.)*
 - **Exact duplicates**: within a group of identical files, the first by path is canonical.
+  *(Scope narrowed to stratum|source, D-015.)*
 - **Write gate**: the catalog is written only if it matches the filesystem, the baseline and the
   git-tracked anchor.
 
-### D-014 · Proposed curation tags (M1) (2026-11-06) · hypothesis (awaiting user approval)
+### D-014 · Proposed curation tags (M1) (2026-11-06) · superseded by D-015 (approved with clarifications)
 `config/curation.yaml` as described in `docs/corpus_report.md` §3 and §6. Open points:
 1. Aggadic midrash stays in period.
 2. Haskala files after 1881 stay in the default set, with a `subperiod` tag.
 3. Seven unlabelled Musar files are `needs_review`.
 4. Duplicates are excluded from the default set.
 5. Modern artifacts (`prefix=`, `token=`, headers, URLs) are reconstructed or cleaned in M2.
+
+### D-015 · Curation tags approved; full and curated views; scoped duplicates (2026-11-06) · accepted
+User decisions on the M1 report (`docs/corpus_report.md` §6):
+1. The strata and period tags are approved as **operational research metadata**, not definitive
+   historical truth.
+2. **Aggadic midrash stays in period**, because the assignment lists "מדרשים". It is documented as
+   *not historically homogeneous* (Amoraic to post-Talmudic compilations).
+3. **All Haskala texts are kept**, including those after 1881. The `subperiod` tag is preserved, and
+   1881 is an *analytical cutoff*, not an absolute linguistic boundary.
+4. The **7 undated Musar files stay `needs_review`**: they are in full-corpus analyses and outside the
+   curated comparison pending verification.
+5. **Exact duplicate copies are excluded from the curated view only, and only within the same
+   duplicate scope** (`stratum|source`). Identical files in other corpora or source categories are
+   kept and flagged (`dup_cross_scope`, `dup_cross_corpus`).
+
+   Verified: the previous global detection had no cross-corpus or cross-source groups. The only
+   cross-stratum group was three blank Haskala placeholders, so this change affects no real text.
+6. **Views.** The *full view* (`in_full_view` = every supplied corpus text file) is the **primary
+   reference** for all statistics. The *curated view* (`in_curated_view`) is an additional, clearly
+   labelled analytical view.
+
+   Schema change, inventory v2:
+   - `include_default` → `in_curated_view`;
+   - `exclusion_reasons` → `curated_exclusion_reasons`;
+   - new columns `in_full_view`, `dup_scope`, `dup_count_global`, `dup_cross_scope`.
+
+### D-016 · Modern/Rambam tokenization artifacts: investigate, do not assume (2026-11-06) · accepted
+The `prefix=X` / `token=Y` artifacts (1.16M in Modern, 141 in Rambam) will be investigated in M2.
+- No unvalidated reconstruction rule may be applied.
+- The original text is always preserved (`text_raw`).
+- Candidate rules are tested on representative and difficult examples before use: abbreviations
+  (`prefix=ב token=רח'`), numbers (`prefix=כ - 20`), quotation marks (`prefix=ו ' ' דרילר`), and
+  gershayim numerals in Rambam (`prefix=ל " ב`).

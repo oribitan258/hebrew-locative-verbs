@@ -19,28 +19,27 @@ TABLES_MD = DOCS_DIR / "corpus_inventory_tables.md"
 CORPUS_ORDER = "CASE corpus_id WHEN 'mikra' THEN 1 WHEN 'hazal' THEN 2 WHEN 'medieval' THEN 3 WHEN 'haskala' THEN 4 ELSE 5 END"
 
 QUERIES: dict[str, tuple[str, str]] = {
-    "corpus_summary": ("Per-corpus totals (all files) and the default comparison set", f"""
+    "corpus_summary": ("Per-corpus totals: FULL view (primary reference) and CURATED view (additional)", f"""
         SELECT corpus_id,
-               count(*) AS files,
-               count(*) FILTER (file_kind='text') AS text_files,
+               count(*) AS files_cataloged,
                count(*) FILTER (file_kind='empty') AS empty_files,
                count(*) FILTER (file_kind='auxiliary') AS auxiliary_files,
-               count(*) FILTER (file_kind='text' AND is_blank) AS blank_files,
-               count(*) FILTER (is_dup_copy) AS duplicate_copies,
                round(sum(size_bytes)/1048576.0, 1) AS mib,
-               sum(n_nonempty_lines) AS nonempty_lines,
-               sum(n_tokens) AS tokens,
-               sum(n_hebrew_tokens) AS hebrew_tokens,
-               count(*) FILTER (include_default) AS default_files,
-               sum(n_hebrew_tokens) FILTER (include_default) AS default_hebrew_tokens,
-               round(100.0 * sum(n_hebrew_tokens) FILTER (include_default) / sum(n_hebrew_tokens), 1) AS default_pct_tokens
+               count(*) FILTER (in_full_view) AS full_files,
+               sum(n_nonempty_lines) FILTER (in_full_view) AS full_nonempty_lines,
+               sum(n_tokens) FILTER (in_full_view) AS full_tokens,
+               sum(n_hebrew_tokens) FILTER (in_full_view) AS full_hebrew_tokens,
+               count(*) FILTER (in_curated_view) AS curated_files,
+               sum(n_hebrew_tokens) FILTER (in_curated_view) AS curated_hebrew_tokens,
+               round(100.0 * sum(n_hebrew_tokens) FILTER (in_curated_view)
+                     / sum(n_hebrew_tokens) FILTER (in_full_view), 1) AS curated_pct_of_full
         FROM docs GROUP BY corpus_id ORDER BY {CORPUS_ORDER}"""),
     "stratum_summary": ("Strata and period status (tags only — nothing is deleted)", f"""
         SELECT corpus_id, stratum, period_status,
                count(*) AS files, sum(n_nonempty_lines) AS nonempty_lines,
                sum(n_hebrew_tokens) AS hebrew_tokens,
-               count(*) FILTER (include_default) AS default_files,
-               coalesce(sum(n_hebrew_tokens) FILTER (include_default), 0) AS default_hebrew_tokens
+               count(*) FILTER (in_curated_view) AS curated_files,
+               coalesce(sum(n_hebrew_tokens) FILTER (in_curated_view), 0) AS curated_hebrew_tokens
         FROM docs GROUP BY corpus_id, stratum, period_status ORDER BY {CORPUS_ORDER}, stratum"""),
     "encoding_summary": ("Detected encodings", f"""
         SELECT corpus_id, coalesce(subcorpus, '') AS subcorpus, encoding, line_endings,
@@ -64,13 +63,14 @@ QUERIES: dict[str, tuple[str, str]] = {
                round(sum(n_cantillation)::DOUBLE / nullif(sum(n_hebrew_letters),0), 3) AS cantillation_per_letter,
                count(*) FILTER (niqqud_per_letter > 0.5) AS files_mostly_vocalized
         FROM docs WHERE file_kind='text' GROUP BY corpus_id, stratum ORDER BY {CORPUS_ORDER}, stratum"""),
-    "duplicates": ("Exact duplicates (identical bytes, non-empty files)", f"""
+    "duplicates": ("Exact duplicates (identical bytes, non-empty files); scope = stratum|source", f"""
         SELECT corpus_id,
-               count(DISTINCT sha256) FILTER (dup_count>1) AS dup_groups,
-               count(*) FILTER (is_dup_copy) AS copies,
-               sum(n_hebrew_tokens) FILTER (is_dup_copy) AS hebrew_tokens_in_copies,
-               count(*) FILTER (dup_cross_corpus) AS files_in_cross_corpus_groups,
-               max(dup_count) AS largest_group
+               count(DISTINCT dup_scope || sha256) FILTER (dup_count>1) AS groups_within_scope,
+               count(*) FILTER (is_dup_copy) AS copies_excluded_from_curated,
+               coalesce(sum(n_hebrew_tokens) FILTER (is_dup_copy), 0) AS hebrew_tokens_in_copies,
+               max(dup_count) AS largest_group_within_scope,
+               count(*) FILTER (dup_cross_scope) AS files_with_identical_copy_in_other_scope,
+               count(*) FILTER (dup_cross_corpus) AS files_with_identical_copy_in_other_corpus
         FROM docs GROUP BY corpus_id ORDER BY {CORPUS_ORDER}"""),
     "anomalies": ("Anomaly counts (files affected)", f"""
         SELECT corpus_id,
@@ -95,15 +95,15 @@ QUERIES: dict[str, tuple[str, str]] = {
         HAVING sum(n_prefix_tags)+sum(n_token_tags)+sum(n_img_tags)+sum(n_urls)
                + count(*) FILTER (n_hebrew_tokens <= 15) > 0
         ORDER BY {CORPUS_ORDER}, prefix_tags DESC, source"""),
-    "needs_review": ("Documents awaiting a period decision (excluded from default until decided)", """
+    "needs_review": ("Documents awaiting verification (in the full view; outside the curated view until decided)", """
         SELECT corpus_id, rel_path, stratum, n_hebrew_tokens AS hebrew_tokens, n_nonempty_lines AS nonempty_lines
         FROM docs WHERE period_status='needs_review' ORDER BY hebrew_tokens DESC, rel_path"""),
-    "out_of_period": ("Out-of-period documents (kept; excluded from default)", f"""
+    "out_of_period": ("Out-of-period documents (in the full view; outside the curated view)", f"""
         SELECT corpus_id, stratum, curation_rule, count(*) AS files, sum(n_hebrew_tokens) AS hebrew_tokens
         FROM docs WHERE period_status='out_of_period' GROUP BY corpus_id, stratum, curation_rule ORDER BY {CORPUS_ORDER}, hebrew_tokens DESC, stratum, curation_rule"""),
-    "exclusion_reasons": ("Why documents are outside the default set (a document may have several reasons)", f"""
+    "exclusion_reasons": ("Why documents are outside the curated view (a document may have several reasons)", f"""
         SELECT corpus_id, reason, count(*) AS files, sum(n_hebrew_tokens) AS hebrew_tokens
-        FROM (SELECT corpus_id, unnest(exclusion_reasons) AS reason, n_hebrew_tokens FROM docs)
+        FROM (SELECT corpus_id, unnest(curated_exclusion_reasons) AS reason, n_hebrew_tokens FROM docs)
         GROUP BY corpus_id, reason ORDER BY {CORPUS_ORDER}, files DESC, reason"""),
 }
 
@@ -154,7 +154,11 @@ def write_reports(table: pa.Table, out_dir: Path = OUT_DIR, md_path: Path = TABL
         "Do not edit by hand. Full CSVs: `results/inventory/`. Interpretation: `docs/corpus_report.md`.",
         "",
         "Definitions: *line* = `\\n`-delimited; *token* = whitespace-separated run; *Hebrew token* = token "
-        "containing ≥1 Hebrew letter (U+05D0–U+05EA). *Default set* = text, non-blank, in-period, non-duplicate.",
+        "containing ≥1 Hebrew letter (U+05D0–U+05EA).",
+        "",
+        "**Views (D-015):** *FULL* = every corpus text file as supplied — the **primary reference**. "
+        "*CURATED* = an additional analytical view: full minus blank files, documents not tagged "
+        "`in_period`, and exact duplicate copies within the same stratum and source.",
         "",
     ]
     for name, df in frames.items():

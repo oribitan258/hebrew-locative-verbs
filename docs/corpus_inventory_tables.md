@@ -2,23 +2,25 @@
 
 > **Auto-generated** by `uv run hebloc inventory` from `data/catalog/documents.parquet`. Do not edit by hand. Full CSVs: `results/inventory/`. Interpretation: `docs/corpus_report.md`.
 
-Definitions: *line* = `\n`-delimited; *token* = whitespace-separated run; *Hebrew token* = token containing ≥1 Hebrew letter (U+05D0–U+05EA). *Default set* = text, non-blank, in-period, non-duplicate.
+Definitions: *line* = `\n`-delimited; *token* = whitespace-separated run; *Hebrew token* = token containing ≥1 Hebrew letter (U+05D0–U+05EA).
 
-## Per-corpus totals (all files) and the default comparison set
+**Views (D-015):** *FULL* = every corpus text file as supplied — the **primary reference**. *CURATED* = an additional analytical view: full minus blank files, documents not tagged `in_period`, and exact duplicate copies within the same stratum and source.
+
+## Per-corpus totals: FULL view (primary reference) and CURATED view (additional)
 `results/inventory/corpus_summary.csv`
 
-| corpus_id | files | text_files | empty_files | auxiliary_files | blank_files | duplicate_copies | mib | nonempty_lines | tokens | hebrew_tokens | default_files | default_hebrew_tokens | default_pct_tokens |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| mikra | 39 | 39 | 0 | 0 | 0 | 0 | 5.2 | 23,206 | 270,170 | 267,866 | 39 | 267,866 | 100 |
-| hazal | 204 | 204 | 0 | 0 | 0 | 0 | 62.9 | 118,481 | 6,503,364 | 6,493,912 | 147 | 2,588,484 | 39.9 |
-| medieval | 1,128 | 1,037 | 91 | 0 | 0 | 0 | 31.3 | 44,457 | 3,523,084 | 3,459,940 | 1,024 | 2,848,979 | 82.3 |
-| haskala | 320 | 320 | 0 | 0 | 3 | 2 | 49.1 | 72,284 | 5,437,243 | 5,336,775 | 317 | 5,336,775 | 100 |
-| modern | 402,603 | 402,496 | 7 | 100 | 0 | 6,265 | 926.1 | 8,716,953 | 167,456,932 | 134,095,012 | 396,231 | 132,320,112 | 98.7 |
+| corpus_id | files_cataloged | empty_files | auxiliary_files | mib | full_files | full_nonempty_lines | full_tokens | full_hebrew_tokens | curated_files | curated_hebrew_tokens | curated_pct_of_full |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| mikra | 39 | 0 | 0 | 5.2 | 39 | 23,206 | 270,170 | 267,866 | 39 | 267,866 | 100 |
+| hazal | 204 | 0 | 0 | 62.9 | 204 | 118,481 | 6,503,364 | 6,493,912 | 147 | 2,588,484 | 39.9 |
+| medieval | 1,128 | 91 | 0 | 31.3 | 1,037 | 44,457 | 3,523,084 | 3,459,940 | 1,024 | 2,848,979 | 82.3 |
+| haskala | 320 | 0 | 0 | 49.1 | 320 | 72,284 | 5,437,243 | 5,336,775 | 317 | 5,336,775 | 100 |
+| modern | 402,603 | 7 | 100 | 926.1 | 402,496 | 8,617,412 | 167,057,568 | 134,095,012 | 396,231 | 132,320,112 | 98.7 |
 
 ## Strata and period status (tags only — nothing is deleted)
 `results/inventory/stratum_summary.csv`
 
-| corpus_id | stratum | period_status | files | nonempty_lines | hebrew_tokens | default_files | default_hebrew_tokens |
+| corpus_id | stratum | period_status | files | nonempty_lines | hebrew_tokens | curated_files | curated_hebrew_tokens |
 |---|---|---|---|---|---|---|---|
 | mikra | mikra.prophets | in_period | 21 | 9,296 | 123,812 | 21 | 123,812 |
 | mikra | mikra.torah | in_period | 5 | 5,846 | 69,318 | 5 | 69,318 |
@@ -153,16 +155,16 @@ Definitions: *line* = `\n`-delimited; *token* = whitespace-separated run; *Hebre
 | modern | modern.news.themarker | 837 | 0 | 0 | 0 |
 | modern | modern.news.ynet | 3,069 | 0 | 0 | 0 |
 
-## Exact duplicates (identical bytes, non-empty files)
+## Exact duplicates (identical bytes, non-empty files); scope = stratum|source
 `results/inventory/duplicates.csv`
 
-| corpus_id | dup_groups | copies | hebrew_tokens_in_copies | files_in_cross_corpus_groups | largest_group |
-|---|---|---|---|---|---|
-| mikra | 0 | 0 |  | 0 | 1 |
-| hazal | 0 | 0 |  | 0 | 1 |
-| medieval | 0 | 0 |  | 0 | 1 |
-| haskala | 1 | 2 | 0 | 0 | 3 |
-| modern | 4,295 | 6,265 | 1,774,900 | 0 | 24 |
+| corpus_id | groups_within_scope | copies_excluded_from_curated | hebrew_tokens_in_copies | largest_group_within_scope | files_with_identical_copy_in_other_scope | files_with_identical_copy_in_other_corpus |
+|---|---|---|---|---|---|---|
+| mikra | 0 | 0 | 0 | 1 | 0 | 0 |
+| hazal | 0 | 0 | 0 | 1 | 0 | 0 |
+| medieval | 0 | 0 | 0 | 1 | 0 | 0 |
+| haskala | 1 | 1 | 0 | 2 | 3 | 0 |
+| modern | 4,295 | 6,265 | 1,774,900 | 24 | 0 | 0 |
 
 ## Anomaly counts (files affected)
 `results/inventory/anomalies.csv`
@@ -196,7 +198,7 @@ Definitions: *line* = `\n`-delimited; *token* = whitespace-separated run; *Hebre
 | modern | tapuz | 0 | 0 | 0 | 0 | 7,679 | 2 | 0 |
 | modern | translated | 0 | 0 | 9 | 0 | 16 | 0 | 0 |
 
-## Documents awaiting a period decision (excluded from default until decided)
+## Documents awaiting verification (in the full view; outside the curated view until decided)
 `results/inventory/needs_review.csv`
 
 | corpus_id | rel_path | stratum | hebrew_tokens | nonempty_lines |
@@ -209,7 +211,7 @@ Definitions: *line* = `\n`-delimited; *token* = whitespace-separated run; *Hebre
 | medieval | Medieval/Musar/Musar - Shuvah Yisrael.txt | medieval.musar_unverified | 3,315 | 40 |
 | medieval | Medieval/Musar/Musar - Letter from Ramban to his Son.txt | medieval.musar_unverified | 1,616 | 8 |
 
-## Out-of-period documents (kept; excluded from default)
+## Out-of-period documents (in the full view; outside the curated view)
 `results/inventory/out_of_period.csv`
 
 | corpus_id | stratum | curation_rule | files | hebrew_tokens |
@@ -222,7 +224,7 @@ Definitions: *line* = `\n`-delimited; *token* = whitespace-separated run; *Hebre
 | medieval | medieval.post_medieval | medieval-musar-known-later | 2 | 5,515 |
 | modern | modern.auxiliary | modern-aux-logs | 100 | 0 |
 
-## Why documents are outside the default set (a document may have several reasons)
+## Why documents are outside the curated view (a document may have several reasons)
 `results/inventory/exclusion_reasons.csv`
 
 | corpus_id | reason | files | hebrew_tokens |
@@ -232,8 +234,8 @@ Definitions: *line* = `\n`-delimited; *token* = whitespace-separated run; *Hebre
 | medieval | period:needs_review | 7 | 218,404 |
 | medieval | period:out_of_period | 6 | 392,557 |
 | haskala | blank | 3 | 0 |
-| haskala | duplicate_copy | 2 | 0 |
-| modern | duplicate_copy | 6,265 | 1,774,900 |
+| haskala | duplicate_copy_within_scope | 1 | 0 |
+| modern | duplicate_copy_within_scope | 6,265 | 1,774,900 |
 | modern | file_kind:auxiliary | 100 | 0 |
 | modern | period:out_of_period | 100 | 0 |
 | modern | file_kind:empty | 7 | 0 |

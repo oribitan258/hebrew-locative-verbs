@@ -3,11 +3,16 @@
 One section per persisted table. Tables are added milestone by milestone: `units` in M2;
 `dicta_raw`, `tokens` and `runs` in M3/M4; statistics in M6.
 
-## `documents`: `data/catalog/documents.parquet` (M1, inventory v1)
+## `documents`: `data/catalog/documents.parquet` (M1, inventory v2)
 
 One row per file under `corpora/`, **including** empty, duplicate, auxiliary and out-of-period
 files. The primary key is `doc_id`. Schema: `hebloc.catalog.DOCUMENTS_SCHEMA`. Load with
-`hebloc.catalog.documents()`.
+`hebloc.catalog.documents(view=None | "full" | "curated")`.
+
+**Views (D-015):**
+- **full** (`in_full_view`) is the *primary reference*: every corpus text file as supplied.
+- **curated** (`in_curated_view`) is an *additional* analytical view: full minus blank files,
+  documents not tagged `in_period`, and duplicate copies within the same stratum|source.
 
 | Column | Type | Meaning |
 |---|---|---|
@@ -32,8 +37,11 @@ files. The primary key is `doc_id`. Schema: `hebloc.catalog.DOCUMENTS_SCHEMA`. L
 | `n_hebrew_letters`, `n_niqqud`, `n_cantillation`, `n_latin_letters`, `n_digits` | int64 | Character-class counts |
 | `hebrew_ratio` | float32 | Hebrew letters ÷ (Hebrew + Latin letters) |
 | `niqqud_per_letter` | float32 | Niqqud marks per Hebrew letter. Roughly 0.8 means fully vocalized |
-| `dup_count`, `dup_rank` | int32 | Size of the exact-duplicate group; rank by `rel_path` (0 = canonical) |
-| `is_dup_copy`, `dup_of`, `dup_cross_corpus` | bool, string, bool | A non-canonical copy; `doc_id` of the canonical file; whether the group spans corpora |
+| `dup_scope` | string | Duplicate scope = `stratum|source`. Duplicates are resolved only inside a scope |
+| `dup_count`, `dup_rank` | int32 | Size of the identical-bytes group *within the scope*; rank by `rel_path` (0 = canonical) |
+| `is_dup_copy`, `dup_of` | bool, string | A non-canonical copy within its scope; `doc_id` of the canonical file in the same scope |
+| `dup_count_global` | int32 | Number of identical files anywhere in `corpora/` |
+| `dup_cross_scope`, `dup_cross_corpus` | bool | Identical bytes also exist in another scope or corpus. Such copies are **kept**, only flagged |
 | `subcorpus`, `source`, `section`, `work`, `base_work`, `commentary`, `era_label`, `author`, `year`, `genre`, `ext_id`, `date` | various | Generic metadata parsed from the path. What each field means per corpus is described in `hebloc.metadata` |
 | `meta_issue` | string | Set when a file name did not match its corpus pattern (none at present) |
 | `meta_json` | string (JSON) | Corpus-specific extras, e.g. `tractate`, `series`, `hilchot`, `unit_label`, `text_only_edition` |
@@ -41,8 +49,9 @@ files. The primary key is `doc_id`. Schema: `hebloc.catalog.DOCUMENTS_SCHEMA`. L
 | `period_status` | string | `in_period` \| `out_of_period` \| `needs_review` |
 | `curation_rule` | string | Id of the rule that assigned the tags |
 | `subperiod` | string | Haskala only: `haskala` (year ≤ cutoff, 1881) or `post_haskala` |
-| `include_default` | bool | Belongs to the default comparison set: text, not blank, in period, not a duplicate copy |
-| `exclusion_reasons` | list<string> | Every reason the file is outside the default set (empty list ⇔ included) |
+| `in_full_view` | bool | Full view (primary reference): `file_kind == 'text'` |
+| `in_curated_view` | bool | Curated view (additional): text, not blank, `in_period`, not a duplicate copy within its scope |
+| `curated_exclusion_reasons` | list<string> | Every reason the file is outside the curated view (empty list ⇔ included) |
 | `inventory_version`, `curation_hash` | string | Provenance: inventory code version, and a hash of the curation YAML |
 
 Companion file: `data/catalog/documents.manifest.json` records the creation time, code commit,
