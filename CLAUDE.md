@@ -10,6 +10,7 @@ assignment §4 descriptive statistics → STOP for review. Later stages (locativ
 classification, classifiers, LLM) are roadmap-only: `docs/roadmap.md`. Do not implement them
 until the user explicitly opens that scope.
 
+- **New session? Start with `docs/HANDOFF.md`** (current state, checks to run, next milestone).
 - Spec (authoritative, Hebrew): `project.pdf`. Paper: `DoronDubnov_revised.pdf`.
 - Decisions log: `docs/decisions.md`. Roadmap: `docs/roadmap.md`. Corpus facts: `docs/corpus_report.md`.
 - Table schemas: `docs/data_dictionary.md`. Data API: `hebloc.data` (`units`, `iter_units`, `trace`, `connect`);
@@ -101,12 +102,14 @@ notebooks/     exploration only — never pipeline logic
 
 ## Status
 - [x] M0 foundation (CLAUDE.md, roadmap, decisions, git, uv env, skeleton, immutability guard)
-      Baseline: 404,294 files / 1,074.7 MiB, pinned by git-tracked anchor. Fast guard ~19s; deep (`-m slow`) ~5 min.
+      Baseline: 404,294 files / 1,074.7 MiB, pinned by git-tracked anchor. Fast suite ~75s; deep (`-m slow`) ~11 min.
 - [x] M1 inventory & catalog — `data/catalog/documents.parquet` (404,294 rows, verified vs anchor);
       report `docs/corpus_report.md`; tags approved as operational metadata (D-015). Aggadic midrash is
       in period but heterogeneous; Haskala 1881 = analytical cutoff; 7 Musar files `needs_review`.
 - [x] M2 unit extraction — `data/units/<corpus>/` (9,714,378 units; verified, deterministic); methodology
-      `docs/m2_preprocessing.md`; open: R5 reorder rule, bidi flag (D-019); M3 must test D-018 hypotheses
+      `docs/m2_preprocessing.md`; open: R5 reorder rule, bidi flag (D-019); M3 must test D-018 hypotheses.
+      `chunk` units are pieces of 3,000 over-long sentences — NOT sentences; no parent-sentence key is
+      stored yet (HANDOFF §8). Sentence-length/tree-depth stats must be computed per original sentence.
 - [ ] M3 Dicta pilot & benchmark (GATE — needs user approval)
 - [ ] M4 data layer & access API
 - [ ] M5 full parsing run
