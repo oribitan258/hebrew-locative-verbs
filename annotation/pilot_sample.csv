@@ -1,0 +1,1001 @@
+sample_id,corpus_id,sent_id,ref,stratum,n_tokens_norm,selection
+P0001,mikra,mikra:7ed0fd1ad789:3782:0,Genesis 42:8,mikra.torah,8,random
+P0002,mikra,mikra:297dae2e8e7f:2195:0,Leviticus 25:8,mikra.torah,19,random
+P0003,mikra,mikra:512e32df0840:512:0,Numbers 4:32,mikra.torah,17,random
+P0004,mikra,mikra:512e32df0840:1010:0,Numbers 8:2,mikra.torah,16,random
+P0005,mikra,mikra:297dae2e8e7f:818:0,Leviticus 11:21,mikra.torah,20,random
+P0006,mikra,mikra:b215986ba956:1037:0,Joshua 14:10,mikra.prophets,32,random
+P0007,mikra,mikra:512e32df0840:110:0,Numbers 1:37,mikra.torah,9,random
+P0008,mikra,mikra:6c5e339429d0:809:0,I Samuel 12:22,mikra.prophets,17,random
+P0009,mikra,mikra:e0c7c4ced77c:806:0,II Chronicles 13:10,mikra.writings,13,random
+P0010,mikra,mikra:b22fc4034dca:1733:0,I Kings 16:12,mikra.prophets,16,random
+P0011,mikra,mikra:391395c39072:1697:0,Proverbs 20:12,mikra.writings,9,random
+P0012,mikra,mikra:5613689d119c:194:0,Jeremiah 3:9,mikra.prophets,12,random
+P0013,mikra,mikra:512e32df0840:2249:0,Numbers 21:14,mikra.torah,13,random
+P0014,mikra,mikra:841d5e9edeba:1172:0,II Samuel 15:24,mikra.prophets,25,random
+P0015,mikra,mikra:667cdde7c257:350:0,Exodus 5:17,mikra.torah,12,random
+P0016,mikra,mikra:bcb4a51e626f:41:0,Daniel 1:14,mikra.writings,8,random
+P0017,mikra,mikra:808fb05efa11:1787:0,Ezekiel 24:4,mikra.prophets,12,random
+P0018,mikra,mikra:275a501747bc:1940:0,Job 28:12,mikra.writings,8,random
+P0019,mikra,mikra:512e32df0840:182:0,Numbers 2:7,mikra.torah,9,random
+P0020,mikra,mikra:b215986ba956:104:0,Joshua 2:17,mikra.prophets,10,random
+P0021,mikra,mikra:73e8ff519b6e:2330:0,Deuteronomy 28:61,mikra.torah,17,random
+P0022,mikra,mikra:5613689d119c:1271:0,Jeremiah 17:13,mikra.prophets,17,random
+P0023,mikra,mikra:841d5e9edeba:1355:0,II Samuel 17:25,mikra.prophets,25,random
+P0024,mikra,mikra:b215986ba956:1139:0,Joshua 15:29,mikra.prophets,4,random
+P0025,mikra,mikra:5613689d119c:2270:0,Jeremiah 31:12,mikra.prophets,27,random
+P0026,mikra,mikra:808fb05efa11:587:0,Ezekiel 11:5,mikra.prophets,19,random
+P0027,mikra,mikra:667cdde7c257:1748:0,Exodus 22:4,mikra.torah,18,random
+P0028,mikra,mikra:b22fc4034dca:671:0,I Kings 7:7,mikra.prophets,14,random
+P0029,mikra,mikra:275a501747bc:2090:0,Job 30:9,mikra.writings,7,random
+P0030,mikra,mikra:275a501747bc:74:0,Job 2:3,mikra.writings,28,random
+P0031,mikra,mikra:808fb05efa11:2207:0,Ezekiel 29:17,mikra.prophets,13,random
+P0032,mikra,mikra:808fb05efa11:377:0,Ezekiel 7:13,mikra.prophets,22,random
+P0033,mikra,mikra:667cdde7c257:2663:0,Exodus 31:3,mikra.torah,10,random
+P0034,mikra,mikra:667cdde7c257:2294:0,Exodus 28:7,mikra.torah,10,random
+P0035,mikra,mikra:0c7891e36943:80:0,Zephaniah 2:9,mikra.prophets,29,random
+P0036,mikra,mikra:e2d0778f8442:1289:0,Isaiah 23:7,mikra.prophets,11,random
+P0037,mikra,mikra:297dae2e8e7f:659:0,Leviticus 9:12,mikra.torah,14,random
+P0038,mikra,mikra:297dae2e8e7f:161:0,Leviticus 4:4,mikra.torah,21,random
+P0039,mikra,mikra:b22fc4034dca:2360:0,I Kings 22:24,mikra.prophets,19,random
+P0040,mikra,mikra:fb023e07433b:206:0,Judges 3:10,mikra.prophets,23,random
+P0041,mikra,mikra:e2d0778f8442:812:0,Isaiah 13:19,mikra.prophets,14,random
+P0042,mikra,mikra:297dae2e8e7f:1298:0,Leviticus 15:10,mikra.torah,19,random
+P0043,mikra,mikra:391395c39072:1613:0,Proverbs 19:13,mikra.writings,9,random
+P0044,mikra,mikra:e2d0778f8442:3665:0,Isaiah 63:10,mikra.prophets,13,random
+P0045,mikra,mikra:6c5e339429d0:1799:0,I Samuel 23:1,mikra.prophets,12,random
+P0046,mikra,mikra:31205b6e1741:4394:0,Psalms 89:18,mikra.writings,8,random
+P0047,mikra,mikra:78b08b62a18c:149:0,Amos 4:4,mikra.prophets,14,random
+P0048,mikra,mikra:31205b6e1741:1733:0,Psalms 38:10,mikra.writings,9,random
+P0049,mikra,mikra:275a501747bc:704:0,Job 10:18,mikra.writings,8,random
+P0050,mikra,mikra:b22fc4034dca:2126:0,I Kings 20:18,mikra.prophets,12,random
+P0051,mikra,mikra:e2d0778f8442:866:0,Isaiah 14:15,mikra.prophets,8,random
+P0052,mikra,mikra:73e8ff519b6e:917:0,Deuteronomy 10:15,mikra.torah,15,random
+P0053,mikra,mikra:7ed0fd1ad789:3203:0,Genesis 36:27,mikra.torah,7,random
+P0054,mikra,mikra:31205b6e1741:4073:0,Psalms 82:8,mikra.writings,10,random
+P0055,mikra,mikra:7ed0fd1ad789:1649:0,Genesis 22:2,mikra.torah,26,random
+P0056,mikra,mikra:31205b6e1741:6497:0,Psalms 119:143,mikra.writings,6,random
+P0057,mikra,mikra:e14b4f4977e8:116:0,Ezra 2:28,mikra.writings,8,random
+P0058,mikra,mikra:31205b6e1741:3443:0,Psalms 73:16,mikra.writings,7,random
+P0059,mikra,mikra:512e32df0840:2033:0,Numbers 18:25,mikra.torah,6,random
+P0060,mikra,mikra:086b0cb748c1:404:0,Esther 9:3,mikra.writings,18,random
+P0061,mikra,mikra:086b0cb748c1:50:0,Esther 1:17,mikra.writings,22,random
+P0062,mikra,mikra:31205b6e1741:905:0,Psalms 22:25,mikra.writings,15,random
+P0063,mikra,mikra:808fb05efa11:2180:0,Ezekiel 29:8,mikra.prophets,14,random
+P0064,mikra,mikra:512e32df0840:2063:0,Numbers 19:3,mikra.torah,14,random
+P0065,mikra,mikra:fb023e07433b:587:0,Judges 7:11,mikra.prophets,18,random
+P0066,mikra,mikra:31205b6e1741:1955:0,Psalms 43:3,mikra.writings,12,random
+P0067,mikra,mikra:808fb05efa11:2897:0,Ezekiel 38:5,mikra.prophets,8,random
+P0068,mikra,mikra:6c5e339429d0:2012:0,I Samuel 25:21,mikra.prophets,22,random
+P0069,mikra,mikra:808fb05efa11:1067:0,Ezekiel 16:58,mikra.prophets,9,random
+P0070,mikra,mikra:391395c39072:1589:0,Proverbs 19:5,mikra.writings,9,random
+P0071,mikra,mikra:297dae2e8e7f:1436:0,Leviticus 16:23,mikra.torah,17,random
+P0072,mikra,mikra:cc36da48baef:416:0,Zechariah 10:1,mikra.prophets,16,random
+P0073,mikra,mikra:31205b6e1741:4436:0,Psalms 89:32,mikra.writings,7,random
+P0074,mikra,mikra:5613689d119c:1124:0,Jeremiah 15:6,mikra.prophets,15,random
+P0075,mikra,mikra:31205b6e1741:2726:0,Psalms 60:1,mikra.writings,8,random
+P0076,mikra,mikra:31205b6e1741:1421:0,Psalms 34:10,mikra.writings,9,random
+P0077,mikra,mikra:275a501747bc:1091:0,Job 15:30,mikra.writings,11,random
+P0078,mikra,mikra:b2735d6b0494:1874:0,II Kings 22:13,mikra.prophets,37,random
+P0079,mikra,mikra:391395c39072:1058:0,Proverbs 13:6,mikra.writings,8,random
+P0080,mikra,mikra:5613689d119c:686:0,Jeremiah 8:22,mikra.prophets,15,random
+P0081,mikra,mikra:31205b6e1741:2762:0,Psalms 60:13,mikra.writings,8,random
+P0082,mikra,mikra:667cdde7c257:1523:0,Exodus 19:14,mikra.torah,12,random
+P0083,mikra,mikra:e2d0778f8442:533:0,Isaiah 9:2,mikra.prophets,14,random
+P0084,mikra,mikra:391395c39072:1880:0,Proverbs 22:12,mikra.writings,8,random
+P0085,mikra,mikra:391395c39072:1646:0,Proverbs 19:24,mikra.writings,10,random
+P0086,mikra,mikra:73e8ff519b6e:1634:0,Deuteronomy 20:13,mikra.torah,11,random
+P0087,mikra,mikra:e0c7c4ced77c:1577:0,II Chronicles 25:16,mikra.writings,27,random
+P0088,mikra,mikra:391395c39072:872:0,Proverbs 11:3,mikra.writings,7,random
+P0089,mikra,mikra:512e32df0840:3656:0,Numbers 34:7,mikra.torah,13,random
+P0090,mikra,mikra:391395c39072:1634:0,Proverbs 19:20,mikra.writings,8,random
+P0091,mikra,mikra:512e32df0840:149:0,Numbers 1:50,mikra.torah,27,random
+P0092,mikra,mikra:7ed0fd1ad789:65:0,Genesis 1:22,mikra.torah,14,random
+P0093,mikra,mikra:e0c7c4ced77c:1640:0,II Chronicles 26:9,mikra.writings,14,random
+P0094,mikra,mikra:fb023e07433b:1739:0,Judges 20:35,mikra.prophets,22,random
+P0095,mikra,mikra:841d5e9edeba:1712:0,II Samuel 21:13,mikra.prophets,14,random
+P0096,mikra,mikra:512e32df0840:86:0,Numbers 1:29,mikra.torah,9,random
+P0097,mikra,mikra:391395c39072:47:0,Proverbs 1:16,mikra.writings,8,random
+P0098,mikra,mikra:275a501747bc:1826:0,Job 26:11,mikra.writings,6,random
+P0099,mikra,mikra:7ed0fd1ad789:2000:0,Genesis 25:8,mikra.torah,11,random
+P0100,mikra,mikra:297dae2e8e7f:593:0,Leviticus 8:26,mikra.torah,22,random
+P0101,mikra,mikra:7ed0fd1ad789:3446:0,Genesis 38:29,mikra.torah,15,random
+P0102,mikra,mikra:e14b4f4977e8:347:0,Ezra 4:22,mikra.writings,12,random
+P0103,mikra,mikra:78b08b62a18c:269:0,Amos 6:4,mikra.prophets,14,random
+P0104,mikra,mikra:fb023e07433b:284:0,Judges 4:5,mikra.prophets,18,random
+P0105,mikra,mikra:e2d0778f8442:446:0,Isaiah 7:21,mikra.prophets,10,random
+P0106,mikra,mikra:7ed0fd1ad789:182:0,Genesis 3:5,mikra.torah,15,random
+P0107,mikra,mikra:667cdde7c257:2045:0,Exodus 25:22,mikra.torah,23,random
+P0108,mikra,mikra:5613689d119c:2585:0,Jeremiah 34:7,mikra.prophets,23,random
+P0109,mikra,mikra:3466a6b28308:11:0,Ecclesiastes 1:4,mikra.writings,8,random
+P0110,mikra,mikra:73e8ff519b6e:815:0,Deuteronomy 9:10,mikra.torah,23,random
+P0111,mikra,mikra:31205b6e1741:6464:0,Psalms 119:132,mikra.writings,7,random
+P0112,mikra,mikra:e2d0778f8442:1607:0,Isaiah 28:26,mikra.prophets,5,random
+P0113,mikra,mikra:fb023e07433b:1721:0,Judges 20:29,mikra.prophets,7,random
+P0114,mikra,mikra:31205b6e1741:3398:0,Psalms 73:1,mikra.writings,9,random
+P0115,mikra,mikra:e2d0778f8442:3137:0,Isaiah 52:4,mikra.prophets,15,random
+P0116,mikra,mikra:e0c7c4ced77c:956:0,II Chronicles 16:4,mikra.writings,29,random
+P0117,mikra,mikra:391395c39072:398:0,Proverbs 5:16,mikra.writings,7,random
+P0118,mikra,mikra:841d5e9edeba:260:0,II Samuel 3:28,mikra.prophets,17,random
+P0119,mikra,mikra:6c5e339429d0:560:0,I Samuel 9:8,mikra.prophets,20,random
+P0120,mikra,mikra:31205b6e1741:6737:0,Psalms 126:6,mikra.writings,12,random
+P0121,mikra,mikra:086b0cb748c1:146:0,Esther 3:4,mikra.writings,21,targeted:ketiv_qere
+P0122,mikra,mikra:31205b6e1741:7358:0,Psalms 145:6,mikra.writings,6,targeted:ketiv_qere
+P0123,mikra,mikra:391395c39072:467:0,Proverbs 6:16,mikra.writings,8,targeted:ketiv_qere
+P0124,mikra,mikra:b2735d6b0494:1994:0,II Kings 23:33,mikra.prophets,18,targeted:ketiv_qere
+P0125,mikra,mikra:808fb05efa11:1676:0,Ezekiel 23:16,mikra.prophets,9,targeted:ketiv_qere
+P0126,mikra,mikra:31205b6e1741:2963:0,Psalms 66:7,mikra.writings,12,targeted:ketiv_qere
+P0127,mikra,mikra:e0c7c4ced77c:2018:0,II Chronicles 31:13,mikra.writings,23,targeted:ketiv_qere
+P0128,mikra,mikra:391395c39072:266:0,Proverbs 3:34,mikra.writings,8,targeted:ketiv_qere
+P0129,mikra,mikra:391395c39072:209:0,Proverbs 3:15,mikra.writings,9,targeted:ketiv_qere
+P0130,mikra,mikra:5613689d119c:1301:0,Jeremiah 17:23,mikra.prophets,15,targeted:ketiv_qere
+P0131,mikra,mikra:bcb4a51e626f:284:0,Daniel 3:25,mikra.writings,22,targeted:ketiv_qere
+P0132,mikra,mikra:31205b6e1741:4646:0,Psalms 92:16,mikra.writings,9,targeted:ketiv_qere
+P0133,mikra,mikra:5613689d119c:2297:0,Jeremiah 31:21,mikra.prophets,19,targeted:ketiv_qere
+P0134,mikra,mikra:312ba94f5259:71:0,Lamentations 2:2,mikra.writings,19,targeted:ketiv_qere
+P0135,mikra,mikra:391395c39072:1262:0,Proverbs 15:14,mikra.writings,9,targeted:ketiv_qere
+P0136,mikra,mikra:5613689d119c:2993:0,Jeremiah 40:3,mikra.prophets,16,targeted:ketiv_qere
+P0137,mikra,mikra:fb023e07433b:1382:0,Judges 16:21,mikra.prophets,15,targeted:ketiv_qere
+P0138,mikra,mikra:e0c7c4ced77c:1676:0,II Chronicles 26:21,mikra.writings,25,targeted:ketiv_qere
+P0139,mikra,mikra:31205b6e1741:383:0,Psalms 11:1,mikra.writings,11,targeted:ketiv_qere
+P0140,mikra,mikra:5613689d119c:584:0,Jeremiah 7:22,mikra.prophets,17,targeted:ketiv_qere
+P0141,mikra,mikra:841d5e9edeba:569:0,II Samuel 8:3,mikra.prophets,14,targeted:qere_or_ketiv_only
+P0142,mikra,mikra:b2735d6b0494:395:0,II Kings 5:18,mikra.prophets,27,targeted:qere_or_ketiv_only
+P0143,mikra,mikra:b2735d6b0494:1676:0,II Kings 19:31,mikra.prophets,13,targeted:qere_or_ketiv_only
+P0144,mikra,mikra:5613689d119c:2348:0,Jeremiah 31:38,mikra.prophets,13,targeted:qere_or_ketiv_only
+P0145,mikra,mikra:cd476c1e4298:185:0,Ruth 3:17,mikra.writings,15,targeted:qere_or_ketiv_only
+P0146,mikra,mikra:841d5e9edeba:983:0,II Samuel 13:33,mikra.prophets,18,targeted:qere_or_ketiv_only
+P0147,mikra,mikra:bcb4a51e626f:110:0,Daniel 2:16,mikra.writings,13,targeted:aramaic
+P0148,mikra,mikra:bcb4a51e626f:518:0,Daniel 6:6,mikra.writings,17,targeted:aramaic
+P0149,mikra,mikra:bcb4a51e626f:530:0,Daniel 6:10,mikra.writings,9,targeted:aramaic
+P0150,mikra,mikra:bcb4a51e626f:92:0,Daniel 2:10,mikra.writings,31,targeted:aramaic
+P0151,mikra,mikra:bcb4a51e626f:308:0,Daniel 3:33,mikra.writings,14,targeted:aramaic
+P0152,mikra,mikra:bcb4a51e626f:383:0,Daniel 4:25,mikra.writings,6,targeted:aramaic
+P0153,mikra,mikra:e14b4f4977e8:524:0,Ezra 7:18,mikra.writings,14,targeted:aramaic
+P0154,mikra,mikra:e14b4f4977e8:371:0,Ezra 5:6,mikra.writings,19,targeted:aramaic
+P0155,mikra,mikra:e14b4f4977e8:530:0,Ezra 7:20,mikra.writings,14,targeted:aramaic
+P0156,mikra,mikra:bcb4a51e626f:140:0,Daniel 2:26,mikra.writings,15,targeted:aramaic
+P0157,mikra,mikra:bcb4a51e626f:74:0,Daniel 2:4,mikra.writings,13,targeted:aramaic
+P0158,mikra,mikra:bcb4a51e626f:338:0,Daniel 4:10,mikra.writings,13,targeted:aramaic
+P0159,mikra,mikra:bcb4a51e626f:182:0,Daniel 2:40,mikra.writings,20,targeted:aramaic
+P0160,mikra,mikra:bcb4a51e626f:626:0,Daniel 7:13,mikra.writings,19,targeted:aramaic
+P0161,mikra,mikra:275a501747bc:1448:0,Job 20:26,mikra.writings,12,targeted:poetry
+P0162,mikra,mikra:31205b6e1741:3344:0,Psalms 72:3,mikra.writings,7,targeted:poetry
+P0163,mikra,mikra:31205b6e1741:2822:0,Psalms 62:10,mikra.writings,13,targeted:poetry
+P0164,mikra,mikra:31205b6e1741:1793:0,Psalms 39:7,mikra.writings,13,targeted:poetry
+P0165,mikra,mikra:31205b6e1741:3293:0,Psalms 71:10,mikra.writings,9,targeted:poetry
+P0166,mikra,mikra:31205b6e1741:611:0,Psalms 18:17,mikra.writings,7,targeted:poetry
+P0167,mikra,mikra:391395c39072:479:0,Proverbs 6:20,mikra.writings,9,targeted:poetry
+P0168,mikra,mikra:275a501747bc:1763:0,Job 24:21,mikra.writings,8,targeted:poetry
+P0169,mikra,mikra:391395c39072:2207:0,Proverbs 25:23,mikra.writings,9,targeted:poetry
+P0170,mikra,mikra:31205b6e1741:890:0,Psalms 22:20,mikra.writings,8,targeted:poetry
+P0171,mikra,mikra:31205b6e1741:3695:0,Psalms 78:4,mikra.writings,13,targeted:poetry
+P0172,mikra,mikra:31205b6e1741:2966:0,Psalms 66:8,mikra.writings,7,targeted:poetry
+P0173,mikra,mikra:31205b6e1741:2282:0,Psalms 50:4,mikra.writings,9,targeted:poetry
+P0174,mikra,mikra:31205b6e1741:3800:0,Psalms 78:39,mikra.writings,9,targeted:poetry
+P0175,mikra,mikra:391395c39072:1793:0,Proverbs 21:14,mikra.writings,9,targeted:poetry
+P0176,mikra,mikra:020d3483e6d1:236:0,I Chronicles 2:25,mikra.writings,12,targeted:late_biblical
+P0177,mikra,mikra:e14b4f4977e8:281:0,Ezra 3:13,mikra.writings,19,targeted:late_biblical
+P0178,mikra,mikra:3466a6b28308:326:0,Ecclesiastes 6:7,mikra.writings,9,targeted:late_biblical
+P0179,mikra,mikra:020d3483e6d1:2318:0,I Chronicles 24:9,mikra.writings,5,targeted:late_biblical
+P0180,mikra,mikra:020d3483e6d1:1529:0,I Chronicles 13:1,mikra.writings,9,targeted:late_biblical
+P0181,mikra,mikra:1d16122e8633:443:0,Nehemiah 7:24,mikra.writings,6,targeted:late_biblical
+P0182,mikra,mikra:086b0cb748c1:401:0,Esther 9:2,mikra.writings,22,targeted:late_biblical
+P0183,mikra,mikra:020d3483e6d1:2780:0,I Chronicles 29:14,mikra.writings,17,targeted:late_biblical
+P0184,mikra,mikra:020d3483e6d1:1205:0,I Chronicles 9:39,mikra.writings,20,targeted:late_biblical
+P0185,mikra,mikra:e0c7c4ced77c:2408:0,II Chronicles 36:4,mikra.writings,21,targeted:late_biblical
+P0186,mikra,mikra:086b0cb748c1:371:0,Esther 8:9,mikra.writings,44,targeted:longest
+P0187,mikra,mikra:086b0cb748c1:212:0,Esther 4:11,mikra.writings,43,targeted:longest
+P0188,mikra,mikra:5613689d119c:1502:0,Jeremiah 21:7,mikra.prophets,43,targeted:longest
+P0189,mikra,mikra:b2735d6b0494:1334:0,II Kings 16:15,mikra.prophets,43,targeted:longest
+P0190,mikra,mikra:b2735d6b0494:17:0,II Kings 1:6,mikra.prophets,42,targeted:longest
+P0191,mikra,mikra:086b0cb748c1:170:0,Esther 3:12,mikra.writings,41,targeted:longest
+P0192,mikra,mikra:5613689d119c:2858:0,Jeremiah 38:4,mikra.prophets,41,targeted:longest
+P0193,mikra,mikra:bcb4a51e626f:254:0,Daniel 3:15,mikra.writings,41,targeted:longest
+P0194,mikra,mikra:bcb4a51e626f:479:0,Daniel 5:23,mikra.writings,41,targeted:longest
+P0195,mikra,mikra:bcb4a51e626f:539:0,Daniel 6:13,mikra.writings,41,targeted:longest
+P0196,mikra,mikra:312ba94f5259:92:0,Lamentations 2:9,mikra.writings,18,targeted:parasha_marker
+P0197,mikra,mikra:5613689d119c:1463:0,Jeremiah 20:12,mikra.prophets,16,targeted:parasha_marker
+P0198,mikra,mikra:e2d0778f8442:1049:0,Isaiah 18:7,mikra.prophets,30,targeted:parasha_marker
+P0199,mikra,mikra:841d5e9edeba:1769:0,II Samuel 22:10,mikra.prophets,7,targeted:parasha_marker
+P0200,mikra,mikra:297dae2e8e7f:1469:0,Leviticus 16:34,mikra.torah,20,targeted:parasha_marker
+P0201,hazal,hazal:ae6af3ad7691:28055:1,Etz Yosef on Bereishit Rabbah ¶28055.2,hazal.commentary,5,random
+P0202,hazal,hazal:00dd6feb311f:1172:0,Sifrei Devarim ¶1172.1,hazal.halakhic_midrash,10,random
+P0203,hazal,hazal:b3c83f163407:3068:0,Sifra ¶3068.1,hazal.halakhic_midrash,8,random
+P0204,hazal,hazal:ee497a5222e0:1268:1,Perush Maharzu on Devarim Rabbah ¶1268.2,hazal.commentary,190,random
+P0205,hazal,hazal:1c69312810e2:6008:1,Etz Yosef on Bamidbar Rabbah ¶6008.2,hazal.commentary,15,random
+P0206,hazal,hazal:e840b7d327c3:12341:4,Etz Yosef on Shemot Rabbah ¶12341.5,hazal.commentary,9,random
+P0207,hazal,hazal:2915988591f0:19655:1,Matnot Kehunah on Bereshit Rabbah ¶19655.2,hazal.commentary,8,random
+P0208,hazal,hazal:b3c83f163407:7625:6,Sifra ¶7625.7,hazal.halakhic_midrash,12,random
+P0209,hazal,hazal:6ce5f8ea5f56:1280:1,Matnot Kehunah on Vayikra Rabbah ¶1280.2,hazal.commentary,2,random
+P0210,hazal,hazal:86a1bb8af2d5:1364:9,Yalkut Shimoni on Torah ¶1364.10,hazal.late_anthology,14,random
+P0211,hazal,hazal:b10dc6034c10:1196:5,Bamidbar Rabbah ¶1196.6,hazal.aggadic_midrash,32,random
+P0212,hazal,hazal:00dd6feb311f:461:2,Sifrei Devarim ¶461.3,hazal.halakhic_midrash,7,random
+P0213,hazal,hazal:2915988591f0:7181:0,Matnot Kehunah on Bereshit Rabbah ¶7181.1,hazal.commentary,3,random
+P0214,hazal,hazal:db05c77af747:68:4,Yefeh Anaf on Eichah Rabbah ¶68.5,hazal.commentary,10,random
+P0215,hazal,hazal:7ca68fb0eb37:1682:1,Yefeh To'ar on Bereshit Rabbah ¶1682.2,hazal.commentary,18,random
+P0216,hazal,hazal:b3c83f163407:2387:1,Sifra ¶2387.2,hazal.halakhic_midrash,25,random
+P0217,hazal,hazal:ae6af3ad7691:28118:3,Etz Yosef on Bereishit Rabbah ¶28118.4,hazal.commentary,19,random
+P0218,hazal,hazal:ae6af3ad7691:8837:0,Etz Yosef on Bereishit Rabbah ¶8837,hazal.commentary,6,random
+P0219,hazal,hazal:999042da29f7:5948:1,Etz Yosef on Eichah Rabbah ¶5948.2,hazal.commentary,3,random
+P0220,hazal,hazal:039c0267c358:2330:0,Etz Yosef on Devarim Rabbah ¶2330.1,hazal.commentary,9,random
+P0221,hazal,hazal:86a1bb8af2d5:13658:0,Yalkut Shimoni on Torah ¶13658.1,hazal.late_anthology,3,random
+P0222,hazal,hazal:abc57d509692:1610:1,Perush Maharzu on Bereshit Rabbah ¶1610.2,hazal.commentary,6,random
+P0223,hazal,hazal:61ed2db7c5a2:3311:3,Etz Yosef on Esther Rabbah ¶3311.4,hazal.commentary,4,random
+P0224,hazal,hazal:8b6b71932b8f:182:0,Midrash Tanchuma ¶182.1,hazal.aggadic_midrash,6,random
+P0225,hazal,hazal:ae6af3ad7691:26666:3,Etz Yosef on Bereishit Rabbah ¶26666.4,hazal.commentary,7,random
+P0226,hazal,hazal:c7d28e7de25f:137:20,Sifrei Bamidbar ¶137.21,hazal.halakhic_midrash,25,random
+P0227,hazal,hazal:00dd6feb311f:2078:1,Sifrei Devarim ¶2078.2,hazal.halakhic_midrash,2,random
+P0228,hazal,hazal:b3c83f163407:5918:2,Sifra ¶5918.3,hazal.halakhic_midrash,8,random
+P0229,hazal,hazal:d15472b5ccc9:1370:1,Yefeh To'ar on Shemot Rabbah ¶1370.2,hazal.commentary,5,random
+P0230,hazal,hazal:e59ee760ad0b:113:3,Mishnah Beitzah ¶113.4,hazal.mishnah,6,random
+P0231,hazal,hazal:f3297f51ff57:8066:0,Yalkut Shimoni on Nach ¶8066.1,hazal.late_anthology,3,random
+P0232,hazal,hazal:2915988591f0:4166:0,Matnot Kehunah on Bereshit Rabbah ¶4166.1,hazal.commentary,1,random
+P0233,hazal,hazal:00dd6feb311f:5384:0,Sifrei Devarim ¶5384.1,hazal.halakhic_midrash,2,random
+P0234,hazal,hazal:d15472b5ccc9:3821:1,Yefeh To'ar on Shemot Rabbah ¶3821.2,hazal.commentary,8,random
+P0235,hazal,hazal:86a1bb8af2d5:4706:26,Yalkut Shimoni on Torah ¶4706.27,hazal.late_anthology,19,random
+P0236,hazal,hazal:2f11a8636da3:6185:1,Perush Maharzu on Bamidbar Rabbah ¶6185.2,hazal.commentary,16,random
+P0237,hazal,hazal:e840b7d327c3:12512:1,Etz Yosef on Shemot Rabbah ¶12512.2,hazal.commentary,27,random
+P0238,hazal,hazal:ee497a5222e0:2054:0,Perush Maharzu on Devarim Rabbah ¶2054.1,hazal.commentary,3,random
+P0239,hazal,hazal:999042da29f7:3317:2,Etz Yosef on Eichah Rabbah ¶3317.3,hazal.commentary,5,random
+P0240,hazal,hazal:abc57d509692:1022:3,Perush Maharzu on Bereshit Rabbah ¶1022.4,hazal.commentary,2,random
+P0241,hazal,hazal:ae6af3ad7691:27206:0,Etz Yosef on Bereishit Rabbah ¶27206.1,hazal.commentary,5,random
+P0242,hazal,hazal:2297ec2ce170:3287:0,Matnot Kehunah on Shemot Rabbah ¶3287.1,hazal.commentary,2,random
+P0243,hazal,hazal:4875150bec03:1175:14,Midrash Tehillim ¶1175.15,hazal.aggadic_midrash,4,random
+P0244,hazal,hazal:8b6b71932b8f:6170:30,Midrash Tanchuma ¶6170.31,hazal.aggadic_midrash,14,random
+P0245,hazal,hazal:63af00df37c2:26:0,Mishnah Gittin ¶26.1,hazal.mishnah,12,random
+P0246,hazal,hazal:530940c3f7f3:2830:1,Etz Yosef on Shir HaShirim Rabbah ¶2830.2,hazal.commentary,9,random
+P0247,hazal,hazal:86a1bb8af2d5:6449:3,Yalkut Shimoni on Torah ¶6449.4,hazal.late_anthology,12,random
+P0248,hazal,hazal:1f5698e4f820:314:4,Vayikra Rabbah ¶314.5,hazal.aggadic_midrash,47,random
+P0249,hazal,hazal:f3297f51ff57:11267:4,Yalkut Shimoni on Nach ¶11267.5,hazal.late_anthology,16,random
+P0250,hazal,hazal:ae6af3ad7691:6422:0,Etz Yosef on Bereishit Rabbah ¶6422,hazal.commentary,12,random
+P0251,hazal,hazal:8b6b71932b8f:1268:0,Midrash Tanchuma ¶1268.1,hazal.aggadic_midrash,7,random
+P0252,hazal,hazal:4875150bec03:1445:12,Midrash Tehillim ¶1445.13,hazal.aggadic_midrash,8,random
+P0253,hazal,hazal:c7d28e7de25f:578:43,Sifrei Bamidbar ¶578.44,hazal.halakhic_midrash,10,random
+P0254,hazal,hazal:ae6af3ad7691:23432:0,Etz Yosef on Bereishit Rabbah ¶23432.1,hazal.commentary,16,random
+P0255,hazal,hazal:23c617eb1fe8:668:0,Mekhilta DeRabbi Shimon Bar Yochai ¶668.1,hazal.halakhic_midrash,273,random
+P0256,hazal,hazal:2915988591f0:2885:0,Matnot Kehunah on Bereshit Rabbah ¶2885.1,hazal.commentary,2,random
+P0257,hazal,hazal:c7d28e7de25f:290:1,Sifrei Bamidbar ¶290.2,hazal.halakhic_midrash,15,random
+P0258,hazal,hazal:86a1bb8af2d5:10799:16,Yalkut Shimoni on Torah ¶10799.17,hazal.late_anthology,12,random
+P0259,hazal,hazal:61ed2db7c5a2:3464:0,Etz Yosef on Esther Rabbah ¶3464.1,hazal.commentary,10,random
+P0260,hazal,hazal:c39835f0a45e:3896:1,Rashi on Bereshit Rabbah ¶3896.2,hazal.commentary,1,random
+P0261,hazal,hazal:8597e11d1c2a:2672:1,Bereishit Rabbah ¶2672.2,hazal.aggadic_midrash,16,random
+P0262,hazal,hazal:00dd6feb311f:1121:2,Sifrei Devarim ¶1121.3,hazal.halakhic_midrash,10,random
+P0263,hazal,hazal:abc57d509692:14630:7,Perush Maharzu on Bereshit Rabbah ¶14630.8,hazal.commentary,3,random
+P0264,hazal,hazal:553c57959d62:17:2,Mishnat DeRabbi Eliezer on Esther Rabbah ¶17.3,hazal.commentary,31,random
+P0265,hazal,hazal:ae6af3ad7691:4517:0,Etz Yosef on Bereishit Rabbah ¶4517.1,hazal.commentary,7,random
+P0266,hazal,hazal:4875150bec03:1043:33,Midrash Tehillim ¶1043.34,hazal.aggadic_midrash,17,random
+P0267,hazal,hazal:d15472b5ccc9:1388:0,Yefeh To'ar on Shemot Rabbah ¶1388.1,hazal.commentary,5,random
+P0268,hazal,hazal:3f653ca67f18:11183:1,Etz Yosef on Vayikra Rabbah ¶11183.2,hazal.commentary,3,random
+P0269,hazal,hazal:8b6b71932b8f:4274:2,Midrash Tanchuma ¶4274.3,hazal.aggadic_midrash,13,random
+P0270,hazal,hazal:b3c83f163407:5915:5,Sifra ¶5915.6,hazal.halakhic_midrash,18,random
+P0271,hazal,hazal:86a1bb8af2d5:8561:5,Yalkut Shimoni on Torah ¶8561.6,hazal.late_anthology,6,random
+P0272,hazal,hazal:00dd6feb311f:5417:2,Sifrei Devarim ¶5417.3,hazal.halakhic_midrash,8,random
+P0273,hazal,hazal:b3c83f163407:818:3,Sifra ¶818.4,hazal.halakhic_midrash,12,random
+P0274,hazal,hazal:4875150bec03:1124:4,Midrash Tehillim ¶1124.5,hazal.aggadic_midrash,16,random
+P0275,hazal,hazal:86a1bb8af2d5:5924:2,Yalkut Shimoni on Torah ¶5924.3,hazal.late_anthology,18,random
+P0276,hazal,hazal:f663d78a9c8f:101:1,Mishnah Parah ¶101.2,hazal.mishnah,5,random
+P0277,hazal,hazal:f3297f51ff57:227:2,Yalkut Shimoni on Nach ¶227.3,hazal.late_anthology,12,random
+P0278,hazal,hazal:9987dc2b90f0:815:6,Shemot Rabbah ¶815.7,hazal.aggadic_midrash,15,random
+P0279,hazal,hazal:c7d28e7de25f:173:5,Sifrei Bamidbar ¶173.6,hazal.halakhic_midrash,2,random
+P0280,hazal,hazal:4875150bec03:806:7,Midrash Tehillim ¶806.8,hazal.aggadic_midrash,20,random
+P0281,hazal,hazal:e11d68d59e65:11:5,Ruth Rabbah ¶11.6,hazal.aggadic_midrash,25,random
+P0282,hazal,hazal:c39835f0a45e:4388:0,Rashi on Bereshit Rabbah ¶4388.1,hazal.commentary,1,random
+P0283,hazal,hazal:4875150bec03:2090:13,Midrash Tehillim ¶2090.14,hazal.aggadic_midrash,24,random
+P0284,hazal,hazal:de65128b6f35:200:2,Mishnah Bava Batra ¶200.3,hazal.mishnah,21,random
+P0285,hazal,hazal:8597e11d1c2a:1715:0,Bereishit Rabbah ¶1715,hazal.aggadic_midrash,81,random
+P0286,hazal,hazal:7ca68fb0eb37:4883:1,Yefeh To'ar on Bereshit Rabbah ¶4883.2,hazal.commentary,9,random
+P0287,hazal,hazal:c7d28e7de25f:692:16,Sifrei Bamidbar ¶692.17,hazal.halakhic_midrash,14,random
+P0288,hazal,hazal:9987dc2b90f0:254:1,Shemot Rabbah ¶254.2,hazal.aggadic_midrash,59,random
+P0289,hazal,hazal:8b6b71932b8f:3989:8,Midrash Tanchuma ¶3989.9,hazal.aggadic_midrash,31,random
+P0290,hazal,hazal:b999c02c18a5:5507:0,Perush Maharzu on Shemot Rabbah ¶5507.1,hazal.commentary,4,random
+P0291,hazal,hazal:8597e11d1c2a:650:0,Bereishit Rabbah ¶650.1,hazal.aggadic_midrash,44,random
+P0292,hazal,hazal:abc57d509692:13805:0,Perush Maharzu on Bereshit Rabbah ¶13805.1,hazal.commentary,3,random
+P0293,hazal,hazal:f052a4f1f2db:185:2,Mishnah Menachot ¶185.3,hazal.mishnah,11,random
+P0294,hazal,hazal:ae6af3ad7691:25232:0,Etz Yosef on Bereishit Rabbah ¶25232.1,hazal.commentary,11,random
+P0295,hazal,hazal:abc57d509692:2822:3,Perush Maharzu on Bereshit Rabbah ¶2822.4,hazal.commentary,11,random
+P0296,hazal,hazal:86a1bb8af2d5:12509:4,Yalkut Shimoni on Torah ¶12509.5,hazal.late_anthology,124,random
+P0297,hazal,hazal:ae6af3ad7691:24689:1,Etz Yosef on Bereishit Rabbah ¶24689.2,hazal.commentary,20,random
+P0298,hazal,hazal:6ce5f8ea5f56:1367:0,Matnot Kehunah on Vayikra Rabbah ¶1367.1,hazal.commentary,3,random
+P0299,hazal,hazal:ae6af3ad7691:15161:0,Etz Yosef on Bereishit Rabbah ¶15161.1,hazal.commentary,11,random
+P0300,hazal,hazal:8961a1664e83:335:0,Perush Maharzu on Ruth Rabbah ¶335.1,hazal.commentary,3,random
+P0301,hazal,hazal:e11d68d59e65:260:0,Ruth Rabbah ¶260.1,hazal.aggadic_midrash,32,random
+P0302,hazal,hazal:86a1bb8af2d5:2648:2,Yalkut Shimoni on Torah ¶2648.3,hazal.late_anthology,40,random
+P0303,hazal,hazal:853ad3000a66:3683:0,Matnot Kehunah on Bamidbar Rabbah ¶3683.1,hazal.commentary,4,random
+P0304,hazal,hazal:ae6af3ad7691:24845:3,Etz Yosef on Bereishit Rabbah ¶24845.4,hazal.commentary,13,random
+P0305,hazal,hazal:ae6af3ad7691:22913:3,Etz Yosef on Bereishit Rabbah ¶22913.4,hazal.commentary,17,random
+P0306,hazal,hazal:f3297f51ff57:7838:4,Yalkut Shimoni on Nach ¶7838.5,hazal.late_anthology,4,random
+P0307,hazal,hazal:86a369555e5c:389:0,Devarim Rabbah ¶389.1,hazal.aggadic_midrash,8,random
+P0308,hazal,hazal:36eaa7500e64:17:8,Tosefta Temurah ¶17.9,hazal.tosefta,16,random
+P0309,hazal,hazal:8b6b71932b8f:5594:10,Midrash Tanchuma ¶5594.11,hazal.aggadic_midrash,10,random
+P0310,hazal,hazal:c39835f0a45e:7091:1,Rashi on Bereshit Rabbah ¶7091.2,hazal.commentary,15,random
+P0311,hazal,hazal:7e127ec18c2f:1487:0,Matnot Kehunah on Eichah Rabbah ¶1487.1,hazal.commentary,1,random
+P0312,hazal,hazal:2297ec2ce170:3548:0,Matnot Kehunah on Shemot Rabbah ¶3548.1,hazal.commentary,1,random
+P0313,hazal,hazal:fe1c39c20a4b:1268:0,Matnot Kehunah on Ruth Rabbah ¶1268,hazal.commentary,4,random
+P0314,hazal,hazal:9987dc2b90f0:1151:4,Shemot Rabbah ¶1151.5,hazal.aggadic_midrash,183,random
+P0315,hazal,hazal:d15472b5ccc9:1022:1,Yefeh To'ar on Shemot Rabbah ¶1022.2,hazal.commentary,23,random
+P0316,hazal,hazal:039c0267c358:722:0,Etz Yosef on Devarim Rabbah ¶722.1,hazal.commentary,19,random
+P0317,hazal,hazal:1f5698e4f820:779:3,Vayikra Rabbah ¶779.4,hazal.aggadic_midrash,16,random
+P0318,hazal,hazal:039c0267c358:2276:1,Etz Yosef on Devarim Rabbah ¶2276.2,hazal.commentary,13,random
+P0319,hazal,hazal:8961a1664e83:1190:1,Perush Maharzu on Ruth Rabbah ¶1190.2,hazal.commentary,29,random
+P0320,hazal,hazal:d15472b5ccc9:3347:5,Yefeh To'ar on Shemot Rabbah ¶3347.6,hazal.commentary,5,random
+P0321,hazal,hazal:5c0cba66dbf1:431:2,Mishnah Kelim ¶431.3,hazal.mishnah,5,targeted:vocalized_mishnah
+P0322,hazal,hazal:4246f34de616:302:0,Mishnah Negaim ¶302.1,hazal.mishnah,11,targeted:vocalized_mishnah
+P0323,hazal,hazal:a42855b70ca0:80:2,Mishnah Avodah Zarah ¶80.3,hazal.mishnah,5,targeted:vocalized_mishnah
+P0324,hazal,hazal:bebb93022474:50:2,Mishnah Challah ¶50.3,hazal.mishnah,2,targeted:vocalized_mishnah
+P0325,hazal,hazal:15c50b69bb9d:146:2,Mishnah Arakhin ¶146.3,hazal.mishnah,23,targeted:vocalized_mishnah
+P0326,hazal,hazal:7e60f82552fe:44:0,Mishnah Moed Katan ¶44.1,hazal.mishnah,4,targeted:vocalized_mishnah
+P0327,hazal,hazal:a42855b70ca0:77:2,Mishnah Avodah Zarah ¶77.3,hazal.mishnah,3,targeted:vocalized_mishnah
+P0328,hazal,hazal:089c1ea9c3d4:218:3,Mishnah Terumot ¶218.4,hazal.mishnah,3,targeted:vocalized_mishnah
+P0329,hazal,hazal:9e2e1e43b1b7:233:2,Mishnah Tahorot ¶233.3,hazal.mishnah,8,targeted:vocalized_mishnah
+P0330,hazal,hazal:c303bdeff9c3:167:0,Mishnah Sotah ¶167.1,hazal.mishnah,3,targeted:vocalized_mishnah
+P0331,hazal,hazal:1e808d24b1aa:80:1,Mishnah Nazir ¶80.2,hazal.mishnah,18,targeted:vocalized_mishnah
+P0332,hazal,hazal:5182f20815e1:134:1,Mishnah Zevachim ¶134.2,hazal.mishnah,9,targeted:vocalized_mishnah
+P0333,hazal,hazal:e0804a5769e9:71:6,Mishnah Eduyot ¶71.7,hazal.mishnah,13,targeted:vocalized_mishnah
+P0334,hazal,hazal:d9c792a79974:131:3,Mishnah Bekhorot ¶131.4,hazal.mishnah,6,targeted:vocalized_mishnah
+P0335,hazal,hazal:089c1ea9c3d4:221:2,Mishnah Terumot ¶221.3,hazal.mishnah,10,targeted:vocalized_mishnah
+P0336,hazal,hazal:f052a4f1f2db:269:9,Mishnah Menachot ¶269.10,hazal.mishnah,11,targeted:vocalized_mishnah
+P0337,hazal,hazal:f062d9ff0c5b:227:0,Mishnah Sheviit ¶227.1,hazal.mishnah,11,targeted:vocalized_mishnah
+P0338,hazal,hazal:089c1ea9c3d4:275:3,Mishnah Terumot ¶275.4,hazal.mishnah,6,targeted:vocalized_mishnah
+P0339,hazal,hazal:9f88fd939bed:203:3,Mishnah Oholot ¶203.4,hazal.mishnah,11,targeted:vocalized_mishnah
+P0340,hazal,hazal:de65128b6f35:233:1,Mishnah Bava Batra ¶233.2,hazal.mishnah,8,targeted:vocalized_mishnah
+P0341,hazal,hazal:f3297f51ff57:13151:1,Yalkut Shimoni on Nach ¶13151.2,hazal.late_anthology,136,targeted:aramaic_markers
+P0342,hazal,hazal:ae6af3ad7691:23303:0,Etz Yosef on Bereishit Rabbah ¶23303,hazal.commentary,18,targeted:aramaic_markers
+P0343,hazal,hazal:3b5b632c98f1:445:2,Etz Yosef on Kohelet Rabbah ¶445.3,hazal.commentary,16,targeted:aramaic_markers
+P0344,hazal,hazal:86a1bb8af2d5:5198:1,Yalkut Shimoni on Torah ¶5198.2,hazal.late_anthology,23,targeted:aramaic_markers
+P0345,hazal,hazal:29d48bfe4b1d:83:0,Kohelet Rabbah ¶83.1,hazal.aggadic_midrash,81,targeted:aramaic_markers
+P0346,hazal,hazal:86a1bb8af2d5:6095:20,Yalkut Shimoni on Torah ¶6095.21,hazal.late_anthology,22,targeted:aramaic_markers
+P0347,hazal,hazal:e840b7d327c3:2681:2,Etz Yosef on Shemot Rabbah ¶2681.3,hazal.commentary,10,targeted:aramaic_markers
+P0348,hazal,hazal:35a8dbff28ef:194:26,Eichah Rabbah ¶194.27,hazal.aggadic_midrash,42,targeted:aramaic_markers
+P0349,hazal,hazal:3a01e42721c5:653:1,Yefeh To'ar on Kohelet Rabbah ¶653.2,hazal.commentary,57,targeted:aramaic_markers
+P0350,hazal,hazal:86a1bb8af2d5:11321:3,Yalkut Shimoni on Torah ¶11321.4,hazal.late_anthology,10,targeted:aramaic_markers
+P0351,hazal,hazal:3b5b632c98f1:1716:1,Etz Yosef on Kohelet Rabbah ¶1716.2,hazal.commentary,5,targeted:aramaic_markers
+P0352,hazal,hazal:3b5b632c98f1:1438:4,Etz Yosef on Kohelet Rabbah ¶1438.5,hazal.commentary,14,targeted:aramaic_markers
+P0353,hazal,hazal:f3297f51ff57:3872:1,Yalkut Shimoni on Nach ¶3872.2,hazal.late_anthology,40,targeted:abbreviation
+P0354,hazal,hazal:ae6af3ad7691:19283:0,Etz Yosef on Bereishit Rabbah ¶19283,hazal.commentary,15,targeted:abbreviation
+P0355,hazal,hazal:ae6af3ad7691:21650:0,Etz Yosef on Bereishit Rabbah ¶21650.1,hazal.commentary,12,targeted:abbreviation
+P0356,hazal,hazal:f9067899376a:422:14,Pesikta D'Rav Kahanna ¶422.15,hazal.aggadic_midrash,13,targeted:abbreviation
+P0357,hazal,hazal:abc57d509692:896:7,Perush Maharzu on Bereshit Rabbah ¶896.8,hazal.commentary,8,targeted:abbreviation
+P0358,hazal,hazal:8b6b71932b8f:152:2,Midrash Tanchuma ¶152.3,hazal.aggadic_midrash,8,targeted:abbreviation
+P0359,hazal,hazal:999042da29f7:245:2,Etz Yosef on Eichah Rabbah ¶245.3,hazal.commentary,16,targeted:abbreviation
+P0360,hazal,hazal:2297ec2ce170:3164:0,Matnot Kehunah on Shemot Rabbah ¶3164,hazal.commentary,8,targeted:abbreviation
+P0361,hazal,hazal:b8704e789fae:119:24,Tanna Debei Eliyahu Rabbah ¶119.25,hazal.aggadic_midrash,220,targeted:abbreviation
+P0362,hazal,hazal:3f653ca67f18:10088:3,Etz Yosef on Vayikra Rabbah ¶10088.4,hazal.commentary,13,targeted:abbreviation
+P0363,hazal,hazal:7ca68fb0eb37:1106:2,Yefeh To'ar on Bereshit Rabbah ¶1106.3,hazal.commentary,26,targeted:abbreviation
+P0364,hazal,hazal:8b6b71932b8f:5618:12,Midrash Tanchuma ¶5618.13,hazal.aggadic_midrash,33,targeted:abbreviation
+P0365,hazal,hazal:b65c74d65d8a:140:4,Tosefta Menahot ¶140.5,hazal.tosefta,9,targeted:tosefta
+P0366,hazal,hazal:901397ead015:119:0,Tosefta Eiruvin ¶119,hazal.tosefta,36,targeted:tosefta
+P0367,hazal,hazal:a0db0eeb97ed:86:6,Tosefta Bekhorot ¶86.7,hazal.tosefta,36,targeted:tosefta
+P0368,hazal,hazal:8cc77453769d:14:0,Tosefta Terumot ¶14,hazal.tosefta,72,targeted:tosefta
+P0369,hazal,hazal:b65c74d65d8a:89:1,Tosefta Menahot ¶89.2,hazal.tosefta,3,targeted:tosefta
+P0370,hazal,hazal:9a5d808ed2c4:53:0,Tosefta Keritot ¶53.1,hazal.tosefta,35,targeted:tosefta
+P0371,hazal,hazal:09d0267c053a:200:0,Tosefta Ma'aser Sheni ¶200,hazal.tosefta,52,targeted:tosefta
+P0372,hazal,hazal:6af8ccb2c321:62:2,Tosefta Avodah Zarah ¶62.3,hazal.tosefta,31,targeted:tosefta
+P0373,hazal,hazal:00dd6feb311f:2990:0,Sifrei Devarim ¶2990,hazal.halakhic_midrash,11,targeted:halakhic_midrash
+P0374,hazal,hazal:b3c83f163407:6782:3,Sifra ¶6782.4,hazal.halakhic_midrash,6,targeted:halakhic_midrash
+P0375,hazal,hazal:23c617eb1fe8:926:1,Mekhilta DeRabbi Shimon Bar Yochai ¶926.2,hazal.halakhic_midrash,10,targeted:halakhic_midrash
+P0376,hazal,hazal:0ec6dbfa3e47:260:2,Mekhilta d'Rabbi Yishmael ¶260.3,hazal.halakhic_midrash,5,targeted:halakhic_midrash
+P0377,hazal,hazal:0ec6dbfa3e47:236:2,Mekhilta d'Rabbi Yishmael ¶236.3,hazal.halakhic_midrash,7,targeted:halakhic_midrash
+P0378,hazal,hazal:b3c83f163407:6404:0,Sifra ¶6404.1,hazal.halakhic_midrash,8,targeted:halakhic_midrash
+P0379,hazal,hazal:b3c83f163407:5117:0,Sifra ¶5117.1,hazal.halakhic_midrash,7,targeted:halakhic_midrash
+P0380,hazal,hazal:b3c83f163407:6374:0,Sifra ¶6374.1,hazal.halakhic_midrash,8,targeted:halakhic_midrash
+P0381,hazal,hazal:86a1bb8af2d5:4799:3,Yalkut Shimoni on Torah ¶4799.4,hazal.late_anthology,15,targeted:late_anthology
+P0382,hazal,hazal:86a1bb8af2d5:9833:0,Yalkut Shimoni on Torah ¶9833.1,hazal.late_anthology,20,targeted:late_anthology
+P0383,hazal,hazal:86a1bb8af2d5:6455:3,Yalkut Shimoni on Torah ¶6455.4,hazal.late_anthology,29,targeted:late_anthology
+P0384,hazal,hazal:86a1bb8af2d5:6689:4,Yalkut Shimoni on Torah ¶6689.5,hazal.late_anthology,10,targeted:late_anthology
+P0385,hazal,hazal:86a1bb8af2d5:8021:35,Yalkut Shimoni on Torah ¶8021.36,hazal.late_anthology,41,targeted:late_anthology
+P0386,hazal,hazal:2297ec2ce170:2000:0,Matnot Kehunah on Shemot Rabbah ¶2000.1,hazal.commentary,1,targeted:commentary
+P0387,hazal,hazal:e840b7d327c3:15191:1,Etz Yosef on Shemot Rabbah ¶15191.2,hazal.commentary,6,targeted:commentary
+P0388,hazal,hazal:7ca68fb0eb37:1811:0,Yefeh To'ar on Bereshit Rabbah ¶1811.1,hazal.commentary,5,targeted:commentary
+P0389,hazal,hazal:2f11a8636da3:8360:0,Perush Maharzu on Bamidbar Rabbah ¶8360.1,hazal.commentary,2,targeted:commentary
+P0390,hazal,hazal:7e127ec18c2f:4157:0,Matnot Kehunah on Eichah Rabbah ¶4157.1,hazal.commentary,2,targeted:commentary
+P0391,hazal,hazal:e8e9a9226d0e:62:9,Pesikta Rabbati ¶62.10,hazal.aggadic_midrash,1955,targeted:longest
+P0392,hazal,hazal:e8e9a9226d0e:131:1,Pesikta Rabbati ¶131.2,hazal.aggadic_midrash,1881,targeted:longest
+P0393,hazal,hazal:e8e9a9226d0e:14:2,Pesikta Rabbati ¶14.3,hazal.aggadic_midrash,1806,targeted:longest
+P0394,hazal,hazal:e8e9a9226d0e:41:8,Pesikta Rabbati ¶41.9,hazal.aggadic_midrash,1772,targeted:longest
+P0395,hazal,hazal:e8e9a9226d0e:29:4,Pesikta Rabbati ¶29.5,hazal.aggadic_midrash,1681,targeted:longest
+P0396,hazal,hazal:e8e9a9226d0e:125:7,Pesikta Rabbati ¶125.8,hazal.aggadic_midrash,1555,targeted:longest
+P0397,hazal,hazal:e8e9a9226d0e:44:13,Pesikta Rabbati ¶44.14,hazal.aggadic_midrash,1427,targeted:longest
+P0398,hazal,hazal:e8e9a9226d0e:2:1,Pesikta Rabbati ¶2.2,hazal.aggadic_midrash,1358,targeted:longest
+P0399,hazal,hazal:86a1bb8af2d5:13757:2,Yalkut Shimoni on Torah ¶13757.3,hazal.late_anthology,1332,targeted:longest
+P0400,hazal,hazal:e8e9a9226d0e:140:0,Pesikta Rabbati ¶140.1,hazal.aggadic_midrash,1281,targeted:longest
+P0401,medieval,medieval:973319dae199:3:0,Mishneh Torah/TAHARA/mtmai-mshkb/prk_ch ¶3,medieval.mishneh_torah,25,random
+P0402,medieval,medieval:ca0decca0dcc:125:4,Ahavat David ¶125.5,medieval.musar_unverified,8,random
+P0403,medieval,medieval:f8c879acf368:6:0,Mishneh Torah/HAFLAA/ndrim/prk_z ¶6,medieval.mishneh_torah,29,random
+P0404,medieval,medieval:6777ece82a8f:6431:0,Marpeh la'Nefesh ¶6431,medieval.later_commentary,19,random
+P0405,medieval,medieval:1fdbbf3a9827:932:8,Akeidat Yitzchak ¶932.9,medieval.thought,8,random
+P0406,medieval,medieval:0d9be60f3a2e:3701:0,Tov haLevanon ¶3701,medieval.later_commentary,13,random
+P0407,medieval,medieval:65036f6ee2a7:4271:0,Duties of the Heart - Duties of the Heart ¶4271,medieval.thought_translated,32,random
+P0408,medieval,medieval:1fdbbf3a9827:887:1,Akeidat Yitzchak ¶887.2,medieval.thought,9,random
+P0409,medieval,medieval:9660365bd9e8:5:0,Mishneh Torah/AVODA/psowli-hmowkdshin/prk_ib ¶5,medieval.mishneh_torah,19,random
+P0410,medieval,medieval:65036f6ee2a7:4526:0,Duties of the Heart - Duties of the Heart ¶4526,medieval.thought_translated,82,random
+P0411,medieval,medieval:1fdbbf3a9827:1517:38,Akeidat Yitzchak ¶1517.39,medieval.thought,62,random
+P0412,medieval,medieval:e02fa954f996:2525:1,Orchot Tzadikim ¶2525.2,medieval.musar,9,random
+P0413,medieval,medieval:41f1aa7bdf15:1415:3,Guide for the Perplexed ¶1415.4,medieval.thought_translated,32,random
+P0414,medieval,medieval:e02fa954f996:1943:2,Orchot Tzadikim ¶1943.3,medieval.musar,8,random
+P0415,medieval,medieval:ef82ae2bf585:200:7,Sefer HaYashar ¶200.8,medieval.musar,4,random
+P0416,medieval,medieval:1fdbbf3a9827:5174:0,Akeidat Yitzchak ¶5174.1,medieval.thought,51,random
+P0417,medieval,medieval:1fdbbf3a9827:3461:53,Akeidat Yitzchak ¶3461.54,medieval.thought,22,random
+P0418,medieval,medieval:10f828adb33b:17:82,Sefer HaYirah ¶17.83,medieval.musar,5,random
+P0419,medieval,medieval:2f5d28297a6f:9:0,Mishneh Torah/ZMANIM/taniowt/prk_h ¶9,medieval.mishneh_torah,52,random
+P0420,medieval,medieval:1fdbbf3a9827:2957:1,Akeidat Yitzchak ¶2957.2,medieval.thought,18,random
+P0421,medieval,medieval:1fdbbf3a9827:2120:75,Akeidat Yitzchak ¶2120.76,medieval.thought,16,random
+P0422,medieval,medieval:e02fa954f996:1424:0,Orchot Tzadikim ¶1424.1,medieval.musar,13,random
+P0423,medieval,medieval:c1229cdbd000:2123:2,Sefer HaIkkarim ¶2123.3,medieval.thought,62,random
+P0424,medieval,medieval:df394757e86c:80:9,Shaarei Teshuvah ¶80.10,medieval.musar,8,random
+P0425,medieval,medieval:ca0decca0dcc:2396:2,Ahavat David ¶2396.3,medieval.musar_unverified,9,random
+P0426,medieval,medieval:0d9be60f3a2e:5054:2,Tov haLevanon ¶5054.3,medieval.later_commentary,12,random
+P0427,medieval,medieval:1fdbbf3a9827:5027:3,Akeidat Yitzchak ¶5027.4,medieval.thought,29,random
+P0428,medieval,medieval:1fdbbf3a9827:2426:13,Akeidat Yitzchak ¶2426.14,medieval.thought,33,random
+P0429,medieval,medieval:1fdbbf3a9827:2609:50,Akeidat Yitzchak ¶2609.51,medieval.thought,12,random
+P0430,medieval,medieval:1fdbbf3a9827:3095:92,Akeidat Yitzchak ¶3095.93,medieval.thought,48,random
+P0431,medieval,medieval:e02fa954f996:2234:12,Orchot Tzadikim ¶2234.13,medieval.musar,36,random
+P0432,medieval,medieval:e02fa954f996:440:4,Orchot Tzadikim ¶440.5,medieval.musar,22,random
+P0433,medieval,medieval:c8e9417d0ee9:551:1,Derashot HaRan ¶551.2,medieval.thought,29,random
+P0434,medieval,medieval:65036f6ee2a7:956:0,Duties of the Heart - Duties of the Heart ¶956,medieval.thought_translated,23,random
+P0435,medieval,medieval:0d9be60f3a2e:11351:0,Tov haLevanon ¶11351,medieval.later_commentary,8,random
+P0436,medieval,medieval:1fdbbf3a9827:1235:38,Akeidat Yitzchak ¶1235.39,medieval.thought,42,random
+P0437,medieval,medieval:0d9be60f3a2e:6494:0,Tov haLevanon ¶6494,medieval.later_commentary,39,random
+P0438,medieval,medieval:1fdbbf3a9827:1325:19,Akeidat Yitzchak ¶1325.20,medieval.thought,21,random
+P0439,medieval,medieval:d3e16f7504d2:2:0,Mishneh Torah/HAFLAA/nzirowt/prk_z ¶2,medieval.mishneh_torah,43,random
+P0440,medieval,medieval:ecef1a6ba9a7:3:0,Mishneh Torah/HAFLAA/ndrim/prk_t ¶3,medieval.mishneh_torah,36,random
+P0441,medieval,medieval:1fdbbf3a9827:1325:17,Akeidat Yitzchak ¶1325.18,medieval.thought,14,random
+P0442,medieval,medieval:65036f6ee2a7:4199:0,Duties of the Heart - Duties of the Heart ¶4199,medieval.thought_translated,45,random
+P0443,medieval,medieval:f0478882fe18:209:17,Kad HaKemach ¶209.18,medieval.musar,15,random
+P0444,medieval,medieval:078977a2f030:353:25,HaEmunot veHaDeot ¶353.26,medieval.thought_translated,52,random
+P0445,medieval,medieval:41f1aa7bdf15:2873:8,Guide for the Perplexed ¶2873.9,medieval.thought_translated,16,random
+P0446,medieval,medieval:f0478882fe18:548:3,Kad HaKemach ¶548.4,medieval.musar,49,random
+P0447,medieval,medieval:db4f52f4fa01:8624:0,Pat Lechem ¶8624,medieval.later_commentary,4,random
+P0448,medieval,medieval:a61b9512d16e:4:0,Mishneh Torah/TAHARA/shar-abowt-htowmah/prk_b ¶4,medieval.mishneh_torah,19,random
+P0449,medieval,medieval:485e007b4f1d:752:12,The Wars of the Lord ¶752.13,medieval.thought,11,random
+P0450,medieval,medieval:ea656733385a:7:0,Mishneh Torah/NZIKIN/gnibh/prk_t ¶7,medieval.mishneh_torah,67,random
+P0451,medieval,medieval:485e007b4f1d:590:0,The Wars of the Lord ¶590.1,medieval.thought,76,random
+P0452,medieval,medieval:df394757e86c:404:9,Shaarei Teshuvah ¶404.10,medieval.musar,4,random
+P0453,medieval,medieval:41f1aa7bdf15:959:0,Guide for the Perplexed ¶959,medieval.thought_translated,75,random
+P0454,medieval,medieval:478ea7af5719:644:1,Mivchar HaPeninim ¶644.2,medieval.musar_translated,2,random
+P0455,medieval,medieval:f0cb8ee5de09:11:0,Mishneh Torah/ZRAIM/shmith-owiowbl/prk_h ¶11,medieval.mishneh_torah,105,random
+P0456,medieval,medieval:ceb4c5145b62:2519:1,Sichot Avodat Levi ¶2519.2,medieval.post_medieval,7,random
+P0457,medieval,medieval:ca0decca0dcc:2546:0,Ahavat David ¶2546,medieval.musar_unverified,51,random
+P0458,medieval,medieval:41f1aa7bdf15:2234:10,Guide for the Perplexed ¶2234.11,medieval.thought_translated,1,random
+P0459,medieval,medieval:1fdbbf3a9827:2102:19,Akeidat Yitzchak ¶2102.20,medieval.thought,45,random
+P0460,medieval,medieval:db4f52f4fa01:2105:0,Pat Lechem ¶2105,medieval.later_commentary,84,random
+P0461,medieval,medieval:c406b3f347ea:146:0,Eight Chapters ¶146,medieval.thought_translated,27,random
+P0462,medieval,medieval:41f1aa7bdf15:968:1,Guide for the Perplexed ¶968.2,medieval.thought_translated,85,random
+P0463,medieval,medieval:ca0decca0dcc:401:0,Ahavat David ¶401.1,medieval.musar_unverified,70,random
+P0464,medieval,medieval:d276e278b45c:191:0,Shekel HaKodesh ¶191,medieval.musar_unverified,11,random
+P0465,medieval,medieval:c1229cdbd000:4514:0,Sefer HaIkkarim ¶4514,medieval.thought,67,random
+P0466,medieval,medieval:ceb4c5145b62:2282:1,Sichot Avodat Levi ¶2282.2,medieval.post_medieval,18,random
+P0467,medieval,medieval:6777ece82a8f:6983:0,Marpeh la'Nefesh ¶6983.1,medieval.later_commentary,6,random
+P0468,medieval,medieval:db4f52f4fa01:12389:0,Pat Lechem ¶12389,medieval.later_commentary,20,random
+P0469,medieval,medieval:65036f6ee2a7:2189:1,Duties of the Heart - Duties of the Heart ¶2189.2,medieval.thought_translated,69,random
+P0470,medieval,medieval:ed62963908b7:598:0,Yesod HaYirah ¶598,medieval.musar_unverified,9,random
+P0471,medieval,medieval:ff6d977a45b2:20:0,Mishneh Torah/KDUSHA/maklowt-asowrowt/prk_i ¶20,medieval.mishneh_torah,41,random
+P0472,medieval,medieval:1fdbbf3a9827:2333:13,Akeidat Yitzchak ¶2333.14,medieval.thought,24,random
+P0473,medieval,medieval:485e007b4f1d:1457:1,The Wars of the Lord ¶1457.2,medieval.thought,15,random
+P0474,medieval,medieval:1fdbbf3a9827:2270:75,Akeidat Yitzchak ¶2270.76,medieval.thought,14,random
+P0475,medieval,medieval:ca0decca0dcc:719:0,Ahavat David ¶719.1,medieval.musar_unverified,13,random
+P0476,medieval,medieval:65036f6ee2a7:629:3,Duties of the Heart - Duties of the Heart ¶629.4,medieval.thought_translated,6,random
+P0477,medieval,medieval:078977a2f030:284:14,HaEmunot veHaDeot ¶284.15,medieval.thought_translated,18,random
+P0478,medieval,medieval:485e007b4f1d:2123:18,The Wars of the Lord ¶2123.19,medieval.thought,24,random
+P0479,medieval,medieval:478ea7af5719:1787:0,Mivchar HaPeninim ¶1787.1,medieval.musar_translated,11,random
+P0480,medieval,medieval:1fdbbf3a9827:3512:3,Akeidat Yitzchak ¶3512.4,medieval.thought,10,random
+P0481,medieval,medieval:42016ca6f5ad:16:0,Mishneh Torah/NZIKIN/nzki-mmown/prk_t ¶16,medieval.mishneh_torah,64,random
+P0482,medieval,medieval:ceb4c5145b62:1295:1,Sichot Avodat Levi ¶1295.2,medieval.post_medieval,47,random
+P0483,medieval,medieval:1fdbbf3a9827:4703:3,Akeidat Yitzchak ¶4703.4,medieval.thought,25,random
+P0484,medieval,medieval:c8e9417d0ee9:1214:2,Derashot HaRan ¶1214.3,medieval.thought,10,random
+P0485,medieval,medieval:f0478882fe18:593:15,Kad HaKemach ¶593.16,medieval.musar,9,random
+P0486,medieval,medieval:078977a2f030:401:0,HaEmunot veHaDeot ¶401.1,medieval.thought_translated,17,random
+P0487,medieval,medieval:83876eb241af:14:0,Mishneh Torah/AVODA/tmidin-owmowspin/prk_ch ¶14,medieval.mishneh_torah,37,random
+P0488,medieval,medieval:1fdbbf3a9827:2630:29,Akeidat Yitzchak ¶2630.30,medieval.thought,43,random
+P0489,medieval,medieval:c8e9417d0ee9:479:14,Derashot HaRan ¶479.15,medieval.thought,11,random
+P0490,medieval,medieval:1fdbbf3a9827:2855:0,Akeidat Yitzchak ¶2855.1,medieval.thought,53,random
+P0491,medieval,medieval:0d9be60f3a2e:7379:0,Tov haLevanon ¶7379,medieval.later_commentary,4,random
+P0492,medieval,medieval:ceb4c5145b62:854:0,Sichot Avodat Levi ¶854,medieval.post_medieval,18,random
+P0493,medieval,medieval:1fdbbf3a9827:5063:2,Akeidat Yitzchak ¶5063.3,medieval.thought,11,random
+P0494,medieval,medieval:e157645991d6:188:5,Davar Be'ito ¶188.6,medieval.musar_unverified,61,random
+P0495,medieval,medieval:d276e278b45c:422:0,Shekel HaKodesh ¶422,medieval.musar_unverified,6,random
+P0496,medieval,medieval:a4c12ebb8d31:1:0,Mishneh Torah/ZMANIM/airowbin/prk_z ¶1,medieval.mishneh_torah,71,random
+P0497,medieval,medieval:db4f52f4fa01:47:1,Pat Lechem ¶47.2,medieval.later_commentary,12,random
+P0498,medieval,medieval:91c6e264e2c7:19:0,Mishneh Torah/NZIKIN/gnibh/prk_ch ¶19,medieval.mishneh_torah,32,random
+P0499,medieval,medieval:07b1836c7aea:7:0,Mishneh Torah/ZMANIM/showpr/prk_z ¶7,medieval.mishneh_torah,47,random
+P0500,medieval,medieval:216d8acb0833:164:1,Maamar Mezake HaRabim ¶164.2,medieval.musar_unverified,38,random
+P0501,medieval,medieval:1fdbbf3a9827:4172:0,Akeidat Yitzchak ¶4172.1,medieval.thought,45,random
+P0502,medieval,medieval:1fdbbf3a9827:1217:44,Akeidat Yitzchak ¶1217.45,medieval.thought,12,random
+P0503,medieval,medieval:078977a2f030:452:1,HaEmunot veHaDeot ¶452.2,medieval.thought_translated,22,random
+P0504,medieval,medieval:e02fa954f996:1505:3,Orchot Tzadikim ¶1505.4,medieval.musar,17,random
+P0505,medieval,medieval:478ea7af5719:143:0,Mivchar HaPeninim ¶143.1,medieval.musar_translated,3,random
+P0506,medieval,medieval:72990b9e05f5:9:0,Mishneh Torah/ZMANIM/shbt/prk_kz ¶9,medieval.mishneh_torah,46,random
+P0507,medieval,medieval:f0478882fe18:788:11,Kad HaKemach ¶788.12,medieval.musar,41,random
+P0508,medieval,medieval:6777ece82a8f:5963:0,Marpeh la'Nefesh ¶5963.1,medieval.later_commentary,15,random
+P0509,medieval,medieval:1fdbbf3a9827:3530:84,Akeidat Yitzchak ¶3530.85,medieval.thought,31,random
+P0510,medieval,medieval:c8e9417d0ee9:632:2,Derashot HaRan ¶632.3,medieval.thought,8,random
+P0511,medieval,medieval:485e007b4f1d:812:9,The Wars of the Lord ¶812.10,medieval.thought,128,random
+P0512,medieval,medieval:1fdbbf3a9827:3410:23,Akeidat Yitzchak ¶3410.24,medieval.thought,10,random
+P0513,medieval,medieval:e02fa954f996:1886:0,Orchot Tzadikim ¶1886.1,medieval.musar,14,random
+P0514,medieval,medieval:1fdbbf3a9827:2180:5,Akeidat Yitzchak ¶2180.6,medieval.thought,19,random
+P0515,medieval,medieval:1fdbbf3a9827:2765:42,Akeidat Yitzchak ¶2765.43,medieval.thought,22,random
+P0516,medieval,medieval:65036f6ee2a7:6929:2,Duties of the Heart - Duties of the Heart ¶6929.3,medieval.thought_translated,2,random
+P0517,medieval,medieval:e02fa954f996:1265:4,Orchot Tzadikim ¶1265.5,medieval.musar,9,random
+P0518,medieval,medieval:db4f52f4fa01:12884:0,Pat Lechem ¶12884.1,medieval.later_commentary,9,random
+P0519,medieval,medieval:054aec659d4a:1076:0,Minchat Kenaot ¶1076,medieval.thought,35,random
+P0520,medieval,medieval:41f1aa7bdf15:3077:4,Guide for the Perplexed ¶3077.5,medieval.thought_translated,63,random
+P0521,medieval,medieval:a073080b2ba0:30:0,Mishneh Torah/KDUSHA/aisowri-biah/prk_t ¶30,medieval.mishneh_torah,24,targeted:mishneh_torah
+P0522,medieval,medieval:cf37443673c7:11:0,Mishneh Torah/TAHARA/towmat-aowklin/prk_a ¶11,medieval.mishneh_torah,10,targeted:mishneh_torah
+P0523,medieval,medieval:81dff0334888:5:0,Mishneh Torah/KINYAN/mkirh/prk_tow ¶5,medieval.mishneh_torah,37,targeted:mishneh_torah
+P0524,medieval,medieval:fd5c557dc215:12:0,Mishneh Torah/MISHPATIM/mlowh/prk_id ¶12,medieval.mishneh_torah,53,targeted:mishneh_torah
+P0525,medieval,medieval:a652a2b05c0b:17:0,Mishneh Torah/ZRAIM/mtnowt-aniim/prk_d ¶17,medieval.mishneh_torah,46,targeted:mishneh_torah
+P0526,medieval,medieval:7165dd07caca:11:0,Mishneh Torah/TAHARA/towmat-zrat/prk_h ¶11,medieval.mishneh_torah,86,targeted:mishneh_torah
+P0527,medieval,medieval:3cc86eefeaa5:2:0,Mishneh Torah/NASHIM/aishowt/prk_kb ¶2,medieval.mishneh_torah,55,targeted:mishneh_torah
+P0528,medieval,medieval:81e6dedd2f0c:4:0,Mishneh Torah/NZIKIN/gnibh/prk_ow ¶4,medieval.mishneh_torah,50,targeted:mishneh_torah
+P0529,medieval,medieval:2ee63bc28d91:8:0,Mishneh Torah/SHOFTIM/snhdrin/prk_k ¶8,medieval.mishneh_torah,18,targeted:mishneh_torah
+P0530,medieval,medieval:d1f891a52ba0:13:0,Mishneh Torah/KINYAN/mkirh/prk_ka ¶13,medieval.mishneh_torah,35,targeted:mishneh_torah
+P0531,medieval,medieval:84b3d6ad5e20:10:0,Mishneh Torah/ZMANIM/shbt/prk_ich ¶10,medieval.mishneh_torah,16,targeted:mishneh_torah
+P0532,medieval,medieval:4aa8fc2cce41:12:0,Mishneh Torah/ZRAIM/bkowrim/prk_ch ¶12,medieval.mishneh_torah,64,targeted:mishneh_torah
+P0533,medieval,medieval:ee5f1ab004af:5:0,Mishneh Torah/MISHPATIM/mlowh/prk_b ¶5,medieval.mishneh_torah,35,targeted:mishneh_torah
+P0534,medieval,medieval:978659e203c9:8:0,Mishneh Torah/KDUSHA/aisowri-biah/prk_iz ¶8,medieval.mishneh_torah,40,targeted:mishneh_torah
+P0535,medieval,medieval:8c53934187db:5:0,Mishneh Torah/TAHARA/klim/prk_g ¶5,medieval.mishneh_torah,25,targeted:mishneh_torah
+P0536,medieval,medieval:68c2ce871781:13:0,Mishneh Torah/NASHIM/girowshin/prk_ia ¶13,medieval.mishneh_torah,33,targeted:rambam_prefix_tags
+P0537,medieval,medieval:ad5dfdc14bf1:1:0,Mishneh Torah/ZMANIM/chmz-owmzh/prk_b ¶1,medieval.mishneh_torah,64,targeted:rambam_prefix_tags
+P0538,medieval,medieval:ebea638acd2c:1:0,Mishneh Torah/ZMANIM/shbitt-ashowr/prk_g ¶1,medieval.mishneh_torah,57,targeted:rambam_prefix_tags
+P0539,medieval,medieval:7a344b488bfd:28:0,Mishneh Torah/NASHIM/aishowt/prk_g ¶28,medieval.mishneh_torah,66,targeted:rambam_prefix_tags
+P0540,medieval,medieval:d2d47c26fd5d:1:0,Mishneh Torah/NZIKIN/rowzch/prk_h ¶1,medieval.mishneh_torah,51,targeted:rambam_prefix_tags
+P0541,medieval,medieval:65036f6ee2a7:5294:0,Duties of the Heart - Duties of the Heart ¶5294,medieval.thought_translated,17,targeted:thought_translated
+P0542,medieval,medieval:65036f6ee2a7:5:2,Duties of the Heart - Duties of the Heart ¶5.3,medieval.thought_translated,10,targeted:thought_translated
+P0543,medieval,medieval:41f1aa7bdf15:3422:5,Guide for the Perplexed ¶3422.6,medieval.thought_translated,46,targeted:thought_translated
+P0544,medieval,medieval:41f1aa7bdf15:1397:5,Guide for the Perplexed ¶1397.6,medieval.thought_translated,49,targeted:thought_translated
+P0545,medieval,medieval:41f1aa7bdf15:1403:6,Guide for the Perplexed ¶1403.7,medieval.thought_translated,16,targeted:thought_translated
+P0546,medieval,medieval:65036f6ee2a7:6974:31,Duties of the Heart - Duties of the Heart ¶6974.32,medieval.thought_translated,4,targeted:thought_translated
+P0547,medieval,medieval:61685361bceb:446:20,Kuzari ¶446.21,medieval.thought_translated,56,targeted:thought_translated
+P0548,medieval,medieval:61685361bceb:1007:20,Kuzari ¶1007.21,medieval.thought_translated,15,targeted:thought_translated
+P0549,medieval,medieval:41f1aa7bdf15:2564:8,Guide for the Perplexed ¶2564.9,medieval.thought_translated,53,targeted:thought_translated
+P0550,medieval,medieval:61685361bceb:776:0,Kuzari ¶776,medieval.thought_translated,16,targeted:thought_translated
+P0551,medieval,medieval:078977a2f030:611:3,HaEmunot veHaDeot ¶611.4,medieval.thought_translated,212,targeted:thought_translated
+P0552,medieval,medieval:078977a2f030:233:23,HaEmunot veHaDeot ¶233.24,medieval.thought_translated,20,targeted:thought_translated
+P0553,medieval,medieval:c8e9417d0ee9:335:9,Derashot HaRan ¶335.10,medieval.thought,14,targeted:thought
+P0554,medieval,medieval:485e007b4f1d:137:6,The Wars of the Lord ¶137.7,medieval.thought,24,targeted:thought
+P0555,medieval,medieval:f7a2dff80762:163:7,Yesod Mora ¶163.8,medieval.thought,51,targeted:thought
+P0556,medieval,medieval:1fdbbf3a9827:4292:52,Akeidat Yitzchak ¶4292.53,medieval.thought,5,targeted:thought
+P0557,medieval,medieval:1fdbbf3a9827:3875:71,Akeidat Yitzchak ¶3875.72,medieval.thought,16,targeted:thought
+P0558,medieval,medieval:1fdbbf3a9827:1730:11,Akeidat Yitzchak ¶1730.12,medieval.thought,23,targeted:thought
+P0559,medieval,medieval:c1229cdbd000:3899:1,Sefer HaIkkarim ¶3899.2,medieval.thought,19,targeted:thought
+P0560,medieval,medieval:485e007b4f1d:1538:52,The Wars of the Lord ¶1538.53,medieval.thought,15,targeted:thought
+P0561,medieval,medieval:054aec659d4a:1601:0,Minchat Kenaot ¶1601,medieval.thought,76,targeted:thought
+P0562,medieval,medieval:1fdbbf3a9827:1910:1,Akeidat Yitzchak ¶1910.2,medieval.thought,8,targeted:thought
+P0563,medieval,medieval:f0478882fe18:395:6,Kad HaKemach ¶395.7,medieval.musar,20,targeted:musar
+P0564,medieval,medieval:10f828adb33b:14:2,Sefer HaYirah ¶14.3,medieval.musar,9,targeted:musar
+P0565,medieval,medieval:f3698b67db72:86:8,The Improvement of the Moral Qualities ¶86.9,medieval.musar_translated,14,targeted:musar
+P0566,medieval,medieval:df394757e86c:32:13,Shaarei Teshuvah ¶32.14,medieval.musar,5,targeted:musar
+P0567,medieval,medieval:e02fa954f996:1106:12,Orchot Tzadikim ¶1106.13,medieval.musar,29,targeted:musar
+P0568,medieval,medieval:df394757e86c:1006:21,Shaarei Teshuvah ¶1006.22,medieval.musar,9,targeted:musar
+P0569,medieval,medieval:e02fa954f996:2366:2,Orchot Tzadikim ¶2366.3,medieval.musar,7,targeted:musar
+P0570,medieval,medieval:f0478882fe18:731:17,Kad HaKemach ¶731.18,medieval.musar,28,targeted:musar
+P0571,medieval,medieval:f0478882fe18:863:1,Kad HaKemach ¶863.2,medieval.musar,30,targeted:musar
+P0572,medieval,medieval:10f828adb33b:17:61,Sefer HaYirah ¶17.62,medieval.musar,6,targeted:musar
+P0573,medieval,medieval:ca0decca0dcc:2360:11,Ahavat David ¶2360.12,medieval.musar_unverified,11,targeted:musar_unverified
+P0574,medieval,medieval:d276e278b45c:100:0,Shekel HaKodesh ¶100,medieval.musar_unverified,8,targeted:musar_unverified
+P0575,medieval,medieval:ed62963908b7:896:0,Yesod HaYirah ¶896,medieval.musar_unverified,9,targeted:musar_unverified
+P0576,medieval,medieval:ed62963908b7:681:0,Yesod HaYirah ¶681,medieval.musar_unverified,10,targeted:musar_unverified
+P0577,medieval,medieval:ca0decca0dcc:1067:1,Ahavat David ¶1067.2,medieval.musar_unverified,15,targeted:musar_unverified
+P0578,medieval,medieval:db4f52f4fa01:11543:0,Pat Lechem ¶11543,medieval.later_commentary,36,targeted:later_or_post_medieval
+P0579,medieval,medieval:0d9be60f3a2e:866:0,Tov haLevanon ¶866,medieval.later_commentary,19,targeted:later_or_post_medieval
+P0580,medieval,medieval:0d9be60f3a2e:2630:0,Tov haLevanon ¶2630,medieval.later_commentary,14,targeted:later_or_post_medieval
+P0581,medieval,medieval:db4f52f4fa01:8414:0,Pat Lechem ¶8414,medieval.later_commentary,9,targeted:later_or_post_medieval
+P0582,medieval,medieval:6777ece82a8f:4739:0,Marpeh la'Nefesh ¶4739,medieval.later_commentary,29,targeted:later_or_post_medieval
+P0583,medieval,medieval:0d9be60f3a2e:629:0,Tov haLevanon ¶629,medieval.later_commentary,4,targeted:later_or_post_medieval
+P0584,medieval,medieval:0d9be60f3a2e:4022:0,Tov haLevanon ¶4022.1,medieval.later_commentary,14,targeted:later_or_post_medieval
+P0585,medieval,medieval:db4f52f4fa01:11:16,Pat Lechem ¶11.17,medieval.later_commentary,6,targeted:later_or_post_medieval
+P0586,medieval,medieval:f3698b67db72:125:0,The Improvement of the Moral Qualities ¶125,medieval.musar_translated,8,targeted:vocalized
+P0587,medieval,medieval:d88c5117344e:98:3,Orchot Chaim L'HaRosh ¶98.4,medieval.musar,9,targeted:vocalized
+P0588,medieval,medieval:61685361bceb:1007:35,Kuzari ¶1007.36,medieval.thought_translated,12,targeted:vocalized
+P0589,medieval,medieval:61685361bceb:374:18,Kuzari ¶374.19,medieval.thought_translated,26,targeted:vocalized
+P0590,medieval,medieval:61685361bceb:830:9,Kuzari ¶830.10,medieval.thought_translated,15,targeted:vocalized
+P0591,medieval,medieval:054aec659d4a:902:0,Minchat Kenaot ¶902.1,medieval.thought,1257,targeted:longest
+P0592,medieval,medieval:054aec659d4a:449:0,Minchat Kenaot ¶449,medieval.thought,1138,targeted:longest
+P0593,medieval,medieval:054aec659d4a:152:0,Minchat Kenaot ¶152.1,medieval.thought,1043,targeted:longest
+P0594,medieval,medieval:054aec659d4a:647:2,Minchat Kenaot ¶647.3,medieval.thought,919,targeted:longest
+P0595,medieval,medieval:054aec659d4a:155:0,Minchat Kenaot ¶155.1,medieval.thought,875,targeted:longest
+P0596,medieval,medieval:747be3c73e81:140:0,Sha'ar Ha'Gemul of the Ramban ¶140,medieval.musar,859,targeted:longest
+P0597,medieval,medieval:054aec659d4a:608:0,Minchat Kenaot ¶608,medieval.thought,823,targeted:longest
+P0598,medieval,medieval:747be3c73e81:104:0,Sha'ar Ha'Gemul of the Ramban ¶104,medieval.musar,823,targeted:longest
+P0599,medieval,medieval:054aec659d4a:155:1,Minchat Kenaot ¶155.2,medieval.thought,751,targeted:longest
+P0600,medieval,medieval:054aec659d4a:812:9,Minchat Kenaot ¶812.10,medieval.thought,744,targeted:longest
+P0601,haskala,haskala:206b5910701b:38:0,Ytext1099201 ¶38,haskala.belles_lettres,4,random
+P0602,haskala,haskala:4286407c2fb5:33:1,Ytext1007002 ¶33.2,haskala.essays_press,63,random
+P0603,haskala,haskala:f8fc548a6d2f:36:0,Ytext1001126 ¶36.1,haskala.belles_lettres,3,random
+P0604,haskala,haskala:95404b8793aa:5:0,Ytext1021114 ¶5.1,haskala.belles_lettres,3,random
+P0605,haskala,haskala:8b68fcbe82aa:661:0,Ytext1021101 ¶661.1,haskala.belles_lettres,2,random
+P0606,haskala,haskala:5f8eb0a7f23e:23:5,Ytext1015025 ¶23.6,haskala.essays_press,2,random
+P0607,haskala,haskala:bde4612090f6:134:2,Ytext1001107 ¶134.3,haskala.belles_lettres,34,random
+P0608,haskala,haskala:32efd44d3e5f:81:0,Ytext1079013 ¶81,haskala.belles_lettres,30,random
+P0609,haskala,haskala:0d0fb800b10b:640:0,Ytext1043002 ¶640.1,haskala.science,26,random
+P0610,haskala,haskala:456e9bbe9902:6:4,Ytext1001401 ¶6.5,haskala.essays_press,52,random
+P0611,haskala,haskala:94b2feb7d813:226:3,Ytext1021107 ¶226.4,haskala.belles_lettres,1,random
+P0612,haskala,haskala:7f6cc3e050d9:8:0,Ytext1001301 ¶8.1,haskala.essays_press,86,random
+P0613,haskala,haskala:3abb5c6ad009:1061:2,Ytext1049002 ¶1061.3,haskala.belles_lettres,27,random
+P0614,haskala,haskala:ee46dec7e13d:462:0,Ytext1021111 ¶462,haskala.belles_lettres,11,random
+P0615,haskala,haskala:3701ecca4977:84:0,Ytext1011001 ¶84.1,haskala.science,49,random
+P0616,haskala,haskala:5dfc4e905155:27:3,Ytext1001119 ¶27.4,haskala.belles_lettres,14,random
+P0617,haskala,haskala:065d3b0388e7:707:0,Ytext1076001 ¶707.1,haskala.belles_lettres,5,random
+P0618,haskala,haskala:a647ec2f6d86:20:1,Ytext1021112 ¶20.2,haskala.belles_lettres,7,random
+P0619,haskala,haskala:065d3b0388e7:761:0,Ytext1076001 ¶761.1,haskala.belles_lettres,14,random
+P0620,haskala,haskala:6d1c1e1c651f:40:6,Ytext1015018 ¶40.7,haskala.essays_press,45,random
+P0621,haskala,haskala:46f070db58eb:37:4,Ytext1037001 ¶37.5,haskala.science,16,random
+P0622,haskala,haskala:f7cab8909b90:9:16,Ytext1099103 ¶9.17,haskala.belles_lettres,5,random
+P0623,haskala,haskala:b32d353bdebd:90:3,Ytext1020001 ¶90.4,haskala.belles_lettres,4,random
+P0624,haskala,haskala:444cd8f80c41:205:1,Ytext1049008 ¶205.2,haskala.belles_lettres,12,random
+P0625,haskala,haskala:206b5910701b:130:2,Ytext1099201 ¶130.3,haskala.belles_lettres,12,random
+P0626,haskala,haskala:9e0bf529e4b3:70:2,Ytext1021108 ¶70.3,haskala.belles_lettres,3,random
+P0627,haskala,haskala:97c9fa932991:906:3,Ytext1061001 ¶906.4,haskala.essays_press,3,random
+P0628,haskala,haskala:af9965a493f6:136:3,Ytext1001136 ¶136.4,haskala.belles_lettres,2,random
+P0629,haskala,haskala:1cd43dc6406f:227:0,Ytext1001202 ¶227.1,haskala.science,20,random
+P0630,haskala,haskala:46f070db58eb:114:14,Ytext1037001 ¶114.15,haskala.science,4,random
+P0631,haskala,haskala:97c9fa932991:885:2,Ytext1061001 ¶885.3,haskala.essays_press,12,random
+P0632,haskala,haskala:7da0015564de:546:0,Ytext1021104 ¶546.1,haskala.belles_lettres,12,random
+P0633,haskala,haskala:23b0022eec01:110:8,Ytext1041001 ¶110.9,haskala.essays_press,77,random
+P0634,haskala,haskala:3abb5c6ad009:430:5,Ytext1049002 ¶430.6,haskala.belles_lettres,18,random
+P0635,haskala,haskala:8cf4396b6d67:857:3,Ytext1099114 ¶857.4,haskala.belles_lettres,28,random
+P0636,haskala,haskala:b2895bf3f65a:40:1,Ytext1001405 ¶40.2,haskala.essays_press,12,random
+P0637,haskala,haskala:536b2aea9c4b:434:0,Ytext1054001 ¶434,haskala.essays_press,41,random
+P0638,haskala,haskala:065d3b0388e7:490:0,Ytext1076001 ¶490,haskala.belles_lettres,15,random
+P0639,haskala,haskala:f93ca4baeb64:473:17,Ytext1068001 ¶473.18,haskala.essays_press,25,random
+P0640,haskala,haskala:1cd43dc6406f:281:13,Ytext1001202 ¶281.14,haskala.science,2,random
+P0641,haskala,haskala:997eaf9b5b87:6:0,Ytext1099320 ¶6,haskala.essays_press,46,random
+P0642,haskala,haskala:f93ca4baeb64:171:1,Ytext1068001 ¶171.2,haskala.essays_press,1,random
+P0643,haskala,haskala:2ea5076ec0c8:312:1,Ytext1049010 ¶312.2,haskala.belles_lettres,25,random
+P0644,haskala,haskala:631e9c242ac1:364:13,Ytext1005004 ¶364.14,haskala.essays_press,4,random
+P0645,haskala,haskala:57eb431f9535:39:1,Ytext1099108 ¶39.2,haskala.belles_lettres,27,random
+P0646,haskala,haskala:97c9fa932991:244:4,Ytext1061001 ¶244.5,haskala.essays_press,19,random
+P0647,haskala,haskala:97c9fa932991:46:3,Ytext1061001 ¶46.4,haskala.essays_press,6,random
+P0648,haskala,haskala:b2895bf3f65a:25:0,Ytext1001405 ¶25.1,haskala.essays_press,88,random
+P0649,haskala,haskala:c69123ae4071:1:0,Ytext1099113 ¶1,haskala.belles_lettres,7,random
+P0650,haskala,haskala:c70bd841bb81:615:0,Ytext1009001 ¶615,haskala.science,2,random
+P0651,haskala,haskala:5174fe50d4c6:453:4,Ytext1013002 ¶453.5,haskala.belles_lettres,40,random
+P0652,haskala,haskala:5174fe50d4c6:461:12,Ytext1013002 ¶461.13,haskala.belles_lettres,5,random
+P0653,haskala,haskala:7d428af8cae5:541:4,Ytext1001103 ¶541.5,haskala.belles_lettres,13,random
+P0654,haskala,haskala:ee46dec7e13d:191:0,Ytext1021111 ¶191.1,haskala.belles_lettres,4,random
+P0655,haskala,haskala:46f070db58eb:58:32,Ytext1037001 ¶58.33,haskala.science,35,random
+P0656,haskala,haskala:7d428af8cae5:672:13,Ytext1001103 ¶672.14,haskala.belles_lettres,48,random
+P0657,haskala,haskala:077a4d4c2788:29:3,Ytext1043003 ¶29.4,haskala.science,3,random
+P0658,haskala,haskala:fa86f7ffefd4:106:0,Ytext1099115 ¶106.1,haskala.belles_lettres,2,random
+P0659,haskala,haskala:3d9b70b9240f:92:3,Ytext1018007 ¶92.4,haskala.belles_lettres,18,random
+P0660,haskala,haskala:aa1a58a666f7:1032:0,Ytext1045001 ¶1032.1,haskala.belles_lettres,2,random
+P0661,haskala,haskala:5f5742771afe:72:14,Ytext1018013 ¶72.15,haskala.belles_lettres,4,random
+P0662,haskala,haskala:97c9fa932991:161:1,Ytext1061001 ¶161.2,haskala.essays_press,1,random
+P0663,haskala,haskala:8cf4396b6d67:279:3,Ytext1099114 ¶279.4,haskala.belles_lettres,39,random
+P0664,haskala,haskala:cd9ef7f136e8:442:1,Ytext1020005 ¶442.2,haskala.belles_lettres,13,random
+P0665,haskala,haskala:94b2feb7d813:675:0,Ytext1021107 ¶675,haskala.belles_lettres,6,random
+P0666,haskala,haskala:bc8d98ab49f9:94:9,Ytext1001201 ¶94.10,haskala.science,15,random
+P0667,haskala,haskala:2c32e39deff5:59:3,Ytext1001116 ¶59.4,haskala.belles_lettres,8,random
+P0668,haskala,haskala:5174fe50d4c6:238:1,Ytext1013002 ¶238.2,haskala.belles_lettres,1,random
+P0669,haskala,haskala:9e0bf529e4b3:494:1,Ytext1021108 ¶494.2,haskala.belles_lettres,8,random
+P0670,haskala,haskala:46f070db58eb:216:29,Ytext1037001 ¶216.30,haskala.science,3,random
+P0671,haskala,haskala:2dc39279074b:25:0,Ytext1023016 ¶25.1,haskala.essays_press,7,random
+P0672,haskala,haskala:0b74a38d85b8:18:8,Ytext1021206 ¶18.9,haskala.essays_press,18,random
+P0673,haskala,haskala:206b5910701b:269:7,Ytext1099201 ¶269.8,haskala.belles_lettres,39,random
+P0674,haskala,haskala:ee46dec7e13d:882:10,Ytext1021111 ¶882.11,haskala.belles_lettres,1,random
+P0675,haskala,haskala:1cd43dc6406f:533:10,Ytext1001202 ¶533.11,haskala.science,4,random
+P0676,haskala,haskala:02a3de2249c4:915:5,Ytext1015023 ¶915.6,haskala.essays_press,17,random
+P0677,haskala,haskala:81171a7ca3c7:556:2,Ytext1001128 ¶556.3,haskala.belles_lettres,14,random
+P0678,haskala,haskala:eab49d934f9d:225:1,Ytext1020002 ¶225.2,haskala.belles_lettres,26,random
+P0679,haskala,haskala:81171a7ca3c7:179:3,Ytext1001128 ¶179.4,haskala.belles_lettres,11,random
+P0680,haskala,haskala:61856cc369e4:68:21,Ytext1040001 ¶68.22,haskala.science,10,random
+P0681,haskala,haskala:ee46dec7e13d:797:1,Ytext1021111 ¶797.2,haskala.belles_lettres,3,random
+P0682,haskala,haskala:c93f5641b0da:1208:1,Ytext1009002 ¶1208.2,haskala.science,27,random
+P0683,haskala,haskala:c70bd841bb81:775:3,Ytext1009001 ¶775.4,haskala.science,11,random
+P0684,haskala,haskala:bc8d98ab49f9:391:2,Ytext1001201 ¶391.3,haskala.science,15,random
+P0685,haskala,haskala:fa86f7ffefd4:910:0,Ytext1099115 ¶910.1,haskala.belles_lettres,6,random
+P0686,haskala,haskala:6c181015156d:60:0,Ytext1056001 ¶60,haskala.science,74,random
+P0687,haskala,haskala:1582c7df1d7d:4:0,Ytext1002001 ¶4,haskala.essays_press,11,random
+P0688,haskala,haskala:74442c2d565c:21:0,Ytext1010002 ¶21.1,haskala.essays_press,23,random
+P0689,haskala,haskala:bc8d98ab49f9:90:0,Ytext1001201 ¶90.1,haskala.science,1,random
+P0690,haskala,haskala:b9adabf423c0:112:8,Ytext1028001 ¶112.9,haskala.belles_lettres,4,random
+P0691,haskala,haskala:3b32fc5702d6:237:1,Ytext1021106 ¶237.2,haskala.belles_lettres,3,random
+P0692,haskala,haskala:1cd43dc6406f:247:11,Ytext1001202 ¶247.12,haskala.science,10,random
+P0693,haskala,haskala:97c9fa932991:114:7,Ytext1061001 ¶114.8,haskala.essays_press,7,random
+P0694,haskala,haskala:917b893c8736:228:0,Ytext1001101 ¶228,haskala.belles_lettres,12,random
+P0695,haskala,haskala:5dfc4e905155:66:1,Ytext1001119 ¶66.2,haskala.belles_lettres,64,random
+P0696,haskala,haskala:1cd43dc6406f:931:0,Ytext1001202 ¶931,haskala.science,2,random
+P0697,haskala,haskala:1686e28cc30c:724:3,Ytext1042001 ¶724.4,haskala.science,21,random
+P0698,haskala,haskala:5dfc4e905155:43:2,Ytext1001119 ¶43.3,haskala.belles_lettres,58,random
+P0699,haskala,haskala:d8422e7c100e:449:6,Ytext1001203 ¶449.7,haskala.science,14,random
+P0700,haskala,haskala:8cf4396b6d67:6:1,Ytext1099114 ¶6.2,haskala.belles_lettres,4,random
+P0701,haskala,haskala:b9adabf423c0:45:3,Ytext1028001 ¶45.4,haskala.belles_lettres,28,random
+P0702,haskala,haskala:d4db92527e11:216:0,Ytext1001102 ¶216.1,haskala.belles_lettres,3,random
+P0703,haskala,haskala:191a56dd93eb:22:4,Ytext1018001 ¶22.5,haskala.belles_lettres,9,random
+P0704,haskala,haskala:46f070db58eb:20:15,Ytext1037001 ¶20.16,haskala.science,2,random
+P0705,haskala,haskala:0ef9c3703635:75:11,Ytext1013001 ¶75.12,haskala.essays_press,8,random
+P0706,haskala,haskala:97c9fa932991:31:13,Ytext1061001 ¶31.14,haskala.essays_press,15,random
+P0707,haskala,haskala:bc8d98ab49f9:1228:0,Ytext1001201 ¶1228.1,haskala.science,24,random
+P0708,haskala,haskala:1cd43dc6406f:492:1,Ytext1001202 ¶492.2,haskala.science,12,random
+P0709,haskala,haskala:2dc39279074b:21:8,Ytext1023016 ¶21.9,haskala.essays_press,7,random
+P0710,haskala,haskala:25251bc85b42:40:9,Ytext1099107 ¶40.10,haskala.belles_lettres,20,random
+P0711,haskala,haskala:3abb5c6ad009:813:1,Ytext1049002 ¶813.2,haskala.belles_lettres,27,random
+P0712,haskala,haskala:1686e28cc30c:753:4,Ytext1042001 ¶753.5,haskala.science,1,random
+P0713,haskala,haskala:9dd4d958675e:23:4,Ytext1021205 ¶23.5,haskala.essays_press,23,random
+P0714,haskala,haskala:ee46dec7e13d:327:9,Ytext1021111 ¶327.10,haskala.belles_lettres,36,random
+P0715,haskala,haskala:97c9fa932991:628:12,Ytext1061001 ¶628.13,haskala.essays_press,4,random
+P0716,haskala,haskala:975ea4c06db0:92:2,Ytext1023017 ¶92.3,haskala.essays_press,15,random
+P0717,haskala,haskala:8b68fcbe82aa:192:12,Ytext1021101 ¶192.13,haskala.belles_lettres,6,random
+P0718,haskala,haskala:5174fe50d4c6:343:0,Ytext1013002 ¶343,haskala.belles_lettres,18,random
+P0719,haskala,haskala:02a3de2249c4:128:0,Ytext1015023 ¶128,haskala.essays_press,4,random
+P0720,haskala,haskala:b74dff3bb9ab:44:15,Ytext1021222 ¶44.16,haskala.essays_press,30,random
+P0721,haskala,haskala:065d3b0388e7:94:1,Ytext1076001 ¶94.2,haskala.belles_lettres,22,targeted:post_1881
+P0722,haskala,haskala:7da0015564de:503:0,Ytext1021104 ¶503.1,haskala.belles_lettres,2,targeted:post_1881
+P0723,haskala,haskala:5f5742771afe:113:19,Ytext1018013 ¶113.20,haskala.belles_lettres,17,targeted:post_1881
+P0724,haskala,haskala:9e0bf529e4b3:53:2,Ytext1021108 ¶53.3,haskala.belles_lettres,7,targeted:post_1881
+P0725,haskala,haskala:3976b77a4a86:20:0,Ytext1001113 ¶20.1,haskala.belles_lettres,1,targeted:post_1881
+P0726,haskala,haskala:ee46dec7e13d:191:19,Ytext1021111 ¶191.20,haskala.belles_lettres,4,targeted:post_1881
+P0727,haskala,haskala:8b68fcbe82aa:142:0,Ytext1021101 ¶142,haskala.belles_lettres,74,targeted:post_1881
+P0728,haskala,haskala:b74dff3bb9ab:11:5,Ytext1021222 ¶11.6,haskala.essays_press,22,targeted:post_1881
+P0729,haskala,haskala:770dc128388f:321:10,Ytext1001120 ¶321.11,haskala.belles_lettres,34,targeted:post_1881
+P0730,haskala,haskala:065d3b0388e7:1317:1,Ytext1076001 ¶1317.2,haskala.belles_lettres,4,targeted:post_1881
+P0731,haskala,haskala:4ae51ce2f5e0:279:3,Ytext1018006 ¶279.4,haskala.belles_lettres,9,targeted:post_1881
+P0732,haskala,haskala:1b6c8358fa05:1681:0,Ytext1053005 ¶1681.1,haskala.essays_press,5,targeted:post_1881
+P0733,haskala,haskala:065d3b0388e7:579:1,Ytext1076001 ¶579.2,haskala.belles_lettres,6,targeted:post_1881
+P0734,haskala,haskala:7da0015564de:483:0,Ytext1021104 ¶483,haskala.belles_lettres,4,targeted:post_1881
+P0735,haskala,haskala:9e0bf529e4b3:147:0,Ytext1021108 ¶147.1,haskala.belles_lettres,15,targeted:post_1881
+P0736,haskala,haskala:d8422e7c100e:163:1,Ytext1001203 ¶163.2,haskala.science,26,targeted:pre_1881
+P0737,haskala,haskala:1cd43dc6406f:954:6,Ytext1001202 ¶954.7,haskala.science,10,targeted:pre_1881
+P0738,haskala,haskala:bc8d98ab49f9:1044:8,Ytext1001201 ¶1044.9,haskala.science,38,targeted:pre_1881
+P0739,haskala,haskala:aa1a58a666f7:690:0,Ytext1045001 ¶690.1,haskala.belles_lettres,11,targeted:pre_1881
+P0740,haskala,haskala:46f070db58eb:39:23,Ytext1037001 ¶39.24,haskala.science,12,targeted:pre_1881
+P0741,haskala,haskala:74442c2d565c:561:0,Ytext1010002 ¶561,haskala.essays_press,168,targeted:pre_1881
+P0742,haskala,haskala:bc8d98ab49f9:180:5,Ytext1001201 ¶180.6,haskala.science,15,targeted:pre_1881
+P0743,haskala,haskala:388242890cb6:415:1,Ytext1049004 ¶415.2,haskala.belles_lettres,18,targeted:pre_1881
+P0744,haskala,haskala:d8422e7c100e:384:1,Ytext1001203 ¶384.2,haskala.science,21,targeted:pre_1881
+P0745,haskala,haskala:c748a4f299f7:249:2,Ytext1005005 ¶249.3,haskala.essays_press,40,targeted:pre_1881
+P0746,haskala,haskala:aa1a58a666f7:377:0,Ytext1045001 ¶377,haskala.belles_lettres,6,targeted:pre_1881
+P0747,haskala,haskala:aa1a58a666f7:95:7,Ytext1045001 ¶95.8,haskala.belles_lettres,24,targeted:pre_1881
+P0748,haskala,haskala:f93ca4baeb64:571:10,Ytext1068001 ¶571.11,haskala.essays_press,35,targeted:pre_1881
+P0749,haskala,haskala:e07e058d02f1:90:7,Ytext1012001 ¶90.8,haskala.essays_press,8,targeted:pre_1881
+P0750,haskala,haskala:c93f5641b0da:292:0,Ytext1009002 ¶292.1,haskala.science,35,targeted:pre_1881
+P0751,haskala,haskala:3701ecca4977:400:0,Ytext1011001 ¶400.1,haskala.science,3,targeted:markup_removed
+P0752,haskala,haskala:f40feab3df1c:13:2,Ytext1099321 ¶13.3,haskala.essays_press,26,targeted:markup_removed
+P0753,haskala,haskala:6eceba843120:1242:6,Ytext1049003 ¶1242.7,haskala.belles_lettres,35,targeted:markup_removed
+P0754,haskala,haskala:1cd43dc6406f:1288:0,Ytext1001202 ¶1288.1,haskala.science,18,targeted:markup_removed
+P0755,haskala,haskala:f93ca4baeb64:365:0,Ytext1068001 ¶365.1,haskala.essays_press,1,targeted:markup_removed
+P0756,haskala,haskala:97c9fa932991:500:53,Ytext1061001 ¶500.54,haskala.essays_press,46,targeted:markup_removed
+P0757,haskala,haskala:f93ca4baeb64:370:3,Ytext1068001 ¶370.4,haskala.essays_press,132,targeted:markup_removed
+P0758,haskala,haskala:97c9fa932991:893:43,Ytext1061001 ¶893.44,haskala.essays_press,16,targeted:markup_removed
+P0759,haskala,haskala:46f070db58eb:241:123,Ytext1037001 ¶241.124,haskala.science,28,targeted:markup_removed
+P0760,haskala,haskala:02a3de2249c4:760:0,Ytext1015023 ¶760.1,haskala.essays_press,22,targeted:markup_removed
+P0761,haskala,haskala:3b32fc5702d6:418:0,Ytext1021106 ¶418.1,haskala.belles_lettres,13,targeted:markup_removed
+P0762,haskala,haskala:6e39d3f38c25:265:2,Ytext1015021 ¶265.3,haskala.essays_press,25,targeted:markup_removed
+P0763,haskala,haskala:6e39d3f38c25:550:1,Ytext1015021 ¶550.2,haskala.essays_press,42,targeted:markup_removed
+P0764,haskala,haskala:4c85b2f1a691:44:2,Ytext1076002 ¶44.3,haskala.essays_press,34,targeted:markup_removed
+P0765,haskala,haskala:bc8d98ab49f9:55:8,Ytext1001201 ¶55.9,haskala.science,16,targeted:markup_removed
+P0766,haskala,haskala:ba9dc27fa51d:26:5,Ytext1099316 ¶26.6,haskala.essays_press,5,targeted:vocalized
+P0767,haskala,haskala:aa1a58a666f7:581:7,Ytext1045001 ¶581.8,haskala.belles_lettres,11,targeted:vocalized
+P0768,haskala,haskala:ee46dec7e13d:425:3,Ytext1021111 ¶425.4,haskala.belles_lettres,8,targeted:vocalized
+P0769,haskala,haskala:bc8d98ab49f9:410:3,Ytext1001201 ¶410.4,haskala.science,29,targeted:vocalized
+P0770,haskala,haskala:c2f6ec9cffc3:17:0,Ytext1041003 ¶17.1,haskala.essays_press,16,targeted:vocalized
+P0771,haskala,haskala:388242890cb6:1055:2,Ytext1049004 ¶1055.3,haskala.belles_lettres,26,targeted:vocalized
+P0772,haskala,haskala:eab49d934f9d:469:10,Ytext1020002 ¶469.11,haskala.belles_lettres,6,targeted:vocalized
+P0773,haskala,haskala:d4db92527e11:1125:3,Ytext1001102 ¶1125.4,haskala.belles_lettres,12,targeted:vocalized
+P0774,haskala,haskala:7da0015564de:751:4,Ytext1021104 ¶751.5,haskala.belles_lettres,2,targeted:vocalized
+P0775,haskala,haskala:b2b10e425bb4:100:13,Ytext1099101 ¶100.14,haskala.belles_lettres,4,targeted:vocalized
+P0776,haskala,haskala:1cd43dc6406f:817:1,Ytext1001202 ¶817.2,haskala.science,16,targeted:science
+P0777,haskala,haskala:0d0fb800b10b:69:0,Ytext1043002 ¶69.1,haskala.science,4,targeted:science
+P0778,haskala,haskala:c70bd841bb81:252:0,Ytext1009001 ¶252,haskala.science,2,targeted:science
+P0779,haskala,haskala:46f070db58eb:163:0,Ytext1037001 ¶163.1,haskala.science,1,targeted:science
+P0780,haskala,haskala:1686e28cc30c:1266:0,Ytext1042001 ¶1266.1,haskala.science,9,targeted:science
+P0781,haskala,haskala:ba4898b43496:306:3,Ytext1041002 ¶306.4,haskala.science,31,targeted:science
+P0782,haskala,haskala:46f070db58eb:140:17,Ytext1037001 ¶140.18,haskala.science,13,targeted:science
+P0783,haskala,haskala:1686e28cc30c:212:4,Ytext1042001 ¶212.5,haskala.science,7,targeted:science
+P0784,haskala,haskala:c93f5641b0da:1455:0,Ytext1009002 ¶1455.1,haskala.science,8,targeted:science
+P0785,haskala,haskala:bc8d98ab49f9:1127:3,Ytext1001201 ¶1127.4,haskala.science,8,targeted:science
+P0786,haskala,haskala:e1cfa8c6caae:5:0,Ytext1006001 ¶5,haskala.science,6435,targeted:longest
+P0787,haskala,haskala:95c496c9ac5f:17:0,Ytext1006002 ¶17,haskala.science,4533,targeted:longest
+P0788,haskala,haskala:95c496c9ac5f:82:0,Ytext1006002 ¶82,haskala.science,3105,targeted:longest
+P0789,haskala,haskala:95c496c9ac5f:40:0,Ytext1006002 ¶40,haskala.science,2094,targeted:longest
+P0790,haskala,haskala:95c496c9ac5f:88:0,Ytext1006002 ¶88,haskala.science,2063,targeted:longest
+P0791,haskala,haskala:95c496c9ac5f:83:0,Ytext1006002 ¶83,haskala.science,2016,targeted:longest
+P0792,haskala,haskala:95c496c9ac5f:89:0,Ytext1006002 ¶89,haskala.science,1815,targeted:longest
+P0793,haskala,haskala:95c496c9ac5f:70:0,Ytext1006002 ¶70,haskala.science,1814,targeted:longest
+P0794,haskala,haskala:95c496c9ac5f:100:0,Ytext1006002 ¶100,haskala.science,1806,targeted:longest
+P0795,haskala,haskala:95c496c9ac5f:68:0,Ytext1006002 ¶68,haskala.science,1685,targeted:longest
+P0796,haskala,haskala:95c496c9ac5f:66:0,Ytext1006002 ¶66,haskala.science,1533,targeted:longest
+P0797,haskala,haskala:95c496c9ac5f:85:0,Ytext1006002 ¶85,haskala.science,1531,targeted:longest
+P0798,haskala,haskala:95c496c9ac5f:65:0,Ytext1006002 ¶65,haskala.science,1516,targeted:longest
+P0799,haskala,haskala:95c496c9ac5f:39:0,Ytext1006002 ¶39,haskala.science,1512,targeted:longest
+P0800,haskala,haskala:95c496c9ac5f:5:0,Ytext1006002 ¶5,haskala.science,1437,targeted:longest
+P0801,modern,modern:31d685e1c906:3299:0,kneset/16/02265504.txt ¶3299,modern.knesset,14,random
+P0802,modern,modern:71145ff6960f:19:0,news/a7/articles/1000-1099/1002.txt ¶19,modern.news.a7,8,random
+P0803,modern,modern:0618fc7e5831:25:1,news/haaretz/4/440386.txt ¶25.2,modern.news.haaretz,9,random
+P0804,modern,modern:74acdbbce319:20:0,news/haaretz/6/639974.txt ¶20,modern.news.haaretz,29,random
+P0805,modern,modern:08c13d38220a:1885:0,kneset/16/02444204.txt ¶1885,modern.knesset,8,random
+P0806,modern,modern:a1227a8ffd29:7:0,news/haaretz/2/204590.txt ¶7,modern.news.haaretz,6,random
+P0807,modern,modern:c9d0010b9bba:1:0,news/haaretz/3/343751.txt ¶1,modern.news.haaretz,28,random
+P0808,modern,modern:e668f3ab1e31:1695:0,kneset/16/00159704.txt ¶1695,modern.knesset,19,random
+P0809,modern,modern:3f217de307a0:1:0,news/haaretz/3/320941.txt ¶1,modern.news.haaretz,43,random
+P0810,modern,modern:87e085dd0047:1079:0,kneset/16/02227304.txt ¶1079,modern.knesset,22,random
+P0811,modern,modern:82e9bb69331c:2:0,news/a7/news/48600-48699/48659.txt ¶2,modern.news.a7,19,random
+P0812,modern,modern:b8e56e01d847:46:0,news/haaretz/8/801834.txt ¶46,modern.news.haaretz,13,random
+P0813,modern,modern:ab1e5c680eed:9:0,medical/questions/text_utf/050408_8.asp_utf.txt ¶9,modern.medical,17,random
+P0814,modern,modern:12575a0c2800:34:0,blogs/2517.txt ¶34,modern.blogs,16,random
+P0815,modern,modern:63c1a9f60241:26:0,news/haaretz/5/500887.txt ¶26,modern.news.haaretz,32,random
+P0816,modern,modern:6724b5130801:4:0,news/a7/news/65700-65799/65705.txt ¶4,modern.news.a7,30,random
+P0817,modern,modern:5065bd72ddbf:1823:0,kneset/17/100648505.txt ¶1823,modern.knesset,40,random
+P0818,modern,modern:919dd024b690:7:0,news/haaretz/2/241820.txt ¶7,modern.news.haaretz,20,random
+P0819,modern,modern:faf8e273d9de:8:0,news/haaretz/3/311250.txt ¶8,modern.news.haaretz,23,random
+P0820,modern,modern:4b45fe4f2c66:23:0,blogs/1143.txt ¶23,modern.blogs,3,random
+P0821,modern,modern:7e1a7194be64:3:0,news/a7/news/39200-39299/39287.txt ¶3,modern.news.a7,12,random
+P0822,modern,modern:2d206fd486ab:6:0,news/haaretz/1/145865.txt ¶6,modern.news.haaretz,20,random
+P0823,modern,modern:43712dfb7c22:888:0,kneset/17/03591505.txt ¶888,modern.knesset,13,random
+P0824,modern,modern:e567ab9e119b:8:0,news/haaretz/8/811542.txt ¶8,modern.news.haaretz,9,random
+P0825,modern,modern:718949777b0d:18:0,news/haaretz/3/325851.txt ¶18,modern.news.haaretz,44,random
+P0826,modern,modern:ffacc7668e15:9:0,news/haaretz/2/223828.txt ¶9,modern.news.haaretz,8,random
+P0827,modern,modern:e7c8d8fc31e9:4:0,news/haaretz/4/442372.txt ¶4,modern.news.haaretz,15,random
+P0828,modern,modern:210a4fe0b365:1:0,news/haaretz/1/147285.txt ¶1,modern.news.haaretz,41,random
+P0829,modern,modern:fef143b38d01:16:0,news/haaretz/7/735815.txt ¶16,modern.news.haaretz,13,random
+P0830,modern,modern:291191657446:1015:0,kneset/16/17245003.txt ¶1015,modern.knesset,6,random
+P0831,modern,modern:599684af5ba6:44:0,news/haaretz/5/533997.txt ¶44,modern.news.haaretz,26,random
+P0832,modern,modern:032808940ece:4:0,news/haaretz/8/804351.txt ¶4,modern.news.haaretz,20,random
+P0833,modern,modern:cfcdc21e25d5:4:0,news/haaretz/1/104308.txt ¶4,modern.news.haaretz,10,random
+P0834,modern,modern:b8b15fc312a6:3:0,news/haaretz/5/514712.txt ¶3,modern.news.haaretz,23,random
+P0835,modern,modern:337d56eecfdb:6:0,news/haaretz/8/846525.txt ¶6,modern.news.haaretz,19,random
+P0836,modern,modern:9e07a01f124d:1:0,news/haaretz/8/827217.txt ¶1,modern.news.haaretz,33,random
+P0837,modern,modern:7fbf88c4358a:23:0,news/haaretz/6/622938.txt ¶23,modern.news.haaretz,12,random
+P0838,modern,modern:d62ff3fe0ff3:51:0,news/haaretz/8/844187.txt ¶51,modern.news.haaretz,9,random
+P0839,modern,modern:cbd747932495:6:0,medical/questions/text_utf/02306_10.htm_utf.txt ¶6,modern.medical,5,random
+P0840,modern,modern:b282c3f49889:1:0,news/haaretz/1/123146.txt ¶1,modern.news.haaretz,13,random
+P0841,modern,modern:731cf6dd2b5d:34:0,blogs/9795.txt ¶34,modern.blogs,1,random
+P0842,modern,modern:4a6da24a74f7:14:0,news/haaretz/3/337927.txt ¶14,modern.news.haaretz,19,random
+P0843,modern,modern:f6938aa2f31e:200:0,blogs/3628.txt ¶200,modern.blogs,4,random
+P0844,modern,modern:fe58184e5de9:24:0,news/haaretz/8/829831.txt ¶24,modern.news.haaretz,11,random
+P0845,modern,modern:e1bb3d5f0c5e:22:0,news/a7/articles/2400-2499/2427.txt ¶22,modern.news.a7,26,random
+P0846,modern,modern:c53d084cd51a:26:0,news/haaretz/5/522294.txt ¶26,modern.news.haaretz,32,random
+P0847,modern,modern:303a0baddace:10:0,news/haaretz/8/834741.txt ¶10,modern.news.haaretz,18,random
+P0848,modern,modern:11dd8422b200:14:0,news/haaretz/4/439173.txt ¶14,modern.news.haaretz,27,random
+P0849,modern,modern:a2c83fa53716:879:0,kneset/17/102180705.txt ¶879,modern.knesset,31,random
+P0850,modern,modern:cedeea06bd12:24:0,news/haaretz/7/714469.txt ¶24.1,modern.news.haaretz,17,random
+P0851,modern,modern:44d7a7b79e0b:81:0,news/haaretz/8/849017.txt ¶81,modern.news.haaretz,16,random
+P0852,modern,modern:4507e529812b:35:0,news/haaretz/6/618781.txt ¶35,modern.news.haaretz,14,random
+P0853,modern,modern:a537566a94f3:1:0,news/haaretz/8/815747.txt ¶1,modern.news.haaretz,56,random
+P0854,modern,modern:ca0ba86e8f1a:4:0,news/haaretz/2/241111.txt ¶4.1,modern.news.haaretz,38,random
+P0855,modern,modern:9616fe5cb992:34:0,news/a7/articles/4800-4899/4897.txt ¶34,modern.news.a7,22,random
+P0856,modern,modern:4fb4782aa6c3:5:0,news/haaretz/4/421948.txt ¶5,modern.news.haaretz,13,random
+P0857,modern,modern:e78195736b1b:10:0,news/haaretz/6/646196.txt ¶10,modern.news.haaretz,33,random
+P0858,modern,modern:3ba1de358078:31:0,news/haaretz/7/715405.txt ¶31.1,modern.news.haaretz,44,random
+P0859,modern,modern:a0f9a874713c:4:0,news/haaretz/1/132895.txt ¶4,modern.news.haaretz,34,random
+P0860,modern,modern:59fcfdff75f7:53:0,news/haaretz/6/629602.txt ¶53.1,modern.news.haaretz,5,random
+P0861,modern,modern:83c5cd701c38:6:0,news/haaretz/3/341302.txt ¶6,modern.news.haaretz,19,random
+P0862,modern,modern:23467313f934:857:0,kneset/16/04630305.txt ¶857,modern.knesset,12,random
+P0863,modern,modern:91e76dbb62cf:20:0,news/haaretz/8/804357.txt ¶20,modern.news.haaretz,8,random
+P0864,modern,modern:be4c41a658da:18:0,news/haaretz/6/628701.txt ¶18,modern.news.haaretz,14,random
+P0865,modern,modern:3dbe00264801:4:0,news/haaretz/3/343621.txt ¶4,modern.news.haaretz,22,random
+P0866,modern,modern:c3c525e599b7:7:0,news/haaretz/1/141089.txt ¶7,modern.news.haaretz,11,random
+P0867,modern,modern:833809f09f3f:15:0,news/haaretz/1/145558.txt ¶15,modern.news.haaretz,4,random
+P0868,modern,modern:14bc15cea199:13:0,news/haaretz/7/716055.txt ¶13,modern.news.haaretz,48,random
+P0869,modern,modern:5ee0e486bd40:90:0,blogs/5381.txt ¶90,modern.blogs,11,random
+P0870,modern,modern:6bec5fc89c47:11:0,news/haaretz/4/431997.txt ¶11,modern.news.haaretz,18,random
+P0871,modern,modern:2b421b0744c4:66:0,news/haaretz/2/217897.txt ¶66,modern.news.haaretz,25,random
+P0872,modern,modern:31d685e1c906:3492:0,kneset/16/02265504.txt ¶3492,modern.knesset,10,random
+P0873,modern,modern:29460d8530fb:3:0,news/haaretz/2/220798.txt ¶3,modern.news.haaretz,20,random
+P0874,modern,modern:03eb5b6e63cc:46:0,news/haaretz/7/711231.txt ¶46,modern.news.haaretz,11,random
+P0875,modern,modern:5e32d4f3d70c:12:1,medical/questions/text_utf/091406_6.htm_utf.txt ¶12.2,modern.medical,12,random
+P0876,modern,modern:224d870c5835:2:0,news/a7/news/44300-44399/44399.txt ¶2,modern.news.a7,14,random
+P0877,modern,modern:babd514b294d:69:0,news/haaretz/3/318354.txt ¶69,modern.news.haaretz,17,random
+P0878,modern,modern:5c6670ded6be:5:0,news/haaretz/4/415107.txt ¶5,modern.news.haaretz,33,random
+P0879,modern,modern:cab80913d630:39:0,news/haaretz/1/100340.txt ¶39,modern.news.haaretz,14,random
+P0880,modern,modern:00e592fe1eca:4:0,news/haaretz/1/140061.txt ¶4,modern.news.haaretz,10,random
+P0881,modern,modern:a646764edc73:19:0,news/haaretz/2/211475.txt ¶19,modern.news.haaretz,5,random
+P0882,modern,modern:019b69987fd6:18:0,news/a7/news/72200-72299/72241.txt ¶18,modern.news.a7,12,random
+P0883,modern,modern:9b3f926a617d:1698:0,kneset/17/03622104.txt ¶1698,modern.knesset,19,random
+P0884,modern,modern:e55618cba14c:4:0,news/haaretz/5/535331.txt ¶4,modern.news.haaretz,7,random
+P0885,modern,modern:fbafcb610ffb:7:0,news/a7/news/117700-117799/117797.txt ¶7,modern.news.a7,56,random
+P0886,modern,modern:734a54c2f258:49:0,news/haaretz/2/224714.txt ¶49,modern.news.haaretz,14,random
+P0887,modern,modern:03c15fc0759d:10:0,news/haaretz/5/529599.txt ¶10,modern.news.haaretz,59,random
+P0888,modern,modern:79b7d4953107:19:0,news/haaretz/2/246017.txt ¶19,modern.news.haaretz,43,random
+P0889,modern,modern:68d439662e3f:6:0,news/haaretz/3/337953.txt ¶6,modern.news.haaretz,14,random
+P0890,modern,modern:5afa650a46a8:16:0,medical/questions/text_utf/082506_8.htm_utf.txt ¶16,modern.medical,16,random
+P0891,modern,modern:4d52e3bd5b36:46:0,news/haaretz/7/727633.txt ¶46,modern.news.haaretz,14,random
+P0892,modern,modern:e7978b2e1d93:39:0,news/haaretz/4/400576.txt ¶39,modern.news.haaretz,39,random
+P0893,modern,modern:6c5433ffddf4:48:0,news/haaretz/6/638098.txt ¶48,modern.news.haaretz,19,random
+P0894,modern,modern:623539d71a01:2:0,news/haaretz/1/114954.txt ¶2,modern.news.haaretz,24,random
+P0895,modern,modern:8a28b5eb3121:9:0,news/haaretz/1/104997.txt ¶9,modern.news.haaretz,19,random
+P0896,modern,modern:870bd8a18648:4:0,news/haaretz/1/151143.txt ¶4,modern.news.haaretz,17,random
+P0897,modern,modern:3c9660bfacf1:39:0,news/haaretz/6/616058.txt ¶39,modern.news.haaretz,9,random
+P0898,modern,modern:678a91069fc7:38:0,news/haaretz/5/501643.txt ¶38,modern.news.haaretz,34,random
+P0899,modern,modern:c943058b2fe3:9:0,news/haaretz/4/431327.txt ¶9,modern.news.haaretz,13,random
+P0900,modern,modern:73baee678e46:2211:0,kneset/16/03393404.txt ¶2211,modern.knesset,6,random
+P0901,modern,modern:385d2f1045f8:18:0,news/haaretz/2/243329.txt ¶18,modern.news.haaretz,8,random
+P0902,modern,modern:367ebb43bcce:97:0,news/haaretz/7/725712.txt ¶97,modern.news.haaretz,18,random
+P0903,modern,modern:e84f15386c18:8:0,news/haaretz/2/226120.txt ¶8,modern.news.haaretz,21,random
+P0904,modern,modern:4ce1536be6d5:14:0,blogs/6741.txt ¶14.1,modern.blogs,1,random
+P0905,modern,modern:980138e385fb:38:0,news/haaretz/8/834578.txt ¶38,modern.news.haaretz,6,random
+P0906,modern,modern:0039c1a5017a:33883:0,literary/O.txt ¶33883,modern.literary.original,21,random
+P0907,modern,modern:117a5f27625a:21:0,blogs/83.txt ¶21,modern.blogs,21,random
+P0908,modern,modern:6d209a890006:1:0,news/haaretz/6/613336.txt ¶1,modern.news.haaretz,83,random
+P0909,modern,modern:05fe73e57b9e:3:0,news/haaretz/7/718927.txt ¶3,modern.news.haaretz,12,random
+P0910,modern,modern:5e28db227fef:2:0,news/a7/news/37700-37799/37703.txt ¶2,modern.news.a7,8,random
+P0911,modern,modern:7423a09a3e8a:65:0,news/haaretz/6/613314.txt ¶65,modern.news.haaretz,30,random
+P0912,modern,modern:705b3a6fc4d2:9:0,news/a7/news/20100-20199/20166.txt ¶9,modern.news.a7,21,random
+P0913,modern,modern:c0444cd9cef3:62:0,news/haaretz/7/748397.txt ¶62,modern.news.haaretz,17,random
+P0914,modern,modern:6beaafc80d67:26:0,news/a7/news/47400-47499/47475.txt ¶26,modern.news.a7,27,random
+P0915,modern,modern:2da5c3a92d8a:10:0,news/haaretz/7/728714.txt ¶10,modern.news.haaretz,24,random
+P0916,modern,modern:dbb5e63fcea5:359:0,kneset/17/101233505.txt ¶359,modern.knesset,24,random
+P0917,modern,modern:61affca15d67:736:0,kneset/16/03394804.txt ¶736,modern.knesset,11,random
+P0918,modern,modern:ed5d35e6a872:33:0,news/haaretz/7/721167.txt ¶33,modern.news.haaretz,23,random
+P0919,modern,modern:9114fc58b4e7:4096:0,kneset/17/00011105.txt ¶4096,modern.knesset,20,random
+P0920,modern,modern:0b6acef32973:5:0,news/haaretz/1/118303.txt ¶5,modern.news.haaretz,19,random
+P0921,modern,modern:5f32a591d02a:5:0,blogs/9894.txt ¶5,modern.blogs,14,targeted:source:blogs
+P0922,modern,modern:bc84ccafae29:9:0,blogs/1237.txt ¶9,modern.blogs,4,targeted:source:blogs
+P0923,modern,modern:90c4fdca1302:106:0,blogs/3491.txt ¶106,modern.blogs,12,targeted:source:blogs
+P0924,modern,modern:72182690665c:132:0,blogs/6481.txt ¶132,modern.blogs,1,targeted:source:blogs
+P0925,modern,modern:9070bd690a1d:28:0,blogs/127.txt ¶28,modern.blogs,11,targeted:source:blogs
+P0926,modern,modern:ae2d3c97c02a:18:0,blogs/6273.txt ¶18,modern.blogs,1,targeted:source:blogs
+P0927,modern,modern:f4238fffcee4:816:0,tapuz/forumpage.asp_id_1833.txt ¶816,modern.forum.tapuz,26,targeted:source:forum.tapuz
+P0928,modern,modern:76ecdc00990c:45:0,tapuz/forumpage.asp_id_1400.txt ¶45,modern.forum.tapuz,1,targeted:source:forum.tapuz
+P0929,modern,modern:8cc628e4141b:235:0,tapuz/forumpage.asp_id_1533.txt ¶235,modern.forum.tapuz,1,targeted:source:forum.tapuz
+P0930,modern,modern:09a363fd4137:1287:0,tapuz/forumpage.asp_forum_113.txt ¶1287,modern.forum.tapuz,15,targeted:source:forum.tapuz
+P0931,modern,modern:a6c79a0436fa:569:0,tapuz/forumpage.asp_forum_1516.txt ¶569,modern.forum.tapuz,21,targeted:source:forum.tapuz
+P0932,modern,modern:09a363fd4137:1366:0,tapuz/forumpage.asp_forum_113.txt ¶1366,modern.forum.tapuz,11,targeted:source:forum.tapuz
+P0933,modern,modern:dfd4d9a8e8d2:8281:0,kneset/16/63018903.txt ¶8281,modern.knesset,4,targeted:source:knesset
+P0934,modern,modern:87b7738b439a:1097:0,kneset/16/03398804.txt ¶1097,modern.knesset,18,targeted:source:knesset
+P0935,modern,modern:9bba0b6c9c5a:2985:0,kneset/16/02711704.txt ¶2985,modern.knesset,25,targeted:source:knesset
+P0936,modern,modern:d67bec69e9dc:787:0,kneset/16/17244303.txt ¶787,modern.knesset,20,targeted:source:knesset
+P0937,modern,modern:539fab99afdc:2437:0,kneset/17/03074105.txt ¶2437,modern.knesset,2,targeted:source:knesset
+P0938,modern,modern:9114fc58b4e7:4184:0,kneset/17/00011105.txt ¶4184,modern.knesset,13,targeted:source:knesset
+P0939,modern,modern:0039c1a5017a:14453:0,literary/O.txt ¶14453,modern.literary.original,17,targeted:source:literary.original
+P0940,modern,modern:0039c1a5017a:34189:0,literary/O.txt ¶34189,modern.literary.original,34,targeted:source:literary.original
+P0941,modern,modern:0039c1a5017a:7080:0,literary/O.txt ¶7080,modern.literary.original,7,targeted:source:literary.original
+P0942,modern,modern:0039c1a5017a:2557:0,literary/O.txt ¶2557,modern.literary.original,30,targeted:source:literary.original
+P0943,modern,modern:0039c1a5017a:24670:0,literary/O.txt ¶24670,modern.literary.original,25,targeted:source:literary.original
+P0944,modern,modern:0039c1a5017a:13267:0,literary/O.txt ¶13267,modern.literary.original,24,targeted:source:literary.original
+P0945,modern,modern:5ab75ca06a35:42807:0,literary/T.txt ¶42807,modern.literary.translated,12,targeted:source:literary.translated
+P0946,modern,modern:5ab75ca06a35:25125:0,literary/T.txt ¶25125,modern.literary.translated,19,targeted:source:literary.translated
+P0947,modern,modern:5ab75ca06a35:7430:0,literary/T.txt ¶7430,modern.literary.translated,17,targeted:source:literary.translated
+P0948,modern,modern:5ab75ca06a35:40442:0,literary/T.txt ¶40442,modern.literary.translated,29,targeted:source:literary.translated
+P0949,modern,modern:5ab75ca06a35:20890:0,literary/T.txt ¶20890,modern.literary.translated,18,targeted:source:literary.translated
+P0950,modern,modern:5ab75ca06a35:21260:0,literary/T.txt ¶21260,modern.literary.translated,9,targeted:source:literary.translated
+P0951,modern,modern:9ad6fdfc7524:14:0,medical/questions/text_utf/01407_15.asp_utf.txt ¶14,modern.medical,14,targeted:source:medical
+P0952,modern,modern:44449b3b9792:27:0,"medical/doctors/xID-6039,xCT-105,xCN-printer,m-Doctors,a-Article.html.out.txt ¶27",modern.medical,18,targeted:source:medical
+P0953,modern,modern:c91c4eb0269b:10:0,medical/questions/text_utf/091108_8.asp_utf.txt ¶10,modern.medical,9,targeted:source:medical
+P0954,modern,modern:01ee2cf6dcdd:4:0,medical/questions/text_utf/083106_7.htm_utf.txt ¶4,modern.medical,8,targeted:source:medical
+P0955,modern,modern:81327cfdf1a0:3:0,medical/questions/text_utf/020408_4.asp_utf.txt ¶3,modern.medical,9,targeted:source:medical
+P0956,modern,modern:828c4ec19019:9:0,medical/questions/text_utf/111805_5.htm_utf.txt ¶9,modern.medical,10,targeted:source:medical
+P0957,modern,modern:8d18a27e6cab:6:0,news/a7/news/38800-38899/38871.txt ¶6,modern.news.a7,15,targeted:source:news.a7
+P0958,modern,modern:1b51dc55739c:6:0,news/a7/news/29400-29499/29408.txt ¶6,modern.news.a7,24,targeted:source:news.a7
+P0959,modern,modern:5fa6ba48f073:1:0,news/a7/news/66500-66599/66559.txt ¶1,modern.news.a7,20,targeted:source:news.a7
+P0960,modern,modern:42f1194cecb9:7:0,news/a7/articles/2700-2799/2763.txt ¶7,modern.news.a7,16,targeted:source:news.a7
+P0961,modern,modern:b6f568efa279:17:0,news/a7/news/2100-2199/2124.txt ¶17,modern.news.a7,13,targeted:source:news.a7
+P0962,modern,modern:dee3ccde90eb:1:0,news/a7/news/58700-58799/58772.txt ¶1,modern.news.a7,29,targeted:source:news.a7
+P0963,modern,modern:a890eca2bfa7:9:0,news/nrg/359.txt ¶9,modern.news.nrg,9,targeted:source:news.nrg
+P0964,modern,modern:14a8e82558ee:9:0,news/nrg/750.txt ¶9,modern.news.nrg,17,targeted:source:news.nrg
+P0965,modern,modern:01cb042479e8:2:0,news/nrg/311.txt ¶2,modern.news.nrg,24,targeted:source:news.nrg
+P0966,modern,modern:313eea35d1c5:1:0,news/nrg/97.txt ¶1,modern.news.nrg,13,targeted:source:news.nrg
+P0967,modern,modern:eeb94b903b5c:4:0,news/nrg/1023.txt ¶4,modern.news.nrg,30,targeted:source:news.nrg
+P0968,modern,modern:6fb5556c7b78:5:0,news/nrg/708.txt ¶5,modern.news.nrg,27,targeted:source:news.nrg
+P0969,modern,modern:f4559cb928f9:2:0,news/themarker/20020603/bb20020603_04.txt ¶2,modern.news.themarker,23,targeted:source:news.themarker
+P0970,modern,modern:65b11ff90345:6:0,news/themarker/20020610/skira20020610_174736.txt ¶6,modern.news.themarker,34,targeted:source:news.themarker
+P0971,modern,modern:895617eeb047:8:0,news/themarker/20020604/ebn20020604_04.txt ¶8,modern.news.themarker,39,targeted:source:news.themarker
+P0972,modern,modern:9dde55c27a61:20:0,news/themarker/20021022/skira20021022_222220.txt ¶20,modern.news.themarker,21,targeted:source:news.themarker
+P0973,modern,modern:91c0df9e9d9d:1:0,news/themarker/20020721/dm20020721_01.txt ¶1,modern.news.themarker,6,targeted:source:news.themarker
+P0974,modern,modern:98ffd6d04856:7:0,news/themarker/20020724/skira20020724_190214.txt ¶7,modern.news.themarker,12,targeted:source:news.themarker
+P0975,modern,modern:681be12e1061:6:0,news/ynet/8324.txt ¶6,modern.news.ynet,30,targeted:source:news.ynet
+P0976,modern,modern:0b465f7665d9:8:0,news/ynet/5488.txt ¶8,modern.news.ynet,13,targeted:source:news.ynet
+P0977,modern,modern:f6c4330a8e1c:14:0,news/ynet/5648.txt ¶14,modern.news.ynet,7,targeted:source:news.ynet
+P0978,modern,modern:c3cd4b8ef88d:18:0,news/ynet/3524.txt ¶18,modern.news.ynet,10,targeted:source:news.ynet
+P0979,modern,modern:38598192b7d3:4:0,news/ynet/6068.txt ¶4,modern.news.ynet,11,targeted:source:news.ynet
+P0980,modern,modern:874185de42a9:14:0,news/ynet/7535.txt ¶14,modern.news.ynet,15,targeted:source:news.ynet
+P0981,modern,modern:7a9c3c9179ef:120:0,news/haaretz/1/113568.txt ¶120.1,modern.news.haaretz,16,targeted:prefix_unresolved
+P0982,modern,modern:23ef2fc40693:3:0,news/haaretz/4/418116.txt ¶3,modern.news.haaretz,44,targeted:prefix_unresolved
+P0983,modern,modern:974032ca59d7:19:0,news/haaretz/8/836109.txt ¶19,modern.news.haaretz,17,targeted:prefix_unresolved
+P0984,modern,modern:ea956571518d:16:0,news/haaretz/7/726890.txt ¶16,modern.news.haaretz,61,targeted:prefix_unresolved
+P0985,modern,modern:04c523f5e3ac:1:0,news/haaretz/6/617444.txt ¶1,modern.news.haaretz,59,targeted:prefix_unresolved
+P0986,modern,modern:5ab75ca06a35:41917:0,literary/T.txt ¶41917,modern.literary.translated,30,targeted:reversed_number_pattern
+P0987,modern,modern:4f5d6b512a26:2442:0,kneset/16/00849404.txt ¶2442,modern.knesset,27,targeted:reversed_number_pattern
+P0988,modern,modern:8a2f60e9ea31:1481:1,kneset/16/01734204.txt ¶1481.2,modern.knesset,26,targeted:reversed_number_pattern
+P0989,modern,modern:8a7d1f160d54:3:0,news/a7/news/29200-29299/29257.txt ¶3,modern.news.a7,12,targeted:reversed_number_pattern
+P0990,modern,modern:c4019236a23c:3:0,blogs/2353.txt ¶3,modern.blogs,78,targeted:reversed_number_pattern
+P0991,modern,modern:1b5ec92f80fc:2:0,news/haaretz/8/830123.txt ¶2,modern.news.haaretz,8,targeted:contains_url
+P0992,modern,modern:c511c63f50e3:50:0,tapuz/forumpage.asp_forum_310.txt ¶50,modern.forum.tapuz,27,targeted:contains_url
+P0993,modern,modern:66d00cc758e4:35:0,news/haaretz/7/741000.txt ¶35,modern.news.haaretz,12,targeted:contains_url
+P0994,modern,modern:530a7e2e06f0:1:0,news/haaretz/7/732695.txt ¶1,modern.news.haaretz,1627,targeted:longest
+P0995,modern,modern:72d4ae12a466:1:0,news/haaretz/6/601238.txt ¶1,modern.news.haaretz,1255,targeted:longest
+P0996,modern,modern:7435bdcf3f0b:48:0,news/haaretz/4/448154.txt ¶48,modern.news.haaretz,1179,targeted:longest
+P0997,modern,modern:71b48cd62dfb:12:0,news/haaretz/1/112162.txt ¶12,modern.news.haaretz,1133,targeted:longest
+P0998,modern,modern:ab8f96f5dbca:7:0,news/haaretz/6/636536.txt ¶7,modern.news.haaretz,1066,targeted:longest
+P0999,modern,modern:5adf2b4bad39:1:0,news/haaretz/7/727380.txt ¶1,modern.news.haaretz,999,targeted:longest
+P1000,modern,modern:c2e490305b6c:11:0,news/haaretz/2/246919.txt ¶11,modern.news.haaretz,993,targeted:longest

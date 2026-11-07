@@ -1,0 +1,47 @@
+# Pinned parser models (M3). Files live in data/models/<name>/ (gitignored, ~0.9 GB total) and are
+# verified against these sha256 checksums before every load. The models' custom ("remote") code is
+# NOT fetched or executed from the Hub: a reviewed, byte-identical copy is vendored in
+# src/hebloc/parse/dicta_code/ (see its PROVENANCE.md) and checked against `vendored_code` below.
+#
+# Re-download (exact revisions; safetensors only):
+#   uv run hebloc pilot fetch-models
+#
+# Licence: both repositories are CC-BY-4.0 (model card metadata, checked 2026-11-07).
+# Cite: Shmidman et al. (2023), "DictaBERT: A State-of-the-Art BERT Suite for Modern Hebrew".
+
+vendored_code:
+  source_repo: dicta-il/dictabert-joint
+  source_revision: 7b1256fc0846e22d1af431eae299e2dcecee2778
+  files:
+    BertForJointParsing.py: adff43130f5ab6a3c6c580c507f206709d4a51028db1a8eff2bbd92bcf244daa
+    BertForMorphTagging.py: f16fbd2a640194a07c3a52fd809000241746a19f491a7af6702f4eb86a2f7093
+    BertForPrefixMarking.py: 6fed41e6041d824b4b5ed3b26ccf32b41ceb9b4ddaf1e961375064a2d0ded1d4
+    BertForSyntaxParsing.py: 2aebe51bf2ca5f090e2e9347786a4b2c032517efd08ee379b5af790456fe2646
+
+models:
+  base:
+    repo: dicta-il/dictabert-joint
+    revision: 7b1256fc0846e22d1af431eae299e2dcecee2778   # Hub last_modified 2026-09-30
+    license: cc-by-4.0
+    dir: dictabert-joint
+    files:   # name: [bytes, sha256]
+      config.json: [1871, 507f247f97ccaed18308054d58b5f063dd2cc01e69204d13218703dc2512932c]
+      model.safetensors: [744080096, c59db02c002b69fd3c072c310e3ba578d036386477248d1c8576d896cc06aa1c]
+      special_tokens_map.json: [695, 5d5b662e421ea9fac075174bb0688ee0d9431699900b90662acd44b2a350503a]
+      tokenizer.json: [3577609, 4e520fd9025a2fd5f2dce1d04df5922954c8ff050cc3e67d4bc54a7347eccb32]
+      tokenizer_config.json: [1361, 28bc3149d8056e46b1cd6e0a0989884acdf3fc115d7902b46c334a3d02890c26]
+      vocab.txt: [1500244, 0fb90bfa35244d26f0065d1fcd0b5becc3da3d44d616a7e2aacaf6320b9fa2d0]
+  tiny:
+    repo: dicta-il/dictabert-tiny-joint
+    revision: 708026b7297ffde293f14a3a592f8cf649f12c38   # Hub last_modified 2024-04-04
+    license: cc-by-4.0
+    dir: dictabert-tiny-joint
+    # The tiny repo ships no code; its config.json auto_map points at the BASE repo's code with no
+    # revision. We always use the vendored copy pinned above instead.
+    files:
+      config.json: [1861, 7fdddffe2722c800c111d201ed2b35c45ef9de1fcbfae6be700a1a58ea242bde]
+      model.safetensors: [180943460, 577997e9eded405f391d77db60072c0d1bcf37354865aacfdb514297288c6f90]
+      special_tokens_map.json: [695, 5d5b662e421ea9fac075174bb0688ee0d9431699900b90662acd44b2a350503a]
+      tokenizer.json: [3577623, 00657b39a8a73b96ddcc3cda245c5e8fa02be36e31e318bd13a9169eb89c999b]
+      tokenizer_config.json: [1351, 53fde6fe26f7b0f5c9e9e6cdaa549888b35266fb08dc8a57b60e385d4f860eb7]
+      vocab.txt: [1500244, 0fb90bfa35244d26f0065d1fcd0b5becc3da3d44d616a7e2aacaf6320b9fa2d0]

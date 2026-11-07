@@ -116,3 +116,42 @@ with `data/units`.
 | `map.parquet` | One row per v1 unit on a line that had chunks (14,733 rows). Columns: `old_sent_id`, `old_unit_type`, `old_ref`, `old_char_start/end`, `new_sent_id`, `new_ref`, `new_char_start/end`, `relation` (`merged_into` \| `renumbered` \| `same_id`), and `piece_idx`/`n_pieces` (the chunk's position in its sentence). On all other lines, v1 and v2 ids are identical |
 | `differences.parquet` | Every derived-value difference found (`new_sent_id`, `rel_path`, `line_no`, `kind`, `detail`). All are explained in D-020 |
 
+
+## Parse runs: `data/annotations/pilot/runs/<run_id>/` (M3; layout PROPOSED for M5)
+
+Written by `hebloc.parse.run.run` (sharded, resumable, atomic). Every run is self-contained:
+
+| Path | Contents |
+|---|---|
+| `inputs/shard-*.parquet` | `sent_id`, `text` (the exact text parsed; for default runs = `units.text_norm`, checked), `text_sha1` |
+| `pieces/shard-*.parquet` | `PIECES_SCHEMA` rows (above); budget 510 model sub-words; `cost_unit` names the tokenizer and revision |
+| `dicta_raw/shard-*.parquet` | One row per piece: `sent_id`, `piece_idx`, `status` (`ok` \| `mst_fallback` \| `error`), `compute_mst`, `error`, `raw_json` (**verbatim** `predict(output_style="json", per_token_ner=True)` output) |
+| `_shards/shard-*.json` | Shard manifest: resume key, counts, statuses, seconds, peak memory. Written last (commit marker) |
+| `run.json` | Run manifest: model repo and revision, applied runtime fixes, code commit, norm/segment/piece versions, budget, batch settings, threads, library versions, totals, throughput |
+| `tokens/tokens.parquet` | Derived from `dicta_raw` only (schema below). Re-derivation is checked to be identical |
+| `checks.json` | `hebloc.parse.checks.validate_run` report |
+
+`ud` / `iahlt_ud` CoNLL-U can be regenerated exactly from `raw_json`
+(`BertForJointParsing.convert_output_to_ud`, verified in M3), so they are not stored (D-008).
+
+### `tokens` (PROPOSED; `hebloc.parse.tokens.TOKENS_SCHEMA`, tokens_version 1)
+
+One row per Dicta word. Dicta words follow the tokenizer's pre-tokenization: punctuation is split
+from words, and Hebrew acronyms (`ל"ב`) and the listed abbreviations stay whole.
+
+| Column | Meaning |
+|---|---|
+| `sent_id`, `piece_idx`, `n_pieces` | Parent unit and piece. `n_pieces = 1` means one complete tree |
+| `word_idx`, `sent_word_idx` | Position in the piece; position in the unit |
+| `char_start`, `char_end`, `surface` | Span in the parsed unit text, and the exact slice. Provenance: → unit → source line |
+| `ws_idx` | Index of the whitespace token of the unit that contains the word |
+| `form` | The model's normalized word string (NFD, diacritics stripped, foreign characters → `UNK`) |
+| `prefix`, `host` | Segmented proclitic letters (e.g. `וב`) and the rest of the word |
+| `lemma`, `lemma_blank` | Dicta lexeme. `[BLANK]` (the model abstained) is kept verbatim and flagged |
+| `upos`, `feats`, `gender`, `number`, `person`, `tense` | UD POS. The **only** morphological features Dicta predicts are Gender, Number, Person and Tense: **no binyan, no definiteness, no construct state** |
+| `prefix_upos` | POS of the prefixes (e.g. `["CCONJ","ADP","DET"]`) |
+| `suffix`, `suffix_feats` | `PRON` or `ADP_PRON` with its features, or null |
+| `head`, `head_sent`, `deprel` | Head as piece-local index and as unit index (`-1` = root), and the UD relation |
+| `ner` | Per-word NER label |
+| `status` | `ok`, or `mst_fallback` (tree decoded without the MST step) |
+| `piece_tree_valid` | False if the piece's **word-level** tree is not a tree (cycle, self-loop or ≠ 1 root). Dicta's sub-word tree is valid, but the sub-word → word head mapping can break it (D-025). Never repaired: exclude these pieces from tree statistics and report the count |

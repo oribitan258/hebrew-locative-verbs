@@ -2,3 +2,5 @@
 *.pdf binary
 *.pptx binary
 *.parquet binary
+# Vendored model code is checksum-pinned (config/models.yaml): never let git rewrite its bytes
+src/hebloc/parse/dicta_code/Bert*.py -text

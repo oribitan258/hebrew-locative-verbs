@@ -17,6 +17,8 @@ uv run hebloc baseline  # record checksums of the original corpora (read-only); 
                         # the git-tracked config/corpora_anchor.json or it refuses
 uv run hebloc inventory # M1: build the document catalog (data/catalog/documents.parquet, ~75 s)
 uv run hebloc prepare   # M2: extract sentence/verse units (data/units/, ~5 min)
+uv run hebloc pilot fetch-models   # M3: download the pinned Dicta models (~0.9 GB, verified)
+uv run hebloc pilot <step>         # M3 pilot steps; see docs/pilot_report.md §16
 uv run pytest           # fast tests
 uv run pytest -m slow   # full checksum re-verification of corpora/
 ```

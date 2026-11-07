@@ -51,7 +51,8 @@ Parse-time pieces (only for over-budget units): (`sent_id`, `piece_idx`) + span 
 ## Corpus pitfalls (measured 2026-11-06)
 - **Mikra** (39 books, 23,206 verses): 1 verse/line, NO chapter:verse labels (refs from an external
   versification table, count-checked per book); niqqud + te'amim; Ketiv `(…)` / Qere `[…]` — default
-  Qere in `text_norm` is an UNVALIDATED HYPOTHESIS (D-009) until the M3 pilot compares both readings;
+  Qere in `text_norm` is SUPPORTED by the M3 pilot vs BHSA (D-026, proposed — awaiting user approval);
+  BHSA (data/external/bhsa, CC BY-NC) uses Latin book names (`hebloc.pilot.bhsa.BHSA_BOOKS`);
   always preserve Ketiv so either can be re-derived; maqaf written as `-`; stray ASCII `'` `"` inside words are accent artifacts; `{פ}` `{ס}` markers.
 - **Hazal** (204 files): ~38% of words are 16th–19th c. commentaries; Yalkut Shimoni is a 13th c.
   anthology → stratum tags. Mixed vocalization, abbreviations (אומ'), some Aramaic.
@@ -68,7 +69,10 @@ Parse-time pieces (only for over-budget units): (`sent_id`, `piece_idx`) + span 
 
 ## Stack & commands
 - Python 3.12 via `uv` (system default 3.14 is NOT used). Package: `src/hebloc/`.
-- Parser: `dicta-il/dictabert-joint` (pinned HF revision, recorded in run manifests).
+- Parser: `dicta-il/dictabert-joint` @ `7b1256fc0846` (and `dictabert-tiny-joint` @ `708026b7297f`), pinned
+  with sha256 in `config/models.yaml`; reviewed model code VENDORED byte-identically in
+  `src/hebloc/parse/dicta_code/` (never edit; never `trust_remote_code`); runtime fixes in
+  `parse/dicta_fixes.py` (D-024 MST fix on; D-029 `topk` off unless approved). torch CPU + transformers 5.
 - Storage: Parquet (zstd) + DuckDB. Tests: pytest.
 ```
 uv sync                                  # create/refresh env from uv.lock
@@ -80,7 +84,9 @@ uv run hebloc anchor                     # pin baseline in config/corpora_anchor
 uv run hebloc inventory                  # M1: rebuild catalog (~75 s; refuses to write if not anchor-consistent)
 uv run hebloc versification             # (one-off, network) refresh config/reference/tanakh_versification.json
 uv run hebloc prepare [--corpus X] [--sample N]   # M2: units (~5 min all; --sample → data/units_sample + review)
-uv run hebloc <pilot|parse|stats|catalog>   # later milestones
+uv run hebloc pilot <step>               # M3: fetch-models, fetch-bhsa, sample, smoke, parse, variants,
+                                         #   diacritics, census, analyze, audit, audit-score, bench
+uv run hebloc <parse|stats>              # later milestones (M5/M6)
 ```
 
 ## Repo map
@@ -114,7 +120,11 @@ notebooks/     exploration only — never pipeline logic
       parse-time step (`hebloc.pieces`, pieces keep parent `sent_id`); 9,709,662 units, exhaustively
       verified vs v1 (`hebloc verify-units-v2`). Multi-piece tree statistics are PROVISIONAL (D-021):
       report them explicitly; exclusion may bias substantially. Awaiting user approval.
-- [ ] M3 Dicta pilot & benchmark (GATE — needs user approval)
+- [x] M2.1 approved. M3 Dicta pilot & benchmark DONE (2026-11-07) — report `docs/pilot_report.md`;
+      **at the M3 GATE: 10 user decisions pending (report §15 / HANDOFF §6)**. Key facts: Dicta truncates
+      >510 sub-words SILENTLY (pieces + coverage check); Dicta has NO binyan feature; original MST code gives
+      11.9% invalid trees (fixed → 2.1%; rest flagged `piece_tree_valid`, never repaired); diacritics do not
+      change model input; base > tiny on BHSA; full Modern ≈ 306 h base (92 h with `topk`).
 - [ ] M4 data layer & access API
 - [ ] M5 full parsing run
 - [ ] M6 descriptive statistics + parser-accuracy report

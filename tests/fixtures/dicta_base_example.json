@@ -1,0 +1,302 @@
+{
+ "source": "dicta-il/dictabert-joint@7b1256fc0846 predict(output_style=json, per_token_ner=True), M3 exploration 2026-11-07",
+ "output": {
+  "text": "הילד מילא את הדלי במים ושם אותו על השולחן .",
+  "tokens": [
+   {
+    "token": "הילד",
+    "offsets": {
+     "start": 0,
+     "end": 4
+    },
+    "syntax": {
+     "word": "הילד",
+     "dep_head_idx": 1,
+     "dep_func": "nsubj",
+     "dep_head": "מילא"
+    },
+    "seg": [
+     "ה",
+     "ילד"
+    ],
+    "lex": "ילד",
+    "morph": {
+     "token": "הילד",
+     "pos": "NOUN",
+     "feats": {
+      "Gender": "Masc",
+      "Number": "Sing"
+     },
+     "prefixes": [
+      "DET"
+     ],
+     "suffix": false
+    },
+    "ner": "O"
+   },
+   {
+    "token": "מילא",
+    "offsets": {
+     "start": 5,
+     "end": 9
+    },
+    "syntax": {
+     "word": "מילא",
+     "dep_head_idx": -1,
+     "dep_func": "root",
+     "dep_head": "."
+    },
+    "seg": [
+     "מילא"
+    ],
+    "lex": "מילא",
+    "morph": {
+     "token": "מילא",
+     "pos": "VERB",
+     "feats": {
+      "Gender": "Masc",
+      "Number": "Sing",
+      "Person": "3",
+      "Tense": "Past"
+     },
+     "prefixes": [],
+     "suffix": false
+    },
+    "ner": "O"
+   },
+   {
+    "token": "את",
+    "offsets": {
+     "start": 10,
+     "end": 12
+    },
+    "syntax": {
+     "word": "את",
+     "dep_head_idx": 3,
+     "dep_func": "case:acc",
+     "dep_head": "הדלי"
+    },
+    "seg": [
+     "את"
+    ],
+    "lex": "את",
+    "morph": {
+     "token": "את",
+     "pos": "ADP",
+     "feats": {},
+     "prefixes": [],
+     "suffix": false
+    },
+    "ner": "O"
+   },
+   {
+    "token": "הדלי",
+    "offsets": {
+     "start": 13,
+     "end": 17
+    },
+    "syntax": {
+     "word": "הדלי",
+     "dep_head_idx": 1,
+     "dep_func": "obj",
+     "dep_head": "מילא"
+    },
+    "seg": [
+     "ה",
+     "דלי"
+    ],
+    "lex": "דלי",
+    "morph": {
+     "token": "הדלי",
+     "pos": "NOUN",
+     "feats": {
+      "Gender": "Masc",
+      "Number": "Sing"
+     },
+     "prefixes": [
+      "DET"
+     ],
+     "suffix": false
+    },
+    "ner": "O"
+   },
+   {
+    "token": "במים",
+    "offsets": {
+     "start": 18,
+     "end": 22
+    },
+    "syntax": {
+     "word": "במים",
+     "dep_head_idx": 1,
+     "dep_func": "obl",
+     "dep_head": "מילא"
+    },
+    "seg": [
+     "ב",
+     "מים"
+    ],
+    "lex": "מים",
+    "morph": {
+     "token": "במים",
+     "pos": "NOUN",
+     "feats": {
+      "Gender": "Masc",
+      "Number": "Plur"
+     },
+     "prefixes": [
+      "ADP"
+     ],
+     "suffix": false
+    },
+    "ner": "O"
+   },
+   {
+    "token": "ושם",
+    "offsets": {
+     "start": 23,
+     "end": 26
+    },
+    "syntax": {
+     "word": "ושם",
+     "dep_head_idx": 1,
+     "dep_func": "conj",
+     "dep_head": "מילא"
+    },
+    "seg": [
+     "ו",
+     "שם"
+    ],
+    "lex": "שם",
+    "morph": {
+     "token": "ושם",
+     "pos": "VERB",
+     "feats": {
+      "Gender": "Masc",
+      "Number": "Sing",
+      "Person": "3",
+      "Tense": "Past"
+     },
+     "prefixes": [
+      "CCONJ"
+     ],
+     "suffix": false
+    },
+    "ner": "O"
+   },
+   {
+    "token": "אותו",
+    "offsets": {
+     "start": 27,
+     "end": 31
+    },
+    "syntax": {
+     "word": "אותו",
+     "dep_head_idx": 5,
+     "dep_func": "obj",
+     "dep_head": "ושם"
+    },
+    "seg": [
+     "אותו"
+    ],
+    "lex": "את",
+    "morph": {
+     "token": "אותו",
+     "pos": "ADP",
+     "feats": {},
+     "prefixes": [],
+     "suffix": "PRON",
+     "suffix_feats": {
+      "Gender": "Masc",
+      "Number": "Sing",
+      "Person": "3"
+     }
+    },
+    "ner": "O"
+   },
+   {
+    "token": "על",
+    "offsets": {
+     "start": 32,
+     "end": 34
+    },
+    "syntax": {
+     "word": "על",
+     "dep_head_idx": 8,
+     "dep_func": "case",
+     "dep_head": "השולחן"
+    },
+    "seg": [
+     "על"
+    ],
+    "lex": "על",
+    "morph": {
+     "token": "על",
+     "pos": "ADP",
+     "feats": {},
+     "prefixes": [],
+     "suffix": false
+    },
+    "ner": "O"
+   },
+   {
+    "token": "השולחן",
+    "offsets": {
+     "start": 35,
+     "end": 41
+    },
+    "syntax": {
+     "word": "השולחן",
+     "dep_head_idx": 5,
+     "dep_func": "obl",
+     "dep_head": "ושם"
+    },
+    "seg": [
+     "ה",
+     "שולחן"
+    ],
+    "lex": "שולחן",
+    "morph": {
+     "token": "השולחן",
+     "pos": "NOUN",
+     "feats": {
+      "Gender": "Masc",
+      "Number": "Sing"
+     },
+     "prefixes": [
+      "DET"
+     ],
+     "suffix": false
+    },
+    "ner": "O"
+   },
+   {
+    "token": ".",
+    "offsets": {
+     "start": 42,
+     "end": 43
+    },
+    "syntax": {
+     "word": ".",
+     "dep_head_idx": 1,
+     "dep_func": "punct",
+     "dep_head": "מילא"
+    },
+    "seg": [
+     "."
+    ],
+    "lex": ".",
+    "morph": {
+     "token": ".",
+     "pos": "PUNCT",
+     "feats": {},
+     "prefixes": [],
+     "suffix": false
+    },
+    "ner": "O"
+   }
+  ],
+  "root_idx": 1,
+  "ner_entities": []
+ }
+}

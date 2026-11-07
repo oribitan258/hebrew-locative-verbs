@@ -130,6 +130,13 @@ def _cmd_verify_units_v2(args: argparse.Namespace) -> int:
     return 0 if r["structural_ok"] else 1
 
 
+def _cmd_pilot(args: argparse.Namespace) -> int:
+    """M3 pilot steps (see hebloc.pilot.steps)."""
+    from hebloc.pilot.steps import step
+
+    return step(args.step, threads=args.threads)
+
+
 def _cmd_versification(args: argparse.Namespace) -> int:
     """(Network, one-off) fetch Tanakh chapter lengths and verify them against the Mikra files."""
     from hebloc import versification as V
@@ -180,6 +187,12 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--seed", type=int, default=0)
     p.add_argument("--workers", type=int, default=None)
     p.set_defaults(func=_cmd_prepare)
+
+    p = sub.add_parser("pilot", help="M3 Dicta pilot steps: fetch-models, fetch-bhsa, sample, smoke, parse, "
+                       "variants, diacritics, census, analyze, audit, audit-score, bench.")
+    p.add_argument("step")
+    p.add_argument("--threads", type=int, default=8)
+    p.set_defaults(func=_cmd_pilot)
 
     p = sub.add_parser("verify-units-v2", help="M2.1: verify regenerated units against data/units_v1 (segment v1 → v2).")
     p.set_defaults(func=_cmd_verify_units_v2)

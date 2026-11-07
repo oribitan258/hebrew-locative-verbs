@@ -260,3 +260,82 @@ Rules and evidence are in `docs/m2_preprocessing.md`.
 - The final treatment is decided **after the M3 Dicta pilot**, from the measured number of
   multi-piece units and from alternatives such as a larger budget or overlapping windows.
 
+
+### D-022 · Pinned parser models; vendored, reviewed model code (M3) (2026-11-07) · accepted
+- Both models are pinned at exact Hugging Face revisions with file sha256s in `config/models.yaml`:
+  - `dicta-il/dictabert-joint` @ `7b1256fc0846`;
+  - `dicta-il/dictabert-tiny-joint` @ `708026b7297f`.
+- Both are licensed CC-BY-4.0. Weights (safetensors only) live in `data/models/`.
+- The custom model code was reviewed before first execution: no network, file, subprocess,
+  `exec`/`eval` or pickle access.
+- That code is **vendored byte-identically** in `src/hebloc/parse/dicta_code/` and loaded directly.
+  `trust_remote_code` is never used, and loading is offline.
+- Why vendor: the tiny model's `auto_map` points at the base repository's code *without a revision*,
+  which would otherwise fetch whatever code is current at run time.
+- The choice between base and tiny is the user's (D-027).
+
+### D-023 · Store `json` output only; UD is derivable (resolves D-008) (2026-11-07) · accepted
+- `ud` and `iahlt_ud` CoNLL-U were checked to be exactly reproducible from the `json` output
+  (`convert_output_to_ud` on a deep copy; equal for both models).
+- Runs therefore store `raw_json` verbatim (`predict(output_style="json", per_token_ner=True)`)
+  per piece.
+- The `tokens` table is derived from it, and re-derivation is checked to be identical.
+
+### D-024 · Runtime fix for Dicta's MST decoder (`mst_seq_len`) (2026-11-07) · proposed (applied in the pilot)
+- *Bug.* `compute_mst_tree` takes each batch row's length from its first padding position. Rows
+  without padding (the longest piece of every batch, or any piece parsed alone) get length 0, so
+  cycle repair never runs for them. Outputs also depend on batch composition.
+- *Evidence.* On the 1,000-unit pilot, the original code gave invalid word-level trees in
+  **138 of 1,161 pieces (11.9%)**. The fix brings this to 24 (2.1%) and changes the output of 129
+  pieces.
+- *Fix.* One line in a verbatim copy of that function (`hebloc.parse.dicta_fixes`), applied at run
+  time and recorded in every run manifest. A test reproduces the bug and checks the fix.
+- The vendored file is unchanged.
+
+### D-025 · Invalid word-level trees are flagged, never repaired (2026-11-07) · proposed
+- Dicta decodes a valid tree over **sub-words**, then gives each word the head of its first
+  sub-word. When that head is a continuation sub-word (`##…`) of another word, or of the word
+  itself, the word-level graph can contain a cycle or self-loop. This was confirmed for all 24
+  remaining pilot cases.
+- Such pieces get `piece_tree_valid = false` in `tokens`, are counted, and must be excluded from
+  tree statistics with the exclusion reported, as in D-021.
+- *Option for the user:* constrained decoding (heads restricted to word-initial sub-words). This is
+  a methodological change to the parser and is not implemented.
+
+### D-026 · Normalization hypotheses (D-018): pilot evidence (2026-11-07) · proposed
+| Hypothesis | Evidence (`docs/pilot_report.md` §9) | Proposal |
+|---|---|---|
+| Diacritic stripping | Keeping niqqud/cantillation gives **identical model input** for 144,247 of 144,247 affected units in all corpora (both tokenizers strip them). Parse outputs are identical for 60 of 60 Mikra verses | Accept (no effect on the parser) |
+| Qere in `text_norm` | On K/Q words, BHSA agreement is higher with the Qere: POS 74.4% vs 69.4%, noun lemma 57.7% vs 33.2%. Changing the reading also changes 14% of the *other* words' full analysis | Accept the Qere; keep the Ketiv in `text_norm_alt` |
+| Maqaf → space | Agreement with BHSA is equal within noise (POS 83.6% vs 83.0%) | Accept the default |
+| Sof pasuq → `.` | Equal POS; verb Person agreement 90.8% with `.` vs 88.2% without | Accept the default |
+
+### D-027 · Base vs tiny model (2026-11-07) · proposed: base
+- Against BHSA (500 random verses), base is better:
+  - POS agreement 83.6% vs 78.5%;
+  - verb Person 90.8% vs 85.4%;
+  - lemma blanks 7.4% vs 8.8%.
+- Speed:
+  - with the original lexeme code, tiny is only 1.4–1.8× faster, because a full-vocabulary sort
+    dominates both models;
+  - with `topk` (D-029), tiny is ≈2.9× faster than base: 1,529 vs 534 sub-words/s.
+- Projected cost for the full Modern corpus with base and `topk`: 92 h.
+- Tiny produced fewer invalid trees (0.3% vs 2.1%).
+
+### D-028 · Piece budget 510 sub-words (2026-11-07) · accepted (follows from the model)
+- The model input is 512 positions including `[CLS]`/`[SEP]`. Longer input is **silently truncated**
+  (verified: 600 words in, 510 words out, no error).
+- Units are split into pieces of at most 510 model sub-words (`hebloc.pieces` with the model's
+  sub-word cost).
+- Every output is checked to cover every input character.
+- How many units this affects in each full corpus is in the report (piece census). The statistical
+  treatment stays provisional (D-021).
+
+### D-029 · Lexeme top-k speed-up (`lex_topk`) (2026-11-07) · proposed (off by default)
+- `lex_candidates` fully sorts the 128k-word vocabulary for every sub-word in order to keep 3
+  candidates. This dominates run time and memory: ~2 MB per padded sub-word.
+- `torch.topk(3)` is a drop-in replacement. Measured:
+  - **byte-identical raw output on 300/300 pieces for each model**;
+  - base 161 → 534 sub-words/s; tiny 229 → 1,529;
+  - peak RAM 3.05 → 1.61 GB (base).
+- Adopting it for M5 is the user's decision.
