@@ -58,7 +58,7 @@ pilot has compared it with its alternative and the user has approved the result.
 
 | Choice | Default (hypothesis) |
 |---|---|
-| Units | Mikra: verse. Modern: source line. Other corpora: paragraph split on `. : ? !` with abbreviation guards; over-length units are chunked |
+| Units | Mikra: verse. Modern: source line. Other corpora: paragraph split on `. : ? !` with abbreviation guards; over-length units are chunked *(superseded: see D-018 and D-020; units are never chunked since segment v2)* |
 | Diacritics | Strip niqqud and cantillation in `text_norm`; keep the vocalized text in `text_raw` |
 | Ketiv/Qere (Mikra) | **HYPOTHESIS, unvalidated:** Qere in `text_norm`; Ketiv preserved in `text_raw` / `norm_flags` so either reading can be re-derived. M3 pilot test: parse the affected verses both ways and compare lemma/POS/tree plausibility (and BHSA agreement), then decide |
 | Maqaf (Mikra `-`) | Replaced by a space |
@@ -184,7 +184,7 @@ The `prefix=X` / `token=Y` artifacts (1.16M in Modern, 141 in Rambam) will be in
 Rules and evidence are in `docs/m2_preprocessing.md`.
 - **Accepted:**
   - segmentation on `. ? !` with bracket, initial and enumerator guards; the colon is not a terminator;
-  - 200-token chunks;
+  - 200-token chunks *(superseded by D-020: units are complete sentences; splitting moved to parse time)*;
   - Mikra accent-quote and paragraph-marker removal;
   - Haskala markup handling, including the removal of editorial edition notes;
   - Rambam `+…+` citations converted to parentheses;
@@ -201,3 +201,62 @@ Rules and evidence are in `docs/m2_preprocessing.md`.
   units. Only the tag text is removed.
 - Candidate rule R5 (re-ordering a number with its punctuation) and a possible `suspect_bidi` flag
   for Haaretz, ynet and nrg are **not applied**, pending user approval.
+
+### D-020 · Units are complete sentences; model splitting moves to parse time (M2.1) (2026-11-07) · accepted
+*Problem.*
+- Segment v1 cut sentences longer than 200 whitespace tokens into `chunk` units: 7,716 chunks
+  from 3,000 sentences.
+- The parent sentence was not stored. On 101 lines, two chunked sentences were adjacent
+  (135 pairs), and the stored columns could not tell where one ended and the next began.
+- Chunking ran **before** normalization, so rules that span a chunk boundary failed.
+- The 200-token cap was unrelated to Dicta's real (sub-word) limit.
+
+*Decision (user-approved M2.1 plan).*
+- `units` stores only complete linguistic units: `verse` or `sentence`. `SEGMENT_VERSION` is "2".
+- Normalization runs on the whole unit. No normalization rule changed, and `norm_version` stays "1".
+- Splitting for a model's input limit is a parse-time step, `hebloc.pieces`, which produces
+  *pieces* of `text_norm`.
+  - Every piece is stored with `PIECES_SCHEMA`: parent `sent_id`, `piece_idx`, `n_pieces`,
+    `norm_char_start/end`, token range, cost, budget, cost unit and `piece_version`.
+  - Pieces are checked by `verify_pieces` (nothing lost or added).
+  - The budget and cost unit (Dicta sub-words) are set in M3 after measurement.
+- The parent sentence is the unit itself, so the adjacency ambiguity can no longer arise.
+
+*Verification* (`hebloc verify-units-v2`, comparing against the preserved v1 copy):
+- 0 differing rows on all 9,699,645 rows of lines without chunks (every column except `segment_version`).
+- Counts reconcile per corpus: 9,714,378 − 7,716 + 3,000 = 9,709,662.
+- Line sets are identical; v1 chunk offsets are reproduced exactly by `plan_pieces(text_raw, 200)`;
+  non-whitespace characters are identical on every affected line.
+- Every derived-value difference was examined. All are in **3 sentences**, and each is a v1
+  boundary defect now fixed:
+  - Haskala Ytext1005003, line 499: an editor's edition note had leaked into `text_norm`.
+  - Haaretz 812673.txt, line 1: R2 now applies (`ב - 38` → `ב-38`).
+  - nrg 174.txt, line 7: an unresolved `prefix=` tag was misclassified `eol` because the chunk ended
+    right after it. It is now `number`, with the text unchanged.
+- 400 further flag-count differences are once-per-unit flags (e.g. `diacritics_stripped`) that v1
+  repeated per chunk.
+
+*Identifiers.*
+- Only units on the 2,710 affected lines changed id or ref: 3,682 renumbered, plus 7,716 chunks merged.
+- A v1 `sent_id` on those lines can denote a different unit in v2, so v1 ids must not be used
+  against v2 data. None were used downstream (no annotations existed).
+- The full old→new map is in `data/migrations/segment_v1_to_v2/map.parquet`. It is derived data,
+  regenerable while `data/units_v1` exists.
+
+### D-021 · Statistics for sentences that need several pieces: PROVISIONAL (2026-11-07) · hypothesis
+- Statistics are computed per **complete unit** (sentence or verse). Length and distinct-word
+  counts use the whole unit, with no cap. Mikra verses are labelled as verses and never silently
+  pooled with prose sentences.
+- A unit parsed in more than one piece has **no complete dependency tree**. Pieces are never
+  stitched under an invented root.
+- Every such unit must be **reported explicitly** in any tree-based statistic (depth, roots, tree
+  shape): count, share per corpus/stratum, and its length distribution. A per-piece depth may
+  appear only as a separately labelled lower bound.
+- **Excluding these units can cause substantial selection bias**, not necessarily a small one:
+  - they are the longest sentences, and depth grows with length;
+  - they are concentrated in particular corpora and works (sparsely punctuated rabbinic and
+    Haskala texts);
+  - how many units are affected depends on the piece budget, which is still unmeasured.
+- The final treatment is decided **after the M3 Dicta pilot**, from the measured number of
+  multi-piece units and from alternatives such as a larger budget or overlapping windows.
+

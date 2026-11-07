@@ -57,9 +57,9 @@ files. The primary key is `doc_id`. Schema: `hebloc.catalog.DOCUMENTS_SCHEMA`. L
 Companion file: `data/catalog/documents.manifest.json` records the creation time, code commit,
 curation hash, per-corpus counts and verification results.
 
-## `units`: `data/units/<corpus>/part-*.parquet` (M2; norm v1, segment v1)
+## `units`: `data/units/<corpus>/part-*.parquet` (M2/M2.1; norm v1, segment v2)
 
-One row per sentence, verse or chunk of every document in the full view. The primary key is
+One row per **complete** sentence or verse of every document in the full view. Units are never cut for a model's input limit (segment v2, D-020). The primary key is
 `sent_id`; `doc_id` links to `documents`. Each corpus folder has a `_manifest.json` (counts,
 checks, flag counts, versions, code commit). Schema: `hebloc.units.UNITS_SCHEMA`. Methodology:
 `docs/m2_preprocessing.md`.
@@ -76,7 +76,7 @@ views `documents` and `units`.
 | `line_no` | int32 | 1-based line in the decoded source file (split on `
 ` only) |
 | `k` | int16 | 0-based position of the unit within its line |
-| `unit_type` | string | `verse` (Mikra) \| `sentence` \| `chunk` (part of a unit longer than 200 tokens) |
+| `unit_type` | string | `verse` (Mikra) \| `sentence`. (Segment v1 also had `chunk`; removed by D-020.) |
 | `char_start`, `char_end` | int32 | Offsets in the decoded line: `line[char_start:char_end] == text_raw` |
 | `ref` | string | Human reference: `Genesis 2:7`; `<work> ¶<line>[.<k+1>]`; Rambam `Mishneh Torah/<sefer>/<hilchot>/<chapter> ¶<line>`; Haskala `<Ytext id> ¶…`; Modern `<path> ¶…` |
 | `text_raw` | string | **Exact source text** of the unit, never modified (incl. niqqud and markup) |
@@ -87,4 +87,32 @@ views `documents` and `units`.
 | `n_tokens_norm`, `n_hebrew_tokens_norm` | int32 | Whitespace tokens of `text_norm`, and how many contain a Hebrew letter (orthographic; not linguistic word counts) |
 | `aramaic` | string | Mikra only: `aramaic` \| `aramaic_partial` \| null |
 | `stratum`, `in_full_view`, `in_curated_view` | string, bool, bool | Copied from `documents`, for convenient filtering |
-| `norm_version`, `segment_version` | string | Rule versions used |
+| `norm_version`, `segment_version` | string | Rule versions used (currently `1`, `2`) |
+
+## `pieces` metadata (defined in M2.1; written by parse runs from M3)
+
+A *piece* is a span of a unit's `text_norm`, cut only when the whole unit exceeds the parser's
+input budget. It is a processing artifact, not a linguistic unit. Every parse run stores one row
+per piece next to the raw parser output. Schema: `hebloc.pieces.PIECES_SCHEMA`. Rule:
+`hebloc.pieces.plan_pieces` (`piece_version` 1). Primary key: (`sent_id`, `piece_idx`).
+
+| Column | Type | Meaning |
+|---|---|---|
+| `sent_id` | string | Parent unit (complete sentence or verse) |
+| `piece_idx`, `n_pieces` | int16 | Position of the piece, and the number of pieces of the unit. `n_pieces = 1` means the unit was parsed whole (complete tree) |
+| `norm_char_start`, `norm_char_end` | int32 | Span in the unit's `text_norm`. Pieces are separated only by whitespace, and together they contain every token (`verify_pieces`) |
+| `tok_start`, `tok_end` | int32 | Whitespace-token range `[tok_start, tok_end)` of `text_norm` |
+| `cost`, `budget`, `cost_unit` | int32, int32, string | Cost of the piece and the budget, in `cost_unit` (e.g. Dicta sub-words, set in M3). A single token over budget is isolated and logged, never truncated |
+| `piece_version` | string | Rule version |
+
+## `migrations/segment_v1_to_v2`: `data/migrations/segment_v1_to_v2/` (M2.1)
+
+Written by `hebloc verify-units-v2`, which compares `data/units_v1` (the preserved v1 output)
+with `data/units`.
+
+| File | Contents |
+|---|---|
+| `report.json` | Per-corpus checks and counts; `structural_ok` |
+| `map.parquet` | One row per v1 unit on a line that had chunks (14,733 rows). Columns: `old_sent_id`, `old_unit_type`, `old_ref`, `old_char_start/end`, `new_sent_id`, `new_ref`, `new_char_start/end`, `relation` (`merged_into` \| `renumbered` \| `same_id`), and `piece_idx`/`n_pieces` (the chunk's position in its sentence). On all other lines, v1 and v2 ids are identical |
+| `differences.parquet` | Every derived-value difference found (`new_sent_id`, `rel_path`, `line_no`, `kind`, `detail`). All are explained in D-020 |
+

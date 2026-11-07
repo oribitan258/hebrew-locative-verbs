@@ -1,7 +1,7 @@
 # M2: Unit Extraction, Normalization and Provenance (Methodology)
 
 *Date: 2026-11-06. Code: `src/hebloc/{units,segment,normalize,artifacts,versification,data}.py`.
-Rule versions: `norm_version = 1`, `segment_version = 1`. Real before/after examples:
+Rule versions: `norm_version = 1`, `segment_version = 2` (M2.1, 2026-11-07; see §8). Real before/after examples:
 [`m2_sample_review.md`](m2_sample_review.md).*
 
 ## 1. What M2 does (plain English)
@@ -27,7 +27,7 @@ columns (D-015).
 | `line_no` | 1-based line in the decoded source file. Lines are split on `\n` only, the same definition the catalog uses |
 | `char_start`, `char_end` | Offsets in that line. `source_line[char_start:char_end] == text_raw`, checked for every unit |
 | `ref` | Human-readable reference: `Genesis 2:7`, `Mishnah Beitzah ¶11`, `Mishneh Torah/NASHIM/aishowt/prk_a ¶1`, `Ytext1044001 ¶12.1`, `news/haaretz/0/14178.txt ¶1` |
-| `unit_type` | `verse` (Mikra), `sentence`, or `chunk` (a piece of an over-long sentence) |
+| `unit_type` | `verse` (Mikra) or `sentence`. Units are always complete; segment v1 also had `chunk` (§8) |
 
 **Mapping a unit back to its source.** `hebloc.data.trace(sent_id)` re-opens the original file
 (read-only), takes the line and the character span, and verifies that they equal `text_raw`. Example:
@@ -47,7 +47,7 @@ NORM: וייצר יהוה אלהים את האדם עפר מן האדמה ויפ
 | | Not inside matched `() [] {} <>` | Citations such as `(שמות כח, יז.)` must not be cut |
 | | Not after a single letter (initials `י. ל.`) or after a leading number (`1 .`) | Real cases from Modern |
 | | The colon is **not** a terminator | Mid-line it introduces quotations (`שנאמר: …`, `אמר :`) |
-| | Units longer than 200 tokens are cut into `chunk`s, preferably after `, ; :` | Some texts have hardly any punctuation (e.g. Pesikta Rabbati, 47 lines and 101k tokens). This keeps parser input bounded; Dicta's actual sub-word limit is checked in M3 |
+| | Units are **never** cut for the parser's input limit (segment v2). A unit too long for the parser is split at parse time into *pieces* that keep their parent `sent_id` (`hebloc.pieces`, §8) | Some texts have hardly any punctuation (e.g. Pesikta Rabbati, 47 lines and 101k tokens), so very long units exist; Dicta's actual sub-word limit is measured in M3 |
 
 **Aramaic.** Mikra units carry `aramaic` = `aramaic` (Dan 2:5–7:28, Ezra 4:8–6:18 and 7:12–26,
 Jer 10:11; 269 verses) or `aramaic_partial` (Dan 2:4, Gen 31:47), so statistics can exclude them.
@@ -133,7 +133,7 @@ the Knesset, a7 and blogs. This is a **source** limitation; M2 does not alter it
 
 | Check | Result |
 |---|---|
-| Every unit's `text_raw` equals the source line slice (asserted during extraction) | ✅ all 9,714,378 units |
+| Every unit's `text_raw` equals the source line slice (asserted during extraction) | ✅ all 9,714,378 v1 units; all 9,709,662 v2 units (§8) |
 | Independent re-read of 3,000 random units from the **original files** | ✅ exact match |
 | Coverage: the units of each line contain all its non-whitespace characters | ✅ 0 failures |
 | Every non-empty line of every full-view document yields units; line counts equal the catalog | ✅ |
@@ -148,5 +148,63 @@ the Knesset, a7 and blogs. This is a **source** limitation; M2 does not alter it
 1. **Candidate rule R5 (not applied).** For `prefix=X - P N`, where P is `, ; % .` and N is a number, rebuild `X-N` with P placed after it (e.g. `ב-20.3%`, `ב-2001 ,`). It would resolve about a third (~100k) of the unresolved cases, but it reorders tokens. *Options:* (a) keep as is, flagged (current); (b) approve R5 after a manual check of ~100 random cases.
 2. **Reversed-order numbers and Latin in Haaretz, ynet and nrg** (§5). *Options:* (a) document as a limitation and flag nothing more (current); (b) add a unit-level `suspect_bidi` flag so statistics can exclude affected units. A fix would be guesswork.
 3. **The M3 pilot will test the hypotheses:** diacritic stripping, Qere vs Ketiv, maqaf, and sof pasuq.
-4. **Over-long units:** 7,716 `chunk` units (0.08%). The 200-token limit will be checked against Dicta's real sub-word limit in M3.
+4. **Over-long units:** resolved structurally by M2.1 (§8). The piece budget (Dicta sub-words) is set in M3; the statistical treatment of multi-piece units is provisional (D-021).
 5. **Empty after normalization:** 306 units (mostly Haskala separator lines, plus Joshua 21:36–37). They are kept and flagged `is_empty_norm`; M3 will skip them.
+
+## 8. M2.1 correction: complete-sentence units (segment v2, D-020)
+
+**What was wrong in v1.**
+- Sentences over 200 whitespace tokens were cut into `chunk` units: 7,716 chunks from 3,000
+  sentences (Hazal 708, Medieval 475, Haskala 850, Modern 967).
+- The original sentence was not stored. On 101 lines, two chunked sentences were adjacent
+  (135 pairs), and nothing in the stored columns showed where one sentence ended.
+- Chunks were cut **before** normalization, so a rule whose pattern crossed a cut could fail.
+- The 200-token cap had no relation to Dicta's real input limit.
+
+**What changed.**
+- `segment_line` no longer cuts sentences, so each unit is a complete sentence or verse and is
+  normalized as a whole.
+- Cutting for the parser is now a parse-time step (`hebloc.pieces.plan_pieces`), measured in the
+  parser's own cost unit. Each piece records its parent `sent_id` and its exact span in `text_norm`
+  (`PIECES_SCHEMA`; see `data_dictionary.md`).
+- With cost = 1 token and budget = 200, `plan_pieces` reproduces every v1 chunk boundary exactly.
+- No normalization rule changed (`norm_version` 1).
+
+**How it was verified.** `hebloc verify-units-v2` compared the regenerated units with a preserved
+copy of v1 (`data/units_v1`). No result was assumed in advance.
+
+| Check | Result |
+|---|---|
+| Rows on lines that had no chunk (9,699,645 rows), every column except `segment_version` | 0 differences |
+| Unit counts per corpus: v2 = v1 − chunks + chunked sentences | reconciles (total 9,714,378 → 9,709,662) |
+| Source line sets, v1 vs v2 | identical |
+| v2 units on affected lines (2,710 lines) = `sentence_spans(line)`, `text_raw == line[s:e]` | ✅ (source re-read from `corpora/`) |
+| Non-whitespace characters per affected line | identical (nothing lost or added) |
+| v1 chunk offsets = `plan_pieces(text_raw, 200)` | ✅ for all 3,000 sentences |
+| Merged sentences: `text_norm` vs v1 chunk norms joined | **2 differences** |
+| Merged sentences: flag sets, token counts, other columns | **3 sentences** in total differ (below); 400 flag-count differences are once-per-unit flags (e.g. `diacritics_stripped`, `braces_removed`) that v1 repeated per chunk |
+| Validation sample (`data/units_sample`) | regenerated with v2 at clean commit `924efd5`. The old sample recorded the pre-M2 commit `be72e1d+dirty`, so it was stale; it was moved to `data/units_sample_v1` |
+
+**All 3 sentences with derived-value differences.** Each is a v1 chunk-boundary defect that is
+now fixed:
+
+| Unit | v1 (chunked) | v2 (whole sentence) |
+|---|---|---|
+| Haskala Ytext1005003, line 499 | The editor's note `<במהד' 1851: איתרמי>` was cut in half, so the note's words entered `text_norm` and a spurious `quote_brackets_removed` flag was added (227 tokens) | The note is removed as rule D-018 intends (224 tokens) |
+| Haaretz 812673.txt, line 1 | `prefix=ב - 38` was cut, so it was left as `ב - 38`, flagged `prefix_unresolved:hyphen_eol` | R2 applies: `ב-38` |
+| nrg 174.txt, line 7 | A chunk ended right after `prefix=כ`, so the tag was classified `prefix_unresolved:eol` | Classified `prefix_unresolved:number` (the next token is `130`). The text is identical, and the tag is still not reconstructed (D-019) |
+
+**Identifiers.**
+- Ids and refs changed only on the 2,710 affected lines: 7,716 chunks merged and 3,682 units
+  renumbered; 3,335 kept their id.
+- A v1 id on those lines can name a different unit in v2, so v1 ids must not be used against v2
+  data. None were used downstream.
+- The full mapping is in `data/migrations/segment_v1_to_v2/map.parquet`.
+
+**Statistics.**
+- Length is computed per complete unit.
+- Dependency-tree statistics for units parsed in several pieces are **provisional** (D-021).
+  Those units have no complete tree and must be reported explicitly.
+- Excluding them may cause substantial selection bias: they are the longest sentences, and they
+  are concentrated in particular corpora.
+

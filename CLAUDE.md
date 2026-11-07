@@ -40,12 +40,13 @@ until the user explicitly opens that scope.
 ```
 corpora/ (read-only)
  → data/catalog/documents.parquet        [M1 inventory]
- → data/units/<corpus>/*.parquet          [M2 prepare: provenance + text_raw + text_norm]
+ → data/units/<corpus>/*.parquet          [M2 prepare: complete sentences/verses, provenance + text_raw + text_norm]
  → data/annotations/<corpus>/{dicta_raw,tokens,runs}/   [M3 pilot, M5 parse]
  → data/stats/*.parquet → results/stats/ (CSV + PNG)    [M6 stats]
 DuckDB views over all Parquet: data/hebloc.duckdb · Python API: hebloc.data
 ```
 Key IDs: `doc_id` = stable hash of rel_path; `sent_id` = `<corpus>:<doc_id>:<line>:<k>`.
+Parse-time pieces (only for over-budget units): (`sent_id`, `piece_idx`) + span in `text_norm` (`hebloc.pieces`).
 
 ## Corpus pitfalls (measured 2026-11-06)
 - **Mikra** (39 books, 23,206 verses): 1 verse/line, NO chapter:verse labels (refs from an external
@@ -108,8 +109,11 @@ notebooks/     exploration only — never pipeline logic
       in period but heterogeneous; Haskala 1881 = analytical cutoff; 7 Musar files `needs_review`.
 - [x] M2 unit extraction — `data/units/<corpus>/` (9,714,378 units; verified, deterministic); methodology
       `docs/m2_preprocessing.md`; open: R5 reorder rule, bidi flag (D-019); M3 must test D-018 hypotheses.
-      `chunk` units are pieces of 3,000 over-long sentences — NOT sentences; no parent-sentence key is
-      stored yet (HANDOFF §8). Sentence-length/tree-depth stats must be computed per original sentence.
+      (Segment v1 chunks superseded by M2.1.)
+- [x] M2.1 complete-sentence units — segment v2 (D-020): units are never cut; model splitting is a
+      parse-time step (`hebloc.pieces`, pieces keep parent `sent_id`); 9,709,662 units, exhaustively
+      verified vs v1 (`hebloc verify-units-v2`). Multi-piece tree statistics are PROVISIONAL (D-021):
+      report them explicitly; exclusion may bias substantially. Awaiting user approval.
 - [ ] M3 Dicta pilot & benchmark (GATE — needs user approval)
 - [ ] M4 data layer & access API
 - [ ] M5 full parsing run
