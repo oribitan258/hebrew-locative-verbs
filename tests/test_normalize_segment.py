@@ -12,7 +12,8 @@ from hebloc.normalize import (
     normalize_mikra,
     normalize_modern,
 )
-from hebloc.segment import MAX_TOKENS, segment_line, sentence_spans
+from hebloc.pieces import plan_pieces, piece_rows, verify_pieces
+from hebloc.segment import segment_line, sentence_spans
 from hebloc import versification as V
 
 
@@ -138,10 +139,44 @@ def test_segmentation_rules():
     assert _texts("  פסוק. עם נקודה׃ {פ} ", "mikra") == ["פסוק. עם נקודה׃ {פ}"]               # verse never split
 
 
-def test_spans_cover_all_text_and_chunking():
-    line = " ".join(["מילה"] * (MAX_TOKENS * 2 + 7)) + ". ועוד משפט."
+def test_units_are_never_chunked():
+    # segment v2: an over-long sentence stays ONE unit (splitting is a parse-time step)
+    line = " ".join(["מילה"] * 407) + ". ועוד משפט."
     units = segment_line(line, "hazal")
+    assert [t for *_, t in units] == ["sentence", "sentence"]
     assert sum(len(line[s:e].split()) for s, e, _ in units) == len(line.split())
-    assert {t for *_, t in units} == {"chunk", "sentence"}
-    assert all(len(line[s:e].split()) <= MAX_TOKENS for s, e, _ in units)
     assert sentence_spans("   ") == []
+
+
+# ----------------------------------------------------------------------------- parse-time pieces
+def test_pieces_reconstruct_text_and_respect_budget():
+    text = " ".join(f"w{i}" for i in range(407))
+    ps = plan_pieces(text, 200)
+    verify_pieces(text, ps)
+    assert [p.tok_end - p.tok_start for p in ps] == [200, 200, 7] and all(p.cost <= 200 for p in ps)
+    assert plan_pieces(text, 1000)[0] == plan_pieces(text, 1000)[-1]          # fits → one piece
+    assert plan_pieces("   ", 5) == []
+
+
+def test_pieces_prefer_soft_break_in_second_half():
+    toks = [f"w{i}" for i in range(10)]
+    toks[7] += ","          # soft break in the second half of the first 9-token window
+    toks[2] += ";"          # first half: ignored
+    ps = plan_pieces(" ".join(toks), 9)
+    assert [(p.tok_start, p.tok_end) for p in ps] == [(0, 8), (8, 10)]
+
+
+def test_pieces_with_subword_cost_and_oversized_token():
+    text = "א בבבבבבבבבב ג ד"
+    ps = plan_pieces(text, 4, cost=len)               # cost = characters, as a stand-in for sub-words
+    verify_pieces(text, ps)
+    assert [text[p.start:p.end] for p in ps] == ["א", "בבבבבבבבבב", "ג ד"]
+    assert ps[1].cost == 10 > 4                        # oversized token is isolated, never truncated
+
+
+def test_piece_rows_link_to_parent_sentence():
+    rows = piece_rows("hazal:abc:5:0", "  א, ב ג  ", 2)
+    assert [r["sent_id"] for r in rows] == ["hazal:abc:5:0"] * 2 and {r["n_pieces"] for r in rows} == {2}
+    assert [(r["norm_char_start"], r["norm_char_end"]) for r in rows] == [(2, 6), (7, 8)]
+    with pytest.raises(AssertionError):
+        verify_pieces("א ב ג", plan_pieces("א ב", 5))

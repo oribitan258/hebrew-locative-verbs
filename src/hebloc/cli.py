@@ -116,6 +116,20 @@ def _cmd_prepare(args: argparse.Namespace) -> int:
     return 0 if ok else 1
 
 
+def _cmd_verify_units_v2(args: argparse.Namespace) -> int:
+    """M2.1: exhaustive v1 → v2 comparison (needs the preserved v1 copy in data/units_v1)."""
+    from hebloc.units_migrate import OUT_DIR, run
+
+    r = run()
+    for c, x in r["corpora"].items():
+        print(f"{c:9} units {x['units_old']:,} -> {x['units_new']:,} (chunks {x['chunks_old']:,} -> "
+              f"{x['chunked_sentences']:,} sentences) unaffected rows differing={x['unaffected_rows_differing']} "
+              f"reconciles={x['count_reconciles']}")
+    print("difference counts:", r["difference_counts"] or "none")
+    print(f"structural_ok={r['structural_ok']} -> {OUT_DIR}")
+    return 0 if r["structural_ok"] else 1
+
+
 def _cmd_versification(args: argparse.Namespace) -> int:
     """(Network, one-off) fetch Tanakh chapter lengths and verify them against the Mikra files."""
     from hebloc import versification as V
@@ -166,6 +180,9 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--seed", type=int, default=0)
     p.add_argument("--workers", type=int, default=None)
     p.set_defaults(func=_cmd_prepare)
+
+    p = sub.add_parser("verify-units-v2", help="M2.1: verify regenerated units against data/units_v1 (segment v1 → v2).")
+    p.set_defaults(func=_cmd_verify_units_v2)
 
     args = parser.parse_args(argv)
     return args.func(args)

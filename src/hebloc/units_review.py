@@ -16,13 +16,13 @@ from hebloc.paths import CORPORA
 # Flags worth showing explicitly per corpus (each gets up to N examples if present).
 TARGETED = {
     "mikra": ["ketiv_qere", "qere_only", "ketiv_only", "aramaic", "parasha_marker", "accent_quotes_removed"],
-    "hazal": ["enumerator_removed", "html_entities_decoded", "chunk"],
-    "medieval": ["citation_plus_to_parens", "prefix_R3", "prefix_unresolved", "enumerator_removed", "chunk"],
+    "hazal": ["enumerator_removed", "html_entities_decoded", "long"],
+    "medieval": ["citation_plus_to_parens", "prefix_R3", "prefix_unresolved", "enumerator_removed", "long"],
     "haskala": ["html_tags_removed", "sic_marker_removed", "quote_brackets_removed", "braces_removed",
-                "hash_marker_removed", "separator_removed", "chunk"],
+                "hash_marker_removed", "separator_removed", "long"],
     "modern": ["haaretz_header_removed", "prefix_R1", "prefix_R2", "prefix_R3", "token_R4",
                "prefix_unresolved:hyphen_hebrew", "prefix_unresolved:hyphen_punct",
-               "prefix_unresolved:punct", "img_marker_removed", "contains_url", "chunk"],
+               "prefix_unresolved:punct", "img_marker_removed", "contains_url", "long"],
 }
 
 
@@ -55,8 +55,8 @@ def write_review(units_root: Path, catalog: Path, out: Path, per_corpus: int = 5
         rows = con.execute(f"{base} WHERE NOT is_empty_norm ORDER BY hash(sent_id || '{seed}') LIMIT {per_corpus}").df()
         parts += [_fmt(r) for r in rows.to_dict("records")]
         for flag in TARGETED.get(cid, []):
-            if flag == "chunk":
-                cond = "unit_type = 'chunk'"
+            if flag == "long":  # would need parse-time pieces at the v1 200-token cap (hebloc.pieces)
+                cond = "n_tokens_norm > 200"
             elif flag == "aramaic":
                 cond = "aramaic IS NOT NULL"
             else:

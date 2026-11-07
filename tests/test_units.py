@@ -38,6 +38,16 @@ def test_manifests_ok_and_full_runs():
         assert m["ok"] and m["sample"] is None and m["coverage_failures"] == 0 and m["n_problems"] == 0, c
 
 
+def test_units_are_complete_segment_v2(con):
+    # D-020: no processing chunks in `units`; every unit is a complete sentence or verse.
+    kinds = dict(con.execute("SELECT unit_type, count(*) FROM u GROUP BY 1").fetchall())
+    assert set(kinds) == {"verse", "sentence"}
+    assert con.execute("SELECT list(DISTINCT segment_version) FROM u").fetchone()[0] == ["2"]
+    for c in CORPORA:
+        m = json.loads((UNITS_DIR / c / "_manifest.json").read_text(encoding="utf-8"))
+        assert m["segment_version"] == "2" and "chunk" not in m["unit_types"], c
+
+
 def test_every_source_line_and_document_accounted_for(con):
     got = dict(con.execute("SELECT corpus_id, count(DISTINCT (doc_id, line_no)) FROM u GROUP BY 1").fetchall())
     want = dict(con.execute("SELECT corpus_id, sum(n_nonempty_lines) FROM d WHERE in_full_view GROUP BY 1").fetchall())

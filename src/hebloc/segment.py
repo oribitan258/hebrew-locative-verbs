@@ -9,24 +9,22 @@ Rules (versioned, ``SEGMENT_VERSION``; evidence in docs/m2_preprocessing.md):
   is a single letter (initials such as "י. ל.") or a bare number at the start of the span (list
   enumerators "1 ."). The colon is NOT a terminator: mid-line it introduces quotations
   ("שנאמר: ...", "אמר :"); line-final colons need no split.
-* Any unit longer than ``MAX_TOKENS`` whitespace tokens is cut into ``chunk`` units, preferably
-  after the last ``, ; :`` within the limit, else at the limit (keeps model input bounded; Dicta's
-  real sub-word limit is checked in M3).
+* Units are COMPLETE linguistic units (segment v2). Over-long sentences are no longer cut here:
+  splitting for a model's input limit is a parse-time step (``hebloc.pieces``) that references
+  the whole unit by ``sent_id``. (Segment v1 cut units > 200 whitespace tokens into ``chunk``
+  units BEFORE normalization; see decision D-020.)
 """
 
 from __future__ import annotations
 
 import re
 
-SEGMENT_VERSION = "1"
-MAX_TOKENS = 200
+SEGMENT_VERSION = "2"
 TERMINATORS = ".?!"
 OPENERS = {"(": ")", "[": "]", "{": "}", "<": ">"}
 CLOSERS = {v: k for k, v in OPENERS.items()}
 RE_SINGLE_LETTER = re.compile(r"^[א-תA-Za-z]$")
 RE_DIGITS = re.compile(r"^\d+$")
-RE_TOKEN = re.compile(r"\S+")
-SOFT_BREAKS = {",", ";", ":"}
 
 
 def _trim(line: str, s: int, e: int) -> tuple[int, int] | None:
@@ -112,36 +110,11 @@ def sentence_spans(line: str) -> list[tuple[int, int]]:
     return spans
 
 
-def chunk_span(line: str, s: int, e: int, max_tokens: int = MAX_TOKENS) -> list[tuple[int, int]]:
-    """Cut an over-long span into chunks of ≤ max_tokens tokens (prefer soft punctuation breaks)."""
-    toks = [(m.start() + s, m.end() + s) for m in RE_TOKEN.finditer(line[s:e])]
-    if len(toks) <= max_tokens:
-        return [(s, e)]
-    out: list[tuple[int, int]] = []
-    i = 0
-    while i < len(toks):
-        j = min(i + max_tokens, len(toks))
-        if j < len(toks):
-            for k in range(j - 1, i + max_tokens // 2, -1):  # soft break in the second half
-                ts, te = toks[k]
-                if line[te - 1] in SOFT_BREAKS:
-                    j = k + 1
-                    break
-        out.append((toks[i][0], toks[j - 1][1]))
-        i = j
-    return out
-
-
 def segment_line(line: str, corpus_id: str) -> list[tuple[int, int, str]]:
-    """Units of one source line as (start, end, unit_type)."""
+    """Units of one source line as (start, end, unit_type); unit_type is ``verse`` or ``sentence``."""
     if not line.strip():
         return []
     if corpus_id == "mikra":
         sp = _trim(line, 0, len(line))
         return [(sp[0], sp[1], "verse")] if sp else []
-    out: list[tuple[int, int, str]] = []
-    for s, e in sentence_spans(line):
-        parts = chunk_span(line, s, e)
-        kind = "sentence" if len(parts) == 1 else "chunk"
-        out += [(a, b, kind) for a, b in parts]
-    return out
+    return [(s, e, "sentence") for s, e in sentence_spans(line)]

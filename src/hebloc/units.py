@@ -2,9 +2,10 @@
 
 For every document in the FULL view (all supplied text; out-of-period and duplicate documents
 included — views are columns, never deletions), each non-empty source line is segmented into
-units (verse / sentence / chunk). For each unit we store the exact source slice (``text_raw``),
-its offsets in the decoded line, the normalized model input (``text_norm``), every normalization
-flag, and a human reference.
+COMPLETE units (verse / sentence; segment v2 — never cut for model limits, see ``hebloc.pieces``).
+For each unit we store the exact source slice (``text_raw``), its offsets in the decoded line, the
+normalized model input (``text_norm``, normalized over the whole unit), every normalization flag,
+and a human reference.
 
 Integrity checks run on every line during extraction (and are recorded in the manifest):
   * ``line[char_start:char_end] == text_raw`` (by construction, re-asserted);
@@ -51,7 +52,7 @@ UNITS_SCHEMA = pa.schema(
         ("doc_id", pa.string()),
         ("line_no", pa.int32()),          # 1-based, canonical '\n' line split of the decoded file
         ("k", pa.int16()),                # 0-based index of the unit within its line
-        ("unit_type", pa.string()),       # verse | sentence | chunk
+        ("unit_type", pa.string()),       # verse | sentence (segment v2; v1 also had chunk)
         ("char_start", pa.int32()),       # offsets into the decoded source line
         ("char_end", pa.int32()),
         ("ref", pa.string()),             # human-readable reference
