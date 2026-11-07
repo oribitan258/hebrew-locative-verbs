@@ -96,10 +96,10 @@ def _compare_unaffected(con: duckdb.DuckDBPyConnection, corpus: str, old: Path, 
 
 def _affected(con: duckdb.DuckDBPyConnection, corpus: str) -> tuple[dict, list[dict], list[dict]]:
     cols = ", ".join(CONTENT_COLS)
-    old_rows = con.sql(f"SELECT o.*, d.rel_path FROM (SELECT {cols} FROM o JOIN aff USING (doc_id, line_no)) o "
+    old_rows = con.execute(f"SELECT o.*, d.rel_path FROM (SELECT {cols} FROM o JOIN aff USING (doc_id, line_no)) o "
                            f"JOIN (SELECT doc_id, rel_path FROM read_parquet('{DOCUMENTS_PATH.as_posix()}')) d USING (doc_id) "
                            f"ORDER BY rel_path, line_no, k").to_arrow_table().to_pylist()
-    new_rows = con.sql(f"SELECT {cols} FROM n JOIN aff USING (doc_id, line_no) ORDER BY doc_id, line_no, k").to_arrow_table().to_pylist()
+    new_rows = con.execute(f"SELECT {cols} FROM n JOIN aff USING (doc_id, line_no) ORDER BY doc_id, line_no, k").to_arrow_table().to_pylist()
     old_by = defaultdict(list)
     for r in old_rows:
         old_by[(r["doc_id"], r["line_no"])].append(r)
