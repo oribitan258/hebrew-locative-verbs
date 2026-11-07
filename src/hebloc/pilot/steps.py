@@ -12,6 +12,7 @@
     audit          write the manual-audit sheets (judgment columns left blank)
     audit-score    score the filled sheets (only human-filled cells)
     bench          bounded grid, equivalence checks, then scaled runs → bench/*.json
+    revalidate     (M4) re-validate every pilot run against its expected inputs → checks.json
 """
 
 from __future__ import annotations
@@ -72,6 +73,11 @@ def step(name: str, threads: int = 8) -> int:
     elif name == "bench":
         from hebloc.pilot import benchmark_plan
         _print(benchmark_plan.run_all(threads_grid=(4, 8, 12)))
+    elif name == "revalidate":
+        from hebloc.pilot import runs as R
+        res = R.revalidate()
+        _print(res)
+        return 0 if all(v["ok"] and v["expected_checked"] for v in res.values()) else 1
     else:
         raise SystemExit(f"unknown pilot step {name!r}; see `hebloc pilot --help`")
     return 0

@@ -1,0 +1,21 @@
+# Canonical parse runs per corpus (M4 data layer; read by hebloc.store.runs).
+#
+# The default `tokens`, `pieces`, `dicta_raw` and `inputs` (hebloc.data and the DuckDB catalog)
+# come ONLY from the runs listed here, each restricted to the corpus it is listed under, so every
+# unit has at most one analysis. A run is referred to as "<collection>/<run_id>", i.e. the folder
+# data/annotations/<collection>/runs/<run_id>/ (M5 runs: collection = corpus id).
+#
+# Rules (enforced by `uv run hebloc check`):
+#   - a listed run must exist, be complete, have variant "default", and pass validation;
+#   - several runs per corpus are allowed (e.g. Modern parsed in parts), but no unit may appear
+#     in two of them;
+#   - registering or replacing a run is a research decision: record it in docs/decisions.md.
+#
+# EMPTY until M5. Pilot runs are never canonical; read them explicitly with run="pilot/<run_id>".
+#
+# Example (after M5):
+#   canonical:
+#     mikra: [mikra/base_v1]
+#     modern: [modern/base_v1_nonhaaretz, modern/base_v1_haaretz10]
+
+canonical: {}

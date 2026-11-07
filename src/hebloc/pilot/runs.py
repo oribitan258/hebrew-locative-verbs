@@ -60,3 +60,27 @@ def summary(manifest: dict, checks: dict) -> str:
 
 def run_dir(run_id: str) -> Path:
     return PILOT_DIR / "runs" / run_id
+
+
+def expected_inputs() -> dict[str, dict[str, str]]:
+    """run_id → {sent_id: text that run must have parsed}, for every pilot run (no model needed)."""
+    from hebloc.pilot.experiments import variant_inputs
+
+    full = dict(unit_rows(sample_ids()))
+    out = {"base__default": full, "base__default__orig_mst": full, "tiny__default": full,
+           "base__default__smoke10": dict(unit_rows(sample_ids(10)))}
+    out.update({rid: dict(units) for rid, units in variant_inputs().items()})
+    return out
+
+
+def revalidate() -> dict:
+    """Re-run the integrity validation of every pilot run against its expected inputs and store
+    ``checks.json`` (with the run fingerprint used by ``hebloc check``)."""
+    expected = expected_inputs()
+    out = {}
+    for d in sorted((PILOT_DIR / "runs").iterdir()):
+        if d.is_dir():
+            c = validate_run(d, expected=expected.get(d.name))
+            out[d.name] = {"ok": c["ok"], "expected_checked": d.name in expected, "tokens": c["tokens"],
+                           "model_invalid_trees": c["checks"].get("model_invalid_trees", 0)}
+    return out

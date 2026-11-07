@@ -96,7 +96,7 @@ against the actual files (slow test, 2026-11-06).
 Re-anchoring is allowed only after a deliberate, documented corpus change, recorded as a new
 decision entry.
 
-### D-012 · Backup and sharing strategy for derived data (2026-11-06) · accepted (documentation only)
+### D-012 · Backup and sharing strategy for derived data (2026-11-06) · accepted · implemented by D-033 (M4)
 `data/` stays out of git. The expensive Dicta outputs will be backed up and shared as verified
 per-corpus bundles: sha256 manifest plus anchor digest, code commit, model revision and
 `norm_version`. Two copies are kept: an external drive and a private cloud folder. Derived data is
@@ -339,3 +339,69 @@ Rules and evidence are in `docs/m2_preprocessing.md`.
   - base 161 → 534 sub-words/s; tiny 229 → 1,529;
   - peak RAM 3.05 → 1.61 GB (base).
 - Adopting it for M5 is the user's decision.
+
+### D-030 · M4 data layer, independent of the pending M3 gate decisions (2026-11-07) · proposed (awaiting M4 review)
+*Context.* M4 was started at the user's request while the ten M3 gate decisions (pilot report §15)
+were still open. M4 was therefore built so that it decides none of them:
+- model (base/tiny), MST fix, `lex_topk`: run parameters, recorded in `run.json` and shown in the `runs` table;
+- invalid trees and multi-piece units (D-021, D-025): exposed as columns (`piece_tree_valid`, `n_pieces`) and counted in `parse_coverage`, never filtered;
+- Modern coverage (D-004): the canonical registry accepts several runs per corpus, and `parse_coverage` reports parsed vs. all units;
+- `tokens` schema (gate decision 5): implemented as proposed (v1). Because `tokens` is re-derived from the stored `dicta_raw` (`hebloc tokens <run> --force`), any requested change costs minutes, not a re-parse.
+
+*Design* (`hebloc.store`, `hebloc.data`, [data_layer.md](data_layer.md)):
+- `store.io`: one crash-safe writer (temp file + atomic rename; refuses `corpora/`), used by the runner and every new writer;
+- `store.schemas`: a registry of every table (schema, key, version), checked against every file on disk;
+- `store.runs`: run discovery and references (`<collection>/<run_id>`), completeness, and the M5 location `data/annotations/<corpus>/runs/<run_id>/` (the M3 layout, kept);
+- `store.catalog`: DuckDB views, in memory (`data.connect()`) or as a file (`hebloc catalog`). They read committed shards only, add `run`/`corpus_id`/`doc_id`, and come in all-run (`*_all`) and canonical variants;
+- `store.integrity` (`hebloc check`): read-only checks of documents, units, runs and the registry. Model-quality facts are reported, never counted as integrity failures;
+- `store.conllu`: export through Dicta's own converter, verified byte-identical to `predict(output_style="ud"/"iahlt_ud")` on 50 pilot pieces (10 per corpus);
+- `store.bundle`: D-012, see D-033.
+
+*Why.* M5 and M6 need one tested way to read and write annotations at full-corpus scale (Modern ≈
+18k shards). The pilot code held whole runs in memory and globbed every file, including those of
+interrupted shards.
+
+### D-031 · `tokens` stored per shard; validation streams per shard (2026-11-07) · proposed (awaiting M4 review)
+- `tokens/shard-NNNNN.parquet` per committed run shard, with `tokens/_shards/shard-NNNNN.json`:
+  sha256 of the shard's `inputs`, `pieces` and `dicta_raw` files, `tokens_version`, rows and the
+  output sha256.
+- Derivation is incremental and exact, because all pieces of a unit are in one shard. Tokens files of
+  uncommitted shards are removed.
+- *Why:* one in-memory table per run cannot work for Modern (hundreds of millions of rows), and one
+  run-level manifest rewritten after each of ~18k shards would be quadratic I/O.
+- *Migration:* the 11 pilot runs' single `tokens.parquet` files were re-derived per shard, found
+  **row-for-row identical**, and only then removed. Re-validation reproduced every M3 `checks.json`
+  count exactly; `hebloc pilot revalidate` re-checked every run against its expected inputs (all ok).
+- `validate_run` now works shard by shard (bounded memory). It adds hard checks for duplicate keys
+  across shards (DuckDB), uncommitted or missing shard files, and missing tokens, and stores a
+  `fingerprint` (shard keys + tokens version) so a later `hebloc check` can tell whether the report
+  still describes the run.
+- *Two semantic fixes* (neither affects existing data: the pilot has no `error` pieces and no
+  missing heads):
+  - after an `error` piece, the later pieces of the same unit get `sent_word_idx`/`head_sent` =
+    null. Before, they were silently shifted by the missing piece's words;
+  - a missing head gives `head_sent` = null, not `-1` (root).
+- `read_run` now reads committed shards only.
+
+### D-032 · Canonical-run registry `config/annotations.yaml` (2026-11-07) · proposed (awaiting M4 review)
+- The default annotations of a corpus come only from runs explicitly registered for it,
+  each restricted to that corpus's units. With nothing registered, the API raises an error; it never
+  guesses.
+- `hebloc check` enforces that registered runs exist, are complete, are `variant = default`, pass
+  validation, and that no unit has two canonical analyses.
+- Registering a run is a research decision and gets a decision entry. The registry is empty until M5.
+- *Why:* the pilot alone has three analyses of the same 1,000 units (base, tiny, original MST). A
+  "read all runs" default would silently double-count.
+
+### D-033 · Backup bundles implemented (implements D-012) (2026-11-07) · proposed (awaiting M4 review)
+- `hebloc bundle create|verify|restore` (`hebloc.store.bundle`). One uncompressed zip per run,
+  holding every file at its path under `data/`, plus `BUNDLE_MANIFEST.json` (fields in
+  [data_dictionary.md](data_dictionary.md)) and a `.sha256` sidecar.
+- `create` refuses incomplete, stale or unvalidated runs. `verify` re-hashes every member, rejects
+  missing, extra or unsafe paths, and requires the bundle's anchor to equal the git-tracked anchor.
+  `restore` verifies first, writes only under `data/annotations/`, refuses to overwrite different
+  files unless `--overwrite` is given, writes atomically, then re-validates the restored run
+  read-only and compares the fingerprint.
+- Measured: the `pilot/base__default` bundle is 6.1 MiB for 1,000 units and 101,368 tokens.
+- *Still manual, the user's action:* copying the bundles to the two targets (external drive, private
+  cloud folder).

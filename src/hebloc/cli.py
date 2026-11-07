@@ -150,6 +150,104 @@ def _cmd_versification(args: argparse.Namespace) -> int:
     return 1 if bad else 0
 
 
+def _cmd_runs(args: argparse.Namespace) -> int:
+    """M4: list parse runs with completeness, tokens status and canonical role."""
+    from hebloc.store.catalog import runs_table
+
+    t = runs_table().to_pylist()
+    if not t:
+        print("No parse runs under data/annotations/.")
+    for r in t:
+        print(f"{r['run']:42} model={r['model'] or '?':5} variant={r['variant'] or '?':26} units={r['units'] or 0:>9,} "
+              f"shards={r['shards']:>5} complete={r['complete']!s:5} tokens_up_to_date={r['tokens_shards_up_to_date']}"
+              f"/{r['shards']} canonical_for={r['canonical_for'] or '-'}")
+    return 0
+
+
+def _cmd_tokens(args: argparse.Namespace) -> int:
+    """M4: (re)derive the tokens of runs from their raw output, incrementally per shard."""
+    from hebloc.parse.tokens import derive, migrate_legacy
+    from hebloc.store.runs import list_runs, resolve
+
+    runs = list_runs() if args.run == "all" else [resolve(args.run)]
+    for r in runs:
+        mig = migrate_legacy(r.path)
+        s = derive(r.path, force=args.force, progress=True)
+        print(f"{r.ref}: shards={s['shards']} derived={s['derived']} up_to_date={s['skipped_up_to_date']} "
+              f"rows={s['rows']:,}" + (f" (legacy tokens.parquet migrated, identical: {mig['rows']:,} rows)"
+                                       if mig.get("legacy") else "")
+              + (f" INCOMPLETE shards: {s['incomplete_shards']}" if s["incomplete_shards"] else ""))
+    return 0
+
+
+def _cmd_catalog(args: argparse.Namespace) -> int:
+    """M4: write the persistent DuckDB catalog (views only) to data/hebloc.duckdb."""
+    from hebloc.store import catalog
+
+    path = catalog.build()
+    con = catalog.duckdb.connect(str(path), read_only=True)
+    views = [r[0] for r in con.execute("SELECT view_name FROM duckdb_views() WHERE NOT internal ORDER BY 1").fetchall()]
+    n_runs = con.execute("SELECT count(*) FROM runs").fetchone()[0]
+    canon = con.execute("SELECT count(*) FROM runs WHERE canonical_for IS NOT NULL").fetchone()[0]
+    con.close()
+    print(f"Wrote {path}\n  views: {', '.join(views)}\n  runs: {n_runs} ({canon} canonical)")
+    return 0
+
+
+def _cmd_check(args: argparse.Namespace) -> int:
+    """M4: integrity of the whole data layer (read-only)."""
+    from hebloc.store.integrity import REPORT_PATH, check_all
+
+    t0 = time.perf_counter()
+    r = check_all(deep=args.deep, runs=args.run or None, skip_units=args.skip_units)
+    d = r["documents"]
+    print(f"documents: ok={d['ok']} rows={d.get('rows', 0):,} {d['problems'] or ''}")
+    for c, u in r["units"].items():
+        print(f"units/{c:9} ok={u['ok']} rows={u.get('rows', 0):,} {u['problems'] or ''}")
+    for ref, x in r["runs"].items():
+        mo = x["model_output"]
+        print(f"run {ref:42} ok={x['ok']!s:5} validation={x['validation']['source']} "
+              f"invalid_tree_share={mo['model_invalid_tree_share']} errors={mo['errors_logged']} "
+              f"{x['problems'] or ''}")
+    print(f"canonical: ok={r['canonical']['ok']} registered={r['canonical']['registered'] or 'none'} "
+          f"{r['canonical']['problems'] or ''}")
+    print(f"OK={r['ok']} failed={r['failed'] or 'none'} ({time.perf_counter() - t0:.0f}s) -> {REPORT_PATH}")
+    return 0 if r["ok"] else 1
+
+
+def _cmd_export_conllu(args: argparse.Namespace) -> int:
+    from hebloc.store.conllu import export_run
+
+    r = export_run(args.run, args.out, corpus=args.corpus, style=args.style, valid_only=args.valid_only)
+    print(r)
+    return 0
+
+
+def _cmd_bundle(args: argparse.Namespace) -> int:
+    """M4 (D-012): create / verify / restore verified backup bundles of parse runs."""
+    from pathlib import Path
+
+    from hebloc.store import bundle as B
+    from hebloc.store.runs import list_runs
+
+    if args.action == "create":
+        refs = [r.ref for r in list_runs() if args.target == "all" or r.collection == args.target] \
+            if args.target in ("all", "pilot") or "/" not in args.target else [args.target]
+        for ref in refs:
+            r = B.create(ref)
+            print(f"{ref}: {r['path']} ({r['bytes'] / 2**20:,.1f} MiB, {r['files']} files) sha256={r['sha256']}")
+        return 0
+    if args.action == "verify":
+        r = B.verify(Path(args.target))
+        print(r)
+        return 0 if r["ok"] else 1
+    if args.action == "restore":
+        r = B.restore(Path(args.target), overwrite=args.overwrite)
+        print(r)
+        return 0 if r["validation_ok"] and r["fingerprint_matches"] else 1
+    raise SystemExit(f"unknown bundle action {args.action!r}")
+
+
 def _utf8_console() -> None:
     """Windows consoles default to a legacy code page; paths/text here are Hebrew."""
     for stream in (sys.stdout, sys.stderr):
@@ -196,6 +294,38 @@ def main(argv: list[str] | None = None) -> int:
 
     p = sub.add_parser("verify-units-v2", help="M2.1: verify regenerated units against data/units_v1 (segment v1 → v2).")
     p.set_defaults(func=_cmd_verify_units_v2)
+
+    p = sub.add_parser("runs", help="M4: list parse runs (completeness, tokens status, canonical role).")
+    p.set_defaults(func=_cmd_runs)
+
+    p = sub.add_parser("tokens", help="M4: (re)derive tokens from dicta_raw, incrementally per shard.")
+    p.add_argument("run", help="'<collection>/<run_id>' (e.g. pilot/base__default) or 'all'.")
+    p.add_argument("--force", action="store_true", help="Re-derive every shard even if up to date.")
+    p.set_defaults(func=_cmd_tokens)
+
+    p = sub.add_parser("catalog", help="M4: write the DuckDB catalog (views over all Parquet) to data/hebloc.duckdb.")
+    p.set_defaults(func=_cmd_catalog)
+
+    p = sub.add_parser("check", help="M4: integrity checks of documents, units, runs and the canonical registry.")
+    p.add_argument("--deep", action="store_true", help="Re-validate every run (else trust checks.json if its fingerprint is current).")
+    p.add_argument("--run", action="append", help="Only this run (repeatable).")
+    p.add_argument("--skip-units", action="store_true", help="Skip the units checks (~20 s).")
+    p.set_defaults(func=_cmd_check)
+
+    p = sub.add_parser("export-conllu", help="M4: export a run as CoNLL-U (Dicta's UD conversion + provenance comments).")
+    p.add_argument("run", help="'<collection>/<run_id>'.")
+    p.add_argument("--corpus", default=None)
+    p.add_argument("--style", default="ud", choices=["ud", "iahlt_ud"])
+    p.add_argument("--valid-only", action="store_true", help="Skip pieces whose word-level tree is invalid (D-025).")
+    p.add_argument("--out", default=None, help="Output file (default data/exports/conllu/…).")
+    p.set_defaults(func=_cmd_export_conllu)
+
+    p = sub.add_parser("bundle", help="M4 (D-012): create|verify|restore verified backup bundles of runs.")
+    p.add_argument("action", choices=["create", "verify", "restore"])
+    p.add_argument("target", help="create: '<collection>/<run_id>', a collection (e.g. 'pilot') or 'all'; "
+                                  "verify/restore: path to the .zip.")
+    p.add_argument("--overwrite", action="store_true", help="restore: replace different existing files (deliberate).")
+    p.set_defaults(func=_cmd_bundle)
 
     args = parser.parse_args(argv)
     return args.func(args)

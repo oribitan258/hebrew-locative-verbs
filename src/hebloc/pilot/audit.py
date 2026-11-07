@@ -17,8 +17,8 @@ import math
 from collections import defaultdict
 from pathlib import Path
 
-import pyarrow.parquet as pq
 
+from hebloc.parse.tokens import read_tokens
 from hebloc.paths import ANNOTATION_DIR, CORPORA
 from hebloc.pilot import sample as S
 from hebloc.pilot.runs import run_dir, unit_rows
@@ -39,7 +39,7 @@ def _h(s: str) -> str:
 
 def build(rid: str = "base__default") -> dict:
     toks = defaultdict(list)
-    for t in pq.read_table(run_dir(rid) / "tokens" / "tokens.parquet").to_pylist():
+    for t in read_tokens(run_dir(rid)).to_pylist():
         toks[t["sent_id"]].append(t)
     sample = S.load()
     chosen = []

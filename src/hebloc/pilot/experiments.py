@@ -11,14 +11,14 @@ from collections import Counter, defaultdict
 from pathlib import Path
 
 import duckdb
-import pyarrow.parquet as pq
 
 from hebloc import units as U
 from hebloc.catalog import DOCUMENTS_PATH, documents
 from hebloc.data import iter_units
 from hebloc.parse import models as M
 from hebloc.parse.checks import validate_run
-from hebloc.parse.run import RunConfig, run
+from hebloc.parse.run import RunConfig, read_run, run
+from hebloc.parse.tokens import read_tokens
 from hebloc.paths import CORPORA, UNITS_DIR
 from hebloc.pilot import PILOT_DIR
 from hebloc.pilot import bhsa as B
@@ -52,20 +52,25 @@ def mikra_sets() -> dict[str, list[tuple]]:
     return {"kq": kq, "h500": h500}
 
 
-def run_variants(lm_base: M.LoadedModel, lm_tiny: M.LoadedModel | None = None, threads: int = 8) -> dict:
+def variant_inputs() -> dict[str, list[tuple[str, str]]]:
+    """run_id → [(sent_id, text to parse)] for every normalization-variant run (no model needed)."""
     sets = mikra_sets()
+    return {
+        "base__mikra_kq_qere": [(r[0], r[3]) for r in sets["kq"]],
+        "base__mikra_kq_ketiv": [(r[0], r[4]) for r in sets["kq"]],
+        "base__mikra_h500_default": [(r[0], r[3]) for r in sets["h500"]],
+        "base__mikra_h500_maqaf_keep": [(r[0], V.mikra_text(r[2], maqaf="keep")) for r in sets["h500"]],
+        "base__mikra_h500_sofpasuq_drop": [(r[0], V.mikra_text(r[2], sof_pasuq="drop")) for r in sets["h500"]],
+        "base__mikra_voc60": [(r[0], V.mikra_text(r[2], strip_points=False)) for r in sets["h500"][:60]],
+        "tiny__mikra_h500_default": [(r[0], r[3]) for r in sets["h500"]],
+    }
+
+
+def run_variants(lm_base: M.LoadedModel, lm_tiny: M.LoadedModel | None = None, threads: int = 8) -> dict:
     defaults = V.check_mikra_defaults([(r[2], r[3], r[4]) for r in _con().execute(
         "SELECT sent_id, ref, text_raw, text_norm, text_norm_alt FROM u WHERE corpus_id='mikra'").fetchall()])
-    jobs = [
-        ("base__mikra_kq_qere", lm_base, [(r[0], r[3]) for r in sets["kq"]]),
-        ("base__mikra_kq_ketiv", lm_base, [(r[0], r[4]) for r in sets["kq"]]),
-        ("base__mikra_h500_default", lm_base, [(r[0], r[3]) for r in sets["h500"]]),
-        ("base__mikra_h500_maqaf_keep", lm_base, [(r[0], V.mikra_text(r[2], maqaf="keep")) for r in sets["h500"]]),
-        ("base__mikra_h500_sofpasuq_drop", lm_base, [(r[0], V.mikra_text(r[2], sof_pasuq="drop")) for r in sets["h500"]]),
-        ("base__mikra_voc60", lm_base, [(r[0], V.mikra_text(r[2], strip_points=False)) for r in sets["h500"][:60]]),
-    ]
-    if lm_tiny is not None:
-        jobs.append(("tiny__mikra_h500_default", lm_tiny, [(r[0], r[3]) for r in sets["h500"]]))
+    jobs = [(rid, lm_tiny if rid.startswith("tiny__") else lm_base, units)
+            for rid, units in variant_inputs().items() if lm_tiny is not None or not rid.startswith("tiny__")]
     out = {"defaults_reproduced": defaults, "runs": {}}
     for rid, lm, units in jobs:
         m = run(units, lm, run_dir(rid), RunConfig(run_id=rid, variant=rid.split("__", 1)[1], threads=threads))
@@ -120,7 +125,7 @@ def diacritics_tokenizer_test(lm: M.LoadedModel, name: str = "diacritics_tokeniz
 def compare_outputs_ignoring_offsets(rid_a: str, rid_b: str) -> dict:
     """Do two runs give the same analyses word by word (offsets/text excluded)?"""
     def load(rid):
-        t = pq.read_table(run_dir(rid) / "tokens" / "tokens.parquet").to_pylist()
+        t = read_tokens(run_dir(rid)).to_pylist()
         d = defaultdict(list)
         for r in t:
             d[r["sent_id"]].append((r["form"], r["prefix"], r["lemma"], r["upos"], r["feats"], r["suffix"], r["head"], r["deprel"]))
@@ -146,7 +151,7 @@ def _bhsa_index():
 
 def _run_tokens_by_unit(rid: str) -> dict[str, list[dict]]:
     d = defaultdict(list)
-    for r in pq.read_table(run_dir(rid) / "tokens" / "tokens.parquet").to_pylist():
+    for r in read_tokens(run_dir(rid)).to_pylist():
         d[r["sent_id"]].append(r)
     return d
 
@@ -258,13 +263,13 @@ def tree_depths(tokens: list[dict]) -> dict[tuple[str, int], int]:
 
 
 def diagnostics(rid: str) -> dict:
-    toks = pq.read_table(run_dir(rid) / "tokens" / "tokens.parquet").to_pylist()
+    toks = read_tokens(run_dir(rid)).to_pylist()
     meta = _corpus_of(rid)
     depths = tree_depths(toks)
     by_c = defaultdict(list)
     for t in toks:
         by_c[meta[t["sent_id"]]].append(t)
-    pieces = pq.read_table(str(run_dir(rid) / "pieces")).to_pylist()
+    pieces = read_run(run_dir(rid), "pieces").to_pylist()
     npieces = {p["sent_id"]: p["n_pieces"] for p in pieces}
     out = {}
     for c in CORPORA:

@@ -24,7 +24,6 @@ from __future__ import annotations
 
 import hashlib
 import json
-import os
 import platform
 import time
 from dataclasses import dataclass, field
@@ -40,6 +39,7 @@ from hebloc.parse.models import BUDGET, LoadedModel, subword_cost
 from hebloc.paths import assert_not_in_corpora
 from hebloc.pieces import PIECE_VERSION, PIECES_SCHEMA, piece_rows
 from hebloc.segment import SEGMENT_VERSION
+from hebloc.store.io import atomic_write_json, atomic_write_parquet
 
 RUNNER_VERSION = "1"
 INPUTS_SCHEMA = pa.schema([("sent_id", pa.string()), ("text", pa.string()), ("text_sha1", pa.string())])
@@ -76,10 +76,7 @@ def _peak_mem_bytes() -> int:
     return int(getattr(mi, "peak_wset", 0) or mi.rss)
 
 
-def _atomic_write(table: pa.Table, path: Path) -> None:
-    tmp = path.with_suffix(".tmp")
-    pq.write_table(table, tmp, compression="zstd")
-    os.replace(tmp, path)
+_atomic_write = atomic_write_parquet   # shared crash-safe writer (hebloc.store.io)
 
 
 def _shard_key(lm: LoadedModel, cfg: RunConfig, units: list[tuple[str, str]]) -> str:
@@ -196,9 +193,7 @@ def run(units: list[tuple[str, str]], lm: LoadedModel, run_dir: Path, cfg: RunCo
               "ws_tokens": sum(len(t.split()) for _, t in shard), "subwords": sum(p["cost"] for p in pieces),
               "status": {s: sum(1 for r in raw if r["status"] == s) for s in ("ok", "mst_fallback", "error")},
               "seconds": round(seconds, 3), "peak_mem_bytes": _peak_mem_bytes()}
-        tmp = mpath.with_suffix(".tmp")
-        tmp.write_text(json.dumps(sm, indent=1), encoding="utf-8")
-        os.replace(tmp, mpath)
+        atomic_write_json(sm, mpath, indent=1)
         if bar:
             bar.update(len(shard))
     if bar:
@@ -222,10 +217,13 @@ def run(units: list[tuple[str, str]], lm: LoadedModel, run_dir: Path, cfg: RunCo
         "extra": cfg.extra,
     }
     manifest["ws_tokens_per_second"] = round(manifest["ws_tokens"] / manifest["parse_seconds"], 1) if manifest["parse_seconds"] else None
-    (run_dir / "run.json").write_text(json.dumps(manifest, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    atomic_write_json(manifest, run_dir / "run.json")
     return manifest
 
 
 def read_run(run_dir: Path, part: str) -> pa.Table:
-    files = sorted((run_dir / part).glob("shard-*.parquet"))
+    """One part (inputs | pieces | dicta_raw | tokens) of a run: COMMITTED shards only, in shard
+    order. Files of an uncommitted shard (an interrupted session) are never read as data."""
+    shards = sorted(p.stem for p in (Path(run_dir) / "_shards").glob("shard-*.json"))
+    files = [Path(run_dir) / part / f"{s}.parquet" for s in shards]
     return pa.concat_tables([pq.read_table(f) for f in files]) if files else pa.table({})

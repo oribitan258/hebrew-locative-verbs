@@ -1,7 +1,9 @@
 # Data Dictionary
 
 One section per persisted table. Tables are added milestone by milestone: `documents` (M1),
-`units` (M2); `dicta_raw`, `tokens` and `runs` in M3/M4; statistics in M6.
+`units` (M2); parse runs (`inputs`, `pieces`, `dicta_raw`, `tokens`) in M3/M4; statistics in M6.
+Every table is registered in `hebloc.store.schemas` (schema, key, version), and `hebloc check`
+verifies every file on disk against it. How to *use* the data layer: [data_layer.md](data_layer.md).
 
 ## `documents`: `data/catalog/documents.parquet` (M1, inventory v2)
 
@@ -67,7 +69,7 @@ checks, flag counts, versions, code commit). Schema: `hebloc.units.UNITS_SCHEMA`
 Read with `hebloc.data.units(corpus, view=None|"full"|"curated", columns=[...])` (pandas), or
 `hebloc.data.iter_units(...)` to stream Arrow batches (Modern). `hebloc.data.trace(sent_id)`
 maps a unit back to its source and verifies it. `hebloc.data.connect()` returns DuckDB with the
-views `documents` and `units`.
+views `documents`, `units` and the annotation views (see "DuckDB catalog" below).
 
 | Column | Type | Meaning |
 |---|---|---|
@@ -117,22 +119,35 @@ with `data/units`.
 | `differences.parquet` | Every derived-value difference found (`new_sent_id`, `rel_path`, `line_no`, `kind`, `detail`). All are explained in D-020 |
 
 
-## Parse runs: `data/annotations/pilot/runs/<run_id>/` (M3; layout PROPOSED for M5)
+## Parse runs: `data/annotations/<collection>/runs/<run_id>/` (M3 layout, final for M5 in M4)
 
+`<collection>` is `pilot` for the M3 runs and the corpus id for M5 runs
+(`hebloc.store.runs.run_dir_for(corpus, run_id)`). A run is referred to as `"<collection>/<run_id>"`.
 Written by `hebloc.parse.run.run` (sharded, resumable, atomic). Every run is self-contained:
 
 | Path | Contents |
 |---|---|
-| `inputs/shard-*.parquet` | `sent_id`, `text` (the exact text parsed; for default runs = `units.text_norm`, checked), `text_sha1` |
-| `pieces/shard-*.parquet` | `PIECES_SCHEMA` rows (above); budget 510 model sub-words; `cost_unit` names the tokenizer and revision |
-| `dicta_raw/shard-*.parquet` | One row per piece: `sent_id`, `piece_idx`, `status` (`ok` \| `mst_fallback` \| `error`), `compute_mst`, `error`, `raw_json` (**verbatim** `predict(output_style="json", per_token_ner=True)` output) |
-| `_shards/shard-*.json` | Shard manifest: resume key, counts, statuses, seconds, peak memory. Written last (commit marker) |
+| `inputs/shard-*.parquet` | `sent_id`, `text` (the exact text parsed; for default runs = `units.text_norm`, checked), `text_sha1`. Key: `sent_id` |
+| `pieces/shard-*.parquet` | `PIECES_SCHEMA` rows (above); budget 510 model sub-words; `cost_unit` names the tokenizer and revision. Key: (`sent_id`, `piece_idx`) |
+| `dicta_raw/shard-*.parquet` | One row per piece: `sent_id`, `piece_idx`, `status` (`ok` \| `mst_fallback` \| `error`), `compute_mst`, `error`, `raw_json` (**verbatim** `predict(output_style="json", per_token_ner=True)` output). Key: (`sent_id`, `piece_idx`) |
+| `_shards/shard-*.json` | Shard manifest: resume key, counts, statuses, seconds, peak memory. Written last: **a shard exists only if this file exists** |
+| `tokens/shard-*.parquet` | Derived from that shard's three files only (schema below). Key: (`sent_id`, `piece_idx`, `word_idx`) |
+| `tokens/_shards/shard-*.json` | sha256 of the three source files, `tokens_version`, rows, sha256 of the tokens file. A shard is re-derived only when one of these changes (`hebloc tokens`) |
 | `run.json` | Run manifest: model repo and revision, applied runtime fixes, code commit, norm/segment/piece versions, budget, batch settings, threads, library versions, totals, throughput |
-| `tokens/tokens.parquet` | Derived from `dicta_raw` only (schema below). Re-derivation is checked to be identical |
-| `checks.json` | `hebloc.parse.checks.validate_run` report |
+| `checks.json` | `hebloc.parse.checks.validate_run` report, with `fingerprint` (hash of the committed shard keys + tokens version). A later `hebloc check` trusts the report only while the fingerprint is current |
+
+All pieces of a unit are in the unit's shard, so per-shard derivation and validation are exact and
+memory is bounded by one shard. Readers (`read_run`, DuckDB views, exports, bundles) use
+**committed shards only**: files of an interrupted shard are never read as data, and
+`hebloc check` reports them.
 
 `ud` / `iahlt_ud` CoNLL-U can be regenerated exactly from `raw_json`
-(`BertForJointParsing.convert_output_to_ud`, verified in M3), so they are not stored (D-008).
+(`convert_output_to_ud`, verified in M3 and again in M4 on 50 pieces), so they are not stored
+(D-023). `hebloc export-conllu` writes them on demand.
+
+*Change in M4 (D-031):* the M3 runs stored one `tokens/tokens.parquet` per run. They were
+re-derived per shard, checked row-for-row identical (all 11 pilot runs), and the single file was
+removed (`hebloc.parse.tokens.migrate_legacy`).
 
 ### `tokens` (PROPOSED; `hebloc.parse.tokens.TOKENS_SCHEMA`, tokens_version 1)
 
@@ -142,7 +157,7 @@ from words, and Hebrew acronyms (`ל"ב`) and the listed abbreviations stay whol
 | Column | Meaning |
 |---|---|
 | `sent_id`, `piece_idx`, `n_pieces` | Parent unit and piece. `n_pieces = 1` means one complete tree |
-| `word_idx`, `sent_word_idx` | Position in the piece; position in the unit |
+| `word_idx`, `sent_word_idx` | Position in the piece; position in the unit. `sent_word_idx` is **null** for the pieces that follow an `error` piece of the same unit (the offset is unknown, so it is never guessed) |
 | `char_start`, `char_end`, `surface` | Span in the parsed unit text, and the exact slice. Provenance: → unit → source line |
 | `ws_idx` | Index of the whitespace token of the unit that contains the word |
 | `form` | The model's normalized word string (NFD, diacritics stripped, foreign characters → `UNK`) |
@@ -151,7 +166,63 @@ from words, and Hebrew acronyms (`ל"ב`) and the listed abbreviations stay whol
 | `upos`, `feats`, `gender`, `number`, `person`, `tense` | UD POS. The **only** morphological features Dicta predicts are Gender, Number, Person and Tense: **no binyan, no definiteness, no construct state** |
 | `prefix_upos` | POS of the prefixes (e.g. `["CCONJ","ADP","DET"]`) |
 | `suffix`, `suffix_feats` | `PRON` or `ADP_PRON` with its features, or null |
-| `head`, `head_sent`, `deprel` | Head as piece-local index and as unit index (`-1` = root), and the UD relation |
+| `head`, `head_sent`, `deprel` | Head as piece-local index and as unit index (`-1` = root), and the UD relation. `head_sent` is null where `sent_word_idx` is (above), or when the model gave no head |
 | `ner` | Per-word NER label |
 | `status` | `ok`, or `mst_fallback` (tree decoded without the MST step) |
 | `piece_tree_valid` | False if the piece's **word-level** tree is not a tree (cycle, self-loop or ≠ 1 root). Dicta's sub-word tree is valid, but the sub-word → word head mapping can break it (D-025). Never repaired: exclude these pieces from tree statistics and report the count |
+
+## Canonical runs: `config/annotations.yaml` (M4; git-tracked; D-032)
+
+`canonical: {<corpus>: [<collection>/<run_id>, …]}`. The default annotations of a corpus
+(`hebloc.data.tokens(corpus)` and the DuckDB views `tokens`, `pieces`, `dicta_raw`, `inputs`)
+come only from the runs listed for it, each restricted to that corpus's units. **Empty until M5.**
+Pilot runs are read explicitly (`run="pilot/<run_id>"`). `hebloc check` requires every listed run
+to exist, be complete, have `variant = default` and pass validation, and requires that no unit has
+two canonical analyses.
+
+## DuckDB catalog: `data/hebloc.duckdb` (M4; `hebloc catalog`; views, no copies)
+
+The same definitions back `hebloc.data.connect()` in memory (`hebloc.store.catalog`).
+
+| View | Contents |
+|---|---|
+| `documents`, `units` | The M1/M2 tables |
+| `runs` | Small table: one row per parse run (model, revision, variant, fixes, versions, units, completeness, tokens status, `canonical_for`) |
+| `inputs_all`, `pieces_all`, `dicta_raw_all`, `tokens_all` | Every run (pilot included), committed shards only, with `run`, `corpus_id` and `doc_id` columns. **Always filter on `run`**: several pilot runs parse the same units |
+| `inputs`, `pieces`, `dicta_raw`, `tokens` | Canonical runs only, with the same extra columns. Typed and empty until M5 |
+| `piece_status` | Canonical pieces with parse `status`, word count and word-level `tree_valid` |
+| `parse_coverage` | Per `corpus_id` × `stratum`: `units`, `units_nonempty`, `units_parsed`, `units_multi_piece`, `units_with_error_piece`, `units_with_invalid_tree` (what every statistic must report, D-021/D-025) |
+
+`corpus_id` and `doc_id` are taken from `sent_id`, so annotations join `documents` (views, strata,
+metadata) without scanning `units`. The file stores absolute paths, so rebuild it after moving the
+project.
+
+## Integrity report: `data/catalog/integrity.json` (M4; `hebloc check`)
+
+Read-only checks:
+- `documents`: schema, unique `doc_id`, row count = anchor;
+- `units` per corpus: schema, rows = `_manifest.json`, unique well-formed `sent_id` consistent with its columns, every `doc_id` a full-view document of the same corpus, current versions;
+- every run: no orphan or missing shard files, schemas, tokens up to date by hash, parsed `sent_id`s are units, default-variant runs parsed exactly `text_norm`, versions, `checks.json` ok and current (`--deep` re-validates);
+- the canonical registry.
+
+Model-output facts (invalid trees, error pieces) are reported, but they are not integrity failures.
+
+## CoNLL-U exports: `data/exports/conllu/` (M4; `hebloc export-conllu`; regenerable)
+
+One CoNLL-U sentence per piece, produced by Dicta's own `convert_output_to_ud` from `raw_json`
+(byte-identical to `predict(output_style="ud" | "iahlt_ud")`, verified on 50 pieces). Header:
+`# sent_id` (`<sent_id>`, or `<sent_id>~p<piece_idx>` for multi-piece units), `# text`, and
+`# hebloc_sent_id`, `# hebloc_piece = <idx>/<n>`, `# hebloc_norm_span`, `# hebloc_ref`,
+`# hebloc_run`, `# hebloc_status`, `# hebloc_tree_valid`. The only change to Dicta's lines: an
+empty field is written as `_`. `--valid-only` skips pieces with an invalid word-level tree (counted).
+
+## Bundles: `data/bundles/hebloc-annotations-<collection>-<run_id>.zip` (M4; D-012, D-033)
+
+An uncompressed zip of every file of one run, at its path under `data/`, plus `BUNDLE_MANIFEST.json`:
+- sha256 and size of every file;
+- the corpora anchor (`manifest_sha256`, file count, bytes);
+- code commits (run and bundle), model repo and revision, runtime fixes;
+- norm/segment/piece/runner/tokens versions;
+- row counts per table; validation result and fingerprint.
+
+A `<zip>.sha256` sidecar holds the digest of the zip itself. See [data_management.md](data_management.md).

@@ -13,8 +13,10 @@ until the user explicitly opens that scope.
 - **New session? Start with `docs/HANDOFF.md`** (current state, checks to run, next milestone).
 - Spec (authoritative, Hebrew): `project.pdf`. Paper: `DoronDubnov_revised.pdf`.
 - Decisions log: `docs/decisions.md`. Roadmap: `docs/roadmap.md`. Corpus facts: `docs/corpus_report.md`.
-- Table schemas: `docs/data_dictionary.md`. Data API: `hebloc.data` (`units`, `iter_units`, `trace`, `connect`);
-  catalog: `hebloc.catalog.documents()`. M2 methodology: `docs/m2_preprocessing.md`.
+- Table schemas: `docs/data_dictionary.md`. Data layer usage + M5 contract: `docs/data_layer.md`.
+  Data API: `hebloc.data` (`units`, `iter_units`, `trace`, `tokens`, `iter_tokens`, `pieces`, `raw`, `sentence`,
+  `trace_token`, `coverage`, `conllu`, `runs`, `connect`); storage: `hebloc.store` (io, schemas, runs, catalog,
+  integrity, conllu, bundle); catalog: `hebloc.catalog.documents()`. M2 methodology: `docs/m2_preprocessing.md`.
 
 ## Non-negotiable rules
 - `corpora/` is IMMUTABLE: never edit, rename, move, delete, or write into it. Guarded by
@@ -22,7 +24,7 @@ until the user explicitly opens that scope.
   pinned by the git-tracked `config/corpora_anchor.json` (404,294 files, 1,126,869,300 bytes,
   manifest sha256). Never edit the anchor by hand; never re-anchor without a documented decision (D-011).
 - `data/` is not in git; expensive outputs are backed up/shared as verified bundles — see
-  `docs/data_management.md` (D-012; to implement before M5).
+  `docs/data_management.md` (D-012, implemented as `hebloc bundle` in M4, D-033). Bundle every M5 run.
 - Never silently drop data. Everything is cataloged; filtering = tags (`config/curation.yaml`),
   never deletion. **Full view** (`in_full_view`, every supplied text file) is the PRIMARY reference
   for statistics; the **curated view** (`in_curated_view`: in-period, non-blank, deduplicated within
@@ -41,9 +43,12 @@ until the user explicitly opens that scope.
 corpora/ (read-only)
  → data/catalog/documents.parquet        [M1 inventory]
  → data/units/<corpus>/*.parquet          [M2 prepare: complete sentences/verses, provenance + text_raw + text_norm]
- → data/annotations/<corpus>/{dicta_raw,tokens,runs}/   [M3 pilot, M5 parse]
+ → data/annotations/<collection>/runs/<run_id>/{inputs,pieces,dicta_raw,tokens,_shards}/ + run.json, checks.json
+                                          [M3: collection=pilot; M5: collection=<corpus>]
+ → config/annotations.yaml: canonical run(s) per corpus (empty until M5; never guessed, D-032)
  → data/stats/*.parquet → results/stats/ (CSV + PNG)    [M6 stats]
-DuckDB views over all Parquet: data/hebloc.duckdb · Python API: hebloc.data
+DuckDB views over all Parquet: data/hebloc.duckdb (hebloc catalog) · Python API: hebloc.data
+Readers use COMMITTED shards only (_shards/*.json exists); tokens are derived per shard from dicta_raw.
 ```
 Key IDs: `doc_id` = stable hash of rel_path; `sent_id` = `<corpus>:<doc_id>:<line>:<k>`.
 Parse-time pieces (only for over-budget units): (`sent_id`, `piece_idx`) + span in `text_norm` (`hebloc.pieces`).
@@ -86,6 +91,12 @@ uv run hebloc versification             # (one-off, network) refresh config/refe
 uv run hebloc prepare [--corpus X] [--sample N]   # M2: units (~5 min all; --sample → data/units_sample + review)
 uv run hebloc pilot <step>               # M3: fetch-models, fetch-bhsa, sample, smoke, parse, variants,
                                          #   diacritics, census, analyze, audit, audit-score, bench
+uv run hebloc runs                       # M4: parse runs, completeness, canonical role
+uv run hebloc tokens <run>|all           # M4: derive tokens per shard (incremental)
+uv run hebloc check [--deep]             # M4: read-only integrity of the whole data layer (~5 s; deep ~25 s)
+uv run hebloc catalog                    # M4: write data/hebloc.duckdb (views)
+uv run hebloc export-conllu <run> [--corpus C] [--style ud|iahlt_ud]
+uv run hebloc bundle create|verify|restore ...   # M4: D-012 backups
 uv run hebloc <parse|stats>              # later milestones (M5/M6)
 ```
 
@@ -125,7 +136,10 @@ notebooks/     exploration only — never pipeline logic
       >510 sub-words SILENTLY (pieces + coverage check); Dicta has NO binyan feature; original MST code gives
       11.9% invalid trees (fixed → 2.1%; rest flagged `piece_tree_valid`, never repaired); diacritics do not
       change model input; base > tiny on BHSA; full Modern ≈ 306 h base (92 h with `topk`).
-- [ ] M4 data layer & access API
+- [x] M4 data layer & access API — DONE 2026-11-07, **awaiting user review** (D-030–D-033 proposed).
+      `hebloc.store` + extended `hebloc.data`; tokens per shard (11 pilot runs migrated, identical);
+      DuckDB catalog; canonical registry; integrity checker; CoNLL-U export (= Dicta's UD, 50/50);
+      bundles. Built independent of the M3 gate decisions, which are STILL PENDING (HANDOFF §6).
 - [ ] M5 full parsing run
 - [ ] M6 descriptive statistics + parser-accuracy report
 - [ ] M7 review checkpoint (STOP)

@@ -4,14 +4,15 @@ from __future__ import annotations
 
 from collections import defaultdict
 
-import pyarrow.parquet as pq
+import pyarrow.compute as pc
+
+from hebloc.parse.tokens import read_tokens
 
 from hebloc.pilot.runs import run_dir, unit_rows
 
 
 def render(sent_id: str, rid: str = "base__default", max_words: int = 40) -> str:
-    toks = sorted((t for t in pq.read_table(run_dir(rid) / "tokens" / "tokens.parquet",
-                                             filters=[("sent_id", "=", sent_id)]).to_pylist()),
+    toks = sorted((t for t in read_tokens(run_dir(rid)).filter(pc.field("sent_id") == sent_id).to_pylist()),
                   key=lambda t: t["sent_word_idx"])
     (raw, norm, ref), = [(r[0], r[1], r[2]) for r in unit_rows([sent_id], "text_raw, text_norm, ref")]
     from hebloc.parse.run import read_run
