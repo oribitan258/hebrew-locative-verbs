@@ -3,7 +3,7 @@
 Status: **living document.** The *active scope* is Part 1. Part 2 is the long-term plan. It will not
 be implemented until it has been discussed with the project partners and explicitly opened.
 
-Authoritative spec: `project.pdf` (Hebrew). Paper: Doron & Dubnov (2017), *The locative alternation
+Authoritative spec: `project.pdf` (Hebrew; local copy, not in git). Paper: Doron & Dubnov (2017), *The locative alternation
 in Biblical (and Modern) Hebrew*, `DoronDubnov_revised.pdf`.
 
 ---

@@ -405,3 +405,29 @@ interrupted shards.
 - Measured: the `pilot/base__default` bundle is 6.1 MiB for 1,000 units and 101,368 tokens.
 - *Still manual, the user's action:* copying the bundles to the two targets (external drive, private
   cloud folder).
+
+### D-034 · Collaboration through a private GitHub repository (2026-11-08) · accepted (user, 2026-11-08)
+*Context.* Two partners will join, and parsing will be split between their machines (one disjoint
+slice each, merged with `hebloc bundle` and `hebloc check`; slices assigned at M5).
+
+*What is in git:* code, configuration, docs, tests, small result tables, and the manual-audit sheets
+(`annotation/pilot_audit*.csv`: 150 short sentences, 30 per corpus, needed if partners annotate).
+Small quoted examples in docs and tests stay.
+
+*What is never in git:*
+- `corpora/`: each partner downloads it; `hebloc baseline` proves identity with the anchor;
+- `data/`: parse results travel as verified bundles through a private shared folder;
+- secrets;
+- the course documents (`project.pdf`, `DoronDubnov_revised.pdf`, `nlp-intro-short.pptx`): copyrighted,
+  and partners have their own copies;
+- `docs/m2_sample_review.md`: 149 quoted raw corpus lines, regenerable.
+
+*History.* The course documents and the M2 review had been committed since M0/M2. The user chose to
+remove them from the **entire** history before the first push. The 16 local, never-pushed commits
+were rewritten with `git filter-branch`, so every commit hash changed (old → new map in HANDOFF).
+The original history is kept as a git bundle at `data/backups/git-history-pre-github.bundle`, and
+the four files stay on disk, git-ignored.
+
+*Enforcement:* `.gitignore`, and `tests/test_repo_hygiene.py`, which fails if `corpora/`, `data/`,
+data or model files, files over 2 MB, the excluded documents, or secret-like strings are tracked.
+Partners change code through branches and pull requests. Guide: `docs/PARTNERS.md`.

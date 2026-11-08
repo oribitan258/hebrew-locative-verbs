@@ -2,7 +2,7 @@
 
 *Date: 2026-11-06. Code: `src/hebloc/{units,segment,normalize,artifacts,versification,data}.py`.
 Rule versions: `norm_version = 1`, `segment_version = 2` (M2.1, 2026-11-07; see §8). Real before/after examples:
-[`m2_sample_review.md`](m2_sample_review.md).*
+`docs/m2_sample_review.md` (local only, not in git because it quotes corpus text; regenerate with `uv run hebloc prepare --sample N`).*
 
 ## 1. What M2 does (plain English)
 

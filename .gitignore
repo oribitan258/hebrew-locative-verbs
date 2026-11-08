@@ -22,3 +22,18 @@ Thumbs.db
 desktop.ini
 .DS_Store
 .vscode/
+
+# Course documents: copyrighted, kept locally only (D-034). Partners use their own copies.
+/project.pdf
+/DoronDubnov_revised.pdf
+/nlp-intro-short.pptx
+
+# Regenerable review that quotes raw corpus text (uv run hebloc prepare --sample N)
+/docs/m2_sample_review.md
+
+# Secrets and local tool settings: never commit
+.env
+*.env
+*.pem
+*.key
+.claude/settings.local.json

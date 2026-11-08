@@ -11,7 +11,8 @@ classification, classifiers, LLM) are roadmap-only: `docs/roadmap.md`. Do not im
 until the user explicitly opens that scope.
 
 - **New session? Start with `docs/HANDOFF.md`** (current state, checks to run, next milestone).
-- Spec (authoritative, Hebrew): `project.pdf`. Paper: `DoronDubnov_revised.pdf`.
+- Spec (authoritative, Hebrew): `project.pdf`. Paper: `DoronDubnov_revised.pdf`. Both are local copies in the
+  repo root, NOT in git (copyright, D-034); partners use their own course copies. Partner guide: `docs/PARTNERS.md`.
 - Decisions log: `docs/decisions.md`. Roadmap: `docs/roadmap.md`. Corpus facts: `docs/corpus_report.md`.
 - Table schemas: `docs/data_dictionary.md`. Data layer usage + M5 contract: `docs/data_layer.md`.
   Data API: `hebloc.data` (`units`, `iter_units`, `trace`, `tokens`, `iter_tokens`, `pieces`, `raw`, `sentence`,
