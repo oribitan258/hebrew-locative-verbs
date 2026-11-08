@@ -248,6 +248,153 @@ def _cmd_bundle(args: argparse.Namespace) -> int:
     raise SystemExit(f"unknown bundle action {args.action!r}")
 
 
+def _json(obj) -> None:
+    import json
+
+    print(json.dumps(obj, indent=1, ensure_ascii=False, default=str))
+
+
+def _cmd_corpora(args: argparse.Namespace) -> int:
+    """Team: install the corpora from a download and verify them against the anchor."""
+    from pathlib import Path
+
+    from hebloc.team import corpora as C
+
+    if args.action == "install":
+        if not args.source:
+            raise SystemExit("usage: hebloc corpora install --from <folder or .zip>")
+        r = C.install(Path(args.source), workers=args.workers)
+        v = r["verify"]
+    else:
+        v = C.verify(workers=args.workers)
+        r = {"verify": v}
+    print(f"{v['files']:,} files, {v['bytes']:,} bytes: " + ("IDENTICAL to the project's corpora (anchor OK)" if v["ok"]
+          else "DIFFERENT from the project's corpora:\n  " + "\n  ".join(v["problems"])))
+    return 0 if v["ok"] else 1
+
+
+def _cmd_models(args: argparse.Namespace) -> int:
+    """Team: download the pinned Dicta models (network) and/or verify their sha256."""
+    from hebloc.parse import models as M
+
+    names = ["base", "tiny"] if args.all else ["base"]
+    ok = True
+    for n in names:
+        if args.action == "fetch":
+            M.fetch(n)
+        probs = M.verify(n)
+        ok &= not probs
+        m = M.registry()["models"][n]
+        print(f"{n}: {m['repo']}@{m['revision'][:12]} " + ("OK (all files match the pinned sha256)" if not probs
+                                                            else f"PROBLEMS: {probs}"))
+    return 0 if ok else 1
+
+
+def _cmd_fingerprint(args: argparse.Namespace) -> int:
+    from hebloc.team import fingerprint as F
+
+    fp = F.compute()
+    if args.write_reference:
+        print("wrote", F.write_reference(fp))
+        return 0
+    ref = F.read_reference()
+    probs = F.compare(fp, ref) if ref else ["no reference"]
+    for name, d in fp["tables"].items():
+        print(f"{name:16} rows={d['rows']:>10,} digest={d['digest']}")
+    hard = [p for p in probs if not p.startswith("note:")]
+    print("IDENTICAL to the reference" if not hard else "DIFFERENT:\n  " + "\n  ".join(probs))
+    return 0 if not hard else 1
+
+
+def _cmd_doctor(args: argparse.Namespace) -> int:
+    from hebloc.team import doctor as D
+
+    r = D.run(args.person, quick=args.quick)
+    for sec, rows in r["sections"].items():
+        for x in rows:
+            print(f"[{x['status']:4}] {sec:8} {x['check']:20} {x['detail']}")
+            if x["status"] in ("FAIL", "TODO") and x["fix"]:
+                print(f"{'':16}-> {x['fix']}")
+    print(f"\nready_for_setup={r['ready_for_setup']}  ready_to_parse={r['ready_to_parse']}  {r['counts']}  "
+          f"-> {D.REPORT_PATH}")
+    return 0 if r["ready_for_setup"] else 1
+
+
+def _cmd_agreement(args: argparse.Namespace) -> int:
+    from hebloc.team import agreement as A
+
+    if args.write_reference:
+        from hebloc.parse import models as M
+        from hebloc.store.runs import resolve
+        from hebloc.team.plan import load
+
+        st = load().settings
+        r = A.write_reference(resolve(args.write_reference).path, st, M.registry()["models"][st["model"]]["revision"])
+        print(r)
+        return 0
+    r = A.run(args.person, threads=args.threads, limit=args.limit)
+    _json({k: v for k, v in r.items() if k != "different_examples"})
+    print("AGREEMENT OK: this machine reproduces the reference output exactly" if r["ok"] else
+          "AGREEMENT NOT OK: send data/team/agreement.json to Ori (and the run bundle if asked)")
+    return 0 if r["ok"] else 1
+
+
+def _cmd_plan(args: argparse.Namespace) -> int:
+    from hebloc.team import plan as P
+
+    plan = P.load()
+    if args.action == "check":
+        r = P.check_partition(plan)
+        _json(r)
+        return 0 if r["ok"] else 1
+    if args.action == "measure":
+        wp = P.write_work_plan(plan, P.measure(plan))
+        _json(wp["assignment"])
+        print(f"wrote {P.WORK_PLAN_JSON} and {P.WORK_PLAN_MD}")
+        return 0
+    if args.action == "show":
+        print(f"status={plan.status} coverage={plan.coverage} settings={plan.settings}")
+        print(P.WORK_PLAN_MD.read_text(encoding="utf-8") if P.WORK_PLAN_MD.exists() else "(no work plan yet: hebloc plan measure)")
+        return 0
+    if args.action == "status":
+        for r in P.status(plan, coverage=args.coverage):
+            print(f"{r['slice']:22} owner={r['owner'] or '?':6} present={r['present']!s:5} complete={r['complete']!s:5} "
+                  f"checks_ok={r['checks_ok']!s:5} {r['run']}")
+        return 0
+    if args.action == "register":
+        from hebloc.team.work import register
+
+        _json(register(write=args.write))
+        return 0
+    raise SystemExit(f"unknown plan action {args.action!r}")
+
+
+def _cmd_parse(args: argparse.Namespace) -> int:
+    from hebloc.team.work import PlanRefusal, run_slice
+
+    try:
+        r = run_slice(args.slice, args.person, threads=args.threads, limit=args.limit)
+    except PlanRefusal as e:
+        print(f"REFUSED: {e}")
+        return 2
+    _json(r)
+    return 0 if r["validation_ok"] and r["integrity_ok"] else 1
+
+
+def _cmd_merge(args: argparse.Namespace) -> int:
+    from pathlib import Path
+
+    from hebloc.team.work import merge
+
+    r = merge([Path(z) for z in args.bundles], overwrite=args.overwrite)
+    for b in r["bundles"]:
+        print(f"{'OK  ' if b['ok'] else 'FAIL'} {b['bundle']} run={b.get('run')} slice={b.get('slice')} "
+              f"person={b.get('person')} {b.get('problems') or ''}{b.get('integrity_problems') or ''}")
+    done = sum(1 for p in r["progress"] if p["complete"] and p["checks_ok"])
+    print(f"plan progress: {done}/{len(r['progress'])} slices complete and valid on this machine")
+    return 0 if all(b["ok"] for b in r["bundles"]) else 1
+
+
 def _utf8_console() -> None:
     """Windows consoles default to a legacy code page; paths/text here are Hebrew."""
     for stream in (sys.stdout, sys.stderr):
@@ -327,7 +474,55 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--overwrite", action="store_true", help="restore: replace different existing files (deliberate).")
     p.set_defaults(func=_cmd_bundle)
 
+    # ---- team collaboration (docs/PARTNERS.md)
+    p = sub.add_parser("corpora", help="Team: install the corpora from a download (folder or .zip) and verify them.")
+    p.add_argument("action", choices=["install", "verify"])
+    p.add_argument("--from", dest="source", default=None, help="install: downloaded folder or .zip")
+    p.add_argument("--workers", type=int, default=8)
+    p.set_defaults(func=_cmd_corpora)
+
+    p = sub.add_parser("models", help="Team: download (fetch) or verify the pinned Dicta models.")
+    p.add_argument("action", choices=["fetch", "verify"])
+    p.add_argument("--all", action="store_true", help="also the tiny model (base only by default)")
+    p.set_defaults(func=_cmd_models)
+
+    p = sub.add_parser("fingerprint", help="Team: content digests of catalog + units vs the reference.")
+    p.add_argument("--write-reference", action="store_true", help="(Ori) pin this machine's digests")
+    p.set_defaults(func=_cmd_fingerprint)
+
+    p = sub.add_parser("doctor", help="Team: check this machine end to end (setup, data, models, readiness).")
+    p.add_argument("--as", dest="person", default=None)
+    p.add_argument("--quick", action="store_true", help="skip the corpora file-list scan")
+    p.set_defaults(func=_cmd_doctor)
+
+    p = sub.add_parser("agreement", help="Team: parse the pilot sample and compare with the reference output.")
+    p.add_argument("--as", dest="person", default=None)
+    p.add_argument("--limit", type=int, default=None)
+    p.add_argument("--threads", type=int, default=8)
+    p.add_argument("--write-reference", default=None, metavar="RUN", help="(Ori) pin RUN as the reference")
+    p.set_defaults(func=_cmd_agreement)
+
+    p = sub.add_parser("plan", help="Team: work plan: show | check | measure | status | register.")
+    p.add_argument("action", choices=["show", "check", "measure", "status", "register"])
+    p.add_argument("--coverage", default=None, choices=["A", "B"])
+    p.add_argument("--write", action="store_true", help="register: write config/annotations.yaml")
+    p.set_defaults(func=_cmd_plan)
+
+    p = sub.add_parser("parse", help="Team: parse your assigned slice (or a smoke test with --limit).")
+    p.add_argument("--slice", required=True)
+    p.add_argument("--as", dest="person", required=True)
+    p.add_argument("--limit", type=int, default=None, help="SMOKE run of the first N units (allowed in draft)")
+    p.add_argument("--threads", type=int, default=8)
+    p.set_defaults(func=_cmd_parse)
+
+    p = sub.add_parser("merge", help="Team (Ori): verify, restore and check partners' bundles.")
+    p.add_argument("bundles", nargs="+")
+    p.add_argument("--overwrite", action="store_true")
+    p.set_defaults(func=_cmd_merge)
+
     args = parser.parse_args(argv)
+    if getattr(args, "func", None) in (_cmd_agreement,) and not args.write_reference and not args.person:
+        parser.error("agreement needs --as <your name>")
     return args.func(args)
 
 

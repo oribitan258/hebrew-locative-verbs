@@ -1,0 +1,30 @@
+{
+  "method": "rows + sum(first 60 bits of md5(CAST(row AS VARCHAR))), DuckDB",
+  "duckdb": "2.0.0",
+  "tables": {
+    "documents": {
+      "rows": 404294,
+      "digest": "314f2311c0591b858d60"
+    },
+    "units/mikra": {
+      "rows": 23206,
+      "digest": "2d42e5ffd6ef3f89f43"
+    },
+    "units/hazal": {
+      "rows": 418758,
+      "digest": "33362e4654e0f51c7e33"
+    },
+    "units/medieval": {
+      "rows": 115415,
+      "digest": "e1e8db4ff4a34e4f057"
+    },
+    "units/haskala": {
+      "rows": 275166,
+      "digest": "21a6a0002517c23dc6f0"
+    },
+    "units/modern": {
+      "rows": 8877117,
+      "digest": "43b5f1081fc56aee9447f"
+    }
+  }
+}

@@ -1,0 +1,353 @@
+{
+  "generated_utc": "2026-11-08T19:11:41+00:00",
+  "plan_sha256": "6d755b6a933a806abef21f0253bf895b30f28f2cbc6ffb7193cca696b8589a4c",
+  "settings_id": "base-topk-v1",
+  "tokenizer": "dicta-il/dictabert-joint@7b1256fc0846",
+  "reference_rate_subwords_per_s": 534,
+  "sizes": {
+    "mikra": {
+      "corpus": "mikra",
+      "units": 23206,
+      "units_nonempty": 23204,
+      "ws_tokens": 328720,
+      "subwords": 387454,
+      "units_over_budget": 0
+    },
+    "hazal": {
+      "corpus": "hazal",
+      "units": 418758,
+      "units_nonempty": 418757,
+      "ws_tokens": 6503346,
+      "subwords": 8551724,
+      "units_over_budget": 149
+    },
+    "medieval": {
+      "corpus": "medieval",
+      "units": 115415,
+      "units_nonempty": 115412,
+      "ws_tokens": 3522454,
+      "subwords": 4320398,
+      "units_over_budget": 73
+    },
+    "haskala": {
+      "corpus": "haskala",
+      "units": 275166,
+      "units_nonempty": 274973,
+      "ws_tokens": 5428359,
+      "subwords": 7408362,
+      "units_over_budget": 206
+    },
+    "modern-a7": {
+      "corpus": "modern",
+      "units": 805398,
+      "units_nonempty": 805293,
+      "ws_tokens": 14776314,
+      "subwords": 15633208,
+      "units_over_budget": 0
+    },
+    "modern-news-other": {
+      "corpus": "modern",
+      "units": 105668,
+      "units_nonempty": 105668,
+      "ws_tokens": 2154127,
+      "subwords": 2373507,
+      "units_over_budget": 14
+    },
+    "modern-knesset": {
+      "corpus": "modern",
+      "units": 873131,
+      "units_nonempty": 873131,
+      "ws_tokens": 14795922,
+      "subwords": 15341149,
+      "units_over_budget": 0
+    },
+    "modern-blogs": {
+      "corpus": "modern",
+      "units": 801171,
+      "units_nonempty": 801171,
+      "ws_tokens": 6867497,
+      "subwords": 7827789,
+      "units_over_budget": 2
+    },
+    "modern-medical": {
+      "corpus": "modern",
+      "units": 186926,
+      "units_nonempty": 186924,
+      "ws_tokens": 2422057,
+      "subwords": 2639963,
+      "units_over_budget": 0
+    },
+    "modern-tapuz": {
+      "corpus": "modern",
+      "units": 80671,
+      "units_nonempty": 80671,
+      "ws_tokens": 936836,
+      "subwords": 1278624,
+      "units_over_budget": 0
+    },
+    "modern-literary": {
+      "corpus": "modern",
+      "units": 83534,
+      "units_nonempty": 83534,
+      "ws_tokens": 1432965,
+      "subwords": 1562520,
+      "units_over_budget": 0
+    },
+    "modern-haaretz-b00": {
+      "corpus": "modern",
+      "units": 294338,
+      "units_nonempty": 294338,
+      "ws_tokens": 5999179,
+      "subwords": 6491374,
+      "units_over_budget": 15
+    },
+    "modern-haaretz-b01": {
+      "corpus": "modern",
+      "units": 299143,
+      "units_nonempty": 299143,
+      "ws_tokens": 6068477,
+      "subwords": 6568365,
+      "units_over_budget": 10
+    },
+    "modern-haaretz-b02": {
+      "corpus": "modern",
+      "units": 294782,
+      "units_nonempty": 294782,
+      "ws_tokens": 6008826,
+      "subwords": 6504885,
+      "units_over_budget": 18
+    },
+    "modern-haaretz-b03": {
+      "corpus": "modern",
+      "units": 299136,
+      "units_nonempty": 299136,
+      "ws_tokens": 6061006,
+      "subwords": 6563207,
+      "units_over_budget": 10
+    },
+    "modern-haaretz-b04": {
+      "corpus": "modern",
+      "units": 302525,
+      "units_nonempty": 302525,
+      "ws_tokens": 6137438,
+      "subwords": 6644351,
+      "units_over_budget": 13
+    },
+    "modern-haaretz-b05": {
+      "corpus": "modern",
+      "units": 293449,
+      "units_nonempty": 293449,
+      "ws_tokens": 5987938,
+      "subwords": 6483366,
+      "units_over_budget": 14
+    },
+    "modern-haaretz-b06": {
+      "corpus": "modern",
+      "units": 298948,
+      "units_nonempty": 298948,
+      "ws_tokens": 6024306,
+      "subwords": 6519533,
+      "units_over_budget": 17
+    },
+    "modern-haaretz-b07": {
+      "corpus": "modern",
+      "units": 290528,
+      "units_nonempty": 290528,
+      "ws_tokens": 5882817,
+      "subwords": 6369326,
+      "units_over_budget": 12
+    },
+    "modern-haaretz-b08": {
+      "corpus": "modern",
+      "units": 297243,
+      "units_nonempty": 297243,
+      "ws_tokens": 6035662,
+      "subwords": 6532358,
+      "units_over_budget": 14
+    },
+    "modern-haaretz-b09": {
+      "corpus": "modern",
+      "units": 292218,
+      "units_nonempty": 292218,
+      "ws_tokens": 5970913,
+      "subwords": 6463644,
+      "units_over_budget": 18
+    },
+    "modern-haaretz-b10": {
+      "corpus": "modern",
+      "units": 301888,
+      "units_nonempty": 301888,
+      "ws_tokens": 6109499,
+      "subwords": 6611517,
+      "units_over_budget": 17
+    },
+    "modern-haaretz-b11": {
+      "corpus": "modern",
+      "units": 300279,
+      "units_nonempty": 300279,
+      "ws_tokens": 6079702,
+      "subwords": 6577075,
+      "units_over_budget": 20
+    },
+    "modern-haaretz-b12": {
+      "corpus": "modern",
+      "units": 300227,
+      "units_nonempty": 300227,
+      "ws_tokens": 6042408,
+      "subwords": 6540114,
+      "units_over_budget": 13
+    },
+    "modern-haaretz-b13": {
+      "corpus": "modern",
+      "units": 293204,
+      "units_nonempty": 293204,
+      "ws_tokens": 5981834,
+      "subwords": 6474551,
+      "units_over_budget": 17
+    },
+    "modern-haaretz-b14": {
+      "corpus": "modern",
+      "units": 294433,
+      "units_nonempty": 294433,
+      "ws_tokens": 5990648,
+      "subwords": 6481791,
+      "units_over_budget": 15
+    },
+    "modern-haaretz-b15": {
+      "corpus": "modern",
+      "units": 297753,
+      "units_nonempty": 297753,
+      "ws_tokens": 6047493,
+      "subwords": 6546706,
+      "units_over_budget": 21
+    },
+    "modern-haaretz-b16": {
+      "corpus": "modern",
+      "units": 293560,
+      "units_nonempty": 293560,
+      "ws_tokens": 5928820,
+      "subwords": 6414583,
+      "units_over_budget": 6
+    },
+    "modern-haaretz-b17": {
+      "corpus": "modern",
+      "units": 296971,
+      "units_nonempty": 296971,
+      "ws_tokens": 6041790,
+      "subwords": 6539483,
+      "units_over_budget": 9
+    },
+    "modern-haaretz-b18": {
+      "corpus": "modern",
+      "units": 300114,
+      "units_nonempty": 300114,
+      "ws_tokens": 6097699,
+      "subwords": 6600649,
+      "units_over_budget": 11
+    },
+    "modern-haaretz-b19": {
+      "corpus": "modern",
+      "units": 299879,
+      "units_nonempty": 299879,
+      "ws_tokens": 6086588,
+      "subwords": 6587952,
+      "units_over_budget": 19
+    }
+  },
+  "assignment": {
+    "A": {
+      "coverage": "A",
+      "total_subwords": 197839528,
+      "people": {
+        "ori": {
+          "slices": [
+            "mikra",
+            "hazal",
+            "modern-blogs",
+            "modern-haaretz-b10",
+            "modern-haaretz-b11",
+            "modern-haaretz-b15",
+            "modern-haaretz-b08",
+            "modern-haaretz-b00",
+            "modern-haaretz-b13",
+            "modern-haaretz-b07",
+            "modern-news-other",
+            "modern-tapuz"
+          ],
+          "subwords": 66022005,
+          "hours_at_reference_rate": 34.3
+        },
+        "efrat": {
+          "slices": [
+            "modern-a7",
+            "modern-haaretz-b04",
+            "modern-haaretz-b18",
+            "modern-haaretz-b01",
+            "modern-haaretz-b12",
+            "modern-haaretz-b06",
+            "modern-haaretz-b05",
+            "modern-haaretz-b09",
+            "medieval"
+          ],
+          "subwords": 65773628,
+          "hours_at_reference_rate": 34.2
+        },
+        "adi": {
+          "slices": [
+            "modern-knesset",
+            "haskala",
+            "modern-haaretz-b19",
+            "modern-haaretz-b03",
+            "modern-haaretz-b17",
+            "modern-haaretz-b02",
+            "modern-haaretz-b14",
+            "modern-haaretz-b16",
+            "modern-medical",
+            "modern-literary"
+          ],
+          "subwords": 66043895,
+          "hours_at_reference_rate": 34.4
+        }
+      },
+      "imbalance": 1.001
+    },
+    "B": {
+      "coverage": "B",
+      "total_subwords": 80384437,
+      "people": {
+        "ori": {
+          "slices": [
+            "mikra",
+            "hazal",
+            "modern-blogs",
+            "modern-haaretz-b00",
+            "modern-news-other",
+            "modern-tapuz"
+          ],
+          "subwords": 26910472,
+          "hours_at_reference_rate": 14.0
+        },
+        "efrat": {
+          "slices": [
+            "modern-a7",
+            "modern-haaretz-b01",
+            "medieval"
+          ],
+          "subwords": 26521971,
+          "hours_at_reference_rate": 13.8
+        },
+        "adi": {
+          "slices": [
+            "modern-knesset",
+            "haskala",
+            "modern-medical",
+            "modern-literary"
+          ],
+          "subwords": 26951994,
+          "hours_at_reference_rate": 14.0
+        }
+      },
+      "imbalance": 1.006
+    }
+  }
+}

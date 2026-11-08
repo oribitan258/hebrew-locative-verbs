@@ -431,3 +431,44 @@ the four files stay on disk, git-ignored.
 *Enforcement:* `.gitignore`, and `tests/test_repo_hygiene.py`, which fails if `corpora/`, `data/`,
 data or model files, files over 2 MB, the excluded documents, or secret-like strings are tracked.
 Partners change code through branches and pull requests. Guide: `docs/PARTNERS.md`.
+
+### D-035 · Signed Python 3.12 on Windows (Smart App Control) (2026-11-08) · accepted (fix of a blocker)
+- *Problem.* On 2026-11-08 Windows Smart App Control (enforcing) began blocking uv's downloaded
+  Python (`python.exe` from python-build-standalone is not code-signed). No project command could
+  run.
+- *Finding.* Smart App Control blocked only that executable; the libraries' DLLs (torch, pyarrow,
+  ...) loaded.
+- *Fix.*
+  - The project venv is built on the python.org Python 3.12 (signed by the Python Software
+    Foundation), installed per-user with `winget install Python.Python.3.12 --scope user` (no admin).
+  - `pyproject.toml` sets `[tool.uv] python-preference = "system"`, so uv uses an installed 3.12
+    when one exists.
+  - Partners on Windows install python.org 3.12 first (`docs/PARTNERS.md`); `hebloc doctor` warns
+    if a uv-managed Python is in use on Windows.
+- *Verified:* full fast suite 123/123 on the new interpreter. Same uv.lock, same library versions.
+
+### D-036 · Team work plan, gates and cross-machine checks (2026-11-08) · proposed (awaiting approval)
+- *Plan.* `config/parse_plan.yaml`: proposed settings `base-topk-v1` (base, MST fix, `topk`,
+  budget 510) and 31 disjoint slices.
+  - The four historical corpora are whole slices.
+  - Modern is split by subcorpus/source; Haaretz is split into 20 document-hash buckets
+    (`int(doc_id[:8],16) % 20`). Buckets 0–1 are option B's ~10% document sample.
+  - `hebloc plan check` proves every one of the 9,709,662 units is in exactly one slice.
+- *Assignment.* `hebloc plan measure` counts exact model sub-words per slice and balances them
+  longest-first between Ori, Efrat and Adi, for options A and B. Mikra is pinned to Ori.
+  Output: `config/work_plan.json`, `docs/WORK_PLAN.md`.
+- *Gate.* `status: draft` and `coverage: pending` until Ori records the M3 gate decisions.
+  `hebloc parse` refuses every real slice in draft, refuses slices outside the chosen coverage, and
+  refuses a slice that is assigned to someone else. Smoke runs (`--limit`) and the agreement check
+  are allowed.
+- *Cross-machine checks.*
+  - Corpora: `hebloc corpora install/verify` (sha256 of every file vs the anchor).
+  - Packages = `uv.lock` (`hebloc doctor`).
+  - Rebuilt data: `hebloc fingerprint`, content digests of documents and units per corpus vs
+    `config/reference/fingerprints.json`.
+  - Models: sha256 pins.
+  - Parser output: `hebloc agreement`, all pieces of the 1,000-unit pilot sample, md5 of raw output
+    vs `config/reference/agreement_reference.json` from Ori's laptop.
+- *Merge.* Bundles (D-033) are merged with `hebloc merge` (verify → restore → integrity check →
+  must be a run of the current plan and settings). `hebloc plan register --write` writes the
+  canonical registry, with a decision entry.

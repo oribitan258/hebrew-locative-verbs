@@ -1,0 +1,67 @@
+# Parse work plan (M5) for the team. Human-edited decisions live HERE; generated numbers
+# (slice sizes, balanced assignment) live in config/work_plan.json and docs/WORK_PLAN.md
+# (`uv run hebloc plan measure` / `hebloc plan assign`).
+#
+# GATE: while `status` is "draft", `hebloc parse` refuses every real slice. Only Ori sets
+# status: approved, after the M3 gate decisions (model, topk, Modern coverage), with a decision
+# entry in docs/decisions.md. Smoke runs (`--limit`) and the agreement check work in draft.
+
+status: draft            # draft | approved
+coverage: pending        # pending | A (all of Modern) | B (Haaretz 10% document sample)
+
+# PROPOSED settings (M3 gate items 1-3; pilot report §15). All machines must use the same.
+settings:
+  settings_id: base-topk-v1   # part of every run id; change it whenever any setting below changes
+  model: base                 # base | tiny          (gate item 1)
+  mst_fix: true               # D-024               (gate item 2)
+  lex_topk: true              # D-029               (gate item 3)
+  budget: 510                 # D-028 (model limit)
+  batch_size: 32
+  max_batch_subwords: 1024
+  shard_size: 500
+
+people: [ori, efrat, adi]
+
+# Ori keeps Mikra: it is needed first for the §5 tests and is the reference machine.
+pins:
+  mikra: ori
+
+# Slices: disjoint parts of the corpora; together they cover every unit (checked by
+# `hebloc plan check`). Selection is by document metadata (data/catalog/documents.parquet):
+#   corpus, subcorpus [list], source [list; null = documents without a source], and
+#   bucket/buckets = documents whose int(doc_id[:8], 16) % buckets == bucket (deterministic).
+# `coverage` lists the Modern coverage options (D-004) that include the slice.
+slices:
+  mikra:            {corpus: mikra, coverage: [A, B]}
+  hazal:            {corpus: hazal, coverage: [A, B]}
+  medieval:         {corpus: medieval, coverage: [A, B]}
+  haskala:          {corpus: haskala, coverage: [A, B]}
+  modern-a7:        {corpus: modern, subcorpus: [news], source: [a7], coverage: [A, B]}
+  modern-news-other: {corpus: modern, subcorpus: [news], source: [ynet, themarker, nrg], coverage: [A, B]}
+  modern-knesset:   {corpus: modern, subcorpus: [kneset], coverage: [A, B]}
+  modern-blogs:     {corpus: modern, subcorpus: [blogs], coverage: [A, B]}
+  modern-medical:   {corpus: modern, subcorpus: [medical], coverage: [A, B]}
+  modern-tapuz:     {corpus: modern, subcorpus: [tapuz], coverage: [A, B]}
+  modern-literary:  {corpus: modern, subcorpus: [literary], coverage: [A, B]}
+  # Haaretz (73% of Modern) in 20 document-hash buckets; buckets 0-1 (~10% of documents) are
+  # option B's random document sample.
+  modern-haaretz-b00: {corpus: modern, subcorpus: [news], source: [haaretz], bucket: 0, buckets: 20, coverage: [A, B]}
+  modern-haaretz-b01: {corpus: modern, subcorpus: [news], source: [haaretz], bucket: 1, buckets: 20, coverage: [A, B]}
+  modern-haaretz-b02: {corpus: modern, subcorpus: [news], source: [haaretz], bucket: 2, buckets: 20, coverage: [A]}
+  modern-haaretz-b03: {corpus: modern, subcorpus: [news], source: [haaretz], bucket: 3, buckets: 20, coverage: [A]}
+  modern-haaretz-b04: {corpus: modern, subcorpus: [news], source: [haaretz], bucket: 4, buckets: 20, coverage: [A]}
+  modern-haaretz-b05: {corpus: modern, subcorpus: [news], source: [haaretz], bucket: 5, buckets: 20, coverage: [A]}
+  modern-haaretz-b06: {corpus: modern, subcorpus: [news], source: [haaretz], bucket: 6, buckets: 20, coverage: [A]}
+  modern-haaretz-b07: {corpus: modern, subcorpus: [news], source: [haaretz], bucket: 7, buckets: 20, coverage: [A]}
+  modern-haaretz-b08: {corpus: modern, subcorpus: [news], source: [haaretz], bucket: 8, buckets: 20, coverage: [A]}
+  modern-haaretz-b09: {corpus: modern, subcorpus: [news], source: [haaretz], bucket: 9, buckets: 20, coverage: [A]}
+  modern-haaretz-b10: {corpus: modern, subcorpus: [news], source: [haaretz], bucket: 10, buckets: 20, coverage: [A]}
+  modern-haaretz-b11: {corpus: modern, subcorpus: [news], source: [haaretz], bucket: 11, buckets: 20, coverage: [A]}
+  modern-haaretz-b12: {corpus: modern, subcorpus: [news], source: [haaretz], bucket: 12, buckets: 20, coverage: [A]}
+  modern-haaretz-b13: {corpus: modern, subcorpus: [news], source: [haaretz], bucket: 13, buckets: 20, coverage: [A]}
+  modern-haaretz-b14: {corpus: modern, subcorpus: [news], source: [haaretz], bucket: 14, buckets: 20, coverage: [A]}
+  modern-haaretz-b15: {corpus: modern, subcorpus: [news], source: [haaretz], bucket: 15, buckets: 20, coverage: [A]}
+  modern-haaretz-b16: {corpus: modern, subcorpus: [news], source: [haaretz], bucket: 16, buckets: 20, coverage: [A]}
+  modern-haaretz-b17: {corpus: modern, subcorpus: [news], source: [haaretz], bucket: 17, buckets: 20, coverage: [A]}
+  modern-haaretz-b18: {corpus: modern, subcorpus: [news], source: [haaretz], bucket: 18, buckets: 20, coverage: [A]}
+  modern-haaretz-b19: {corpus: modern, subcorpus: [news], source: [haaretz], bucket: 19, buckets: 20, coverage: [A]}

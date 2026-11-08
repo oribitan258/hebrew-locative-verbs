@@ -39,6 +39,18 @@ until the user explicitly opens that scope.
 - Talk to the user in English. End every milestone with a plain-language summary:
   what was built, why, how it works, how we know it works. User approves before the next milestone.
 
+## Team (Ori, Efrat, Adi) — read if you are helping a partner
+- Setup and parsing guide: `docs/PARTNERS.md`; who parses what: `docs/WORK_PLAN.md` (generated).
+  Slash commands: `/partner-setup <name>`, `/partner-parse <name>`, `/merge-results` (Ori).
+- Ask whose machine this is (ori/efrat/adi) and pass it as `--as <name>`.
+- Never parse a slice that is not assigned to that person; never bypass a `hebloc parse` REFUSED.
+  Only Ori edits `config/parse_plan.yaml` (status/coverage/settings), `config/annotations.yaml`,
+  `config/reference/*` and the anchor, each with a decision entry.
+- Results travel as bundles (`hebloc bundle create`) through the private shared folder, NEVER git.
+- A failed check (corpora, fingerprint, models, agreement, integrity) is never worked around:
+  stop and report to Ori with `data/team/doctor.json`.
+- Windows: use python.org Python 3.12 (Smart App Control blocks uv's Python, D-035); set PYTHONUTF8=1.
+
 ## Data flow
 ```
 corpora/ (read-only)

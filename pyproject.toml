@@ -37,3 +37,8 @@ markers = [
     "slow: long-running checks (e.g. full sha256 re-verification of corpora/). Run with -m slow.",
 ]
 addopts = "-m 'not slow'"
+
+[tool.uv]
+# Prefer an installed Python 3.12 (e.g. python.org's, which is code-signed) over uv's own download.
+# On Windows 11 with Smart App Control on, uv's downloaded Python is blocked (D-035).
+python-preference = "system"
