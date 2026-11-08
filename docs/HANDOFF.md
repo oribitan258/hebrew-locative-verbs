@@ -1,21 +1,37 @@
-# Session Handoff: after M4, at the M4 review (M3 gate decisions still pending)
+# Session Handoff: after M4 + collaboration setup (M4 review and M3 gate decisions pending)
 
-*Updated 2026-11-07 at the end of the M4 session. This file summarizes and points to other
-documents; when they disagree, the linked documents win.*
+*Updated 2026-11-08 (collaboration setup; M4 itself finished 2026-11-07). This file summarizes and
+points to other documents; when they disagree, the linked documents win.*
 
 ---
 
+## 0. Read first: two blockers found on 2026-11-08
+
+1. **Windows Smart App Control is now ON (enforcing) on Ori's laptop.** It blocks the project's
+   Python, because the uv-installed `python.exe`, torch, pyarrow and tokenizers are all unsigned
+   (Code Integrity events 3077/3033). Since then **no project command or test can run here**;
+   only the signed system Python 3.14 runs, and it has no project libraries. The fix is the user's
+   decision: turn Smart App Control off (check first whether it can be re-enabled), or work in WSL2.
+   Everything verified on 2026-11-08 was checked with git and stdlib-only scripts, not pytest
+   (§5).
+2. **The git history was rewritten** (D-034) before the first push to GitHub, to remove the course
+   documents and `docs/m2_sample_review.md`. **All commit hashes changed.** Manifests written before
+   the rewrite (`run.json`, `units/_manifest.json`, `documents.manifest.json`, bundles) still record
+   the OLD hashes as `code_commit`. Map old → new in §8 and in `data/backups/commit_map.txt`. The
+   original history is in `data/backups/git-history-pre-github.bundle`.
+
 ## 1. Status
 
-| Milestone | State | Commit |
+| Milestone | State | Commit (new hashes) |
 |---|---|---|
-| M0 Foundation | ✅ approved | `2b3cc63`, `b7ca5aa` |
-| M1 Inventory and catalog | ✅ approved | `9d59081`, `7b20262`, `be72e1d` |
-| M2 Unit extraction | ✅ approved | `96b0d1e` |
-| M2.1 Complete-sentence units (segment v2, D-020) | ✅ approved | `924efd5`, `680f6b5` |
-| M3 Dicta pilot and benchmark | ✅ done. **Gate decisions still pending** ([pilot_report.md §15](pilot_report.md); §6 below) | `1d2254b` |
-| **M4 Data layer and access API** | ✅ done 2026-11-07. **Awaiting user review** (D-030–D-033 *proposed*) | see `git log` |
-| M5 full parse, M6 statistics, M7 review | not started. **M5 is blocked on the M3 gate decisions** and on M4 approval | — |
+| M0 Foundation | ✅ approved | `d332468`, `9ffea6a` |
+| M1 Inventory and catalog | ✅ approved | `7a27434`, `abb8f1d`, `31fdf67` |
+| M2 Unit extraction | ✅ approved | `49247c0` |
+| M2.1 Complete-sentence units (segment v2, D-020) | ✅ approved | `19e56f2`, `9ae5dd6` |
+| M3 Dicta pilot and benchmark | ✅ done. **Gate decisions still pending** ([pilot_report.md §15](pilot_report.md); §6 below) | `2e50976` |
+| **M4 Data layer and access API** | ✅ done 2026-11-07. **Awaiting user review** (D-030–D-033 *proposed*) | `2b6f2b1` |
+| Collaboration setup (D-034) | ✅ partner guide, hygiene test, history cleaned. Private GitHub repo `oribitan258/hebrew-locative-verbs`: **see §9 for push status** | `77f9aa5` + later |
+| M5 full parse, M6 statistics, M7 review | not started. **M5 is blocked on the M3 gate decisions** and on M4 approval (and §0.1) | — |
 
 **Do not start M5 and do not run full-corpus parsing** until the user has (a) approved M4 and
 (b) decided the M3 gate items.
@@ -81,6 +97,17 @@ committed shards only; pilot code reads per-shard tokens; `hebloc pilot revalida
 
 ## 5. Verification at handoff
 
+**2026-11-08** (project Python blocked, §0.1; checked with git and the signed system Python):
+
+| Check | How | Result |
+|---|---|---|
+| Repo hygiene (`tests/test_repo_hygiene.py`) | its 5 test functions run with stdlib Python | **5/5 pass** |
+| History clean | `git log main --name-only` for the 4 removed files | 0 occurrences in all commits |
+| Rewrite changed nothing else | `git ls-tree -r` of old vs new HEAD, minus the 4 files | identical |
+| Removed files kept locally | `cmp` against `data/backups/files/` | identical, git-ignored |
+
+**2026-11-07** (end of M4, before Smart App Control blocked Python):
+
 | Check | Command | Result |
 |---|---|---|
 | Fast tests | `uv run pytest` | **118 passed**, 1 deselected (~81 s); 19 new in `tests/test_store.py` |
@@ -126,15 +153,33 @@ copied (external drive and cloud folder: the user's action).
 
 Also check the machine's power and sleep settings before M5 (one benchmark shard stalled tenfold).
 
+**Parsing speed (investigated 2026-11-08 at the professor's question; analysis only, nothing run).**
+- *Measured* (M3 benchmark): base + `topk` runs at 534 sub-words/s → 92 h for full Modern.
+- *Derived* from the model configs and the two measured rates:
+  - the lemma head (128k-word vocabulary) is ~54% of base's compute and ~90% of tiny's;
+  - the CPU is ~86% busy with real computation, and Python post-processing (Dicta's and ours) is ~14%;
+  - so the pipeline is not overcomplicated.
+- *Assumed* gains:
+  - CPU tuning (2–3 processes × 4 threads, power plan, lemma head only on word starts): 1.2–1.5×, so ~55–75 h;
+  - a GPU (university server, Colab/Kaggle): ~2–25 h, limited by CPU post-processing.
+- Splitting slices across the 3 partners' laptops divides wall-clock time by ~3.
+- Recommended: approve `topk`; ask the professor about a GPU and about full-Modern expectations;
+  measure (profile, multi-process, batch size, GPU smoke test with an output-agreement check) once
+  Python runs again.
+
 ## 7. Startup instructions for the next session
 
+0. Check that Python runs at all: `uv run python -c "print(1)"`. If you see *"An Application Control
+   policy has blocked this file"*, Smart App Control is still on (§0.1). Tell the user; nothing else
+   can be verified.
 1. Read [CLAUDE.md](../CLAUDE.md), this file, [data_layer.md](data_layer.md) (§5 = M5 contract),
-   [decisions.md](decisions.md) D-020–D-033, and [pilot_report.md](pilot_report.md) §11–§15.
+   [PARTNERS.md](PARTNERS.md), [decisions.md](decisions.md) D-020–D-034, and
+   [pilot_report.md](pilot_report.md) §11–§15.
 2. Check:
    ```
    git status --short; git log --oneline -3
    uv sync
-   uv run pytest                 # 118 pass; no model is loaded by the tests
+   uv run pytest                 # 123 expected (118 + 5 hygiene); no model is loaded by the tests
    uv run hebloc baseline        # Anchor check: OK
    uv run hebloc check           # OK=True
    ```
@@ -145,3 +190,45 @@ Also check the machine's power and sleep settings before M5 (one benchmark shard
    decision. Bundle every finished run.
 5. Do not change `normalize.py`, `segment.py` or the vendored `dicta_code/` without an approved
    decision entry.
+
+## 8. Commit hashes before and after the D-034 history rewrite
+
+Manifests and bundles created before 2026-11-08 record the old hashes as `code_commit`.
+
+| Old | New | Commit |
+|---|---|---|
+| `2b3cc63` | `d332468` | M0: project foundation and immutability guard |
+| `b342614` | `1bff748` | Mark M0 complete in CLAUDE.md |
+| `b7ca5aa` | `9ffea6a` | M0 follow-up: pin corpus baseline with git-tracked anchor |
+| `9d59081` | `7a27434` | M1: corpus inventory and document catalog |
+| `3318985` | `50dee12` | Make inventory summary tables deterministic |
+| `7b20262` | `abb8f1d` | M1 decisions: full/curated views, scoped duplicates |
+| `be72e1d` | `31fdf67` | Full view: exclude whitespace-only placeholders |
+| `96b0d1e` | `49247c0` | M2: sentence/verse extraction, normalization and provenance |
+| `40d9306` | `ef7d5c8` | Session handoff after M2 |
+| `924efd5` | `19e56f2` | M2.1 code: complete-sentence units, parse-time pieces |
+| `304182e` | `b93ee12` | units_migrate: fix ambiguous join and DuckDB 2.0 Arrow API |
+| `34587d3` | `7521928` | units_migrate: revert to execute() |
+| `680f6b5` | `9ae5dd6` | M2.1: regenerate units as complete sentences |
+| `1d2254b` | `2e50976` | M3: Dicta pilot and benchmark |
+| `3aad371` | `2b6f2b1` | M4: data layer and access API |
+| `30c493e` | `77f9aa5` | Prepare private GitHub collaboration |
+
+## 9. Collaboration (D-034)
+
+- **Repository:** private GitHub `oribitan258/hebrew-locative-verbs`. Push status: **not pushed yet**, waiting for the user to approve the exact upload list (2026-11-08).
+- **In git:** code, config, docs, tests, small result tables, the audit sheets.
+- **Never in git:** `corpora/` (partners download it themselves and prove identity with
+  `hebloc baseline`), `data/`, secrets, the course documents, `docs/m2_sample_review.md`.
+  `tests/test_repo_hygiene.py` enforces this.
+- **Partner guide:** [PARTNERS.md](PARTNERS.md). Steps: install, clone, corpora, build, checks; then
+  wait for a slice; parse it; share it as a bundle through a private shared folder (never git).
+- **Still needed before partners can parse (M5 work, after the gate decisions):**
+  - a `hebloc parse --slice …` command;
+  - a pinned `config/parse_plan.yaml` (slices, owners, model, `topk`, budget, fixes);
+  - a cross-machine agreement check: each partner parses the 1,000-unit pilot sample and compares
+    with our stored `raw_json`. Outputs are not yet proven identical across different CPUs/OSes.
+- **To do (user):**
+  - send the partners' GitHub usernames (invitations);
+  - create the private shared folder for bundles;
+  - send the corpora link.

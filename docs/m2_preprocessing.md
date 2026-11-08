@@ -183,7 +183,7 @@ copy of v1 (`data/units_v1`). No result was assumed in advance.
 | v1 chunk offsets = `plan_pieces(text_raw, 200)` | ✅ for all 3,000 sentences |
 | Merged sentences: `text_norm` vs v1 chunk norms joined | **2 differences** |
 | Merged sentences: flag sets, token counts, other columns | **3 sentences** in total differ (below); 400 flag-count differences are once-per-unit flags (e.g. `diacritics_stripped`, `braces_removed`) that v1 repeated per chunk |
-| Validation sample (`data/units_sample`) | regenerated with v2 at clean commit `924efd5`. The old sample recorded the pre-M2 commit `be72e1d+dirty`, so it was stale; it was moved to `data/units_sample_v1` |
+| Validation sample (`data/units_sample`) | regenerated with v2 at clean commit `924efd5` (now `19e56f2`; hashes changed in the D-034 history rewrite). The old sample recorded the pre-M2 commit `be72e1d+dirty` (now `31fdf67`), so it was stale; it was moved to `data/units_sample_v1` |
 
 **All 3 sentences with derived-value differences.** Each is a v1 chunk-boundary defect that is
 now fixed:

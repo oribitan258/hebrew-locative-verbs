@@ -141,6 +141,9 @@ notebooks/     exploration only — never pipeline logic
       `hebloc.store` + extended `hebloc.data`; tokens per shard (11 pilot runs migrated, identical);
       DuckDB catalog; canonical registry; integrity checker; CoNLL-U export (= Dicta's UD, 50/50);
       bundles. Built independent of the M3 gate decisions, which are STILL PENDING (HANDOFF §6).
+- [x] Collaboration setup (D-034, 2026-11-08): private GitHub repo, `docs/PARTNERS.md`, repo-hygiene test;
+      course docs + `m2_sample_review.md` removed from ALL history (hashes changed: HANDOFF §8).
+      **Smart App Control now blocks the project Python on this laptop (HANDOFF §0).**
 - [ ] M5 full parsing run
 - [ ] M6 descriptive statistics + parser-accuracy report
 - [ ] M7 review checkpoint (STOP)
