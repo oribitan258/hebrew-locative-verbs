@@ -251,4 +251,18 @@ def test_real_work_plan_matches_census():
     wp, cen = P.load_work_plan(), json.loads(census.read_text(encoding="utf-8"))["per_corpus"]
     for c, d in cen.items():
         assert sum(s["subwords"] for s in wp["sizes"].values() if s["corpus"] == c) == d["subwords"], c
-    assert wp["plan_sha256"] == P.load().sha256, "config/parse_plan.yaml changed: run hebloc plan measure"
+    assert wp["sizes_key"] == P.load().sizes_key, "slices/model changed: run hebloc plan measure"
+
+
+def test_reassign_reuses_sizes_and_refuses_when_slices_change(tmp_path):
+    p = _plan(tmp_path)
+    sizes = {s.id: {"corpus": s.corpus, "units": 1, "ws_tokens": 1, "subwords": n, "units_over_budget": 0}
+             for s, n in zip(p.slices, [5, 90, 40, 70, 10, 60, 60])}
+    j, md = tmp_path / "wp.json", tmp_path / "wp.md"
+    P.write_work_plan(p, {"tokenizer": "t", "sizes": sizes}, j, md)
+    approved = _plan(tmp_path, PLAN_YAML.replace("status: draft", "status: approved").replace("coverage: pending", "coverage: B"))
+    wp = P.reassign(approved, j, md)
+    assert wp["sizes"] == sizes and "Plan status: `approved`, coverage: `B`" in md.read_text(encoding="utf-8")
+    changed = _plan(tmp_path, PLAN_YAML.replace("buckets: 2", "buckets: 3"))
+    with pytest.raises(ValueError, match="re-measure"):
+        P.reassign(changed, j, md)

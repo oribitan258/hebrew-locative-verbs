@@ -86,6 +86,14 @@ class Plan:
     def run_ref(self, s: Slice) -> str:
         return f"{s.corpus}/{self.settings['settings_id']}__{s.id}"
 
+    @property
+    def sizes_key(self) -> str:
+        """What the measured sizes depend on: slice definitions + tokenizer (model) + budget.
+        Status, coverage, people and pins can change without re-measuring (`hebloc plan assign`)."""
+        payload = json.dumps([[s.id, s.corpus, s.subcorpus, s.source, s.bucket, s.buckets] for s in self.slices]
+                             + [self.settings["model"], self.settings["budget"]], sort_keys=True)
+        return hashlib.sha256(payload.encode()).hexdigest()
+
 
 def load(path: Path = PLAN_PATH) -> Plan:
     raw = path.read_bytes()
@@ -233,12 +241,21 @@ def assign(plan: Plan, sizes: dict[str, dict], coverage: str) -> dict:
 
 def write_work_plan(plan: Plan, measured: dict, path_json: Path = WORK_PLAN_JSON, path_md: Path = WORK_PLAN_MD) -> dict:
     wp = {"generated_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"), "plan_sha256": plan.sha256,
-          "settings_id": plan.settings["settings_id"], "tokenizer": measured["tokenizer"],
+          "sizes_key": plan.sizes_key, "settings_id": plan.settings["settings_id"], "tokenizer": measured["tokenizer"],
           "reference_rate_subwords_per_s": RATE_SUBWORDS_PER_S, "sizes": measured["sizes"],
           "assignment": {c: assign(plan, measured["sizes"], c) for c in COVERAGES}}
     atomic_write_json(wp, path_json)
     atomic_write_text(render_markdown(plan, wp), path_md)
     return wp
+
+
+def reassign(plan: Plan, path_json: Path = WORK_PLAN_JSON, path_md: Path = WORK_PLAN_MD) -> dict:
+    """Re-balance and re-render from the STORED sizes (seconds), e.g. after Ori approves the plan.
+    Refuses if the slices, model or budget changed since measuring (sizes would be stale)."""
+    wp = load_work_plan(path_json)
+    if wp.get("sizes_key") != plan.sizes_key:
+        raise ValueError("slice definitions, model or budget changed since `hebloc plan measure`: re-measure")
+    return write_work_plan(plan, {"tokenizer": wp["tokenizer"], "sizes": wp["sizes"]}, path_json, path_md)
 
 
 def load_work_plan(path: Path = WORK_PLAN_JSON) -> dict:

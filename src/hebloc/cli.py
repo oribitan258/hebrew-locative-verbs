@@ -352,6 +352,11 @@ def _cmd_plan(args: argparse.Namespace) -> int:
         _json(wp["assignment"])
         print(f"wrote {P.WORK_PLAN_JSON} and {P.WORK_PLAN_MD}")
         return 0
+    if args.action == "assign":
+        wp = P.reassign(plan)
+        _json({c: {p: d["slices"] for p, d in a["people"].items()} for c, a in wp["assignment"].items()})
+        print(f"re-rendered {P.WORK_PLAN_JSON} and {P.WORK_PLAN_MD} from the stored sizes")
+        return 0
     if args.action == "show":
         print(f"status={plan.status} coverage={plan.coverage} settings={plan.settings}")
         print(P.WORK_PLAN_MD.read_text(encoding="utf-8") if P.WORK_PLAN_MD.exists() else "(no work plan yet: hebloc plan measure)")
@@ -502,8 +507,8 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--write-reference", default=None, metavar="RUN", help="(Ori) pin RUN as the reference")
     p.set_defaults(func=_cmd_agreement)
 
-    p = sub.add_parser("plan", help="Team: work plan: show | check | measure | status | register.")
-    p.add_argument("action", choices=["show", "check", "measure", "status", "register"])
+    p = sub.add_parser("plan", help="Team: work plan: show | check | measure | assign | status | register.")
+    p.add_argument("action", choices=["show", "check", "measure", "assign", "status", "register"])
     p.add_argument("--coverage", default=None, choices=["A", "B"])
     p.add_argument("--write", action="store_true", help="register: write config/annotations.yaml")
     p.set_defaults(func=_cmd_plan)

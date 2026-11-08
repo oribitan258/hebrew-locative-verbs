@@ -11,6 +11,8 @@ classification, classifiers, LLM) are roadmap-only: `docs/roadmap.md`. Do not im
 until the user explicitly opens that scope.
 
 - **New session? Start with `docs/HANDOFF.md`** (current state, checks to run, next milestone).
+- **On a partner's computer (Efrat/Adi, or any fresh setup)? Execute `PARTNER_START.md`** (tested,
+  step-by-step: identify the partner, set up, verify, parse only their slices, package results).
 - Spec (authoritative, Hebrew): `project.pdf`. Paper: `DoronDubnov_revised.pdf`. Both are local copies in the
   repo root, NOT in git (copyright, D-034); partners use their own course copies. Partner guide: `docs/PARTNERS.md`.
 - Decisions log: `docs/decisions.md`. Roadmap: `docs/roadmap.md`. Corpus facts: `docs/corpus_report.md`.
@@ -40,7 +42,8 @@ until the user explicitly opens that scope.
   what was built, why, how it works, how we know it works. User approves before the next milestone.
 
 ## Team (Ori, Efrat, Adi) — read if you are helping a partner
-- Setup and parsing guide: `docs/PARTNERS.md`; who parses what: `docs/WORK_PLAN.md` (generated).
+- Execution guide for Claude Code: **`PARTNER_START.md`** (single source of the tested commands);
+  overview: `docs/PARTNERS.md`; who parses what: `docs/WORK_PLAN.md` (generated).
   Slash commands: `/partner-setup <name>`, `/partner-parse <name>`, `/merge-results` (Ori).
 - Ask whose machine this is (ori/efrat/adi) and pass it as `--as <name>`.
 - Never parse a slice that is not assigned to that person; never bypass a `hebloc parse` REFUSED.
@@ -110,7 +113,15 @@ uv run hebloc check [--deep]             # M4: read-only integrity of the whole 
 uv run hebloc catalog                    # M4: write data/hebloc.duckdb (views)
 uv run hebloc export-conllu <run> [--corpus C] [--style ud|iahlt_ud]
 uv run hebloc bundle create|verify|restore ...   # M4: D-012 backups
-uv run hebloc <parse|stats>              # later milestones (M5/M6)
+uv run hebloc corpora install --from P | verify   # team: install/verify corpora vs anchor
+uv run hebloc models fetch|verify        # team: pinned Dicta models (sha256)
+uv run hebloc fingerprint                # team: rebuilt data == reference content
+uv run hebloc doctor --as NAME           # team: end-to-end machine check -> data/team/doctor.json
+uv run hebloc agreement --as NAME        # team: pilot-sample parse == reference output (1,161 pieces)
+uv run hebloc plan show|check|measure|assign|status|register   # team: work plan (gated)
+uv run hebloc parse --slice S --as NAME [--limit N]   # M5: one assigned slice (refused in draft)
+uv run hebloc merge <bundle.zip>...      # Ori: verify + restore + check partners' bundles
+uv run hebloc stats                      # later milestone (M6)
 ```
 
 ## Repo map
@@ -155,7 +166,10 @@ notebooks/     exploration only — never pipeline logic
       bundles. Built independent of the M3 gate decisions, which are STILL PENDING (HANDOFF §6).
 - [x] Collaboration setup (D-034, 2026-11-08): private GitHub repo, `docs/PARTNERS.md`, repo-hygiene test;
       course docs + `m2_sample_review.md` removed from ALL history (hashes changed: HANDOFF §8).
-      **Smart App Control now blocks the project Python on this laptop (HANDOFF §0).**
+      Smart App Control blocker FIXED by a signed python.org 3.12 venv (D-035).
+- [x] Team readiness (D-036, D-037, 2026-11-08): `hebloc.team` (work plan, doctor, corpora install,
+      fingerprints, agreement, gated `parse --slice`, `merge`), `PARTNER_START.md`; verified from a clean
+      clone. Plan is DRAFT until the M3 gate decisions; partners not invited yet.
 - [ ] M5 full parsing run
 - [ ] M6 descriptive statistics + parser-accuracy report
 - [ ] M7 review checkpoint (STOP)

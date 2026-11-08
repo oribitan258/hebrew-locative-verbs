@@ -1,20 +1,23 @@
-# Session Handoff: after M4 + collaboration setup (M4 review and M3 gate decisions pending)
+# Session Handoff: team-ready (M4 review, M3 gate decisions and repo push pending)
 
-*Updated 2026-11-08 (collaboration setup; M4 itself finished 2026-11-07). This file summarizes and
-points to other documents; when they disagree, the linked documents win.*
+*Updated 2026-11-08, evening (team readiness verified from a clean clone; M4 finished 2026-11-07).
+This file summarizes and points to other documents; when they disagree, the linked documents win.*
 
 ---
 
-## 0. Read first: two blockers found on 2026-11-08
+## 0. Read first
 
-1. **Windows Smart App Control is now ON (enforcing) on Ori's laptop.** It blocks the project's
-   Python, because the uv-installed `python.exe`, torch, pyarrow and tokenizers are all unsigned
-   (Code Integrity events 3077/3033). Since then **no project command or test can run here**;
-   only the signed system Python 3.14 runs, and it has no project libraries. The fix is the user's
-   decision: turn Smart App Control off (check first whether it can be re-enabled), or work in WSL2.
-   Everything verified on 2026-11-08 was checked with git and stdlib-only scripts, not pytest
-   (§5).
-2. **The git history was rewritten** (D-034) before the first push to GitHub, to remove the course
+1. **Smart App Control: FIXED (D-035).** Windows Smart App Control (On, enforcing) blocks uv's
+   unsigned `python.exe`.
+   - The project venv now uses the **signed python.org Python 3.12.10**, installed per-user with winget.
+   - Recreate the venv with `uv venv --clear --python (py -3.12 -c "import sys; print(sys.executable)")`,
+     then `uv sync`.
+   - Do NOT let uv pick `~/.local/bin/python3.12.exe` (a blocked uv shim).
+2. **Team setup is built and verified from a clean clone** (D-036, D-037; §10 below).
+   - Partners' entry point: [`PARTNER_START.md`](../PARTNER_START.md).
+   - Plan: `config/parse_plan.yaml` (status **draft**).
+   - Who parses what: [`WORK_PLAN.md`](WORK_PLAN.md).
+3. **The git history was rewritten** (D-034) before the first push to GitHub, to remove the course
    documents and `docs/m2_sample_review.md`. **All commit hashes changed.** Manifests written before
    the rewrite (`run.json`, `units/_manifest.json`, `documents.manifest.json`, bundles) still record
    the OLD hashes as `code_commit`. Map old → new in §8 and in `data/backups/commit_map.txt`. The
@@ -30,8 +33,9 @@ points to other documents; when they disagree, the linked documents win.*
 | M2.1 Complete-sentence units (segment v2, D-020) | ✅ approved | `19e56f2`, `9ae5dd6` |
 | M3 Dicta pilot and benchmark | ✅ done. **Gate decisions still pending** ([pilot_report.md §15](pilot_report.md); §6 below) | `2e50976` |
 | **M4 Data layer and access API** | ✅ done 2026-11-07. **Awaiting user review** (D-030–D-033 *proposed*) | `2b6f2b1` |
-| Collaboration setup (D-034) | ✅ partner guide, hygiene test, history cleaned. Private GitHub repo `oribitan258/hebrew-locative-verbs`: **see §9 for push status** | `77f9aa5` + later |
-| M5 full parse, M6 statistics, M7 review | not started. **M5 is blocked on the M3 gate decisions** and on M4 approval (and §0.1) | — |
+| Collaboration setup (D-034) | ✅ hygiene test, history cleaned. Private GitHub repo: **not created or pushed yet** (§9) | `77f9aa5`, `dcf1207` |
+| Team readiness (D-035–D-037) | ✅ `hebloc.team`, `PARTNER_START.md`, work plan (draft), verified from a clean clone (§10) | `eaffb62` + later |
+| M5 full parse, M6 statistics, M7 review | not started. **M5 is blocked on the M3 gate decisions** and on M4 approval | — |
 
 **Do not start M5 and do not run full-corpus parsing** until the user has (a) approved M4 and
 (b) decided the M3 gate items.
@@ -97,7 +101,7 @@ committed shards only; pilot code reads per-shard tokens; `hebloc pilot revalida
 
 ## 5. Verification at handoff
 
-**2026-11-08** (project Python blocked, §0.1; checked with git and the signed system Python):
+**2026-11-08, morning** (before the D-035 fix; checked with git and the signed system Python). Evening results: §10.
 
 | Check | How | Result |
 |---|---|---|
@@ -170,8 +174,8 @@ Also check the machine's power and sleep settings before M5 (one benchmark shard
 ## 7. Startup instructions for the next session
 
 0. Check that Python runs at all: `uv run python -c "print(1)"`. If you see *"An Application Control
-   policy has blocked this file"*, Smart App Control is still on (§0.1). Tell the user; nothing else
-   can be verified.
+   policy has blocked this file"*, the venv uses uv's unsigned Python: recreate it as in §0.1 (python.org 3.12
+   via `uv venv --clear --python (py -3.12 ...)`), then `uv sync`.
 1. Read [CLAUDE.md](../CLAUDE.md), this file, [data_layer.md](data_layer.md) (§5 = M5 contract),
    [PARTNERS.md](PARTNERS.md), [decisions.md](decisions.md) D-020–D-034, and
    [pilot_report.md](pilot_report.md) §11–§15.
@@ -179,7 +183,7 @@ Also check the machine's power and sleep settings before M5 (one benchmark shard
    ```
    git status --short; git log --oneline -3
    uv sync
-   uv run pytest                 # 123 expected (118 + 5 hygiene); no model is loaded by the tests
+   uv run pytest                 # 138 expected; no model is loaded by the tests
    uv run hebloc baseline        # Anchor check: OK
    uv run hebloc check           # OK=True
    ```
@@ -216,19 +220,66 @@ Manifests and bundles created before 2026-11-08 record the old hashes as `code_c
 
 ## 9. Collaboration (D-034)
 
-- **Repository:** private GitHub `oribitan258/hebrew-locative-verbs`. Push status: **not pushed yet**, waiting for the user to approve the exact upload list (2026-11-08).
+- **Repository:** private GitHub `oribitan258/hebrew-locative-verbs`. Push status: **not created or pushed yet**.
+  The user must approve the final upload list; partners are not invited yet.
 - **In git:** code, config, docs, tests, small result tables, the audit sheets.
 - **Never in git:** `corpora/` (partners download it themselves and prove identity with
   `hebloc baseline`), `data/`, secrets, the course documents, `docs/m2_sample_review.md`.
   `tests/test_repo_hygiene.py` enforces this.
-- **Partner guide:** [PARTNERS.md](PARTNERS.md). Steps: install, clone, corpora, build, checks; then
-  wait for a slice; parse it; share it as a bundle through a private shared folder (never git).
-- **Still needed before partners can parse (M5 work, after the gate decisions):**
-  - a `hebloc parse --slice …` command;
-  - a pinned `config/parse_plan.yaml` (slices, owners, model, `topk`, budget, fixes);
-  - a cross-machine agreement check: each partner parses the 1,000-unit pilot sample and compares
-    with our stored `raw_json`. Outputs are not yet proven identical across different CPUs/OSes.
+- **Partner execution guide (for Claude Code): [PARTNER_START.md](../PARTNER_START.md).** It is the single
+  source of the tested commands. [PARTNERS.md](PARTNERS.md) is the human overview. Slash commands:
+  `/partner-setup`, `/partner-parse`, `/merge-results`.
+- **Built (D-036):** `hebloc parse --slice` (gated), `config/parse_plan.yaml`, the agreement check,
+  `hebloc merge`, `hebloc plan register`.
 - **To do (user):**
-  - send the partners' GitHub usernames (invitations);
-  - create the private shared folder for bundles;
-  - send the corpora link.
+  - fill the two placeholders in `PARTNER_START.md` (corpora link; shared folder);
+  - approve the upload list and the GitHub push;
+  - send Efrat's and Adi's GitHub usernames;
+  - approve the plan (§11).
+
+## 10. Team readiness: what is verified (2026-11-08, D-037)
+
+**Verified on this laptop, from a clean clone at an ASCII path, as "efrat":**
+- signed-Python venv;
+- corpora installed and sha256-identical (20 min);
+- fresh model download, sha256 OK;
+- rebuilt catalog and units with content fingerprints identical to the reference;
+- tests: 129 passed, 8 skipped;
+- doctor all PASS;
+- **agreement 1,161/1,161 pieces byte-identical** (758 sub-words/s);
+- a real slice REFUSED in draft;
+- a smoke slice parsed, bundled and merged into the working repo (`hebloc check` OK);
+- an altered bundle rejected;
+- documented recovery paths;
+- `git status` clean throughout.
+
+**Also verified:**
+- the slice partition covers every one of the 9,709,662 units exactly once;
+- slice sub-word totals equal the M3 census per corpus;
+- `topk` output is byte-identical to the original code on all 1,161 pilot pieces (D-029 evidence;
+  M3 had 600).
+
+**Not verified:**
+- a different computer or CPU (the agreement shows equality across checkouts, environments and
+  downloads on the SAME hardware);
+- macOS/Linux;
+- a full-size corpora `.zip`;
+- cloning from GitHub (not pushed);
+- real slices;
+- `plan register` with real runs (unit-tested);
+- partners' internet speed and download format of the course corpora.
+
+**Speed note.** The agreement run measured 758 sub-words/s with base + `topk` (pilot sample, nothing
+else running). The work plan uses the more conservative M3 Modern benchmark (534/s), so the hours in
+`WORK_PLAN.md` are an upper estimate on this laptop.
+
+## 11. How to start the parsing phase (Ori, after the gate decisions)
+
+1. Record the gate decisions (decision entries).
+2. In `config/parse_plan.yaml`, set the final `settings`.
+   - If anything changes, change `settings_id` too, then run `uv run hebloc agreement --as ori` and
+     `uv run hebloc agreement --write-reference agreement/<settings_id>__ori`.
+   - If the model or budget changes, also run `uv run hebloc plan measure`.
+3. Set `status: approved` and `coverage: A|B`, then `uv run hebloc plan assign`.
+4. Run `uv run pytest`, commit, push.
+5. Partners: `git pull`, then `PARTNER_START.md` §10.

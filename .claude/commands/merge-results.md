@@ -3,7 +3,7 @@ description: (Ori) Verify, restore and integrate the partners' parse bundles
 argument-hint: <path(s) to downloaded bundle .zip files>
 ---
 
-You are helping Ori integrate parse results from the team. Follow `docs/PARTNERS.md` §10 (merging).
+You are helping Ori integrate parse results from the team. Follow `PARTNER_START.md` §12 (merging).
 
 1. For every bundle in `$ARGUMENTS`, check that its `.zip.sha256` sidecar matches the zip
    (`sha256sum` / `Get-FileHash`), then run `uv run hebloc merge <zips...>`. Every line must start

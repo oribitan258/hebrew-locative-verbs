@@ -1,6 +1,7 @@
 {
-  "generated_utc": "2026-11-08T19:11:41+00:00",
+  "generated_utc": "2026-11-08T19:28:49+00:00",
   "plan_sha256": "6d755b6a933a806abef21f0253bf895b30f28f2cbc6ffb7193cca696b8589a4c",
+  "sizes_key": "8d4d006bcf2e0850446af0a7de1a61d5f563f2e7f975551602c263053c02447c",
   "settings_id": "base-topk-v1",
   "tokenizer": "dicta-il/dictabert-joint@7b1256fc0846",
   "reference_rate_subwords_per_s": 534,

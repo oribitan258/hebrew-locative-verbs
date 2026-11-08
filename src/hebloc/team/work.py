@@ -86,10 +86,20 @@ def merge(bundles: list[Path], *, overwrite: bool = False) -> dict:
     expected_refs = {plan.run_ref(s): s.id for s in plan.slices}
     out = []
     con = duckdb.connect()
+    from hebloc.store.io import file_sha256
+
     for z in bundles:
         v = B.verify(Path(z))
-        row = {"bundle": str(z), "run": v.get("run"), "verified": v["ok"], "problems": v["problems"]}
-        if v["ok"]:
+        row = {"bundle": str(z), "run": v.get("run"), "verified": v["ok"], "problems": list(v["problems"])}
+        side = Path(str(z) + ".sha256")              # whole-file digest written by `bundle create`
+        if side.exists():
+            row["sidecar"] = "match" if side.read_text(encoding="utf-8").split()[0] == file_sha256(Path(z)) else "MISMATCH"
+            if row["sidecar"] == "MISMATCH":
+                row["problems"].append("zip does not match its .sha256 file (damaged or altered in transfer)")
+        else:
+            row["sidecar"] = "missing"
+            row["problems"].append("note: no .zip.sha256 next to the zip (members were still verified)")
+        if v["ok"] and row["sidecar"] != "MISMATCH":
             res = B.restore(Path(z), overwrite=overwrite)
             run = resolve(res["path"])
             ci = check_run(run, con)
