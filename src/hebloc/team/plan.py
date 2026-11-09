@@ -27,6 +27,10 @@ WORK_PLAN_JSON = CONFIG_DIR / "work_plan.json"
 WORK_PLAN_MD = DOCS_DIR / "WORK_PLAN.md"
 COVERAGES = ("A", "B")
 RATE_SUBWORDS_PER_S = 534     # measured, base + topk, M3 benchmark (pilot_report.md §11)
+# Ori's speed on the agreement sample (same settings). That sample over-represents long, hard sentences
+# (~114 sub-words each vs ~20 in the corpus), so its absolute rate is lower than the corpus rate; only
+# the RATIO between machines on the same sample is meaningful for time estimates.
+AGREEMENT_REFERENCE_RATE = 203.9
 DEFAULT_THREADS = 8           # torch threads used for the agreement reference and every run (D-039)
 
 
@@ -285,7 +289,9 @@ def render_markdown(plan: Plan, wp: dict) -> str:
              "While the status is `draft`, `hebloc parse` refuses real slices: wait for Ori's go-ahead.", "",
              f"Sizes are exact model sub-word counts ({wp['tokenizer']} tokenizer). Hours assume the reference "
              f"rate of {wp['reference_rate_subwords_per_s']} sub-words/s measured on Ori's laptop (base + `topk`); "
-             "your machine may differ, and `hebloc agreement` reports your actual rate.", ""]
+             "your machine may be faster or slower. `hebloc doctor` estimates your hours from your agreement "
+             "check: the agreement sample is deliberately hard, so its sub-words/s is lower than the corpus "
+             "rate on every machine; only your speed relative to Ori's on that sample counts.", ""]
     for c in COVERAGES:
         a = wp["assignment"][c]
         title = {"A": "Option A: all of Modern", "B": "Option B: Modern with a 10% Haaretz document sample"}[c]

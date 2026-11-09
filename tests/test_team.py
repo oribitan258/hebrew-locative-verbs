@@ -276,6 +276,16 @@ def test_merge_reports_damaged_or_conflicting_bundles_without_crashing(tmp_path,
 
 # ------------------------------------------------------------------ D-039: threads, lock, status
 
+def test_doctor_hours_estimate_scales_by_relative_agreement_speed():
+    # The agreement sample is hard: its absolute rate is not a corpus rate. Only the ratio to Ori's counts.
+    from hebloc.team.doctor import _hours_text
+
+    mine = {"hours_at_reference_rate": 34.0}
+    assert _hours_text(mine, None) == "~34.0 h on Ori's laptop"
+    assert _hours_text(mine, {"subwords_per_second": P.AGREEMENT_REFERENCE_RATE}).startswith("~34 h on this computer, at 100%")
+    assert _hours_text(mine, {"subwords_per_second": P.AGREEMENT_REFERENCE_RATE / 2}).startswith("~68 h on this computer, at 50%")
+
+
 def test_threads_are_pinned_for_full_runs(tmp_path):
     from hebloc.team import work as W
 

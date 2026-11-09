@@ -148,7 +148,7 @@ def check_parse_readiness(person: str | None) -> list[dict]:
         same = res.get("settings", {}).get("settings_id") == plan.settings["settings_id"]
         out.append(_r("agreement check", "PASS" if res.get("ok") and same else ("TODO" if not same else "FAIL"),
                       (f"{res.get('pieces_identical')}/{res.get('pieces_compared')} pieces identical, "
-                       f"{res.get('subwords_per_second')} sub-words/s" if res.get("compared") else res.get("reason", ""))
+                       f"sample speed {res.get('subwords_per_second')} sub-words/s" if res.get("compared") else res.get("reason", ""))
                       + ("" if same else " (made with other settings)"),
                       f"uv run hebloc agreement --as {person or '<name>'}   (send data/team/agreement.json to Ori if it fails)"))
     out.append(_r("plan approved", "PASS" if plan.approved else "TODO",
@@ -160,11 +160,24 @@ def check_parse_readiness(person: str | None) -> list[dict]:
             cov = plan.coverage if plan.coverage in P.COVERAGES else "A"
             mine = wp["assignment"][cov]["people"].get(person)
             out.append(_r("your slices", "PASS" if mine else "WARN",
-                          (f"option {cov}: " + ", ".join(mine["slices"]) + f" (~{mine['hours_at_reference_rate']} h)") if mine
+                          (f"option {cov}: " + ", ".join(mine["slices"]) + f" ({_hours_text(mine, res)})") if mine
                           else f"{person!r} is not in the plan's people {list(plan.people)}"))
         except FileNotFoundError as e:
             out.append(_r("your slices", "WARN", str(e)))
     return out
+
+
+def _hours_text(mine: dict, agreement: dict | None) -> str:
+    """Time estimate for this person's slices: plan hours (Ori's laptop) scaled by this machine's speed
+    relative to Ori's on the same agreement sample. The sample's absolute sub-words/s is not a corpus rate."""
+    from hebloc.team import plan as P
+
+    hours = mine["hours_at_reference_rate"]
+    rate = (agreement or {}).get("subwords_per_second")
+    if not rate:
+        return f"~{hours} h on Ori's laptop"
+    ratio = rate / P.AGREEMENT_REFERENCE_RATE
+    return f"~{hours / ratio:.0f} h on this computer, at {ratio:.0%} of Ori's speed in the agreement check"
 
 
 def check_machine() -> list[dict]:

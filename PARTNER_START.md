@@ -102,8 +102,14 @@ Every section starts with **Skip if**: check it and skip the section when it is 
 | Tool | Check | Expected | Install if missing |
 |---|---|---|---|
 | Git | `git --version` | a version | (§0) Windows: `winget install --id Git.Git -e --scope user`; macOS: `xcode-select --install` |
-| uv | `uv --version` | `uv 0.12` or newer | Windows: `powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 \| iex"`; macOS/Linux: `curl -LsSf https://astral.sh/uv/install.sh \| sh` |
+| uv | `uv --version` | `uv 0.12` or newer | the command below the table |
 | Python 3.12 (python.org) | Windows: `py -3.12 --version` | `Python 3.12.x` | Windows: `winget install --id Python.Python.3.12 --scope user --silent --accept-package-agreements --accept-source-agreements` (*~1 min, no admin*). macOS **(untested)**: the 3.12 installer from python.org. Linux **(untested)**: the `python3.12` package |
+
+Install uv, if missing (Windows PowerShell):
+```
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+```
+macOS/Linux **(untested)**: `curl -LsSf https://astral.sh/uv/install.sh | sh`
 
 After installing anything, a NEW terminal is needed for PATH to update. If a check still says "not
 recognized", ask the person to close and reopen VS Code (same folder), then say "follow
@@ -269,7 +275,8 @@ the person sends that folder and `data/team/agreement.json` to Ori, who compares
    | `complete` | everything is parsed and packaged | Go to §11. |
    | `not started` or `stopped: run it again to resume` | ready to (re)start | Step 3. |
 
-3. Tell the person how long it takes (the doctor's `your slices` line, and `docs/WORK_PLAN.md`).
+3. Tell the person how long it takes: the doctor's `your slices` line (`uv run python -m hebloc doctor --quick`)
+   gives the estimate for this computer.
    Then tell them: keep the laptop **plugged in, lid open**; a new window will open and must stay
    open; VS Code may be closed; if Windows asks to restart for updates, choose a later time. Run:
    ```
