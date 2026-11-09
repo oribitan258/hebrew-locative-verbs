@@ -154,53 +154,22 @@ def test_register_rewrites_only_the_real_key(tmp_path, monkeypatch):
     monkeypatch.setattr(P, "status", lambda plan, *a, **k: [
         {"slice": "mikra", "run": "mikra/t1__mikra", "complete": True, "checks_ok": True},
         {"slice": "hazal", "run": "hazal/t1__hazal", "complete": False, "checks_ok": False}])
+    incomplete = {"complete": False, "missing": ["hazal"], "invalid_or_duplicate": [], "units_in_more_than_one_run": 0,
+                  "units_present": 1, "units_expected": 2}
+    monkeypatch.setattr(W, "completeness", lambda *a, **k: incomplete)
+    monkeypatch.setattr(P, "load_work_plan", lambda *a, **k: {})
+    with pytest.raises(W.PlanRefusal, match="not complete"):
+        W.register(write=True)
+    assert R.load_registry(cfg) == {}
+    assert W.register(write=False)["entries"] == {"mikra": ["mikra/t1__mikra"]}      # preview still works
+    monkeypatch.setattr(W, "completeness", lambda *a, **k: incomplete | {"complete": True})
     r = W.register(write=True)
     text = cfg.read_text(encoding="utf-8")
     assert r["slices_not_ready"] == ["hazal"] and text.startswith("# header\n# Example:\n#   canonical:")
     assert R.load_registry(cfg) == {"mikra": ["mikra/t1__mikra"]}
 
 
-# ------------------------------------------------------------------ corpora install
-
-def _fake_corpora(root: Path) -> None:
-    for i, f in enumerate(("Mikra", "Hazal", "Medieval", "Haskala", "Modern")):
-        (root / f / "sub").mkdir(parents=True)
-        (root / f / "sub" / f"{i}.txt").write_bytes(f"text {i}\n".encode())
-
-
-def test_corpora_install_from_folder_and_zip(tmp_path):
-    from hebloc.baseline import compute_baseline, make_anchor, write_anchor
-    from hebloc.team import corpora as C
-
-    src = tmp_path / "download" / "inner"
-    _fake_corpora(src)
-    (tmp_path / "download" / "README.txt").write_text("not a corpus file")
-    anchor = tmp_path / "anchor.json"
-    write_anchor(make_anchor(compute_baseline(src, workers=1, progress=False)), anchor)
-    kw = {"baseline_path": tmp_path / "b1.parquet", "anchor_path": anchor, "workers": 1}
-    r = C.install(tmp_path / "download", tmp_path / "c1" / "corpora", **kw)
-    assert r["verify"]["ok"] and r["verify"]["files"] == 5 and (src / "Mikra").is_dir()   # original kept
-    with pytest.raises(FileExistsError):
-        C.install(tmp_path / "download", tmp_path / "c1" / "corpora", **kw)
-    z = tmp_path / "corpora.zip"
-    with zipfile.ZipFile(z, "w") as zf:
-        for f in src.rglob("*"):
-            if f.is_file():
-                zf.write(f, "top/" + f.relative_to(src).as_posix())
-    kw["baseline_path"] = tmp_path / "b2.parquet"
-    assert C.install(z, tmp_path / "c2" / "corpora", **kw)["verify"]["ok"]
-    (tmp_path / "c2" / "corpora" / "Mikra" / "sub" / "0.txt").write_bytes(b"edited\n")
-    assert not C.verify(tmp_path / "c2" / "corpora", workers=1, write=False, anchor_path=anchor)["ok"]
-
-
-def test_corpora_install_rejects_zip_slip(tmp_path):
-    from hebloc.team import corpora as C
-
-    z = tmp_path / "evil.zip"
-    with zipfile.ZipFile(z, "w") as zf:
-        zf.writestr("../evil.txt", "x")
-    with pytest.raises(ValueError, match="unsafe"):
-        C.install(z, tmp_path / "corpora", verify_after=False)
+# (corpora install and identity: tests/test_corpora_install.py)
 
 
 # ------------------------------------------------------------------ fingerprints / doctor

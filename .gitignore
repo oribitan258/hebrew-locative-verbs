@@ -37,3 +37,6 @@ desktop.ini
 *.pem
 *.key
 .claude/settings.local.json
+
+# Interrupted `hebloc corpora install` staging (removed automatically on the next run)
+/.corpora-staging/

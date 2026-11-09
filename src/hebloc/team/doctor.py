@@ -81,7 +81,7 @@ def check_corpora(quick: bool) -> list[dict]:
 
     if not CORPORA_DIR.is_dir() or not all((CORPORA_DIR / f).is_dir() for f in CORPORA.values()):
         return [_r("corpora present", "TODO", f"{CORPORA_DIR} missing or incomplete",
-                   "uv run hebloc corpora install --from <downloaded folder or .zip>")]
+                   "uv run hebloc corpora install --from <the course corpora archive (or its folder)>")]
     if not BASELINE_PATH.exists():
         return [_r("corpora = anchor", "TODO", "not verified yet", "uv run hebloc corpora verify")]
     probs = anchor_mismatches(read_baseline(BASELINE_PATH), read_anchor(ANCHOR_PATH))
@@ -133,8 +133,14 @@ def check_parse_readiness(person: str | None) -> list[dict]:
     from hebloc.team import agreement as A
     from hebloc.team import plan as P
 
+    from hebloc.team import identity as I
+
     plan = P.load()
     out = []
+    stored = I.get()
+    out.append(_r("identity", "PASS" if stored else "TODO",
+                  f"this computer is set up for {stored.capitalize()}" if stored else "not set",
+                  "uv run hebloc whoami --set <ori|efrat|adi>"))
     res = json.loads(A.RESULT_PATH.read_text(encoding="utf-8")) if A.RESULT_PATH.exists() else None
     if res is None:
         out.append(_r("agreement check", "TODO", "not run", f"uv run hebloc agreement --as {person or '<name>'}"))
@@ -190,7 +196,10 @@ def check_machine() -> list[dict]:
 
 
 def run(person: str | None = None, *, quick: bool = False, write: bool = True) -> dict:
+    from hebloc.team import identity as I
     from hebloc.team import plan as P
+
+    person = person or I.get()
 
     model = P.load().settings["model"]
     sections = {"python": check_python, "git": check_git, "corpora": lambda: check_corpora(quick),

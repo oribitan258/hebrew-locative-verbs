@@ -1,0 +1,29 @@
+{
+  "format": 1,
+  "description": "Names-only digests of corpora/ (sha256 over the sorted rel_paths joined by LF, per top folder). Derived from the anchored baseline; lets `hebloc corpora install` check and repair file-name encodings before hashing. Do not edit by hand.",
+  "files": 404294,
+  "max_rel_path_chars": 141,
+  "non_ascii_names": 320,
+  "per_folder": {
+    "Mikra": {
+      "files": 39,
+      "names_sha256": "fb8f9125cf871b3f749a544a99b026a8995dc4fdbc78d46b4f33e41c0c15c939"
+    },
+    "Hazal": {
+      "files": 204,
+      "names_sha256": "586a1e9faaae9e0e6faf8debe8ced4744572d5f932c20c7ab56cb9c63cba67e6"
+    },
+    "Medieval": {
+      "files": 1128,
+      "names_sha256": "fd232b37e50dbb343d982a68d01075459ffd926d5eb159602155b3688560c58b"
+    },
+    "Haskala": {
+      "files": 320,
+      "names_sha256": "4972c4e2b7d9eeb0321b5c32884fc92058e76e36a98c9c4b71767a394fb21e1c"
+    },
+    "Modern": {
+      "files": 402603,
+      "names_sha256": "b5fe82cc75e1e41e31d3096038efe030e3b421999ebf92c5193955be3d08a992"
+    }
+  }
+}

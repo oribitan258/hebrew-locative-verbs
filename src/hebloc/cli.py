@@ -260,17 +260,63 @@ def _cmd_corpora(args: argparse.Namespace) -> int:
 
     from hebloc.team import corpora as C
 
+    if args.action == "write-names-reference":
+        r = C.write_names_reference()
+        print(f"wrote {C.NAMES_PATH} ({r['files']:,} files)")
+        return 0
     if args.action == "install":
         if not args.source:
-            raise SystemExit("usage: hebloc corpora install --from <folder or .zip>")
-        r = C.install(Path(args.source), workers=args.workers)
+            raise SystemExit("usage: hebloc corpora install --from <archive, folder of parts, or extracted folder>")
+        try:
+            r = C.install([Path(s) for s in args.source], workers=args.workers)
+        except (C.InstallError, FileExistsError, FileNotFoundError) as e:
+            print(f"INSTALL FAILED (nothing was installed): {e}")
+            return 1
+        print(f"found the corpora at '{r['root_in_download']}' in the download; file-name decoding: "
+              f"{r['names']['decoding']}; OS junk files ignored: {r['ignored_os_files']}; "
+              f"duplicate entries across parts: {r['duplicate_entries']}")
         v = r["verify"]
+        if not v["ok"]:
+            print("nothing was installed (the download is not byte-identical to the project's corpora)")
     else:
         v = C.verify(workers=args.workers)
-        r = {"verify": v}
     print(f"{v['files']:,} files, {v['bytes']:,} bytes: " + ("IDENTICAL to the project's corpora (anchor OK)" if v["ok"]
           else "DIFFERENT from the project's corpora:\n  " + "\n  ".join(v["problems"])))
     return 0 if v["ok"] else 1
+
+
+def _cmd_whoami(args: argparse.Namespace) -> int:
+    from hebloc.team import identity as I
+
+    try:
+        if args.name:
+            r = I.set_identity(args.name, change=args.change)
+            print(f"This computer is set up for: {r['person'].capitalize()}  (data/team/identity.json)")
+            return 0
+        who = I.get()
+    except I.IdentityError as e:
+        print(f"REFUSED: {e}")
+        return 2
+    print(f"This computer is set up for: {who.capitalize()}" if who else
+          "Not set. Run: uv run hebloc whoami --set <ori|efrat|adi>")
+    return 0 if who else 1
+
+
+def _cmd_work(args: argparse.Namespace) -> int:
+    from hebloc.team.work import PlanRefusal, WorkFailed, work
+
+    try:
+        r = work(args.person, rehearsal=args.rehearsal, coverage=args.coverage, threads=args.threads)
+    except PlanRefusal as e:
+        print(f"REFUSED: {e}")
+        return 2
+    except WorkFailed as e:
+        print(f"FAILED: {e}\nSend Ori this output, data/team/doctor.json and data/outbox/*/DELIVERY.json")
+        return 1
+    _json(r)
+    print(f"WORK COMPLETE: {r['slices']} slice(s), {r['units']:,} units, {r['bytes'] / 2**20:,.0f} MiB packaged.\n"
+          f"Send the whole folder {r['outbox']} to Ori (see HOW_TO_SEND.txt inside).")
+    return 0
 
 
 def _cmd_models(args: argparse.Namespace) -> int:
@@ -391,13 +437,25 @@ def _cmd_merge(args: argparse.Namespace) -> int:
 
     from hebloc.team.work import merge
 
-    r = merge([Path(z) for z in args.bundles], overwrite=args.overwrite)
+    r = merge([Path(z) for z in args.paths], overwrite=args.overwrite)
+    print(f"{r['bundles_found']} bundle file(s) found, {r['runs']} distinct run(s)")
     for b in r["bundles"]:
-        print(f"{'OK  ' if b['ok'] else 'FAIL'} {b['bundle']} run={b.get('run')} slice={b.get('slice')} "
-              f"person={b.get('person')} {b.get('problems') or ''}{b.get('integrity_problems') or ''}")
-    done = sum(1 for p in r["progress"] if p["complete"] and p["checks_ok"])
-    print(f"plan progress: {done}/{len(r['progress'])} slices complete and valid on this machine")
-    return 0 if all(b["ok"] for b in r["bundles"]) else 1
+        dup = f" (+{len(b['duplicate_copies_ignored'])} identical copy ignored)" if b.get("duplicate_copies_ignored") else ""
+        print(f"{'OK  ' if b['ok'] else 'FAIL'} {b.get('run')} slice={b.get('slice')} person={b.get('person')}{dup}"
+              + ("" if b["ok"] else f"\n     {b['bundle']}\n     {b.get('problems') or ''}{b.get('integrity_problems') or ''}"))
+    for p in r["problems"]:
+        print(("     " if p.startswith("note:") else "FAIL ") + p)
+    for c in r["completeness"]:
+        print(f"\n{c['mode']} coverage {c['coverage']}: {c['slices_ok']}/{c['slices_expected']} slices OK; "
+              f"units {c['units_present']:,}/{c['units_expected']:,}; units in more than one run: "
+              f"{c['units_in_more_than_one_run']}; " + ("COMPLETE" if c["complete"] else "NOT complete"))
+        for p, sl in c["missing_by_owner"].items():
+            if sl:
+                print(f"   missing from {p}: {', '.join(sl)}")
+        if c["invalid_or_duplicate"]:
+            print(f"   INVALID or DUPLICATE: {', '.join(c['invalid_or_duplicate'])}")
+    print(f"\nMERGE {'OK' if r['ok'] else 'HAS PROBLEMS'} -> data/team/merge_report.json")
+    return 0 if r["ok"] else 1
 
 
 def _utf8_console() -> None:
@@ -480,11 +538,26 @@ def main(argv: list[str] | None = None) -> int:
     p.set_defaults(func=_cmd_bundle)
 
     # ---- team collaboration (docs/PARTNERS.md)
-    p = sub.add_parser("corpora", help="Team: install the corpora from a download (folder or .zip) and verify them.")
-    p.add_argument("action", choices=["install", "verify"])
-    p.add_argument("--from", dest="source", default=None, help="install: downloaded folder or .zip")
+    p = sub.add_parser("corpora", help="Team: install the corpora from the course download and verify them.")
+    p.add_argument("action", choices=["install", "verify", "write-names-reference"])
+    p.add_argument("--from", dest="source", action="append", default=None,
+                   help="install: the downloaded archive (.zip/.7z/.rar/.tar.*), a folder of archive parts, or an "
+                        "extracted folder; repeat --from for each part of a multi-part download")
     p.add_argument("--workers", type=int, default=8)
     p.set_defaults(func=_cmd_corpora)
+
+    p = sub.add_parser("whoami", help="Team: show or set who this computer belongs to (ori | efrat | adi).")
+    p.add_argument("--set", dest="name", default=None)
+    p.add_argument("--change", action="store_true", help="deliberately replace a different stored name")
+    p.set_defaults(func=_cmd_whoami)
+
+    p = sub.add_parser("work", help="Team: parse ALL your assigned slices and package them for Ori (resumable).")
+    p.add_argument("--as", dest="person", default=None)
+    p.add_argument("--rehearsal", type=int, default=None, metavar="N",
+                   help="dress rehearsal on the first N units of each of your slices (allowed before approval)")
+    p.add_argument("--coverage", default=None, choices=["A", "B"], help="rehearsal only (default: the plan's, else A)")
+    p.add_argument("--threads", type=int, default=8)
+    p.set_defaults(func=_cmd_work)
 
     p = sub.add_parser("models", help="Team: download (fetch) or verify the pinned Dicta models.")
     p.add_argument("action", choices=["fetch", "verify"])
@@ -513,21 +586,29 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--write", action="store_true", help="register: write config/annotations.yaml")
     p.set_defaults(func=_cmd_plan)
 
-    p = sub.add_parser("parse", help="Team: parse your assigned slice (or a smoke test with --limit).")
+    p = sub.add_parser("parse", help="Team: parse ONE assigned slice (`hebloc work` does all of them).")
     p.add_argument("--slice", required=True)
-    p.add_argument("--as", dest="person", required=True)
+    p.add_argument("--as", dest="person", default=None)
     p.add_argument("--limit", type=int, default=None, help="SMOKE run of the first N units (allowed in draft)")
     p.add_argument("--threads", type=int, default=8)
     p.set_defaults(func=_cmd_parse)
 
-    p = sub.add_parser("merge", help="Team (Ori): verify, restore and check partners' bundles.")
-    p.add_argument("bundles", nargs="+")
+    p = sub.add_parser("merge", help="Team (Ori): verify, restore and check partners' result folders/bundles.")
+    p.add_argument("paths", nargs="*", help="folders (e.g. a partner's outbox folder) and/or bundle .zip files; "
+                                            "none = only report completeness")
     p.add_argument("--overwrite", action="store_true")
     p.set_defaults(func=_cmd_merge)
 
     args = parser.parse_args(argv)
-    if getattr(args, "func", None) in (_cmd_agreement,) and not args.write_reference and not args.person:
-        parser.error("agreement needs --as <your name>")
+    if getattr(args, "person", None) is not None or getattr(args, "func", None) in (_cmd_agreement, _cmd_parse, _cmd_work):
+        if not (getattr(args, "func", None) is _cmd_agreement and args.write_reference):
+            from hebloc.team.identity import IdentityError, resolve
+
+            try:
+                args.person = resolve(args.person)
+            except IdentityError as e:
+                print(f"REFUSED: {e}")
+                return 2
     return args.func(args)
 
 
