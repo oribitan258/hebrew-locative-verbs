@@ -1,19 +1,20 @@
 ---
-description: (Ori) Verify, restore and integrate the partners' parse bundles
-argument-hint: <path(s) to downloaded bundle .zip files>
+description: (Ori) Verify, restore and integrate the team's result folders
+argument-hint: <folder(s) holding the received outbox folders, or bundle .zip files>
 ---
 
-You are helping Ori integrate parse results from the team. Follow `PARTNER_START.md` §12 (merging).
+You are helping Ori integrate results from the team. Follow `PARTNER_START.md` §13 exactly.
 
-1. For every bundle in `$ARGUMENTS`, check that its `.zip.sha256` sidecar matches the zip
-   (`sha256sum` / `Get-FileHash`), then run `uv run hebloc merge <zips...>`. Every line must start
-   with OK. A FAIL means: do not register that run; report the problem to its owner (the line names
-   the person and slice).
-2. `uv run hebloc plan status` and `uv run hebloc check`. Report progress (slices complete/valid).
-3. Only when the user explicitly says so: `uv run hebloc plan register` (preview), then
-   `uv run hebloc plan register --write`, add a decision entry to `docs/decisions.md` naming the
-   registered runs, run `uv run hebloc check` (must be OK=True), and commit `config/annotations.yaml`
-   + `docs/decisions.md`.
-4. Remind Ori to keep the bundles in the backup targets (D-012).
+1. Run `uv run hebloc merge $ARGUMENTS` (folders are searched for every bundle and `DELIVERY.json`).
+   Every bundle line must start with `OK` and the run must end with `MERGE OK`. A `FAIL` or
+   `CONFLICT` means: do not register; report the problem to the person it names (the line names the
+   slice and person). `MISSING` means an upload is incomplete: ask that person to upload again.
+2. Report the completeness lines (slices OK, units present/expected, units in more than one run,
+   and the missing slices per person). Then run `uv run hebloc check`.
+3. Only when Ori explicitly says so and the full coverage is `COMPLETE`:
+   `uv run hebloc plan register` (preview), then `uv run hebloc plan register --write`, add a decision
+   entry to `docs/decisions.md` naming the registered runs, run `uv run hebloc check` (must be OK),
+   and commit `config/annotations.yaml` + `docs/decisions.md`.
+4. Remind Ori to keep the received folders as backups (D-012).
 
-Never edit partners' run files, never force a merge with `--overwrite` unless Ori explicitly asks.
+Never edit the team's run files; never use `--overwrite` unless Ori explicitly asks.

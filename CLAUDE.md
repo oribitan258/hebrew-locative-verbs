@@ -44,12 +44,14 @@ until the user explicitly opens that scope.
 ## Team (Ori, Efrat, Adi) — read if you are helping a partner
 - Execution guide for Claude Code: **`PARTNER_START.md`** (single source of the tested commands);
   overview: `docs/PARTNERS.md`; who parses what: `docs/WORK_PLAN.md` (generated).
-  Slash commands: `/partner-setup <name>`, `/partner-parse <name>`, `/merge-results` (Ori).
-- Ask whose machine this is (ori/efrat/adi) and pass it as `--as <name>`.
+  Slash commands: `/partner-setup`, `/partner-parse`, `/merge-results` (Ori).
+- Identity: PARTNER_START §2 asks "Who are you — Ori, Efrat, or Adi?"; `hebloc whoami --set <name>` stores it
+  (`data/team/identity.json`) and every team command then refuses to act for anyone else.
 - Never parse a slice that is not assigned to that person; never bypass a `hebloc parse` REFUSED.
   Only Ori edits `config/parse_plan.yaml` (status/coverage/settings), `config/annotations.yaml`,
   `config/reference/*` and the anchor, each with a decision entry.
-- Results travel as bundles (`hebloc bundle create`) through the private shared folder, NEVER git.
+- Results travel as the folder `data/outbox/<name>` (bundles + `DELIVERY.json`, made by `hebloc work`)
+  through the private shared folder or USB, NEVER git. Ori runs `hebloc merge <folder>`.
 - A failed check (corpora, fingerprint, models, agreement, integrity) is never worked around:
   stop and report to Ori with `data/team/doctor.json`.
 - Windows: use python.org Python 3.12 (Smart App Control blocks uv's Python, D-035); set PYTHONUTF8=1.
@@ -113,14 +115,18 @@ uv run hebloc check [--deep]             # M4: read-only integrity of the whole 
 uv run hebloc catalog                    # M4: write data/hebloc.duckdb (views)
 uv run hebloc export-conllu <run> [--corpus C] [--style ud|iahlt_ud]
 uv run hebloc bundle create|verify|restore ...   # M4: D-012 backups
-uv run hebloc corpora install --from P | verify   # team: install/verify corpora vs anchor
+uv run hebloc corpora install --from P | verify   # team: install the course archive (zip/multi-part/7z/rar/tar/folder;
+                                         #   Hebrew names repaired) into corpora/ only if identical to the anchor
+uv run hebloc whoami [--set NAME]        # team: who this computer belongs to
 uv run hebloc models fetch|verify        # team: pinned Dicta models (sha256)
 uv run hebloc fingerprint                # team: rebuilt data == reference content
-uv run hebloc doctor --as NAME           # team: end-to-end machine check -> data/team/doctor.json
-uv run hebloc agreement --as NAME        # team: pilot-sample parse == reference output (1,161 pieces)
+uv run hebloc doctor                     # team: end-to-end machine check -> data/team/doctor.json
+uv run hebloc agreement                  # team: pilot-sample parse == reference output (1,161 pieces)
 uv run hebloc plan show|check|measure|assign|status|register   # team: work plan (gated)
-uv run hebloc parse --slice S --as NAME [--limit N]   # M5: one assigned slice (refused in draft)
-uv run hebloc merge <bundle.zip>...      # Ori: verify + restore + check partners' bundles
+uv run hebloc work [--rehearsal N]       # M5: ALL of this person's slices -> data/outbox/<name> (refused in draft;
+                                         #   rehearsal allowed); resumable, keeps the computer awake
+uv run hebloc parse --slice S [--limit N]   # one assigned slice (refused in draft) / smoke test
+uv run hebloc merge [<folder|zip>...]    # Ori: verify + restore + exact-units check + completeness report
 uv run hebloc stats                      # later milestone (M6)
 ```
 
@@ -170,6 +176,9 @@ notebooks/     exploration only — never pipeline logic
 - [x] Team readiness (D-036, D-037, 2026-11-08): `hebloc.team` (work plan, doctor, corpora install,
       fingerprints, agreement, gated `parse --slice`, `merge`), `PARTNER_START.md`; verified from a clean
       clone. Plan is DRAFT until the M3 gate decisions; partners not invited yet.
+- [x] Automatic partner workflow (D-038, 2026-11-09): PARTNER_START.md is the single entry point (identity
+      question, course-archive install with name repair, `hebloc work` + outbox, exact `merge`); tested at full
+      size and with a three-person rehearsal merge. Full runs still gated on Ori's approval.
 - [ ] M5 full parsing run
 - [ ] M6 descriptive statistics + parser-accuracy report
 - [ ] M7 review checkpoint (STOP)

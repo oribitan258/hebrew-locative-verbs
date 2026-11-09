@@ -175,6 +175,11 @@ def check_machine() -> list[dict]:
     out.append(_r("RAM", "PASS" if ram >= 12 else "WARN", f"{ram:.1f} GB", "parsing needs ~2-4 GB free; close other programs"))
     free = shutil.disk_usage(DATA_DIR if DATA_DIR.exists() else ROOT).free / 2**30
     out.append(_r("free disk", "PASS" if free >= 15 else "WARN", f"{free:.0f} GB", "free at least 15 GB (30 GB to parse Modern)"))
+    synced = [s for s in ("onedrive", "dropbox", "google drive", "icloud") if s in str(ROOT).lower()]
+    out.append(_r("project folder", "WARN" if synced else "PASS",
+                  f"{ROOT} ({len(str(ROOT))} characters)" + (f": inside a {synced[0]} synced folder" if synced else ""),
+                  "clone the project into your home folder instead (PARTNER_START.md §0): syncing ~10 GB of "
+                  "working files slows everything and can corrupt runs"))
     out.append(_r("CPU", "PASS", f"{platform.processor() or platform.machine()}; {psutil.cpu_count(logical=False)} cores / "
                   f"{psutil.cpu_count()} threads"))
     bat = psutil.sensors_battery() if hasattr(psutil, "sensors_battery") else None

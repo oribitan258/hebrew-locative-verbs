@@ -20,27 +20,30 @@ equivalent:
 
 | Check | What it proves |
 |---|---|
-| `hebloc corpora install/verify` | Your corpora are byte-identical to the project's (sha256 of all 404,294 files vs `config/corpora_anchor.json`) |
+| `hebloc corpora install/verify` | Your corpora, installed from the course archive (zip, multi-part, 7z, … with Hebrew file names repaired if a tool garbled them), are byte-identical to the project's (sha256 of all 404,294 files vs `config/corpora_anchor.json`) |
+| `hebloc whoami` | This computer belongs to one person; commands refuse to act for anyone else |
 | `uv sync` + `hebloc doctor` | Same Python and library versions as `uv.lock` |
 | `hebloc models fetch` | The exact pinned Dicta model files (sha256) |
 | `hebloc fingerprint` | Your rebuilt catalog and sentences have the same content as Ori's |
 | `hebloc agreement` | Your computer produces byte-identical parser output on 1,161 test pieces |
-| `hebloc parse` (gated) | You parse only your own slices, with the agreed settings, and every run is validated |
-| `hebloc merge` | Every received file is intact, from the same corpora, valid, and part of the plan |
+| `hebloc work` (gated) | Runs exactly your slices with the agreed settings, validates each, and packages verified bundles + `DELIVERY.json`; resumable. `--rehearsal 40` tries the whole chain before approval |
+| `hebloc merge` | Every received file is intact and listed, from the same corpora, valid, made by the slice's owner, and holds exactly its slice's sentences; nothing missing, nothing twice |
 
 ## What goes where
 
 - **GitHub (private):** code, configuration, docs, small reference files. No corpora, no
   generated data, no course documents.
-- **Your computer only:** `corpora/` (from the course link) and `data/` (everything generated).
-- **The private shared folder:** your result bundles (`.zip` + `.zip.sha256`).
+- **Your computer only:** `corpora/` (installed from the course archive) and `data/` (everything generated).
+- **The private shared folder (or a USB drive):** your result folder `data/outbox/<name>` (and, after
+  setup, the rehearsal folder `data/outbox/<name>-rehearsal40A`).
 - **Ori:** your `data/team/doctor.json` and `data/team/agreement.json` after setup.
 
 ## Using Claude Code
 
-Open the repository folder, start `claude`, and type:
-`Read PARTNER_START.md and run it for me. I am <your name>.`
-Slash commands are also available: `/partner-setup <name>` and `/partner-parse <name>`.
+Clone the repository into your home folder, start `claude` in it, and type:
+`Read PARTNER_START.md and follow it.`
+Claude Code asks who you are and where your downloaded corpus archive is, and does the rest.
+Slash commands are also available: `/partner-setup` (setup + rehearsal) and `/partner-parse` (full run).
 
 ## Changing code
 
