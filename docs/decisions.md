@@ -683,3 +683,8 @@ reference are needed).
   words, mostly biblical/rabbinic) in docs and tests.
 - *M5 impact: none.* Only `hebloc pilot audit`/`audit-score` (M6 parser-accuracy work) read the sheets;
   they are rebuilt locally with `hebloc pilot audit`, and a partner who annotates gets them privately.
+- *GitHub purge (same day).* A force-push leaves old commits fetchable by hash, so the repository was
+  deleted and recreated (public, same URL, no forks, collaborators or clones recorded beforehand) and
+  only the cleaned `main` was pushed. The old commit hashes now return "No commit found". Backups:
+  `git-history-cleaned-f3ebbc9.bundle` and `git-history-before-clean.bundle` in
+  `data/backups/pre-public-clean-2026-11-09/`.
