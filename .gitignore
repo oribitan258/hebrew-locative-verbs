@@ -28,6 +28,11 @@ desktop.ini
 /DoronDubnov_revised.pdf
 /nlp-intro-short.pptx
 
+# Manual-audit sheets quote full corpus sentences: local only, never in the public repo (D-042).
+# Regenerate with `uv run hebloc pilot audit`; Ori's filled copies are backed up under data/backups/.
+/annotation/pilot_audit.csv
+/annotation/pilot_audit_words.csv
+
 # Regenerable review that quotes raw corpus text (uv run hebloc prepare --sample N)
 /docs/m2_sample_review.md
 

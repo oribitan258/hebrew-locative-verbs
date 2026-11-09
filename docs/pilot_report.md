@@ -295,6 +295,8 @@ The sample over-represents long units, so these are diagnostics, not corpus stat
   - `annotation/pilot_audit.csv`: 150 units.
 - They cover 30 units per corpus: 25 random and 5 targeted, each of at most 60 words.
 - Instructions: [annotation/pilot_audit_guide.md](../annotation/pilot_audit_guide.md).
+- The two sheets quote corpus text, so they are **not in the public repository** (D-042): they live
+  in Ori's `annotation/` folder (backup in `data/backups/`) and can be rebuilt with `hebloc pilot audit`.
 - The sheets contain Dicta's output only; every judgment column is blank.
 - `uv run hebloc pilot audit-score` currently reports **"not yet annotated"**. It will compute
   per-layer accuracy with confidence intervals once people fill the sheets in.

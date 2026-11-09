@@ -146,7 +146,7 @@ config/        YAML: corpora registry, curation/strata, sample plans
 docs/          roadmap, decisions, data_dictionary, corpus/pilot/stats reports
 src/hebloc/    cli, inventory, readers/, normalize, segment, parse/, store/, stats/, data (API)
 tests/         pytest (+ fixtures/)
-annotation/    small hand-labelled audit/gold sheets (versioned)
+annotation/    audit guide + pilot sample ids (versioned); audit sheets quote corpus text: local only (D-042)
 data/          derived, reproducible, gitignored
 results/       small tables/figures for the report (versioned)
 notebooks/     exploration only — never pipeline logic
@@ -194,7 +194,8 @@ notebooks/     exploration only — never pipeline logic
       will be computed centrally after the merge. Private GitHub repo prepared.
 - [x] M3 gate + M4 approved; plan approved with coverage A (D-041, 2026-11-09): settings base-topk-v1
       (base, MST fix, `topk`, D-025 flags, D-026 normalization; R5 not applied; D-021 + audit deferred to M6).
-      GitHub repo is PUBLIC (no invitations; partners cannot push).
+      GitHub repo is PUBLIC (no invitations; partners cannot push). Corpus-text audit sheets removed
+      from git and from all history (D-042; local copies + pre-clean history bundle in data/backups/).
 - [ ] M5 full parsing run — approved; each person starts their share via PARTNER_START.md
 - [ ] M6 descriptive statistics + parser-accuracy report
 - [ ] M7 review checkpoint (STOP)

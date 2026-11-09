@@ -1,5 +1,5 @@
-"""What git tracks must stay safe to push to the (private) GitHub repository (decision D-034):
-no corpora, no generated data, no large/binary data files, no secrets."""
+"""What git tracks must stay safe to push to the PUBLIC GitHub repository (decisions D-034, D-042):
+no corpora, no corpus-text sheets, no generated data, no large/binary data files, no secrets."""
 
 from __future__ import annotations
 
@@ -16,7 +16,9 @@ FORBIDDEN_EXT = (".parquet", ".zip", ".safetensors", ".bin", ".pt", ".duckdb", "
 SECRET = re.compile(r"(gh[pousr]_[A-Za-z0-9]{30,}|hf_[A-Za-z0-9]{30,}|sk-[A-Za-z0-9]{30,}|AKIA[0-9A-Z]{16}"
                     r"|-----BEGIN [A-Z ]*PRIVATE KEY-----)")
 # Course documents and the M2 sample review (quotes corpus text) stay out of the repository (D-034).
-UNTRACKED_DOCS = ("project.pdf", "DoronDubnov_revised.pdf", "nlp-intro-short.pptx", "docs/m2_sample_review.md")
+UNTRACKED_DOCS = ("project.pdf", "DoronDubnov_revised.pdf", "nlp-intro-short.pptx", "docs/m2_sample_review.md",
+                  # manual-audit sheets quote full corpus sentences (D-042)
+                  "annotation/pilot_audit.csv", "annotation/pilot_audit_words.csv")
 
 
 def _tracked() -> list[str]:
@@ -55,4 +57,4 @@ def test_no_secrets_tracked():
 
 def test_gitignore_protects_data():
     lines = {ln.strip() for ln in (ROOT / ".gitignore").read_text(encoding="utf-8").splitlines()}
-    assert {"/corpora/", "/data/"} <= lines
+    assert {"/corpora/", "/data/", "/annotation/pilot_audit.csv", "/annotation/pilot_audit_words.csv"} <= lines

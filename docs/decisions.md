@@ -412,6 +412,7 @@ slice each, merged with `hebloc bundle` and `hebloc check`; slices assigned at M
 
 *What is in git:* code, configuration, docs, tests, small result tables, and the manual-audit sheets
 (`annotation/pilot_audit*.csv`: 150 short sentences, 30 per corpus, needed if partners annotate).
+*Superseded for the audit sheets by D-042:* the repository became public, so they are local only.
 Small quoted examples in docs and tests stay.
 
 *What is never in git:*
@@ -667,3 +668,18 @@ reference are needed).
 - **Results:** each person keeps the complete results locally (`data/annotations/…` and
   `data/outbox/<name>`) and, at completion, sends the outbox folder to Ori by Google Drive, OneDrive
   or USB. No shared folder is set up in advance.
+
+### D-042 · Public repository: corpus-text sheets removed from git and history (2026-11-09) · accepted (Ori)
+- *Why.* The repository is public (D-041). `annotation/pilot_audit.csv` (150 full corpus sentences,
+  30 per corpus, incl. Modern news text) and `annotation/pilot_audit_words.csv` (their ~2,740 words
+  with Dicta's analysis) published corpus text that may be copyrighted.
+- *What.* Both files were removed from git **and from every commit in the history** (`git filter-branch`),
+  added to `.gitignore`, and forbidden by `tests/test_repo_hygiene.py`. `main` was force-pushed.
+  All commit hashes changed again: old → new in `data/backups/pre-public-clean-2026-11-09/commit_map.txt`.
+- *Preserved.* Ori's local files are untouched (`annotation/`), with byte-identical copies and a bundle
+  of the complete pre-clean history in `data/backups/pre-public-clean-2026-11-09/`.
+- *Kept in git.* `annotation/pilot_sample.csv` (sentence ids and verse references only, no text: the
+  agreement check needs it), `annotation/pilot_audit_guide.md`, and short illustrative quotes (≤ 14
+  words, mostly biblical/rabbinic) in docs and tests.
+- *M5 impact: none.* Only `hebloc pilot audit`/`audit-score` (M6 parser-accuracy work) read the sheets;
+  they are rebuilt locally with `hebloc pilot audit`, and a partner who annotates gets them privately.
