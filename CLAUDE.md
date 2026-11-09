@@ -36,12 +36,18 @@ until the user explicitly opens that scope.
 - Every derived row is traceable: `sent_id` → `doc_id` → `rel_path` + `line_no` + char offsets (+ sha256).
 - Keep raw Dicta responses (`dicta_raw`); recomputing statistics must never require re-running Dicta.
 - No large run without an approved pilot (M3 gate). Runs are sharded, resumable, manifest-logged.
-- Modern corpus coverage (full vs sample) is an explicit user decision after the M3 benchmark.
+- Modern corpus coverage: decided by the user — **Option A, all of Modern** (D-041).
 - Dicta output on historical Hebrew is NOT ground truth: measure and report its accuracy.
 - Talk to the user in English. End every milestone with a plain-language summary:
   what was built, why, how it works, how we know it works. User approves before the next milestone.
 
 ## Team (Ori, Efrat, Adi) — read if you are helping a partner
+- **Workflow (plan approved, coverage A, D-041):** each person clones the PUBLIC repo (no invitation),
+  opens it in VS Code + Claude Code and says "Read PARTNER_START.md and follow it". Claude Code sets up
+  and verifies the computer, then runs that person's share automatically (`hebloc work --detach`,
+  resumable). Each person keeps the complete results locally; at completion they get simple
+  instructions to send `data/outbox/<name>` to Ori by Google Drive, OneDrive or USB. No shared folder
+  is set up in advance. Ori merges; M6 statistics are computed centrally (D-040).
 - Execution guide for Claude Code: **`PARTNER_START.md`** (single source of the tested commands);
   overview: `docs/PARTNERS.md`; who parses what: `docs/WORK_PLAN.md` (generated).
   Slash commands: `/partner-setup`, `/partner-parse`, `/merge-results` (Ori).
@@ -51,7 +57,7 @@ until the user explicitly opens that scope.
   Only Ori edits `config/parse_plan.yaml` (status/coverage/settings), `config/annotations.yaml`,
   `config/reference/*` and the anchor, each with a decision entry.
 - Results travel as the folder `data/outbox/<name>` (bundles + `DELIVERY.json`, made by `hebloc work`)
-  through the private shared folder or USB, NEVER git. Ori runs `hebloc merge <folder>`.
+  by Google Drive, OneDrive or USB, NEVER git. Ori runs `hebloc merge <folder>`. Only Ori pushes to git.
 - A failed check (corpora, fingerprint, models, agreement, integrity) is never worked around:
   stop and report to Ori with `data/team/doctor.json`.
 - Windows: use python.org Python 3.12 (Smart App Control blocks uv's Python, D-035). PYTHONUTF8 is not
@@ -77,7 +83,7 @@ Parse-time pieces (only for over-budget units): (`sent_id`, `piece_idx`) + span 
 ## Corpus pitfalls (measured 2026-11-06)
 - **Mikra** (39 books, 23,206 verses): 1 verse/line, NO chapter:verse labels (refs from an external
   versification table, count-checked per book); niqqud + te'amim; Ketiv `(…)` / Qere `[…]` — default
-  Qere in `text_norm` is SUPPORTED by the M3 pilot vs BHSA (D-026, proposed — awaiting user approval);
+  Qere in `text_norm` is SUPPORTED by the M3 pilot vs BHSA (D-026, accepted D-041);
   BHSA (data/external/bhsa, CC BY-NC) uses Latin book names (`hebloc.pilot.bhsa.BHSA_BOOKS`);
   always preserve Ketiv so either can be re-derived; maqaf written as `-`; stray ASCII `'` `"` inside words are accent artifacts; `{פ}` `{ס}` markers.
 - **Hazal** (204 files): ~38% of words are 16th–19th c. commentaries; Yalkut Shimoni is a 13th c.
@@ -98,7 +104,7 @@ Parse-time pieces (only for over-budget units): (`sent_id`, `piece_idx`) + span 
 - Parser: `dicta-il/dictabert-joint` @ `7b1256fc0846` (and `dictabert-tiny-joint` @ `708026b7297f`), pinned
   with sha256 in `config/models.yaml`; reviewed model code VENDORED byte-identically in
   `src/hebloc/parse/dicta_code/` (never edit; never `trust_remote_code`); runtime fixes in
-  `parse/dicta_fixes.py` (D-024 MST fix on; D-029 `topk` off unless approved). torch CPU + transformers 5.
+  `parse/dicta_fixes.py` (D-024 MST fix on; D-029 `topk` on, approved D-041). torch CPU + transformers 5.
 - Storage: Parquet (zstd) + DuckDB. Tests: pytest.
 ```
 uv sync                                  # create/refresh env from uv.lock
@@ -186,6 +192,9 @@ notebooks/     exploration only — never pipeline logic
 - [x] Final M5 workflow (D-039, D-040, 2026-11-09): detached run + lock + `work --status`, pinned threads,
       agreement mismatch packaging + `agreement --compare`, partner flow without rehearsal; M6 statistics
       will be computed centrally after the merge. Private GitHub repo prepared.
-- [ ] M5 full parsing run
+- [x] M3 gate + M4 approved; plan approved with coverage A (D-041, 2026-11-09): settings base-topk-v1
+      (base, MST fix, `topk`, D-025 flags, D-026 normalization; R5 not applied; D-021 + audit deferred to M6).
+      GitHub repo is PUBLIC (no invitations; partners cannot push).
+- [ ] M5 full parsing run — approved; each person starts their share via PARTNER_START.md
 - [ ] M6 descriptive statistics + parser-accuracy report
 - [ ] M7 review checkpoint (STOP)

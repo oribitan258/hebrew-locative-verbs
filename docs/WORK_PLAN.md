@@ -1,8 +1,8 @@
 # Work Plan: who parses what (generated)
 
-*Generated 2026-11-09T10:48:53+00:00 by `uv run hebloc plan measure` from `config/parse_plan.yaml` (sha256 `b47bc2202975`). Do not edit by hand.*
+*Generated 2026-11-09T10:57:32+00:00 by `uv run hebloc plan measure` from `config/parse_plan.yaml` (sha256 `1d3e101a57f8`). Do not edit by hand.*
 
-**Plan status: `draft`, coverage: `pending`, settings: `base-topk-v1`.** While the status is `draft`, `hebloc parse` refuses real slices: wait for Ori's go-ahead.
+**Plan status: `approved`, coverage: `A`, settings: `base-topk-v1`.** While the status is `draft`, `hebloc parse` refuses real slices: wait for Ori's go-ahead.
 
 Sizes are exact model sub-word counts (dicta-il/dictabert-joint@7b1256fc0846 tokenizer). Hours assume the reference rate of 534 sub-words/s measured on Ori's laptop (base + `topk`); your machine may be faster or slower. `hebloc doctor` estimates your hours from your agreement check: the agreement sample is deliberately hard, so its sub-words/s is lower than the corpus rate on every machine; only your speed relative to Ori's on that sample counts.
 

@@ -195,7 +195,7 @@ Rules and evidence are in `docs/m2_preprocessing.md`.
   - maqaf → space;
   - sof pasuq → `.`.
 
-### D-019 · Artifact handling results (M2) (2026-11-06) · accepted; R5 awaiting user decision
+### D-019 · Artifact handling results (M2) (2026-11-06) · accepted; R5 not applied (D-041)
 - R1, R2 and R3 rebuilt 854,362 of 1,159,353 `prefix=` tags (73.7%).
 - 304,991 tags (26.3%) are left un-rebuilt and flagged `prefix_unresolved:<class>`, in 250,149
   units. Only the tag text is removed.
@@ -281,7 +281,7 @@ Rules and evidence are in `docs/m2_preprocessing.md`.
   per piece.
 - The `tokens` table is derived from it, and re-derivation is checked to be identical.
 
-### D-024 · Runtime fix for Dicta's MST decoder (`mst_seq_len`) (2026-11-07) · proposed (applied in the pilot)
+### D-024 · Runtime fix for Dicta's MST decoder (`mst_seq_len`) (2026-11-07) · accepted (D-041)
 - *Bug.* `compute_mst_tree` takes each batch row's length from its first padding position. Rows
   without padding (the longest piece of every batch, or any piece parsed alone) get length 0, so
   cycle repair never runs for them. Outputs also depend on batch composition.
@@ -292,7 +292,7 @@ Rules and evidence are in `docs/m2_preprocessing.md`.
   time and recorded in every run manifest. A test reproduces the bug and checks the fix.
 - The vendored file is unchanged.
 
-### D-025 · Invalid word-level trees are flagged, never repaired (2026-11-07) · proposed
+### D-025 · Invalid word-level trees are flagged, never repaired (2026-11-07) · accepted (D-041)
 - Dicta decodes a valid tree over **sub-words**, then gives each word the head of its first
   sub-word. When that head is a continuation sub-word (`##…`) of another word, or of the word
   itself, the word-level graph can contain a cycle or self-loop. This was confirmed for all 24
@@ -302,7 +302,7 @@ Rules and evidence are in `docs/m2_preprocessing.md`.
 - *Option for the user:* constrained decoding (heads restricted to word-initial sub-words). This is
   a methodological change to the parser and is not implemented.
 
-### D-026 · Normalization hypotheses (D-018): pilot evidence (2026-11-07) · proposed
+### D-026 · Normalization hypotheses (D-018): pilot evidence (2026-11-07) · accepted (D-041)
 | Hypothesis | Evidence (`docs/pilot_report.md` §9) | Proposal |
 |---|---|---|
 | Diacritic stripping | Keeping niqqud/cantillation gives **identical model input** for 144,247 of 144,247 affected units in all corpora (both tokenizers strip them). Parse outputs are identical for 60 of 60 Mikra verses | Accept (no effect on the parser) |
@@ -310,7 +310,7 @@ Rules and evidence are in `docs/m2_preprocessing.md`.
 | Maqaf → space | Agreement with BHSA is equal within noise (POS 83.6% vs 83.0%) | Accept the default |
 | Sof pasuq → `.` | Equal POS; verb Person agreement 90.8% with `.` vs 88.2% without | Accept the default |
 
-### D-027 · Base vs tiny model (2026-11-07) · proposed: base
+### D-027 · Base vs tiny model (2026-11-07) · accepted: base (D-041)
 - Against BHSA (500 random verses), base is better:
   - POS agreement 83.6% vs 78.5%;
   - verb Person 90.8% vs 85.4%;
@@ -331,7 +331,7 @@ Rules and evidence are in `docs/m2_preprocessing.md`.
 - How many units this affects in each full corpus is in the report (piece census). The statistical
   treatment stays provisional (D-021).
 
-### D-029 · Lexeme top-k speed-up (`lex_topk`) (2026-11-07) · proposed (off by default)
+### D-029 · Lexeme top-k speed-up (`lex_topk`) (2026-11-07) · accepted (D-041)
 - `lex_candidates` fully sorts the 128k-word vocabulary for every sub-word in order to keep 3
   candidates. This dominates run time and memory: ~2 MB per padded sub-word.
 - `torch.topk(3)` is a drop-in replacement. Measured:
@@ -340,7 +340,7 @@ Rules and evidence are in `docs/m2_preprocessing.md`.
   - peak RAM 3.05 → 1.61 GB (base).
 - Adopting it for M5 is the user's decision.
 
-### D-030 · M4 data layer, independent of the pending M3 gate decisions (2026-11-07) · proposed (awaiting M4 review)
+### D-030 · M4 data layer, independent of the pending M3 gate decisions (2026-11-07) · accepted (M4 approved, D-041)
 *Context.* M4 was started at the user's request while the ten M3 gate decisions (pilot report §15)
 were still open. M4 was therefore built so that it decides none of them:
 - model (base/tiny), MST fix, `lex_topk`: run parameters, recorded in `run.json` and shown in the `runs` table;
@@ -361,7 +361,7 @@ were still open. M4 was therefore built so that it decides none of them:
 18k shards). The pilot code held whole runs in memory and globbed every file, including those of
 interrupted shards.
 
-### D-031 · `tokens` stored per shard; validation streams per shard (2026-11-07) · proposed (awaiting M4 review)
+### D-031 · `tokens` stored per shard; validation streams per shard (2026-11-07) · accepted (M4 approved, D-041)
 - `tokens/shard-NNNNN.parquet` per committed run shard, with `tokens/_shards/shard-NNNNN.json`:
   sha256 of the shard's `inputs`, `pieces` and `dicta_raw` files, `tokens_version`, rows and the
   output sha256.
@@ -383,7 +383,7 @@ interrupted shards.
   - a missing head gives `head_sent` = null, not `-1` (root).
 - `read_run` now reads committed shards only.
 
-### D-032 · Canonical-run registry `config/annotations.yaml` (2026-11-07) · proposed (awaiting M4 review)
+### D-032 · Canonical-run registry `config/annotations.yaml` (2026-11-07) · accepted (M4 approved, D-041)
 - The default annotations of a corpus come only from runs explicitly registered for it,
   each restricted to that corpus's units. With nothing registered, the API raises an error; it never
   guesses.
@@ -393,7 +393,7 @@ interrupted shards.
 - *Why:* the pilot alone has three analyses of the same 1,000 units (base, tiny, original MST). A
   "read all runs" default would silently double-count.
 
-### D-033 · Backup bundles implemented (implements D-012) (2026-11-07) · proposed (awaiting M4 review)
+### D-033 · Backup bundles implemented (implements D-012) (2026-11-07) · accepted (M4 approved, D-041)
 - `hebloc bundle create|verify|restore` (`hebloc.store.bundle`). One uncompressed zip per run,
   holding every file at its path under `data/`, plus `BUNDLE_MANIFEST.json` (fields in
   [data_dictionary.md](data_dictionary.md)) and a `.sha256` sidecar.
@@ -447,7 +447,7 @@ Partners change code through branches and pull requests. Guide: `docs/PARTNERS.m
     if a uv-managed Python is in use on Windows.
 - *Verified:* full fast suite 123/123 on the new interpreter. Same uv.lock, same library versions.
 
-### D-036 · Team work plan, gates and cross-machine checks (2026-11-08) · proposed (awaiting approval)
+### D-036 · Team work plan, gates and cross-machine checks (2026-11-08) · accepted (D-041)
 - *Plan.* `config/parse_plan.yaml`: proposed settings `base-topk-v1` (base, MST fix, `topk`,
   budget 510) and 31 disjoint slices.
   - The four historical corpora are whole slices.
@@ -511,7 +511,7 @@ Partners change code through branches and pull requests. Guide: `docs/PARTNERS.m
   - real slices (gated);
   - `plan register` on real runs (unit-tested only).
 
-### D-038 · Automatic partner workflow: one entry point, archive install, `hebloc work`, exact merge (2026-11-09) · proposed (built and tested; full runs stay gated)
+### D-038 · Automatic partner workflow: one entry point, archive install, `hebloc work`, exact merge (2026-11-09) · accepted (D-041)
 - *Goal (Ori).* Partners only clone, open Claude Code and say "Read PARTNER_START.md and follow it".
   Each downloads the course corpus archive independently; Claude Code asks who they are and where the
   archive is, and does the rest. Full runs wait for Ori's approval.
@@ -638,3 +638,32 @@ Partners change code through branches and pull requests. Guide: `docs/PARTNERS.m
     Splitting saves nothing and would add a second, separately verified code path and more files to
     send and reconcile.
 - *Consequence.* M6 needs no knowledge of who parsed what; recomputation never needs the partners.
+
+### D-041 · M3 gate and M4 approved; plan approved with coverage A (2026-11-09) · accepted (Ori)
+Ori approved coverage **Option A (all of Modern)** and the equal work plan for Ori, Efrat and Adi, and
+asked to finalize the M3/M4 decisions with the settings already validated in M3 and by the agreement
+reference (`settings_id` **base-topk-v1**, unchanged, so no re-measurement and no new agreement
+reference are needed).
+
+| M3 gate item (pilot report §15) | Decision for M5 |
+|---|---|
+| 1. Model | **base** (D-027) |
+| 2. MST fix | **kept** (D-024) |
+| 3. `lex_topk` | **adopted** (D-029; byte-identical on 1,161/1,161 pilot pieces) |
+| 4. Invalid word-level trees | **flagged, never repaired** (D-025); constrained decoding not opened |
+| 5. `tokens` schema | **as proposed** (`data_dictionary.md`); a change only needs `hebloc tokens all --force` |
+| 6. Normalization | **the four D-026 defaults** (diacritics stripped, Qere with Ketiv kept, maqaf → space, sof pasuq → `.`) |
+| 7. Multi-piece statistics (D-021) | **deferred to the M6 design**: an analysis rule, not a parse setting; every piece is kept |
+| 8. R5 / `suspect_bidi` | **R5 not applied**, no new flag: the units stay exactly as fingerprinted (D-019) |
+| 9. Modern coverage (D-004) | **Option A**: all 31 slices, all 9,709,662 units |
+| 10. Manual audit | **deferred to M6** (parser-accuracy report); not needed for M5 |
+
+- **M4:** D-030–D-033 accepted. **Team:** D-036 (equal sub-word split, gates) and D-038 accepted.
+- **Plan:** `config/parse_plan.yaml` `status: approved`, `coverage: A`; `work_plan.json` and
+  `WORK_PLAN.md` re-rendered. Each person may now start their share (`hebloc work --detach`).
+- **Repository:** now **public** (Ori). Nobody needs an invitation; partners clone the public URL.
+  Partners have no push rights, so the former "disable push" step is dropped. Corpora, data, models
+  and the course documents stay out of git (hygiene test unchanged).
+- **Results:** each person keeps the complete results locally (`data/annotations/…` and
+  `data/outbox/<name>`) and, at completion, sends the outbox folder to Ori by Google Drive, OneDrive
+  or USB. No shared folder is set up in advance.

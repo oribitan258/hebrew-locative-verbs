@@ -1,6 +1,6 @@
-# Session Handoff: M5 workflow final (M4 review, M3 gate decisions and the coverage choice pending)
+# Session Handoff: M5 approved (coverage A); partners run their shares
 
-*Updated 2026-11-09 (final M5 workflow D-039, M6 central statistics D-040, private GitHub repo; partner
+*Updated 2026-11-09 (M3 gate + M4 approved, plan approved with coverage A, public repo: D-041; final M5 workflow D-039, M6 central statistics D-040, private GitHub repo; partner
 workflow D-038; team readiness 2026-11-08; M4 finished 2026-11-07).
 This file summarizes and points to other documents; when they disagree, the linked documents win.*
 
@@ -18,12 +18,12 @@ This file summarizes and points to other documents; when they disagree, the link
    - Partners only clone, open the folder in VS Code with Claude Code, and say "Read PARTNER_START.md
      and follow it."
    - The parsing run starts with `hebloc work --detach` (its own window) and is checked with
-     `hebloc work --status`. Full runs stay REFUSED until Ori approves the plan and coverage.
+     `hebloc work --status`. The plan is APPROVED (coverage A, D-041): each person starts their share.
    - M6 statistics are computed centrally after the merge (D-040).
    - On Windows use `uv run python -m hebloc …` / `uv run python -m pytest`: Smart App Control blocks
      the launchers of NEW environments (D-038). `uv run hebloc` still works in this repo's old venv.
    - Partners' entry point: [`PARTNER_START.md`](../PARTNER_START.md).
-   - Plan: `config/parse_plan.yaml` (status **draft**).
+   - Plan: `config/parse_plan.yaml` (status **approved**, coverage **A**, settings `base-topk-v1`).
    - Who parses what: [`WORK_PLAN.md`](WORK_PLAN.md).
 3. **The git history was rewritten** (D-034) before the first push to GitHub, to remove the course
    documents and `docs/m2_sample_review.md`. **All commit hashes changed.** Manifests written before
@@ -39,16 +39,18 @@ This file summarizes and points to other documents; when they disagree, the link
 | M1 Inventory and catalog | ✅ approved | `7a27434`, `abb8f1d`, `31fdf67` |
 | M2 Unit extraction | ✅ approved | `49247c0` |
 | M2.1 Complete-sentence units (segment v2, D-020) | ✅ approved | `19e56f2`, `9ae5dd6` |
-| M3 Dicta pilot and benchmark | ✅ done. **Gate decisions still pending** ([pilot_report.md §15](pilot_report.md); §6 below) | `2e50976` |
-| **M4 Data layer and access API** | ✅ done 2026-11-07. **Awaiting user review** (D-030–D-033 *proposed*) | `2b6f2b1` |
+| M3 Dicta pilot and benchmark | ✅ done. Gate decided 2026-11-09 (D-041; §6 below) | `2e50976` |
+| M4 Data layer and access API | ✅ approved 2026-11-09 (D-030–D-033 accepted, D-041) | `2b6f2b1` |
 | Collaboration setup (D-034) | ✅ hygiene test, history cleaned. Private GitHub repo created and pushed 2026-11-09 (§9, §13) | `77f9aa5`, `dcf1207` |
 | Team readiness (D-035–D-037) | ✅ `hebloc.team`, `PARTNER_START.md`, work plan (draft), verified from a clean clone (§10) | `eaffb62` + later |
 | Automatic partner workflow (D-038) | ✅ single entry point, archive install with name repair, `hebloc work`, exact `merge`; full-size and three-person rehearsal tested (§12). Full runs still gated | `eba82f3` + later |
 | Final M5 workflow (D-039, D-040) | ✅ detached run, lock, status, pinned threads, agreement diagnostics; central M6; private GitHub repo (§13) | this commit |
-| M5 full parse, M6 statistics, M7 review | not started. **M5 is blocked on the M3 gate decisions (incl. Modern coverage A/B)** and on M4 approval | — |
+| M3 gate + M4 approval, plan approved (D-041) | ✅ coverage A, equal work plan, public repo | this commit |
+| **M5 full parse** | **approved, not started**: each person runs their share via PARTNER_START.md; Ori merges | — |
+| M6 statistics, M7 review | not started (M6 central, D-040) | — |
 
-**Do not start M5 and do not run full-corpus parsing** until the user has (a) approved M4 and
-(b) decided the M3 gate items.
+M5 is approved (D-041). Full parsing runs only through `hebloc work` (each person's own share);
+Ori starts his share when he chooses.
 
 ## 2. Active scope
 
@@ -147,7 +149,12 @@ committed shards only; pilot code reads per-shard tokens; `hebloc pilot revalida
 - `data/hebloc.duckdb`;
 - `data/units_v1/` and `data/units_sample_v1/` (superseded, deletable since M2.1 was approved).
 
-## 6. Decisions pending (do not decide them unilaterally)
+## 6. Decisions (decided 2026-11-09, D-041)
+
+**All M3 gate items and the M4 review are decided in [D-041](decisions.md)**: base, MST fix, `topk`,
+invalid trees flagged (D-025), `tokens` schema as proposed, D-026 normalization, R5 not applied,
+**coverage A**; multi-piece statistics (D-021) and the manual audit are deferred to the M6 design.
+The list below is kept as the historical record of what was pending.
 
 **M4 review** (new): approve D-030 (design, independent of the M3 gate), D-031 (per-shard tokens,
 null-index semantics), D-032 (canonical registry), D-033 (bundles). Also, where bundles should be
@@ -230,8 +237,8 @@ Manifests and bundles created before 2026-11-08 record the old hashes as `code_c
 
 ## 9. Collaboration (D-034)
 
-- **Repository:** private GitHub `oribitan258/hebrew-locative-verbs`, created and `main` pushed on
-  2026-11-09 (D-039). Partners are not invited yet (their usernames are needed).
+- **Repository:** GitHub `oribitan258/hebrew-locative-verbs`, created 2026-11-09 (D-039), made
+  **public** by Ori (D-041). No invitations; partners clone the public URL and cannot push.
 - **In git:** code, config, docs, tests, small result tables, the audit sheets.
 - **Never in git:** `corpora/` (partners download it themselves and prove identity with
   `hebloc baseline`), `data/`, secrets, the course documents, `docs/m2_sample_review.md`.
@@ -285,6 +292,9 @@ else running). The work plan uses the more conservative M3 Modern benchmark (534
 
 ## 11. How to start the parsing phase (Ori, after the gate decisions)
 
+**Steps 1–4 done on 2026-11-09 (D-041).** Remaining: 5 (tell Efrat and Adi; start Ori's own share)
+and 6 (merge).
+
 1. Record the gate decisions (decision entries).
 2. In `config/parse_plan.yaml`, set the final `settings`.
    - If anything changes, change `settings_id` too, then run `uv run hebloc agreement --as ori` and
@@ -319,7 +329,7 @@ else running). The work plan uses the more conservative M3 Modern benchmark (534
 
 ## 13. Final M5 workflow (2026-11-09, D-039, D-040)
 
-- **Partner path:** identity → prerequisites → environment → push disabled → corpora from the course
+- **Partner path:** identity → prerequisites → environment → corpora from the course
   archive → model → derived data → pytest + doctor → agreement → *wait for approval* →
   `work --detach` → `work --status` → completion message → send `data/outbox/<name>`.
   No rehearsal (Ori's choice).
@@ -343,6 +353,6 @@ else running). The work plan uses the more conservative M3 Modern benchmark (534
   - `data/backups`.
 - **Data volume:** ~1.4 KB per sentence, so ~13–14 GB of results for option A (~4.5 GB per person),
   ~5–6 GB for option B. Ori needs about twice that free while merging.
-- **GitHub:** private repo `oribitan258/hebrew-locative-verbs`. Invite Efrat and Adi when their
-  usernames are known:
-  `gh api -X PUT repos/oribitan258/hebrew-locative-verbs/collaborators/<username>`.
+- **GitHub:** public repo `oribitan258/hebrew-locative-verbs` (D-041); no invitations needed.
+- **Transfer:** at completion each person sends `data/outbox/<name>` (~4–5 GB) to Ori by Google
+  Drive, OneDrive or USB, and keeps the complete local results until MERGE OK.

@@ -11,7 +11,8 @@ laptop, so the work is split into **slices**: parts of the corpora that never ov
 parses their own slices on their own computer and sends the results to Ori, who merges them.
 - Who parses what: [`docs/WORK_PLAN.md`](WORK_PLAN.md), generated from `config/parse_plan.yaml`.
   It is balanced to within 1% between the three of us.
-- Parsing starts only when Ori approves the plan. Until then, set up and verify your computer.
+- The plan is approved (coverage A, all corpora; D-041): after setup and the checks, Claude Code
+  starts your share automatically in its own window.
 
 ## Why so many checks
 
@@ -31,11 +32,11 @@ equivalent:
 
 ## What goes where
 
-- **GitHub (private):** code, configuration, docs, small reference files. No corpora, no
+- **GitHub (public, no account needed):** code, configuration, docs, small reference files. No corpora, no
   generated data, no course documents.
 - **Your computer only:** `corpora/` (installed from the course archive) and `data/` (everything generated).
-- **The private shared folder (or a USB drive):** your result folder `data/outbox/<name>`
-  (~4–5 GB for option A, ~1.5–2 GB for option B).
+- **To Ori, at the end (Google Drive, OneDrive or a USB drive):** your result folder
+  `data/outbox/<name>` (~4–5 GB). Keep everything on your computer until Ori's merge says MERGE OK.
 - **Ori:** your `data/team/doctor.json` and `data/team/agreement.json` after setup.
 
 ## Using Claude Code
@@ -48,5 +49,5 @@ resume the parsing run).
 
 ## Changing code
 
-Work on a branch and open a pull request: never push to `main` directly. A partner's setup and
+Only Ori pushes to the repository. A partner who wants a change sends it to Ori. A partner's setup and
 parsing session changes no tracked file.

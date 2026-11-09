@@ -23,7 +23,8 @@ from Ori's laptop. Steps marked **(untested)** were not run on that platform.
 
 ## 0. For the person, before starting (one time, ~15 min)
 
-1. Accept the GitHub invitation to `oribitan258/hebrew-locative-verbs` (it arrives by email).
+1. Nothing to accept: the repository `oribitan258/hebrew-locative-verbs` is public, so no GitHub
+   account or invitation is needed.
 2. Install, if missing:
    - **Git for Windows** (https://git-scm.com/download/win; Claude Code on Windows needs it);
    - **VS Code** (https://code.visualstudio.com) with the **Claude Code** extension (Extensions → search
@@ -145,12 +146,6 @@ uv run python -m hebloc whoami --set NAME
 command uses this name and refuses to act for anyone else.
 **Recovery:** `REFUSED: this computer is already set up for OTHER` → do not change it; STOP S5.
 
-**Only for Efrat and Adi** (not Ori): make accidental pushes impossible (pulling still works):
-```
-git remote set-url --push origin DISABLED
-```
-**Success:** `git remote -v` shows `(push)` → `DISABLED`.
-
 ## 6. Install the corpora from the course archive (*tested at full size: ~11–35 min*)
 
 **Skip if** `uv run python -m hebloc doctor --quick` shows `[PASS] corpora  corpora = anchor`.
@@ -256,9 +251,12 @@ the person sends that folder and `data/team/agreement.json` to Ori, who compares
 (`hebloc agreement --compare`) and decides.
 
 **Setup is complete.** Tell the person to send Ori the two small files `data/team/doctor.json` and
-`data/team/agreement.json` (no corpus text). Then continue with 10b.
+`data/team/agreement.json` (no corpus text; by email or chat is fine). Then continue with 10b.
 
-### 10b. Start or check the parsing run (only after Ori's approval)
+### 10b. Start or check the parsing run
+
+Ori approved the plan on 2026-11-09 (coverage A, decision D-041): once 10a passes, each person starts
+their own share. The steps below still check the approval, so nothing runs if it is ever withdrawn.
 
 1. Get Ori's latest plan:
    ```
@@ -308,15 +306,19 @@ filled in from `work --status` and `data/outbox/NAME/DELIVERY.json`:
 > against this computer's data and packaged as a checksum-verified bundle (**X MiB** in total).
 > Everything is in the folder **`<full path>\data\outbox\NAME`**.
 >
-> **Send Ori that whole folder, unchanged.** Upload the folder itself to the team's private shared
-> folder (Google Drive / OneDrive / Dropbox), or copy it to a USB drive. Never put it on GitHub. Wait
-> until the upload has finished, then tell Ori. Keep your copy until Ori confirms the merge reported
-> **MERGE OK**.
+> **Send Ori that whole folder, unchanged.** Choose one way:
+> - **Google Drive or OneDrive:** in the browser, upload the folder `NAME` (drag it into the page),
+>   wait until the upload is finished, then share it with Ori (right-click → Share → Ori's email).
+> - **USB drive** (≥ 8 GB free): copy the folder `NAME` onto it and give it to Ori.
+>
+> Never put it on GitHub. Tell Ori when it is uploaded or copied. **Keep everything on this
+> computer** (the folder `data` in the project) until Ori confirms the merge reported **MERGE OK**:
+> your copy is the backup.
 
-Expected sizes:
-- Option A (all of Modern): ~4–5 GB per person;
-- Option B (10% Haaretz sample): ~1.5–2 GB per person.
+Expected size: ~4–5 GB per person (coverage A).
 
+Facts for this message: the folder holds one `.zip` + `.zip.sha256` per slice, plus `DELIVERY.json`
+and `HOW_TO_SEND.txt`. Ori's merge checks every checksum, so a broken upload is detected, never merged.
 A partial folder may be sent early; send it again when complete. Ori's merge skips what it already
 has.
 

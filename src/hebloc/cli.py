@@ -350,8 +350,8 @@ def _cmd_work(args: argparse.Namespace) -> int:
         f"          and packaged as {r['slices']} checksum-verified bundles ({r['bytes'] / 2**20:,.0f} MiB).",
         f"Send Ori: the WHOLE folder {r['outbox']}",
         f"          ({r['slices']} .zip + {r['slices']} .zip.sha256 + DELIVERY.json + HOW_TO_SEND.txt), unchanged,",
-        "          through the team's private shared folder or a USB drive. Never GitHub.",
-        "Keep your copy until Ori confirms that `hebloc merge` reported MERGE OK."]))
+        "          by Google Drive, OneDrive or a USB drive (see HOW_TO_SEND.txt in that folder). Never GitHub.",
+        "Keep everything on this computer until Ori confirms that `hebloc merge` reported MERGE OK."]))
     return 0
 
 
