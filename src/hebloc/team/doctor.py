@@ -46,8 +46,8 @@ def check_python() -> list[dict]:
                   "uv-managed Python is unsigned: Windows Smart App Control may block it. "
                   "Install python.org 3.12 and run `uv sync` (docs/PARTNERS.md)"))
     utf8 = bool(sys.flags.utf8_mode)
-    out.append(_r("UTF-8 mode", "PASS" if utf8 or platform.system() != "Windows" else "WARN",
-                  f"PYTHONUTF8={'1' if utf8 else 'unset'}", 'PowerShell: $env:PYTHONUTF8 = "1"'))
+    # informational: all project I/O names its encoding; the test suite passes without UTF-8 mode (D-039)
+    out.append(_r("UTF-8 mode", "PASS", f"PYTHONUTF8={'1' if utf8 else 'unset'} (not required)"))
     locked = _locked_versions()
     bad = []
     for p in KEY_PACKAGES:

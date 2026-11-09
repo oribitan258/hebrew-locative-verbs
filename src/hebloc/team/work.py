@@ -36,6 +36,8 @@ OUTBOX_DIR = DATA_DIR / "outbox"
 TEAM_DIR = DATA_DIR / "team"
 MERGE_REPORT = TEAM_DIR / "merge_report.json"
 COVERAGE_CACHE = TEAM_DIR / "coverage_cache.json"
+LOCK_PATH = TEAM_DIR / "work.lock"
+LOG_PATH = TEAM_DIR / "work.log"
 REHEARSAL = "rehearsal"
 
 
@@ -57,7 +59,17 @@ def rehearsal_run_id(settings_id: str, slice_id: str, n: int, coverage: str) -> 
 
 # ------------------------------------------------------------------ one slice
 
-def run_slice(slice_id: str, person: str, *, threads: int = 8, limit: int | None = None,
+def _threads(settings: dict, requested: int | None, *, real: bool) -> int:
+    """Torch threads: the plan's pinned value; another value only for smoke/rehearsal runs."""
+    pinned = int(settings.get("threads", 8))
+    if requested is None or requested == pinned:
+        return pinned
+    if real:
+        raise PlanRefusal(f"full runs use the plan's threads={pinned} (the setting the agreement check verified)")
+    return requested
+
+
+def run_slice(slice_id: str, person: str, *, threads: int | None = None, limit: int | None = None,
               rehearsal: int | None = None, coverage: str | None = None, lm=None, progress: bool = True) -> dict:
     from hebloc.parse import models as M
     from hebloc.parse.checks import validate_run
@@ -75,6 +87,7 @@ def run_slice(slice_id: str, person: str, *, threads: int = 8, limit: int | None
     if smoke and rehearsal is not None:
         raise PlanRefusal("use either --limit (smoke) or --rehearsal, not both")
     n = limit if smoke else rehearsal
+    threads = _threads(st, threads, real=not smoke and rehearsal is None)
     if not smoke:
         if rehearsal is None:
             if not plan.approved:
@@ -172,8 +185,83 @@ def _bundle_ok(path: Path) -> bool:
     return path.exists() and side.exists() and side.read_text(encoding="utf-8").split()[0] == file_sha256(path)
 
 
-def work(person: str, *, rehearsal: int | None = None, coverage: str | None = None, threads: int = 8,
+def work(person: str, *, rehearsal: int | None = None, coverage: str | None = None, threads: int | None = None,
          outbox_root: Path = OUTBOX_DIR, progress: bool = True, echo=print) -> dict:
+    """The whole workload; one instance per computer (lock), progress also appended to data/team/work.log."""
+    from hebloc.team import plan as P
+
+    threads = _threads(P.load().settings, threads, real=rehearsal is None)
+    log = _logger(echo)
+    with work_lock(person, "full" if rehearsal is None else f"rehearsal{rehearsal}"):
+        log(f"--- hebloc work started {_now()} (person={person}, rehearsal={rehearsal}, threads={threads})")
+        try:
+            r = _work(person, rehearsal=rehearsal, coverage=coverage, threads=threads, outbox_root=outbox_root,
+                      progress=progress, echo=log)
+        except (PlanRefusal, WorkFailed) as e:
+            log(f"--- stopped {_now()}: {type(e).__name__}: {e}")
+            raise
+        log(f"--- WORK COMPLETE {_now()}: {r['slices']} slices, {r['units']:,} units")
+        return r
+
+
+def _logger(echo):
+    LOG_PATH.parent.mkdir(parents=True, exist_ok=True)
+
+    def log(msg: str) -> None:
+        echo(msg)
+        with open(LOG_PATH, "a", encoding="utf-8") as fh:
+            fh.write(msg + "\n")
+    return log
+
+
+def _pid_alive(pid: int) -> bool:
+    import psutil
+
+    try:
+        p = psutil.Process(pid)
+        return p.is_running() and p.status() != psutil.STATUS_ZOMBIE
+    except (psutil.NoSuchProcess, psutil.AccessDenied):
+        return False
+
+
+def read_lock() -> dict | None:
+    """The running `hebloc work` on this computer (None if none; a stale lock counts as none)."""
+    if not LOCK_PATH.exists():
+        return None
+    try:
+        lk = json.loads(LOCK_PATH.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return None
+    return lk if _pid_alive(int(lk.get("pid", -1))) else None
+
+
+class work_lock:
+    """At most one `hebloc work` per computer: two would parse the same shards."""
+
+    def __init__(self, person: str, mode: str):
+        self.rec = {"pid": __import__("os").getpid(), "person": person, "mode": mode, "started_utc": _now()}
+
+    def __enter__(self):
+        from hebloc.store.io import atomic_write_json
+
+        cur = read_lock()
+        if cur and cur["pid"] != self.rec["pid"]:
+            raise PlanRefusal(f"hebloc work is already running on this computer (pid {cur['pid']}, started "
+                              f"{cur['started_utc']}). Check it with: uv run python -m hebloc work --status")
+        atomic_write_json(self.rec, LOCK_PATH)
+        return self
+
+    def __exit__(self, *exc):
+        try:
+            if json.loads(LOCK_PATH.read_text(encoding="utf-8")).get("pid") == self.rec["pid"]:
+                LOCK_PATH.unlink()
+        except (OSError, json.JSONDecodeError):
+            pass
+        return False
+
+
+def _work(person: str, *, rehearsal: int | None, coverage: str | None, threads: int, outbox_root: Path,
+          progress: bool, echo) -> dict:
     from hebloc.inventory import _git_commit
     from hebloc.parse import models as M
     from hebloc.store import bundle as B
@@ -243,12 +331,21 @@ def work(person: str, *, rehearsal: int | None = None, coverage: str | None = No
                                              .get("fingerprint")), "packaged_utc": _now()}
             save(False)
             echo(f"[{i}/{len(slices)}] {sid}: OK, {r['units']:,} units, packaged as {done[sid]['bundle']}")
+    # final self-check of the whole outbox, as Ori's merge will check it: every assigned slice present once,
+    # each bundle intact, each with exactly the number of sentences the work plan expects
+    problems = []
+    if sorted(done) != sorted(slices):
+        problems.append(f"outbox slices {sorted(done)} != assigned {sorted(slices)}")
+    for sid, d in done.items():
+        if not _bundle_ok(outbox / d["bundle"]) or file_sha256(outbox / d["bundle"]) != d["bundle_sha256"]:
+            problems.append(f"{d['bundle']}: damaged")
+        expected = wp["sizes"][sid]["units"] if rehearsal is None else min(rehearsal, wp["sizes"][sid]["units"])
+        if d["units"] != expected:
+            problems.append(f"{sid}: {d['units']:,} units, expected {expected:,}")
+    if problems:
+        save(False)
+        raise WorkFailed("outbox check failed: " + "; ".join(problems))
     save(True)
-    # final self-check of the whole outbox, exactly as Ori's merge will check it
-    bad = [d["bundle"] for d in done.values() if not _bundle_ok(outbox / d["bundle"])
-           or file_sha256(outbox / d["bundle"]) != d["bundle_sha256"]]
-    if bad:
-        raise WorkFailed(f"outbox check failed for {bad}")
     return {"person": person, "mode": mode, "coverage": cov, "outbox": str(outbox), "slices": len(slices),
             "units": sum(d["units"] for d in done.values()),
             "bytes": sum(d["bundle_bytes"] for d in done.values()), "complete": True}
@@ -271,6 +368,104 @@ def _how_to_send(person: str, outbox: Path, rec: dict) -> str:
         "Ori merges with:  uv run hebloc merge \"<path to this folder>\"",
         "",
     ])
+
+
+# ------------------------------------------------------------------ progress and detached runs
+
+def status(person: str, *, rehearsal: int | None = None, coverage: str | None = None,
+           outbox_root: Path = OUTBOX_DIR) -> dict:
+    """Where the person's workload stands on THIS computer (cheap: manifests only, no parsing)."""
+    from hebloc.team import plan as P
+
+    plan = P.load()
+    wp = P.load_work_plan()
+    lock = read_lock()
+    running = bool(lock and lock.get("person") == person)
+    if rehearsal is None and not plan.approved:
+        return {"person": person, "state": "waiting for Ori's approval (the plan is a draft); nothing to run yet",
+                "running": running, "complete": False}
+    cov = plan.coverage if rehearsal is None else (coverage or (plan.coverage if plan.coverage in P.COVERAGES else "A"))
+    slices = wp["assignment"][cov]["people"][person]["slices"]
+    outbox = outbox_root / (person if rehearsal is None else f"{person}-rehearsal{rehearsal}{cov}")
+    dp = outbox / "DELIVERY.json"
+    delivery = json.loads(dp.read_text(encoding="utf-8")) if dp.exists() else {}
+    packaged = {d["slice"] for d in delivery.get("slices", [])}
+    rows, tot = [], {"units": 0, "units_done": 0, "sub": 0.0, "sub_done": 0.0, "secs": 0.0, "sub_measured": 0}
+    for sid in slices:
+        size = wp["sizes"][sid]
+        exp_units = size["units"] if rehearsal is None else min(rehearsal, size["units"])
+        exp_sub = size["subwords"] * (exp_units / max(size["units"], 1))
+        s = plan.slice(sid)
+        if rehearsal is None:
+            rdir = ANNOTATIONS_DIR / s.corpus / "runs" / f"{plan.settings['settings_id']}__{sid}"
+        else:
+            rdir = ANNOTATIONS_DIR / REHEARSAL / "runs" / rehearsal_run_id(plan.settings["settings_id"], sid, rehearsal, cov)
+        u = sw = 0
+        for f in sorted((rdir / "_shards").glob("shard-*.json")):
+            m = json.loads(f.read_text(encoding="utf-8"))
+            u += m["units"]
+            sw += m["subwords"]
+            tot["secs"] += m["seconds"]
+            tot["sub_measured"] += m["subwords"]
+        state = "packaged" if sid in packaged else ("in progress" if u else "waiting")
+        done_units = exp_units if state == "packaged" else u
+        tot["units"] += exp_units
+        tot["units_done"] += done_units
+        tot["sub"] += exp_sub
+        tot["sub_done"] += exp_sub if state == "packaged" else sw
+        rows.append({"slice": sid, "state": state, "units_done": done_units, "units": exp_units})
+    rate = tot["sub_measured"] / tot["secs"] if tot["secs"] else None
+    complete = all(r["state"] == "packaged" for r in rows) and bool(delivery.get("complete"))
+    left_h = round((tot["sub"] - tot["sub_done"]) / rate / 3600, 1) if rate and not complete else (0 if complete else None)
+    state = ("complete" if complete else "running" if running else
+             "stopped: run it again to resume" if tot["units_done"] else "not started")
+    return {"person": person, "coverage": cov, "mode": "full" if rehearsal is None else "rehearsal", "state": state,
+            "running": running, "pid": lock.get("pid") if running else None, "complete": complete,
+            "slices_packaged": sum(r["state"] == "packaged" for r in rows), "slices": len(rows),
+            "units_done": tot["units_done"], "units": tot["units"],
+            "percent": round(100 * tot["sub_done"] / tot["sub"], 1) if tot["sub"] else 0.0,
+            "subwords_per_second": round(rate, 1) if rate else None, "hours_left_estimate": left_h,
+            "outbox": str(outbox), "log": str(LOG_PATH), "per_slice": rows}
+
+
+def detach(person: str, *, rehearsal: int | None = None, coverage: str | None = None) -> dict:
+    """Start `hebloc work` in its own window/session, independent of the Claude Code session that asked."""
+    import os
+    import platform
+    import subprocess
+    import sys
+
+    from hebloc.paths import ROOT
+
+    cur = read_lock()
+    if cur:
+        raise PlanRefusal(f"hebloc work is already running on this computer (pid {cur['pid']}); "
+                          "check it with: uv run python -m hebloc work --status")
+    probs = preflight(person, rehearsal=rehearsal is not None)
+    if probs:
+        raise PlanRefusal("not ready:\n  - " + "\n  - ".join(probs))
+    args = [sys.executable, "-m", "hebloc", "work", "--as", person]
+    args += ["--rehearsal", str(rehearsal)] if rehearsal is not None else []
+    args += ["--coverage", coverage] if coverage else []
+    env = dict(os.environ, PYTHONUTF8="1", PYTHONUNBUFFERED="1")
+    LOG_PATH.parent.mkdir(parents=True, exist_ok=True)
+    if platform.system() == "Windows":
+        q = lambda x: "'" + str(x).replace("'", "''") + "'"  # noqa: E731  PowerShell single-quoted literal
+        title = f"hebloc work ({person.capitalize()}) - keep this window open"
+        ps = (f"$Host.UI.RawUI.WindowTitle = {q(title)}; Set-Location -LiteralPath {q(ROOT)}; "
+              f"& {' '.join(q(a) for a in args)}; Write-Host ''; "
+              "Write-Host 'hebloc work has stopped (see the last lines above). You may close this window.'")
+        cmd = ["powershell.exe", "-NoProfile", "-NoExit", "-ExecutionPolicy", "Bypass", "-Command", ps]
+        base = subprocess.CREATE_NEW_CONSOLE | subprocess.CREATE_NEW_PROCESS_GROUP
+        try:      # leave the caller's job object, so closing Claude Code does not end the run
+            proc = subprocess.Popen(cmd, cwd=ROOT, env=env, creationflags=base | 0x01000000)  # CREATE_BREAKAWAY_FROM_JOB
+        except OSError:
+            proc = subprocess.Popen(cmd, cwd=ROOT, env=env, creationflags=base)
+    else:         # (untested) macOS/Linux: a new session, output in the log
+        out = open(LOG_PATH, "a", encoding="utf-8")
+        proc = subprocess.Popen(args, cwd=ROOT, env=env, stdin=subprocess.DEVNULL, stdout=out,
+                                stderr=subprocess.STDOUT, start_new_session=True)
+    return {"launcher_pid": proc.pid, "log": str(LOG_PATH)}
 
 
 # ------------------------------------------------------------------ merging (Ori)

@@ -1,6 +1,6 @@
 # Work Plan: who parses what (generated)
 
-*Generated 2026-11-08T19:28:49+00:00 by `uv run hebloc plan measure` from `config/parse_plan.yaml` (sha256 `6d755b6a933a`). Do not edit by hand.*
+*Generated 2026-11-09T09:26:24+00:00 by `uv run hebloc plan measure` from `config/parse_plan.yaml` (sha256 `b47bc2202975`). Do not edit by hand.*
 
 **Plan status: `draft`, coverage: `pending`, settings: `base-topk-v1`.** While the status is `draft`, `hebloc parse` refuses real slices: wait for Ori's go-ahead.
 

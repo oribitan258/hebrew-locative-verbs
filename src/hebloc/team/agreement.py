@@ -47,7 +47,7 @@ def _settings_key(settings: dict, model_revision: str) -> dict:
     return {k: settings[k] for k in ("settings_id", "model", "mst_fix", "lex_topk", "budget")} | {"revision": model_revision}
 
 
-def run(person: str, *, threads: int = 8, limit: int | None = None) -> dict:
+def run(person: str, *, threads: int | None = None, limit: int | None = None) -> dict:
     """Parse the pilot sample with the plan settings, compare with the reference, store the result."""
     from hebloc.parse import models as M
     from hebloc.parse.checks import validate_run
@@ -56,6 +56,7 @@ def run(person: str, *, threads: int = 8, limit: int | None = None) -> dict:
 
     plan = load()
     st = plan.settings
+    threads = threads or st["threads"]          # the plan's pinned value unless a diagnostic override
     units = _units(limit)
     run_id = f"{st['settings_id']}__{person}" + (f"__n{limit}" if limit else "")
     rdir = ANNOTATIONS_DIR / COLLECTION / "runs" / run_id
@@ -87,8 +88,38 @@ def run(person: str, *, threads: int = 8, limit: int | None = None) -> dict:
                        "pieces_different": len(diff), "pieces_not_in_reference": len(missing),
                        "different_examples": diff[:20],
                        "ok": checks["ok"] and not diff and not missing and len(shared) > 0})
+        if not result["ok"] and not limit:
+            result["package"] = _package_for_ori(f"{COLLECTION}/{run_id}", person)
     atomic_write_json(result, RESULT_PATH)
     return result
+
+
+def _package_for_ori(ref: str, person: str) -> str | None:
+    """On a mismatch, bundle this run so Ori can compare it token by token (`hebloc agreement --compare`)."""
+    from hebloc.store import bundle as B
+    from hebloc.team.work import OUTBOX_DIR
+
+    try:
+        return B.create(ref, out_dir=OUTBOX_DIR / f"{person}-agreement")["path"]
+    except Exception as e:  # noqa: BLE001 — the report must still be written
+        return f"could not package: {type(e).__name__}: {e}"
+
+
+def compare_bundle(zip_path: Path) -> dict:
+    """(Ori) Restore a partner's agreement bundle and compare it token by token with Ori's reference run."""
+    from hebloc.store import bundle as B
+    from hebloc.store.runs import resolve
+    from hebloc.team.plan import load
+
+    st = load().settings
+    ref_dir = ANNOTATIONS_DIR / COLLECTION / "runs" / f"{st['settings_id']}__ori"
+    if not ref_dir.exists():
+        raise FileNotFoundError(f"reference run {ref_dir} not found on this machine (Ori's computer only)")
+    res = B.restore(Path(zip_path))
+    other = resolve(res["path"])
+    if other.path.resolve() == ref_dir.resolve():
+        raise ValueError("that bundle IS the reference run")
+    return {"reference": str(ref_dir), "other": other.ref, **compare_runs(ref_dir, other.path)}
 
 
 def write_reference(run_dir: Path, settings: dict, revision: str, path: Path = REFERENCE_PATH) -> dict:

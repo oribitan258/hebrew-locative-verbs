@@ -1,6 +1,7 @@
-# Session Handoff: team-ready (M4 review, M3 gate decisions and repo push pending)
+# Session Handoff: M5 workflow final (M4 review, M3 gate decisions and the coverage choice pending)
 
-*Updated 2026-11-09 (automatic partner workflow built and tested, D-038; team readiness 2026-11-08; M4 finished 2026-11-07).
+*Updated 2026-11-09 (final M5 workflow D-039, M6 central statistics D-040, private GitHub repo; partner
+workflow D-038; team readiness 2026-11-08; M4 finished 2026-11-07).
 This file summarizes and points to other documents; when they disagree, the linked documents win.*
 
 ---
@@ -13,8 +14,12 @@ This file summarizes and points to other documents; when they disagree, the link
    - Recreate the venv with `uv venv --clear --python (py -3.12 -c "import sys; print(sys.executable)")`,
      then `uv sync`.
    - Do NOT let uv pick `~/.local/bin/python3.12.exe` (a blocked uv shim).
-2. **Team setup is built and verified from clean clones** (D-036–D-038; §10 and §12 below).
-   - Partners only clone, open Claude Code and say "Read PARTNER_START.md and follow it."
+2. **Team setup is built and verified** (D-036–D-039; §10, §12 and §13 below).
+   - Partners only clone, open the folder in VS Code with Claude Code, and say "Read PARTNER_START.md
+     and follow it."
+   - The parsing run starts with `hebloc work --detach` (its own window) and is checked with
+     `hebloc work --status`. Full runs stay REFUSED until Ori approves the plan and coverage.
+   - M6 statistics are computed centrally after the merge (D-040).
    - On Windows use `uv run python -m hebloc …` / `uv run python -m pytest`: Smart App Control blocks
      the launchers of NEW environments (D-038). `uv run hebloc` still works in this repo's old venv.
    - Partners' entry point: [`PARTNER_START.md`](../PARTNER_START.md).
@@ -36,10 +41,11 @@ This file summarizes and points to other documents; when they disagree, the link
 | M2.1 Complete-sentence units (segment v2, D-020) | ✅ approved | `19e56f2`, `9ae5dd6` |
 | M3 Dicta pilot and benchmark | ✅ done. **Gate decisions still pending** ([pilot_report.md §15](pilot_report.md); §6 below) | `2e50976` |
 | **M4 Data layer and access API** | ✅ done 2026-11-07. **Awaiting user review** (D-030–D-033 *proposed*) | `2b6f2b1` |
-| Collaboration setup (D-034) | ✅ hygiene test, history cleaned. Private GitHub repo: **not created or pushed yet** (§9) | `77f9aa5`, `dcf1207` |
+| Collaboration setup (D-034) | ✅ hygiene test, history cleaned. Private GitHub repo created and pushed 2026-11-09 (§9, §13) | `77f9aa5`, `dcf1207` |
 | Team readiness (D-035–D-037) | ✅ `hebloc.team`, `PARTNER_START.md`, work plan (draft), verified from a clean clone (§10) | `eaffb62` + later |
 | Automatic partner workflow (D-038) | ✅ single entry point, archive install with name repair, `hebloc work`, exact `merge`; full-size and three-person rehearsal tested (§12). Full runs still gated | `eba82f3` + later |
-| M5 full parse, M6 statistics, M7 review | not started. **M5 is blocked on the M3 gate decisions** and on M4 approval | — |
+| Final M5 workflow (D-039, D-040) | ✅ detached run, lock, status, pinned threads, agreement diagnostics; central M6; private GitHub repo (§13) | this commit |
+| M5 full parse, M6 statistics, M7 review | not started. **M5 is blocked on the M3 gate decisions (incl. Modern coverage A/B)** and on M4 approval | — |
 
 **Do not start M5 and do not run full-corpus parsing** until the user has (a) approved M4 and
 (b) decided the M3 gate items.
@@ -224,8 +230,8 @@ Manifests and bundles created before 2026-11-08 record the old hashes as `code_c
 
 ## 9. Collaboration (D-034)
 
-- **Repository:** private GitHub `oribitan258/hebrew-locative-verbs`. Push status: **not created or pushed yet**.
-  The user must approve the final upload list; partners are not invited yet.
+- **Repository:** private GitHub `oribitan258/hebrew-locative-verbs`, created and `main` pushed on
+  2026-11-09 (D-039). Partners are not invited yet (their usernames are needed).
 - **In git:** code, config, docs, tests, small result tables, the audit sheets.
 - **Never in git:** `corpora/` (partners download it themselves and prove identity with
   `hebloc baseline`), `data/`, secrets, the course documents, `docs/m2_sample_review.md`.
@@ -285,10 +291,12 @@ else running). The work plan uses the more conservative M3 Modern benchmark (534
      `uv run hebloc agreement --write-reference agreement/<settings_id>__ori`.
    - If the model or budget changes, also run `uv run hebloc plan measure`.
 3. Set `status: approved` and `coverage: A|B`, then `uv run hebloc plan assign`.
-4. Run `uv run pytest`, commit, push.
-5. Partners: open Claude Code in their clone and ask it to follow `PARTNER_START.md` (it does
-   `git pull` and runs §11: `hebloc work`). Merge their `data/outbox/<name>` folders with
-   `uv run python -m hebloc merge <folder>` (§13), then `plan register --write` when COMPLETE.
+4. Run `uv run python -m pytest`, commit, `git push`.
+5. Tell Efrat and Adi to open their folder in VS Code and ask Claude Code to follow `PARTNER_START.md`.
+   It does `git pull`, sees the approval in `work --status`, and starts `hebloc work --detach`
+   (§10b). Ori starts his own share the same way.
+6. Merge the received `data/outbox/<name>` folders with `uv run python -m hebloc merge <folder>`
+   (PARTNER_START §12). When COMPLETE, run `plan register --write`, add a decision entry, then M6.
 
 ## 12. Automatic partner workflow: what is verified (2026-11-09, D-038)
 
@@ -303,13 +311,38 @@ else running). The work plan uses the more conservative M3 Modern benchmark (534
 - **Ori** (this repo, identity `ori`): rehearsal packaged (12 slices).
 - **Merge** of the three outbox folders: 31/31 slices, 12,840/12,840 units, 0 duplicated units,
   COMPLETE. Missing, damaged, conflicting and duplicate deliveries are all handled correctly.
-- **Local test leftovers (safe to delete; none are needed, and rehearsal runs are never registered):**
-  - `C:\Users\Ori\hebloc-t2` (fresh clone, ~6 GB);
-  - `C:\Users\Ori\hebloc-clean-test` (~6 GB);
-  - `C:\Users\Ori\hebloc-archive-test` (553 MiB test zip);
-  - `C:\Users\Ori\hebloc-incoming` and `C:\Users\Ori\hebloc-merge-failtests` (copies of rehearsal
-    bundles);
-  - `C:\c\` (two stray test files);
-  - in this repo: `data/annotations/rehearsal/` and `data/outbox/`.
-- **Not verified:** another computer, macOS/Linux, a GitHub clone, a fresh Claude Code session
-  executing the guide itself, full runs and `register --write` on real runs.
+- **Test leftovers:** deleted on 2026-11-09 (D-039 cleanup):
+  - the two test clones, the test zip, and the merge-test copies (~9.7 GB);
+  - this repo's rehearsal/smoke runs and outbox.
+
+  Only `C:\c\` (two stray test files) remains: delete it by hand (Claude Code's safety check blocks it).
+
+## 13. Final M5 workflow (2026-11-09, D-039, D-040)
+
+- **Partner path:** identity → prerequisites → environment → push disabled → corpora from the course
+  archive → model → derived data → pytest + doctor → agreement → *wait for approval* →
+  `work --detach` → `work --status` → completion message → send `data/outbox/<name>`.
+  No rehearsal (Ori's choice).
+- **Workload:** the equal sub-word split in `docs/WORK_PLAN.md` (Ori's choice), for option A or B.
+- **Verified on this laptop:**
+  - the full suite (also without `PYTHONUTF8`);
+  - detached start from a Claude Code shell, lock refusal, kill → status "stopped" → resume →
+    complete;
+  - `agreement --compare` (101,368/101,368 tokens identical).
+- **Not verified:**
+  - partners' machines and CPUs (their agreement check is the test);
+  - the real course archive;
+  - macOS/Linux;
+  - a Claude Code window actually closed during a run;
+  - full runs, and `register --write` on real runs.
+- **Kept on purpose:**
+  - `data/units_v1` + `data/units_sample_v1` (1 GB, superseded M2 v1 units, used only by
+    `verify-units-v2`);
+  - `data/bundles` (pilot backup bundle);
+  - `data/annotations/pilot` and `agreement/…__ori` (the reference);
+  - `data/backups`.
+- **Data volume:** ~1.4 KB per sentence, so ~13–14 GB of results for option A (~4.5 GB per person),
+  ~5–6 GB for option B. Ori needs about twice that free while merging.
+- **GitHub:** private repo `oribitan258/hebrew-locative-verbs`. Invite Efrat and Adi when their
+  usernames are known:
+  `gh api -X PUT repos/oribitan258/hebrew-locative-verbs/collaborators/<username>`.

@@ -19,6 +19,7 @@ settings:
   batch_size: 32
   max_batch_subwords: 1024
   shard_size: 500
+  threads: 8                  # torch threads on every machine: the agreement reference used 8 (D-039)
 
 people: [ori, efrat, adi]
 

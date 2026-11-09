@@ -272,3 +272,62 @@ def test_merge_reports_damaged_or_conflicting_bundles_without_crashing(tmp_path,
     assert not rows["b.zip"]["ok"]                                            # failed, did not raise
     assert "CONFLICT" in str(rows["c.zip"]["problems"]) and "CONFLICT" in str(rows["d.zip"]["problems"])
     assert file_sha256(other) != file_sha256(shutil_copy)
+
+
+# ------------------------------------------------------------------ D-039: threads, lock, status
+
+def test_threads_are_pinned_for_full_runs(tmp_path):
+    from hebloc.team import work as W
+
+    plan = _plan(tmp_path)
+    assert plan.settings["threads"] == 8                                    # default when not in the YAML
+    assert W._threads(plan.settings, None, real=True) == 8
+    assert W._threads(plan.settings, 8, real=True) == 8
+    assert W._threads(plan.settings, 4, real=False) == 4                  # smoke / rehearsal diagnostics
+    with pytest.raises(W.PlanRefusal, match="threads=8"):
+        W._threads(plan.settings, 4, real=True)
+    with pytest.raises(ValueError, match="threads"):
+        _plan(tmp_path, PLAN_YAML.replace("shard_size: 500}", "shard_size: 500, threads: 0}"))
+
+
+def test_single_instance_lock(tmp_path, monkeypatch):
+    import os
+
+    from hebloc.team import work as W
+
+    monkeypatch.setattr(W, "LOCK_PATH", tmp_path / "work.lock")
+    (tmp_path / "work.lock").write_text(json.dumps({"pid": 2**22 + 12345, "started_utc": "x"}))   # stale: no process
+    assert W.read_lock() is None
+    with W.work_lock("efrat", "full"):
+        assert W.read_lock()["pid"] == os.getpid()
+    assert not (tmp_path / "work.lock").exists()                          # released
+    (tmp_path / "work.lock").write_text(json.dumps({"pid": os.getppid(), "person": "efrat", "started_utc": "t"}))
+    with pytest.raises(W.PlanRefusal, match="already running"):          # a live other process holds it
+        with W.work_lock("efrat", "full"):
+            pass
+
+
+def test_status_reports_progress_from_manifests(tmp_path, monkeypatch):
+    from hebloc.team import work as W
+
+    draft = _plan(tmp_path)                       # built before P.load is patched
+    approved = _plan(tmp_path, PLAN_YAML.replace("status: draft", "status: approved").replace("coverage: pending", "coverage: A"))
+    wp = {"assignment": {"A": {"people": {"efrat": {"slices": ["hazal", "medieval"]}}}},
+          "sizes": {"hazal": {"units": 1000, "subwords": 20000}, "medieval": {"units": 600, "subwords": 12000}}}
+    monkeypatch.setattr(P, "load", lambda *a, **k: approved)
+    monkeypatch.setattr(P, "load_work_plan", lambda *a, **k: wp)
+    monkeypatch.setattr(W, "ANNOTATIONS_DIR", tmp_path / "ann")
+    monkeypatch.setattr(W, "LOCK_PATH", tmp_path / "work.lock")
+    out = tmp_path / "outbox" / "efrat"
+    out.mkdir(parents=True)
+    (out / "DELIVERY.json").write_text(json.dumps({"complete": False, "slices": [{"slice": "hazal"}]}))
+    sh = tmp_path / "ann" / "medieval" / "runs" / "t1__medieval" / "_shards"
+    sh.mkdir(parents=True)
+    (sh / "shard-00000.json").write_text(json.dumps({"units": 500, "subwords": 10000, "seconds": 20.0}))
+    st = W.status("efrat", outbox_root=tmp_path / "outbox")
+    assert st["state"].startswith("stopped") and not st["running"] and not st["complete"]
+    assert [r["state"] for r in st["per_slice"]] == ["packaged", "in progress"]
+    assert st["units_done"] == 1500 and st["units"] == 1600 and st["subwords_per_second"] == 500.0
+    assert st["hours_left_estimate"] == round(2000 / 500 / 3600, 1)
+    monkeypatch.setattr(P, "load", lambda *a, **k: draft)
+    assert "waiting for Ori's approval" in W.status("efrat")["state"]

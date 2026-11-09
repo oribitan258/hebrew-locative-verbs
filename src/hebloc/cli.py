@@ -303,8 +303,38 @@ def _cmd_whoami(args: argparse.Namespace) -> int:
 
 
 def _cmd_work(args: argparse.Namespace) -> int:
-    from hebloc.team.work import PlanRefusal, WorkFailed, work
+    from hebloc.team.work import PlanRefusal, WorkFailed, detach, read_lock, status, work
 
+    if args.status:
+        st = status(args.person, rehearsal=args.rehearsal, coverage=args.coverage)
+        print(f"{st['person'].capitalize()}: {st['state']}")
+        if "slices" in st:
+            eta = st["hours_left_estimate"]
+            print(f"  slices packaged {st['slices_packaged']}/{st['slices']}; sentences {st['units_done']:,}/"
+                  f"{st['units']:,} ({st['percent']}% of the work)"
+                  + (f"; speed {st['subwords_per_second']} sub-words/s; about {eta} h left" if eta else ""))
+            for r in st["per_slice"]:
+                print(f"    {r['slice']:22} {r['state']:12} {r['units_done']:>10,}/{r['units']:,}")
+            print(f"  results folder: {st['outbox']}")
+            print(f"  log: {st['log']}")
+        return 0
+    if args.detach:
+        import time
+
+        try:
+            d = detach(args.person, rehearsal=args.rehearsal, coverage=args.coverage)
+        except PlanRefusal as e:
+            print(f"REFUSED: {e}")
+            return 2
+        for _ in range(120):                       # wait until the new window has taken the lock
+            lk = read_lock()
+            if lk and lk.get("person") == args.person:
+                print(f"STARTED in its own window (pid {lk['pid']}). It keeps running if Claude Code or VS Code is "
+                      f"closed. Progress: uv run python -m hebloc work --status   log: {d['log']}")
+                return 0
+            time.sleep(1)
+        print(f"NOT STARTED within 2 minutes: read the new window and {d['log']}")
+        return 1
     try:
         r = work(args.person, rehearsal=args.rehearsal, coverage=args.coverage, threads=args.threads)
     except PlanRefusal as e:
@@ -314,8 +344,14 @@ def _cmd_work(args: argparse.Namespace) -> int:
         print(f"FAILED: {e}\nSend Ori this output, data/team/doctor.json and data/outbox/*/DELIVERY.json")
         return 1
     _json(r)
-    print(f"WORK COMPLETE: {r['slices']} slice(s), {r['units']:,} units, {r['bytes'] / 2**20:,.0f} MiB packaged.\n"
-          f"Send the whole folder {r['outbox']} to Ori (see HOW_TO_SEND.txt inside).")
+    print("\n".join([
+        f"WORK COMPLETE ({r['mode']}, coverage {r['coverage']}).",
+        f"Produced: {r['slices']} slice(s), {r['units']:,} sentences parsed, validated against this computer's data,",
+        f"          and packaged as {r['slices']} checksum-verified bundles ({r['bytes'] / 2**20:,.0f} MiB).",
+        f"Send Ori: the WHOLE folder {r['outbox']}",
+        f"          ({r['slices']} .zip + {r['slices']} .zip.sha256 + DELIVERY.json + HOW_TO_SEND.txt), unchanged,",
+        "          through the team's private shared folder or a USB drive. Never GitHub.",
+        "Keep your copy until Ori confirms that `hebloc merge` reported MERGE OK."]))
     return 0
 
 
@@ -367,6 +403,8 @@ def _cmd_doctor(args: argparse.Namespace) -> int:
 
 
 def _cmd_agreement(args: argparse.Namespace) -> int:
+    from pathlib import Path
+
     from hebloc.team import agreement as A
 
     if args.write_reference:
@@ -378,10 +416,17 @@ def _cmd_agreement(args: argparse.Namespace) -> int:
         r = A.write_reference(resolve(args.write_reference).path, st, M.registry()["models"][st["model"]]["revision"])
         print(r)
         return 0
+    if args.compare:
+        from pathlib import Path
+
+        _json(A.compare_bundle(Path(args.compare)))
+        return 0
     r = A.run(args.person, threads=args.threads, limit=args.limit)
     _json({k: v for k, v in r.items() if k != "different_examples"})
     print("AGREEMENT OK: this machine reproduces the reference output exactly" if r["ok"] else
-          "AGREEMENT NOT OK: send data/team/agreement.json to Ori (and the run bundle if asked)")
+          "AGREEMENT NOT OK: send Ori data/team/agreement.json"
+          + (f" and the folder {Path(r['package']).parent}" if r.get("package") and Path(r["package"]).exists() else "")
+          + " (Ori compares it token by token: hebloc agreement --compare <zip>)")
     return 0 if r["ok"] else 1
 
 
@@ -556,7 +601,9 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--rehearsal", type=int, default=None, metavar="N",
                    help="dress rehearsal on the first N units of each of your slices (allowed before approval)")
     p.add_argument("--coverage", default=None, choices=["A", "B"], help="rehearsal only (default: the plan's, else A)")
-    p.add_argument("--threads", type=int, default=8)
+    p.add_argument("--threads", type=int, default=None, help="rehearsal only; full runs use the plan's threads")
+    p.add_argument("--detach", action="store_true", help="start in its own window (survives closing Claude Code)")
+    p.add_argument("--status", action="store_true", help="show progress on this computer and exit")
     p.set_defaults(func=_cmd_work)
 
     p = sub.add_parser("models", help="Team: download (fetch) or verify the pinned Dicta models.")
@@ -576,8 +623,9 @@ def main(argv: list[str] | None = None) -> int:
     p = sub.add_parser("agreement", help="Team: parse the pilot sample and compare with the reference output.")
     p.add_argument("--as", dest="person", default=None)
     p.add_argument("--limit", type=int, default=None)
-    p.add_argument("--threads", type=int, default=8)
+    p.add_argument("--threads", type=int, default=None, help="diagnostics only (default: the plan's threads)")
     p.add_argument("--write-reference", default=None, metavar="RUN", help="(Ori) pin RUN as the reference")
+    p.add_argument("--compare", default=None, metavar="ZIP", help="(Ori) token-level comparison of a partner's agreement bundle")
     p.set_defaults(func=_cmd_agreement)
 
     p = sub.add_parser("plan", help="Team: work plan: show | check | measure | assign | status | register.")
@@ -590,7 +638,7 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--slice", required=True)
     p.add_argument("--as", dest="person", default=None)
     p.add_argument("--limit", type=int, default=None, help="SMOKE run of the first N units (allowed in draft)")
-    p.add_argument("--threads", type=int, default=8)
+    p.add_argument("--threads", type=int, default=None)
     p.set_defaults(func=_cmd_parse)
 
     p = sub.add_parser("merge", help="Team (Ori): verify, restore and check partners' result folders/bundles.")
@@ -601,7 +649,7 @@ def main(argv: list[str] | None = None) -> int:
 
     args = parser.parse_args(argv)
     if getattr(args, "person", None) is not None or getattr(args, "func", None) in (_cmd_agreement, _cmd_parse, _cmd_work):
-        if not (getattr(args, "func", None) is _cmd_agreement and args.write_reference):
+        if not (getattr(args, "func", None) is _cmd_agreement and (args.write_reference or args.compare)):
             from hebloc.team.identity import IdentityError, resolve
 
             try:

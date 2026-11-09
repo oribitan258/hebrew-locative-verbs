@@ -1,6 +1,6 @@
 {
-  "generated_utc": "2026-11-08T19:28:49+00:00",
-  "plan_sha256": "6d755b6a933a806abef21f0253bf895b30f28f2cbc6ffb7193cca696b8589a4c",
+  "generated_utc": "2026-11-09T09:26:24+00:00",
+  "plan_sha256": "b47bc22029757f87d3d1e15b9881251acc050fd8ae3c29d09b507324fda4eaa4",
   "sizes_key": "8d4d006bcf2e0850446af0a7de1a61d5f563f2e7f975551602c263053c02447c",
   "settings_id": "base-topk-v1",
   "tokenizer": "dicta-il/dictabert-joint@7b1256fc0846",

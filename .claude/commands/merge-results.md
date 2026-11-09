@@ -3,7 +3,7 @@ description: (Ori) Verify, restore and integrate the team's result folders
 argument-hint: <folder(s) holding the received outbox folders, or bundle .zip files>
 ---
 
-You are helping Ori integrate results from the team. Follow `PARTNER_START.md` §13 exactly.
+You are helping Ori integrate results from the team. Follow `PARTNER_START.md` §12 exactly.
 
 1. Run `uv run python -m hebloc merge $ARGUMENTS` (folders are searched for every bundle and `DELIVERY.json`).
    Every bundle line must start with `OK` and the run must end with `MERGE OK`. A `FAIL` or

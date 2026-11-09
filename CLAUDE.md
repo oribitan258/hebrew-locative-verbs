@@ -54,7 +54,8 @@ until the user explicitly opens that scope.
   through the private shared folder or USB, NEVER git. Ori runs `hebloc merge <folder>`.
 - A failed check (corpora, fingerprint, models, agreement, integrity) is never worked around:
   stop and report to Ori with `data/team/doctor.json`.
-- Windows: use python.org Python 3.12 (Smart App Control blocks uv's Python, D-035); set PYTHONUTF8=1.
+- Windows: use python.org Python 3.12 (Smart App Control blocks uv's Python, D-035). PYTHONUTF8 is not
+  required (all I/O names its encoding; the suite passes without it, D-039).
   In a NEW environment SAC may also block the generated `hebloc.exe`/`pytest.exe` launchers: use
   `uv run python -m hebloc …` and `uv run python -m pytest` (D-038).
 
@@ -125,8 +126,9 @@ uv run hebloc fingerprint                # team: rebuilt data == reference conte
 uv run hebloc doctor                     # team: end-to-end machine check -> data/team/doctor.json
 uv run hebloc agreement                  # team: pilot-sample parse == reference output (1,161 pieces)
 uv run hebloc plan show|check|measure|assign|status|register   # team: work plan (gated)
-uv run hebloc work [--rehearsal N]       # M5: ALL of this person's slices -> data/outbox/<name> (refused in draft;
-                                         #   rehearsal allowed); resumable, keeps the computer awake
+uv run hebloc work --detach | --status   # M5: ALL of this person's slices in its own window -> data/outbox/<name>
+                                         #   (refused in draft; one per computer; resumable; keeps it awake)
+                                         #   --rehearsal N: diagnostic on N units/slice, allowed in draft
 uv run hebloc parse --slice S [--limit N]   # one assigned slice (refused in draft) / smoke test
 uv run hebloc merge [<folder|zip>...]    # Ori: verify + restore + exact-units check + completeness report
 uv run hebloc stats                      # later milestone (M6)
@@ -181,6 +183,9 @@ notebooks/     exploration only — never pipeline logic
 - [x] Automatic partner workflow (D-038, 2026-11-09): PARTNER_START.md is the single entry point (identity
       question, course-archive install with name repair, `hebloc work` + outbox, exact `merge`); tested at full
       size and with a three-person rehearsal merge. Full runs still gated on Ori's approval.
+- [x] Final M5 workflow (D-039, D-040, 2026-11-09): detached run + lock + `work --status`, pinned threads,
+      agreement mismatch packaging + `agreement --compare`, partner flow without rehearsal; M6 statistics
+      will be computed centrally after the merge. Private GitHub repo prepared.
 - [ ] M5 full parsing run
 - [ ] M6 descriptive statistics + parser-accuracy report
 - [ ] M7 review checkpoint (STOP)

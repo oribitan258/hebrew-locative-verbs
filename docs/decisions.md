@@ -581,3 +581,60 @@ Partners change code through branches and pull requests. Guide: `docs/PARTNERS.m
   - Full runs, `register --write` on real runs, and the full-mode completeness report on real slices
     (gated; the same code path ran in rehearsal mode).
   - The wrong-owner merge rejection (cannot be produced without bypassing the gate; code path only).
+
+### D-039 · Final M5 workflow: detached runs, lock, status, pinned threads, simpler partner path (2026-11-09) · accepted (Ori approved the plan)
+- *Why.* A review of how a Claude Code session drives the pipeline found:
+  - a full share (14–34 h) cannot run as a Claude Code command (10-minute limit; background
+    commands end with the session);
+  - `PYTHONUTF8` set in one shell call is lost in the next;
+  - the torch thread count was not pinned;
+  - an agreement failure had no defined next step;
+  - partners have push rights.
+- *Changes.*
+  - `hebloc work --detach`: the run starts in its own window (Windows: a new PowerShell console that
+    leaves the caller's job; macOS/Linux, untested: a new session), so closing VS Code or Claude
+    Code does not stop it. Progress goes to `data/team/work.log`.
+  - A single-instance lock (`data/team/work.lock`; a stale lock is ignored).
+  - `hebloc work --status`: per-slice state, sentences done, measured speed, hours left, and whether
+    the run is alive. The guide decides from its first line.
+  - The final self-check of a delivery: every assigned slice present once, each bundle intact, each
+    with exactly the work plan's sentence count.
+  - The completion message states what was produced and exactly what to send.
+  - `settings.threads: 8` in `config/parse_plan.yaml` (the value used for the agreement reference).
+    `work`, `parse` and `agreement` use it; another value is refused for real runs.
+  - On AGREEMENT NOT OK, the run is packaged into `data/outbox/<name>-agreement`;
+    `hebloc agreement --compare <zip>` (Ori) gives word-level agreement per column.
+  - `PYTHONUTF8` is not required: the full suite passes without it, and the doctor line is
+    informational.
+  - Partners disable pushing in their clone (`git remote set-url --push origin DISABLED`).
+  - The partner path drops the rehearsal (Ori: only essential checks):
+    identity → setup → integrity checks → agreement → wait for approval → detached run → send the folder.
+  - Equal amount of work per person stays as planned (Ori's choice; no speed weighting).
+  - Not adopted (Ori): a command allowlist in `.claude/settings.json`; automatic pausing of Windows Update.
+- *Verified (Ori's laptop).*
+  - The full suite passes, also with `PYTHONUTF8` unset.
+  - `work --detach --rehearsal 40` from a Claude Code shell: started in its own window and kept
+    running after the launching shell ended.
+  - A second launch was REFUSED by the lock.
+  - After `Stop-Process -Force` mid-run, `--status` reported "stopped" (5/12 slices). A new
+    `--detach` skipped the 5 packaged slices and completed 12/12; the final self-check passed.
+  - `agreement --compare` on Adi's test bundle: 101,368/101,368 tokens identical in every column.
+- *Not verified.*
+  - A Claude Code session that is actually closed while a run continues (the launching shell
+    ending was tested; job breakaway is attempted with a fallback);
+  - macOS/Linux detach;
+  - partners' machines; the real course archive; full runs.
+
+### D-040 · M6 statistics are computed centrally after the merge (2026-11-09) · accepted (Ori)
+- *Decision.* Partners send only parse outputs (bundles). After `hebloc merge` reports COMPLETE and
+  `plan register --write`, all M6 statistics are computed on one machine from the registered
+  canonical runs (`hebloc.data`, `store.runs.canonical_runs`: a list of slice runs per corpus).
+- *Why.*
+  - Many §4 statistics are not additive across partners: type/unique-word counts, hapaxes, medians,
+    percentiles, distributions, top-N lists. Haaretz is split by document across people.
+  - Rules still pending (multi-piece D-021, invalid trees, full vs curated view) must be applied once,
+    uniformly, and re-run cheaply when they change.
+  - Statistics over ~14 GB of Parquet take minutes with DuckDB, while parsing takes tens of hours.
+    Splitting saves nothing and would add a second, separately verified code path and more files to
+    send and reconcile.
+- *Consequence.* M6 needs no knowledge of who parsed what; recomputation never needs the partners.

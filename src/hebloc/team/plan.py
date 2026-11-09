@@ -27,6 +27,7 @@ WORK_PLAN_JSON = CONFIG_DIR / "work_plan.json"
 WORK_PLAN_MD = DOCS_DIR / "WORK_PLAN.md"
 COVERAGES = ("A", "B")
 RATE_SUBWORDS_PER_S = 534     # measured, base + topk, M3 benchmark (pilot_report.md §11)
+DEFAULT_THREADS = 8           # torch threads used for the agreement reference and every run (D-039)
 
 
 @dataclass(frozen=True)
@@ -123,7 +124,11 @@ def load(path: Path = PLAN_PATH) -> Plan:
     for k in ("settings_id", "model", "mst_fix", "lex_topk", "budget", "batch_size", "max_batch_subwords", "shard_size"):
         if k not in (cfg.get("settings") or {}):
             raise ValueError(f"{path.name}: settings.{k} missing")
-    return Plan(cfg["status"], cfg["coverage"], dict(cfg["settings"]), people, pins, tuple(slices),
+    settings = dict(cfg["settings"])
+    settings.setdefault("threads", DEFAULT_THREADS)
+    if not isinstance(settings["threads"], int) or settings["threads"] < 1:
+        raise ValueError(f"{path.name}: settings.threads must be a positive integer")
+    return Plan(cfg["status"], cfg["coverage"], settings, people, pins, tuple(slices),
                 hashlib.sha256(raw).hexdigest())
 
 
