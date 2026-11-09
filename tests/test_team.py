@@ -235,3 +235,40 @@ def test_reassign_reuses_sizes_and_refuses_when_slices_change(tmp_path):
     changed = _plan(tmp_path, PLAN_YAML.replace("buckets: 2", "buckets: 3"))
     with pytest.raises(ValueError, match="re-measure"):
         P.reassign(changed, j, md)
+
+
+def test_merge_reports_damaged_or_conflicting_bundles_without_crashing(tmp_path, monkeypatch):
+    """Regression (D-038 test): a corrupted member used to crash `hebloc merge` instead of failing it."""
+    from hebloc.store.bundle import MANIFEST_NAME
+    from hebloc.store.io import file_sha256
+    from hebloc.team import work as W
+
+    monkeypatch.setattr(W, "MERGE_REPORT", tmp_path / "merge_report.json")
+
+    def fake_bundle(path, run, payload=b"x" * 1000):
+        with zipfile.ZipFile(path, "w", zipfile.ZIP_DEFLATED) as zf:
+            zf.writestr(MANIFEST_NAME, json.dumps({"run": run, "files": {"annotations/a.parquet": {"sha256": "0"}}}))
+            zf.writestr("annotations/a.parquet", payload)
+
+    good = tmp_path / "in" / "a.zip"
+    good.parent.mkdir()
+    fake_bundle(good, "rehearsal/r1")
+    (tmp_path / "in" / "a.zip.sha256").write_text("0" * 64 + "  a.zip\n")      # sidecar mismatch
+    crc = tmp_path / "in" / "b.zip"
+    fake_bundle(crc, "rehearsal/r2")
+    data = bytearray(crc.read_bytes())
+    i = data.index(b"annotations/a.parquet") + len(b"annotations/a.parquet") + 5    # inside the compressed member
+    data[i] ^= 0xFF
+    crc.write_bytes(bytes(data))
+    other = tmp_path / "in2" / "c.zip"
+    other.parent.mkdir()
+    fake_bundle(other, "rehearsal/r3")
+    shutil_copy = (tmp_path / "in2" / "d.zip")
+    fake_bundle(shutil_copy, "rehearsal/r3", payload=b"y" * 1000)                  # same run, different bytes
+    rep = W.merge([tmp_path / "in", tmp_path / "in2"])
+    rows = {Path(r["bundle"]).name: r for r in rep["bundles"]}
+    assert not rep["ok"]
+    assert "does not match its .sha256" in str(rows["a.zip"]["problems"])
+    assert not rows["b.zip"]["ok"]                                            # failed, did not raise
+    assert "CONFLICT" in str(rows["c.zip"]["problems"]) and "CONFLICT" in str(rows["d.zip"]["problems"])
+    assert file_sha256(other) != file_sha256(shutil_copy)

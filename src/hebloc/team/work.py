@@ -26,6 +26,7 @@ from __future__ import annotations
 import hashlib
 import json
 import zipfile
+import zlib
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -280,7 +281,7 @@ def _read_manifest(z: Path) -> dict | None:
     try:
         with zipfile.ZipFile(z) as zf:
             return json.loads(zf.read(MANIFEST_NAME))
-    except (zipfile.BadZipFile, KeyError, json.JSONDecodeError, OSError):
+    except (zipfile.BadZipFile, zlib.error, KeyError, json.JSONDecodeError, OSError, ValueError, EOFError):
         return None
 
 
@@ -387,10 +388,17 @@ def merge(paths: list[Path], *, overwrite: bool = False) -> dict:
             row["problems"].append("zip does not match its .sha256 file (damaged or altered in transfer)")
         if str(z.resolve()) in listed and listed[str(z.resolve())] != shas[z]:
             row["problems"].append("zip does not match the sha256 in DELIVERY.json")
-        v = B.verify(z)
+        if row["problems"]:                         # damaged: do not even open its members
+            row.update({"ok": False, "verified": False})
+            rows.append(row)
+            continue
+        try:
+            v = B.verify(z)
+        except (zipfile.BadZipFile, zlib.error, OSError, ValueError, EOFError, KeyError) as e:   # corrupt member
+            v = {"ok": False, "problems": [f"zip is damaged: {type(e).__name__}: {e}"]}
         row["verified"] = v["ok"]
         row["problems"] += v["problems"]
-        if row["problems"] and not all(p.startswith("note:") for p in row["problems"]):
+        if row["problems"]:
             row["ok"] = False
             rows.append(row)
             continue

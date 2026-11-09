@@ -1,6 +1,6 @@
 # Session Handoff: team-ready (M4 review, M3 gate decisions and repo push pending)
 
-*Updated 2026-11-08, evening (team readiness verified from a clean clone; M4 finished 2026-11-07).
+*Updated 2026-11-09 (automatic partner workflow built and tested, D-038; team readiness 2026-11-08; M4 finished 2026-11-07).
 This file summarizes and points to other documents; when they disagree, the linked documents win.*
 
 ---
@@ -13,7 +13,10 @@ This file summarizes and points to other documents; when they disagree, the link
    - Recreate the venv with `uv venv --clear --python (py -3.12 -c "import sys; print(sys.executable)")`,
      then `uv sync`.
    - Do NOT let uv pick `~/.local/bin/python3.12.exe` (a blocked uv shim).
-2. **Team setup is built and verified from a clean clone** (D-036, D-037; §10 below).
+2. **Team setup is built and verified from clean clones** (D-036–D-038; §10 and §12 below).
+   - Partners only clone, open Claude Code and say "Read PARTNER_START.md and follow it."
+   - On Windows use `uv run python -m hebloc …` / `uv run python -m pytest`: Smart App Control blocks
+     the launchers of NEW environments (D-038). `uv run hebloc` still works in this repo's old venv.
    - Partners' entry point: [`PARTNER_START.md`](../PARTNER_START.md).
    - Plan: `config/parse_plan.yaml` (status **draft**).
    - Who parses what: [`WORK_PLAN.md`](WORK_PLAN.md).
@@ -35,6 +38,7 @@ This file summarizes and points to other documents; when they disagree, the link
 | **M4 Data layer and access API** | ✅ done 2026-11-07. **Awaiting user review** (D-030–D-033 *proposed*) | `2b6f2b1` |
 | Collaboration setup (D-034) | ✅ hygiene test, history cleaned. Private GitHub repo: **not created or pushed yet** (§9) | `77f9aa5`, `dcf1207` |
 | Team readiness (D-035–D-037) | ✅ `hebloc.team`, `PARTNER_START.md`, work plan (draft), verified from a clean clone (§10) | `eaffb62` + later |
+| Automatic partner workflow (D-038) | ✅ single entry point, archive install with name repair, `hebloc work`, exact `merge`; full-size and three-person rehearsal tested (§12). Full runs still gated | `eba82f3` + later |
 | M5 full parse, M6 statistics, M7 review | not started. **M5 is blocked on the M3 gate decisions** and on M4 approval | — |
 
 **Do not start M5 and do not run full-corpus parsing** until the user has (a) approved M4 and
@@ -282,4 +286,30 @@ else running). The work plan uses the more conservative M3 Modern benchmark (534
    - If the model or budget changes, also run `uv run hebloc plan measure`.
 3. Set `status: approved` and `coverage: A|B`, then `uv run hebloc plan assign`.
 4. Run `uv run pytest`, commit, push.
-5. Partners: `git pull`, then `PARTNER_START.md` §10.
+5. Partners: open Claude Code in their clone and ask it to follow `PARTNER_START.md` (it does
+   `git pull` and runs §11: `hebloc work`). Merge their `data/outbox/<name>` folders with
+   `uv run python -m hebloc merge <folder>` (§13), then `plan register --write` when COMPLETE.
+
+## 12. Automatic partner workflow: what is verified (2026-11-09, D-038)
+
+- **Full-size archive install.** A zip built read-only from `corpora/`, with UTF-8 names and no
+  UTF-8 flag (so the Hebrew names come out garbled), installed in a fresh clone. Names were repaired
+  automatically, IDENTICAL to the anchor, 11.2 min. The real course archive was not available (Ori:
+  test with the installed corpora). The installer also accepts multi-part zips, nested archives,
+  tar.*, 7z/rar and folders (unit-tested; .rar and a Hebrew-named .7z not exercised).
+- **Efrat** (fresh clone, every PARTNER_START command as written): all setup steps OK, agreement
+  1,161/1,161, rehearsal packaged, `git status` clean.
+- **Adi** (first clone): agreement 1,161/1,161; a rehearsal killed mid-slice resumed with no rework.
+- **Ori** (this repo, identity `ori`): rehearsal packaged (12 slices).
+- **Merge** of the three outbox folders: 31/31 slices, 12,840/12,840 units, 0 duplicated units,
+  COMPLETE. Missing, damaged, conflicting and duplicate deliveries are all handled correctly.
+- **Local test leftovers (safe to delete; none are needed, and rehearsal runs are never registered):**
+  - `C:\Users\Ori\hebloc-t2` (fresh clone, ~6 GB);
+  - `C:\Users\Ori\hebloc-clean-test` (~6 GB);
+  - `C:\Users\Ori\hebloc-archive-test` (553 MiB test zip);
+  - `C:\Users\Ori\hebloc-incoming` and `C:\Users\Ori\hebloc-merge-failtests` (copies of rehearsal
+    bundles);
+  - `C:\c\` (two stray test files);
+  - in this repo: `data/annotations/rehearsal/` and `data/outbox/`.
+- **Not verified:** another computer, macOS/Linux, a GitHub clone, a fresh Claude Code session
+  executing the guide itself, full runs and `register --write` on real runs.

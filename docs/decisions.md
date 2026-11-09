@@ -510,3 +510,74 @@ Partners change code through branches and pull requests. Guide: `docs/PARTNERS.m
   - cloning from GitHub (the repo is not pushed);
   - real slices (gated);
   - `plan register` on real runs (unit-tested only).
+
+### D-038 · Automatic partner workflow: one entry point, archive install, `hebloc work`, exact merge (2026-11-09) · proposed (built and tested; full runs stay gated)
+- *Goal (Ori).* Partners only clone, open Claude Code and say "Read PARTNER_START.md and follow it".
+  Each downloads the course corpus archive independently; Claude Code asks who they are and where the
+  archive is, and does the rest. Full runs wait for Ori's approval.
+- *What was built.*
+  - `PARTNER_START.md` is the single entry point. §2 asks "Who are you — Ori, Efrat, or Adi?". Every
+    section has a "Skip if" check, so any session can resume.
+  - `hebloc corpora install --from …`:
+    - accepts a zip (also multi-part, e.g. Google Drive `-001/-002`), nested archives, tar.*, 7z/rar
+      (through the system bsdtar, built into Windows 10+/macOS), or a folder;
+    - checks file NAMES first against `config/reference/corpora_names.json` (new: names-only
+      digests derived from the anchored baseline);
+    - repairs mojibake reversibly. 320 Haskala names are Hebrew; unflagged zips and Windows Explorer
+      garble them. The decoding is accepted only if EVERY name then matches;
+    - extracts into a staging folder with extended-length paths, hashes there, and creates `corpora/`
+      only if identical to the anchor;
+    - refuses up front when the project path is too long for Windows' 260-character limit.
+  - `hebloc whoami`: the identity is stored per computer. Team commands default to it and REFUSE
+    another `--as`.
+  - `hebloc work`:
+    - preflight (corpora anchor, data fingerprints, model sha256, agreement, work plan in sync);
+    - all of the person's slices, resumable;
+    - keeps the computer awake (SetThreadExecutionState / caffeinate);
+    - packages verified bundles into `data/outbox/<name>/` with `DELIVERY.json` and `HOW_TO_SEND.txt`;
+    - REFUSED until the plan is approved; `--rehearsal N` (first N units per slice, collection
+      `rehearsal`, never canonical) is allowed before.
+  - `hebloc merge <folders|zips>`:
+    - checks each bundle's sidecar and its DELIVERY listing (missing upload = FAIL);
+    - drops identical duplicate copies; refuses two different bundles of one run (CONFLICT);
+    - verify + restore + integrity;
+    - checks the EXACT unit set per slice on Ori's machine (sent_ids + text sha1; no repeats);
+    - checks the owner and settings;
+    - reports completeness per coverage: missing slices per person, and units in more than one run
+      (must be 0).
+  - `plan register --write` refuses unless the coverage is complete.
+  - `python -m hebloc` entry point (see below).
+- *Test (Windows 11, this laptop, Smart App Control on).*
+
+  | Test | Result |
+  |---|---|
+  | Full-size archive built read-only from `corpora/`: 404,294 files, UTF-8 names WITHOUT the UTF-8 flag (the worst realistic case) | 553 MiB |
+  | Fresh clone `C:\Users\Ori\hebloc-t2\…` following PARTNER_START as **Efrat**: identity → venv → `corpora install` from that zip | names repaired automatically (`cp437->utf-8`); **IDENTICAL** to the anchor; 11.2 min |
+  | … models / inventory / prepare / fingerprint / pytest / doctor | 20 s / 2.9 / 5.2 min / IDENTICAL / 146 passed, 8 skipped / 17 PASS, 0 FAIL; `git status` clean |
+  | … agreement; rehearsal (`work --rehearsal 40`) | 1,161/1,161 identical (507 sub-words/s, with other jobs running); 9 slices packaged |
+  | First clone as **Adi**: agreement; `work --rehearsal 1200`, killed (`Stop-Process -Force`) mid-slice 2, then re-run | 1,161/1,161; slice 1 "already packaged", slice 2 resumed with its committed shard untouched; 10 slices, 12,000 units |
+  | Ori's repo as **Ori**: `work --rehearsal 40` | 12 slices, 72 s |
+  | `merge` of the three outbox folders, copied to a stand-in shared folder | 31/31 slices OK (each by its owner); units 12,840/12,840; units in more than one run 0; **COMPLETE**, MERGE OK; `hebloc check` OK |
+  | Merge failure modes | same folder twice → identical copies ignored, OK; DELIVERY lists an absent zip → MISSING; one flipped byte → sidecar mismatch FAIL; re-packaged bundle of the same run → CONFLICT, nothing merged |
+  | Identity | `--as efrat` on Ori's computer → REFUSED; a second `whoami --set` → REFUSED; full `work` in draft → REFUSED |
+  | Unit tests | 18 install cases: folder, flagged/unflagged/cp1255 zips, Explorer-mangled folder, multi-part, nested, tar.gz, 7z read, junk, wrong content, extra file, two copies, zip-slip, long path. Also identity and merge robustness. Full suite passes |
+
+- *Gaps found by the test and fixed.*
+  - **Smart App Control blocks the launchers** (`hebloc.exe`, `pytest.exe`) that uv generates in
+    each NEW environment: unsigned, unique files with no reputation. The guide now uses
+    `uv run python -m hebloc` and `uv run python -m pytest` (signed python.exe).
+  - Merge crashed (instead of failing) on a damaged zip (`BadZipFile`/`zlib.error`).
+  - Windows' tar.exe crashes when WRITING a 7z with Hebrew names. Only a test limitation: reading
+    works.
+- *Not tested.*
+  - The real course archive (no longer available; Ori asked to test with the installed corpora).
+    Its exact format is unknown, so the installer accepts every common form; .rar and Hebrew-named
+    .7z were not exercised.
+  - Another computer or CPU (the agreement check covers this on each partner's machine).
+  - macOS/Linux.
+  - A GitHub clone (not pushed).
+  - A real Claude Code session executing the guide from scratch (commands were run by this session
+    exactly as written).
+  - Full runs, `register --write` on real runs, and the full-mode completeness report on real slices
+    (gated; the same code path ran in rehearsal mode).
+  - The wrong-owner merge rejection (cannot be produced without bypassing the gate; code path only).
