@@ -55,6 +55,8 @@ until the user explicitly opens that scope.
 - A failed check (corpora, fingerprint, models, agreement, integrity) is never worked around:
   stop and report to Ori with `data/team/doctor.json`.
 - Windows: use python.org Python 3.12 (Smart App Control blocks uv's Python, D-035); set PYTHONUTF8=1.
+  In a NEW environment SAC may also block the generated `hebloc.exe`/`pytest.exe` launchers: use
+  `uv run python -m hebloc …` and `uv run python -m pytest` (D-038).
 
 ## Data flow
 ```

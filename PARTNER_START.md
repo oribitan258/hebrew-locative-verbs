@@ -63,6 +63,11 @@ from those tests on Ori's laptop. Steps marked **(untested)** were not run on th
 - Windows: run commands in **PowerShell**. In every new PowerShell window, first run
   `$env:PYTHONUTF8 = "1"`.
 - macOS/Linux **(untested)**: use bash, and run `export PYTHONUTF8=1` first.
+- Always start project commands with **`uv run python -m hebloc …`** and run tests with
+  **`uv run python -m pytest`**, exactly as written below. When a command's own message suggests
+  `uv run hebloc X` (e.g. after `->`), run it as `uv run python -m hebloc X`. Reason: Windows Smart
+  App Control blocks the launchers `hebloc.exe` / `pytest.exe` that every new environment generates
+  ("An Application Control policy has blocked this file"), but not the signed Python (D-038).
 
 **Resuming.** This guide can be stopped and restarted at any point, by a new Claude Code session too.
 Every section starts with **Skip if**: check it and skip the section when it is already done. Long
@@ -127,9 +132,9 @@ installed packages, no data).
 
 ## 5. Save who this computer belongs to
 
-**Skip if** `uv run hebloc whoami` prints `This computer is set up for: NAME`.
+**Skip if** `uv run python -m hebloc whoami` prints `This computer is set up for: NAME`.
 ```
-uv run hebloc whoami --set NAME
+uv run python -m hebloc whoami --set NAME
 ```
 **Success:** `This computer is set up for: Name  (data/team/identity.json)`.
 From now on every team command uses this name automatically and refuses to act for anyone else.
@@ -138,7 +143,7 @@ whether this is really their computer. If it was set wrongly by mistake, STOP S5
 
 ## 6. Install the corpora from the course archive (*tested at full size: ~25–35 min*)
 
-**Skip if** `uv run hebloc doctor --quick` shows `[PASS] corpora  corpora = anchor`.
+**Skip if** `uv run python -m hebloc doctor --quick` shows `[PASS] corpora  corpora = anchor`.
 
 1. Ask the person: **"Where is the corpus archive you downloaded from the course? Please give me the
    full path of the file — or of the folder that holds it, if it came in several parts."**
@@ -148,7 +153,7 @@ whether this is really their computer. If it was set wrongly by mistake, STOP S5
 2. Check that the path exists (`Test-Path "<PATH>"` must print `True`). If not, ask again.
 3. Run (keep the quotes; for a multi-part download give the folder, or repeat `--from` per part):
    ```
-   uv run hebloc corpora install --from "<PATH>"
+   uv run python -m hebloc corpora install --from "<PATH>"
    ```
    It reads the download (never changes it); finds the corpus folders inside it at any depth,
    including archives inside the archive; checks every file NAME against the project's reference and
@@ -163,7 +168,7 @@ value is fine).
 
 **Recovery:**
 - `already exists and is not empty` → the corpora were installed before: run
-  `uv run hebloc corpora verify` (same success line).
+  `uv run python -m hebloc corpora verify` (same success line).
 - `INSTALL FAILED … could not find a folder containing Mikra, Hazal, …` → wrong file, or an
   incomplete download (a missing part). Ask for the right path; re-download if needed.
 - `INSTALL FAILED … the file names in the download are not the project's corpora` or `… sizes
@@ -180,9 +185,9 @@ value is fine).
 
 ## 7. Download and verify the parser model (*tested: ~30 s on a fast connection, 0.7 GB*)
 
-**Skip if** `uv run hebloc models verify` prints `base: … OK`.
+**Skip if** `uv run python -m hebloc models verify` prints `base: … OK`.
 ```
-uv run hebloc models fetch
+uv run python -m hebloc models fetch
 ```
 **Success:** `base: dicta-il/dictabert-joint@7b1256fc0846 OK (all files match the pinned sha256)`.
 **Recovery:** network error → run the same command again (it resumes). A sha256 problem → delete the
@@ -190,11 +195,11 @@ folder `data/models/dictabert-joint` and run it again. Still failing → STOP S2
 
 ## 8. Build the derived data (*tested: inventory ~1.5 min, prepare ~3–5 min, fingerprint ~10 s*)
 
-**Skip if** `uv run hebloc fingerprint` already ends with `IDENTICAL to the reference`.
+**Skip if** `uv run python -m hebloc fingerprint` already ends with `IDENTICAL to the reference`.
 ```
-uv run hebloc inventory
-uv run hebloc prepare
-uv run hebloc fingerprint
+uv run python -m hebloc inventory
+uv run python -m hebloc prepare
+uv run python -m hebloc fingerprint
 ```
 **Success:** `inventory` prints `Catalog: 404,294 documents -> …` with every verification flag `True`;
 `prepare` prints one line per corpus ending in `ok=True`; `fingerprint` ends with
@@ -205,8 +210,8 @@ uv run hebloc fingerprint
 ## 9. Check the whole setup (*tested: tests ~1 min*)
 
 ```
-uv run pytest
-uv run hebloc doctor
+uv run python -m pytest
+uv run python -m hebloc doctor
 ```
 **Success:** `pytest` ends with `passed` and no `failed` (a few `skipped` are expected on a fresh
 computer: tests that need Ori's pilot data). `doctor` ends with `ready_for_setup=True`. On its other
@@ -221,7 +226,7 @@ person, do not commit. A `WARN` about power: tell the person to plug in before �
 
 1. Cross-machine agreement:
    ```
-   uv run hebloc agreement
+   uv run python -m hebloc agreement
    ```
    It parses the 1,000-sentence pilot sample with the plan's exact settings and compares every
    piece's raw parser output with the reference made on Ori's computer.
@@ -231,7 +236,7 @@ person, do not commit. A `WARN` about power: tell the person to plug in before �
 2. Rehearsal of NAME's own workload (the first 40 sentences of each of NAME's slices; the whole
    chain: parse → validate → package):
    ```
-   uv run hebloc work --rehearsal 40
+   uv run python -m hebloc work --rehearsal 40
    ```
    **Success:** ends with `WORK COMPLETE: … slice(s) …` and names the folder
    `data/outbox/NAME-rehearsal40A` (or `…40B` if Ori has already chosen option B).
@@ -253,7 +258,7 @@ first session.
    ```
    git pull
    uv sync
-   uv run hebloc doctor
+   uv run python -m hebloc doctor
    ```
    Look at the `plan approved` line. If it is `TODO` (status=draft), tell the person: **"Ori has not
    started the parsing phase yet. Nothing more to do now; when Ori says so, open Claude Code here
@@ -268,14 +273,14 @@ first session.
    programs slow it down.
 3. Run NAME's whole workload:
    ```
-   uv run hebloc work
+   uv run python -m hebloc work
    ```
    It checks the setup again, then parses each of NAME's slices in turn, validates it against this
    computer's data, and packages it (a verified `.zip` + `.zip.sha256`) into `data/outbox/NAME/`,
    updating `DELIVERY.json` after every slice. Progress bars show each slice.
    **Success:** `WORK COMPLETE: N slice(s), … units, … MiB packaged.` and the folder `data/outbox/NAME`.
    **If it stops for any reason** (sleep, crash, reboot, Ctrl+C, power cut): open PowerShell in the
-   project, `$env:PYTHONUTF8 = "1"`, and run `uv run hebloc work` again. It skips packaged slices,
+   project, `$env:PYTHONUTF8 = "1"`, and run `uv run python -m hebloc work` again. It skips packaged slices,
    resumes the current one at its first unfinished shard (≤ 500 sentences are redone), and never
    duplicates work. Never delete anything in `data/annotations/` or `data/outbox/`.
    **FAILED** → STOP S6. **REFUSED** → STOP S5.
@@ -296,7 +301,7 @@ send the folder again when `hebloc work` has finished: Ori's merge skips what it
 
 Copy every received folder somewhere outside the project, e.g. `C:\hebloc-incoming\efrat`, then:
 ```
-uv run hebloc merge "C:\hebloc-incoming"
+uv run python -m hebloc merge "C:\hebloc-incoming"
 ```
 (or name the folders/zips one by one). For every bundle it checks the zip against its `.sha256` file
 and the `DELIVERY.json` that lists it (a missing or damaged upload fails); re-hashes every file inside;
@@ -309,11 +314,11 @@ CONFLICT and neither is merged. Merging the same folder again is safe.
 It ends with the completeness report per coverage:
 `full coverage A: 31/31 slices OK; units 9,709,662/9,709,662; units in more than one run: 0; COMPLETE`,
 followed by the slices still missing, per person. **Success:** `MERGE OK` and `COMPLETE`.
-`uv run hebloc merge` with no paths prints just the completeness report.
+`uv run python -m hebloc merge` with no paths prints just the completeness report.
 
-When the full coverage is COMPLETE: `uv run hebloc plan register` (preview), then
-`uv run hebloc plan register --write` (refuses unless COMPLETE), add a decision entry, run
-`uv run hebloc check`, and commit `config/annotations.yaml`. Rehearsal and smoke runs are never
+When the full coverage is COMPLETE: `uv run python -m hebloc plan register` (preview), then
+`uv run python -m hebloc plan register --write` (refuses unless COMPLETE), add a decision entry, run
+`uv run python -m hebloc check`, and commit `config/annotations.yaml`. Rehearsal and smoke runs are never
 registered.
 
 ---
@@ -322,7 +327,8 @@ registered.
 
 | Symptom | Action |
 |---|---|
-| "An Application Control policy has blocked this file" | §3 (python.org 3.12), then §4 |
+| "An Application Control policy has blocked this file" on `hebloc` / `pytest` | Use `uv run python -m hebloc …` / `uv run python -m pytest` (§1 Shell) |
+| The same message on `python` / `uv venv` | §3 (python.org 3.12), then §4 |
 | `UnicodeEncodeError` / garbled Hebrew in the terminal | `$env:PYTHONUTF8 = "1"` in this window, repeat the command |
 | `uv` / `py` / `claude` "not recognized" | Open a NEW terminal after installing (PATH refresh) |
 | `REFUSED: who are you?` | §5 |
