@@ -30,6 +30,10 @@ This file summarizes and points to other documents; when they disagree, the link
    the rewrite (`run.json`, `units/_manifest.json`, `documents.manifest.json`, bundles) still record
    the OLD hashes as `code_commit`. Map old → new in §8 and in `data/backups/commit_map.txt`. The
    original history is in `data/backups/git-history-pre-github.bundle`.
+   **Rewritten again on 2026-11-09 (D-042)** to remove the corpus-text audit sheets from the public
+   repository: every hash from §8 and later changed once more. Map:
+   `data/backups/pre-public-clean-2026-11-09/commit_map.txt` (with the pre-clean history bundle and
+   byte-identical copies of the two sheets, which stay local in `annotation/`).
 
 ## 1. Status
 
