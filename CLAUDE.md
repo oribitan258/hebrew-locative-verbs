@@ -48,6 +48,11 @@ until the user explicitly opens that scope.
   resumable). Each person keeps the complete results locally; at completion they get simple
   instructions to send `data/outbox/<name>` to Ori by Google Drive, OneDrive or USB. No shared folder
   is set up in advance. Ori merges; M6 statistics are computed centrally (D-040).
+- **If the person's whole message is "start"** (or "go", "continue", "status"): it means *run or check
+  this computer's share of M5*. Read `PARTNER_START.md` and follow it from §2: identity from
+  `data/team/identity.json`; skip every section whose "Skip if" holds; then §10b (`git pull`, `uv sync`,
+  `work --status`, and `work --detach` if not started/stopped), or §11 if complete. Never run it in
+  the foreground; never run anyone else's slices.
 - Execution guide for Claude Code: **`PARTNER_START.md`** (single source of the tested commands);
   overview: `docs/PARTNERS.md`; who parses what: `docs/WORK_PLAN.md` (generated).
   Slash commands: `/partner-setup`, `/partner-parse`, `/merge-results` (Ori).
