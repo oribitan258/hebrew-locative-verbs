@@ -1,0 +1,1060 @@
+{
+  "what": "Dicta (base, topk, MST fix) vs BHSA on all Mikra verses: convention-aware agreement, not gold accuracy",
+  "run": "mikra/base-topk-v1__mikra",
+  "run_fingerprint": "d21dbde61c6ac42b11d321e8acdb6ff36fab674994b34f364957dc191afbe1d5",
+  "code_commit": "966ec2f088db3ba6e3a5ba82c1485453be330991+dirty",
+  "created_utc": "2026-11-12T13:57:10+00:00",
+  "bhsa_source": {
+    "dataset": "ETCBC/bhsa",
+    "version": "2021",
+    "commit": "4db00e2157915495e1a4d3d57e41223df24775da",
+    "base_url": "https://raw.githubusercontent.com/ETCBC/bhsa/4db00e2157915495e1a4d3d57e41223df24775da/tf/2021/",
+    "license": "CC BY-NC 4.0 (data); cite 10.17026/dans-z6y-skyh",
+    "fetched_utc": "2026-11-07T10:00:06+00:00",
+    "files": "see data/external/bhsa/SOURCE.json"
+  },
+  "reading": "qere",
+  "min_alignment": 0.8,
+  "layers": [
+    {
+      "layer": "POS, strict mapping",
+      "language": "hebrew",
+      "key": "pos",
+      "n": 297324,
+      "agreement": 0.8347,
+      "ci95_low": 0.8334,
+      "ci95_high": 0.836
+    },
+    {
+      "layer": "POS, convention-tolerant",
+      "language": "hebrew",
+      "key": "pos_lenient",
+      "n": 297324,
+      "agreement": 0.8885,
+      "ci95_low": 0.8874,
+      "ci95_high": 0.8896
+    },
+    {
+      "layer": "Prefix segmentation",
+      "language": "hebrew",
+      "key": "prefix_segmentation",
+      "n": 297324,
+      "agreement": 0.9575,
+      "ci95_low": 0.9568,
+      "ci95_high": 0.9582
+    },
+    {
+      "layer": "Noun lemma",
+      "language": "hebrew",
+      "key": "lemma_noun",
+      "n": 141689,
+      "agreement": 0.7335,
+      "ci95_low": 0.7312,
+      "ci95_high": 0.7358
+    },
+    {
+      "layer": "Verb lemma, qal",
+      "language": "hebrew",
+      "key": "lemma_verb_qal",
+      "n": 43456,
+      "agreement": 0.4162,
+      "ci95_low": 0.4116,
+      "ci95_high": 0.4208
+    },
+    {
+      "layer": "Verb lemma, other stems",
+      "language": "hebrew",
+      "key": "lemma_verb_other_stem",
+      "n": 18716,
+      "agreement": 0.0789,
+      "ci95_low": 0.0751,
+      "ci95_high": 0.0828
+    },
+    {
+      "layer": "Verb person",
+      "language": "hebrew",
+      "key": "verb_person",
+      "n": 50605,
+      "agreement": 0.9094,
+      "ci95_low": 0.9069,
+      "ci95_high": 0.9119
+    },
+    {
+      "layer": "Verb number",
+      "language": "hebrew",
+      "key": "verb_number",
+      "n": 56661,
+      "agreement": 0.9642,
+      "ci95_low": 0.9626,
+      "ci95_high": 0.9657
+    },
+    {
+      "layer": "Verb gender",
+      "language": "hebrew",
+      "key": "verb_gender",
+      "n": 40494,
+      "agreement": 0.9414,
+      "ci95_low": 0.9391,
+      "ci95_high": 0.9436
+    },
+    {
+      "layer": "Aramaic words: POS, strict",
+      "language": "aramaic",
+      "key": "pos",
+      "n": 4696,
+      "agreement": 0.4721,
+      "ci95_low": 0.4579,
+      "ci95_high": 0.4864
+    }
+  ],
+  "summary": {
+    "aligned_words": 302020,
+    "bhsa_ortho_words": 303805,
+    "dicta_ws_words": 304481,
+    "alignment_rate_bhsa": 0.9941,
+    "hebrew": {
+      "pos": {
+        "n": 297324,
+        "agree": 0.8347
+      },
+      "pos_lenient": {
+        "n": 297324,
+        "agree": 0.8885
+      },
+      "prefix_segmentation": {
+        "n": 297324,
+        "agree": 0.9575
+      },
+      "lemma_noun": {
+        "n": 141689,
+        "agree": 0.7335
+      },
+      "lemma_verb_qal": {
+        "n": 43456,
+        "agree": 0.4162
+      },
+      "lemma_verb_other_stem": {
+        "n": 18716,
+        "agree": 0.0789
+      },
+      "lemma_blank_rate": 0.0691,
+      "verb_person": {
+        "n": 50605,
+        "agree": 0.9094
+      },
+      "verb_number": {
+        "n": 56661,
+        "agree": 0.9642
+      },
+      "verb_gender": {
+        "n": 40494,
+        "agree": 0.9414
+      }
+    },
+    "aramaic": {
+      "pos": {
+        "n": 4696,
+        "agree": 0.4721
+      }
+    },
+    "pos_confusion": [
+      [
+        "subs→NOUN",
+        91891
+      ],
+      [
+        "verb→VERB",
+        60835
+      ],
+      [
+        "prep→ADP",
+        30476
+      ],
+      [
+        "nmpr→PROPN",
+        28797
+      ],
+      [
+        "conj→SCONJ",
+        11084
+      ],
+      [
+        "verb→NOUN",
+        6408
+      ],
+      [
+        "subs→NUM",
+        6248
+      ],
+      [
+        "nega→ADV",
+        5830
+      ],
+      [
+        "subs→DET",
+        5508
+      ],
+      [
+        "subs→ADP",
+        5009
+      ],
+      [
+        "adjv→ADJ",
+        4711
+      ],
+      [
+        "prps→PRON",
+        4684
+      ],
+      [
+        "advb→ADV",
+        3813
+      ],
+      [
+        "adjv→NOUN",
+        3370
+      ],
+      [
+        "subs→PROPN",
+        3105
+      ],
+      [
+        "subs→ADV",
+        3086
+      ],
+      [
+        "prde→PRON",
+        2536
+      ],
+      [
+        "subs→VERB",
+        2382
+      ],
+      [
+        "nmpr→NOUN",
+        2271
+      ],
+      [
+        "verb→AUX",
+        2253
+      ],
+      [
+        "prep→PRON",
+        1935
+      ],
+      [
+        "intj→ADV",
+        1389
+      ],
+      [
+        "verb→ADJ",
+        1339
+      ],
+      [
+        "subs→ADJ",
+        928
+      ],
+      [
+        "prin→ADV",
+        599
+      ],
+      [
+        "adjv→VERB",
+        509
+      ],
+      [
+        "inrg→ADV",
+        508
+      ],
+      [
+        "verb→PROPN",
+        503
+      ],
+      [
+        "nmpr→VERB",
+        496
+      ],
+      [
+        "prin→PRON",
+        378
+      ],
+      [
+        "adjv→PROPN",
+        340
+      ],
+      [
+        "conj→CCONJ",
+        337
+      ],
+      [
+        "verb→ADV",
+        293
+      ],
+      [
+        "prep→NOUN",
+        255
+      ],
+      [
+        "verb→ADP",
+        243
+      ],
+      [
+        "intj→AUX",
+        231
+      ],
+      [
+        "advb→PRON",
+        211
+      ],
+      [
+        "advb→CCONJ",
+        206
+      ],
+      [
+        "adjv→NUM",
+        188
+      ],
+      [
+        "subs→SCONJ",
+        133
+      ]
+    ],
+    "tense_confusion": [
+      [
+        "perf→Past",
+        16764
+      ],
+      [
+        "impf→Fut",
+        13434
+      ],
+      [
+        "wayq→Fut",
+        12144
+      ],
+      [
+        "ptca→None",
+        6292
+      ],
+      [
+        "infc→None",
+        6183
+      ],
+      [
+        "perf→None",
+        2911
+      ],
+      [
+        "wayq→Past",
+        2006
+      ],
+      [
+        "impv→Imp",
+        1982
+      ],
+      [
+        "impf→None",
+        1321
+      ],
+      [
+        "ptca→Past",
+        1193
+      ],
+      [
+        "ptcp→None",
+        1183
+      ],
+      [
+        "impv→Past",
+        1123
+      ],
+      [
+        "impv→None",
+        1066
+      ],
+      [
+        "impf→Past",
+        807
+      ],
+      [
+        "wayq→None",
+        701
+      ],
+      [
+        "infa→None",
+        622
+      ],
+      [
+        "perf→Imp",
+        519
+      ],
+      [
+        "ptca→Pres",
+        402
+      ],
+      [
+        "perf→Fut",
+        398
+      ],
+      [
+        "infc→Past",
+        249
+      ],
+      [
+        "infa→Past",
+        171
+      ],
+      [
+        "impf→Imp",
+        116
+      ],
+      [
+        "ptca→Fut",
+        86
+      ],
+      [
+        "infa→Imp",
+        67
+      ],
+      [
+        "impv→Fut",
+        64
+      ]
+    ],
+    "run": "mikra/base-topk-v1__mikra",
+    "reading": "qere",
+    "verses": 23204,
+    "verses_excluded_low_alignment": 109,
+    "excluded_examples": [
+      {
+        "sent_id": "mikra:020d3483e6d1:1028:0",
+        "ref": "I Chronicles 8:20",
+        "align_ratio": 0.667
+      },
+      {
+        "sent_id": "mikra:020d3483e6d1:1070:0",
+        "ref": "I Chronicles 8:34",
+        "align_ratio": 0.714
+      },
+      {
+        "sent_id": "mikra:020d3483e6d1:1208:0",
+        "ref": "I Chronicles 9:40",
+        "align_ratio": 0.714
+      },
+      {
+        "sent_id": "mikra:020d3483e6d1:1820:0",
+        "ref": "I Chronicles 16:38",
+        "align_ratio": 0.778
+      },
+      {
+        "sent_id": "mikra:020d3483e6d1:2240:0",
+        "ref": "I Chronicles 23:15",
+        "align_ratio": 0.75
+      },
+      {
+        "sent_id": "mikra:020d3483e6d1:314:0",
+        "ref": "I Chronicles 2:51",
+        "align_ratio": 0.667
+      },
+      {
+        "sent_id": "mikra:020d3483e6d1:323:0",
+        "ref": "I Chronicles 2:54",
+        "align_ratio": 0.75
+      },
+      {
+        "sent_id": "mikra:020d3483e6d1:491:0",
+        "ref": "I Chronicles 4:31",
+        "align_ratio": 0.667
+      },
+      {
+        "sent_id": "mikra:1d16122e8633:455:0",
+        "ref": "Nehemiah 7:28",
+        "align_ratio": 0.75
+      },
+      {
+        "sent_id": "mikra:1d16122e8633:950:0",
+        "ref": "Nehemiah 11:26",
+        "align_ratio": 0.333
+      },
+      {
+        "sent_id": "mikra:1d16122e8633:953:0",
+        "ref": "Nehemiah 11:27",
+        "align_ratio": 0.75
+      },
+      {
+        "sent_id": "mikra:1d16122e8633:959:0",
+        "ref": "Nehemiah 11:29",
+        "align_ratio": 0.667
+      },
+      {
+        "sent_id": "mikra:275a501747bc:1265:0",
+        "ref": "Job 18:15",
+        "align_ratio": 0.75
+      },
+      {
+        "sent_id": "mikra:275a501747bc:2405:0",
+        "ref": "Job 33:21",
+        "align_ratio": 0.714
+      },
+      {
+        "sent_id": "mikra:275a501747bc:281:0",
+        "ref": "Job 5:12",
+        "align_ratio": 0.714
+      }
+    ]
+  },
+  "excluded_verses": [
+    {
+      "sent_id": "mikra:020d3483e6d1:1028:0",
+      "ref": "I Chronicles 8:20",
+      "align_ratio": 0.667
+    },
+    {
+      "sent_id": "mikra:020d3483e6d1:1070:0",
+      "ref": "I Chronicles 8:34",
+      "align_ratio": 0.714
+    },
+    {
+      "sent_id": "mikra:020d3483e6d1:1208:0",
+      "ref": "I Chronicles 9:40",
+      "align_ratio": 0.714
+    },
+    {
+      "sent_id": "mikra:020d3483e6d1:1820:0",
+      "ref": "I Chronicles 16:38",
+      "align_ratio": 0.778
+    },
+    {
+      "sent_id": "mikra:020d3483e6d1:2240:0",
+      "ref": "I Chronicles 23:15",
+      "align_ratio": 0.75
+    },
+    {
+      "sent_id": "mikra:020d3483e6d1:314:0",
+      "ref": "I Chronicles 2:51",
+      "align_ratio": 0.667
+    },
+    {
+      "sent_id": "mikra:020d3483e6d1:323:0",
+      "ref": "I Chronicles 2:54",
+      "align_ratio": 0.75
+    },
+    {
+      "sent_id": "mikra:020d3483e6d1:491:0",
+      "ref": "I Chronicles 4:31",
+      "align_ratio": 0.667
+    },
+    {
+      "sent_id": "mikra:1d16122e8633:455:0",
+      "ref": "Nehemiah 7:28",
+      "align_ratio": 0.75
+    },
+    {
+      "sent_id": "mikra:1d16122e8633:950:0",
+      "ref": "Nehemiah 11:26",
+      "align_ratio": 0.333
+    },
+    {
+      "sent_id": "mikra:1d16122e8633:953:0",
+      "ref": "Nehemiah 11:27",
+      "align_ratio": 0.75
+    },
+    {
+      "sent_id": "mikra:1d16122e8633:959:0",
+      "ref": "Nehemiah 11:29",
+      "align_ratio": 0.667
+    },
+    {
+      "sent_id": "mikra:275a501747bc:1265:0",
+      "ref": "Job 18:15",
+      "align_ratio": 0.75
+    },
+    {
+      "sent_id": "mikra:275a501747bc:2405:0",
+      "ref": "Job 33:21",
+      "align_ratio": 0.714
+    },
+    {
+      "sent_id": "mikra:275a501747bc:281:0",
+      "ref": "Job 5:12",
+      "align_ratio": 0.714
+    },
+    {
+      "sent_id": "mikra:275a501747bc:3062:0",
+      "ref": "Job 40:26",
+      "align_ratio": 0.667
+    },
+    {
+      "sent_id": "mikra:275a501747bc:413:0",
+      "ref": "Job 6:29",
+      "align_ratio": 0.778
+    },
+    {
+      "sent_id": "mikra:31205b6e1741:2006:0",
+      "ref": "Psalms 44:15",
+      "align_ratio": 0.714
+    },
+    {
+      "sent_id": "mikra:31205b6e1741:2627:0",
+      "ref": "Psalms 57:10",
+      "align_ratio": 0.667
+    },
+    {
+      "sent_id": "mikra:31205b6e1741:4109:0",
+      "ref": "Psalms 83:12",
+      "align_ratio": 0.75
+    },
+    {
+      "sent_id": "mikra:31205b6e1741:4394:0",
+      "ref": "Psalms 89:18",
+      "align_ratio": 0.714
+    },
+    {
+      "sent_id": "mikra:31205b6e1741:4943:0",
+      "ref": "Psalms 102:4",
+      "align_ratio": 0.75
+    },
+    {
+      "sent_id": "mikra:31205b6e1741:5609:0",
+      "ref": "Psalms 108:4",
+      "align_ratio": 0.667
+    },
+    {
+      "sent_id": "mikra:31205b6e1741:6113:0",
+      "ref": "Psalms 119:15",
+      "align_ratio": 0.75
+    },
+    {
+      "sent_id": "mikra:31205b6e1741:7151:0",
+      "ref": "Psalms 139:20",
+      "align_ratio": 0.667
+    },
+    {
+      "sent_id": "mikra:31205b6e1741:7556:0",
+      "ref": "Psalms 149:7",
+      "align_ratio": 0.5
+    },
+    {
+      "sent_id": "mikra:312ba94f5259:170:0",
+      "ref": "Lamentations 3:13",
+      "align_ratio": 0.75
+    },
+    {
+      "sent_id": "mikra:312ba94f5259:368:0",
+      "ref": "Lamentations 4:13",
+      "align_ratio": 0.75
+    },
+    {
+      "sent_id": "mikra:391395c39072:1904:0",
+      "ref": "Proverbs 22:20",
+      "align_ratio": 0.667
+    },
+    {
+      "sent_id": "mikra:391395c39072:2303:0",
+      "ref": "Proverbs 26:27",
+      "align_ratio": 0.75
+    },
+    {
+      "sent_id": "mikra:391395c39072:458:0",
+      "ref": "Proverbs 6:13",
+      "align_ratio": 0.667
+    },
+    {
+      "sent_id": "mikra:391395c39072:872:0",
+      "ref": "Proverbs 11:3",
+      "align_ratio": 0.667
+    },
+    {
+      "sent_id": "mikra:39a169957fae:95:0",
+      "ref": "Song of Songs 2:15",
+      "align_ratio": 0.778
+    },
+    {
+      "sent_id": "mikra:512e32df0840:3449:0",
+      "ref": "Numbers 32:36",
+      "align_ratio": 0.75
+    },
+    {
+      "sent_id": "mikra:512e32df0840:3518:0",
+      "ref": "Numbers 33:17",
+      "align_ratio": 0.75
+    },
+    {
+      "sent_id": "mikra:512e32df0840:3524:0",
+      "ref": "Numbers 33:19",
+      "align_ratio": 0.75
+    },
+    {
+      "sent_id": "mikra:512e32df0840:3527:0",
+      "ref": "Numbers 33:20",
+      "align_ratio": 0.75
+    },
+    {
+      "sent_id": "mikra:512e32df0840:3560:0",
+      "ref": "Numbers 33:31",
+      "align_ratio": 0.75
+    },
+    {
+      "sent_id": "mikra:512e32df0840:3563:0",
+      "ref": "Numbers 33:32",
+      "align_ratio": 0.5
+    },
+    {
+      "sent_id": "mikra:512e32df0840:3566:0",
+      "ref": "Numbers 33:33",
+      "align_ratio": 0.75
+    },
+    {
+      "sent_id": "mikra:512e32df0840:3572:0",
+      "ref": "Numbers 33:35",
+      "align_ratio": 0.75
+    },
+    {
+      "sent_id": "mikra:512e32df0840:3614:0",
+      "ref": "Numbers 33:49",
+      "align_ratio": 0.75
+    },
+    {
+      "sent_id": "mikra:5613689d119c:1340:0",
+      "ref": "Jeremiah 18:9",
+      "align_ratio": 0.75
+    },
+    {
+      "sent_id": "mikra:5613689d119c:3470:0",
+      "ref": "Jeremiah 48:23",
+      "align_ratio": 0.667
+    },
+    {
+      "sent_id": "mikra:5613689d119c:3659:0",
+      "ref": "Jeremiah 49:39",
+      "align_ratio": 0.778
+    },
+    {
+      "sent_id": "mikra:667cdde7c257:1598:0",
+      "ref": "Exodus 20:14",
+      "align_ratio": 0.5
+    },
+    {
+      "sent_id": "mikra:667cdde7c257:1601:0",
+      "ref": "Exodus 20:15",
+      "align_ratio": 0.0
+    },
+    {
+      "sent_id": "mikra:667cdde7c257:1604:0",
+      "ref": "Exodus 20:16",
+      "align_ratio": 0.0
+    },
+    {
+      "sent_id": "mikra:667cdde7c257:1607:0",
+      "ref": "Exodus 20:17",
+      "align_ratio": 0.0
+    },
+    {
+      "sent_id": "mikra:667cdde7c257:1610:0",
+      "ref": "Exodus 20:18",
+      "align_ratio": 0.111
+    },
+    {
+      "sent_id": "mikra:667cdde7c257:1613:0",
+      "ref": "Exodus 20:19",
+      "align_ratio": 0.154
+    },
+    {
+      "sent_id": "mikra:667cdde7c257:1616:0",
+      "ref": "Exodus 20:20",
+      "align_ratio": 0.0
+    },
+    {
+      "sent_id": "mikra:667cdde7c257:1619:0",
+      "ref": "Exodus 20:21",
+      "align_ratio": 0.1
+    },
+    {
+      "sent_id": "mikra:667cdde7c257:1622:0",
+      "ref": "Exodus 20:22",
+      "align_ratio": 0.062
+    },
+    {
+      "sent_id": "mikra:667cdde7c257:1625:0",
+      "ref": "Exodus 20:23",
+      "align_ratio": 0.1
+    },
+    {
+      "sent_id": "mikra:73e8ff519b6e:335:0",
+      "ref": "Deuteronomy 3:29",
+      "align_ratio": 0.75
+    },
+    {
+      "sent_id": "mikra:73e8ff519b6e:536:0",
+      "ref": "Deuteronomy 5:18",
+      "align_ratio": 0.5
+    },
+    {
+      "sent_id": "mikra:73e8ff519b6e:539:0",
+      "ref": "Deuteronomy 5:19",
+      "align_ratio": 0.5
+    },
+    {
+      "sent_id": "mikra:73e8ff519b6e:542:0",
+      "ref": "Deuteronomy 5:20",
+      "align_ratio": 0.0
+    },
+    {
+      "sent_id": "mikra:73e8ff519b6e:545:0",
+      "ref": "Deuteronomy 5:21",
+      "align_ratio": 0.0
+    },
+    {
+      "sent_id": "mikra:73e8ff519b6e:548:0",
+      "ref": "Deuteronomy 5:22",
+      "align_ratio": 0.083
+    },
+    {
+      "sent_id": "mikra:73e8ff519b6e:551:0",
+      "ref": "Deuteronomy 5:23",
+      "align_ratio": 0.067
+    },
+    {
+      "sent_id": "mikra:73e8ff519b6e:554:0",
+      "ref": "Deuteronomy 5:24",
+      "align_ratio": 0.174
+    },
+    {
+      "sent_id": "mikra:73e8ff519b6e:557:0",
+      "ref": "Deuteronomy 5:25",
+      "align_ratio": 0.167
+    },
+    {
+      "sent_id": "mikra:73e8ff519b6e:560:0",
+      "ref": "Deuteronomy 5:26",
+      "align_ratio": 0.143
+    },
+    {
+      "sent_id": "mikra:73e8ff519b6e:563:0",
+      "ref": "Deuteronomy 5:27",
+      "align_ratio": 0.0
+    },
+    {
+      "sent_id": "mikra:73e8ff519b6e:566:0",
+      "ref": "Deuteronomy 5:28",
+      "align_ratio": 0.13
+    },
+    {
+      "sent_id": "mikra:73e8ff519b6e:569:0",
+      "ref": "Deuteronomy 5:29",
+      "align_ratio": 0.0
+    },
+    {
+      "sent_id": "mikra:73e8ff519b6e:572:0",
+      "ref": "Deuteronomy 5:30",
+      "align_ratio": 0.167
+    },
+    {
+      "sent_id": "mikra:7ed0fd1ad789:3098:0",
+      "ref": "Genesis 35:21",
+      "align_ratio": 0.667
+    },
+    {
+      "sent_id": "mikra:808fb05efa11:1052:0",
+      "ref": "Ezekiel 16:53",
+      "align_ratio": 0.786
+    },
+    {
+      "sent_id": "mikra:808fb05efa11:3104:0",
+      "ref": "Ezekiel 40:22",
+      "align_ratio": 0.733
+    },
+    {
+      "sent_id": "mikra:808fb05efa11:3116:0",
+      "ref": "Ezekiel 40:26",
+      "align_ratio": 0.769
+    },
+    {
+      "sent_id": "mikra:808fb05efa11:3125:0",
+      "ref": "Ezekiel 40:29",
+      "align_ratio": 0.765
+    },
+    {
+      "sent_id": "mikra:808fb05efa11:3131:0",
+      "ref": "Ezekiel 40:31",
+      "align_ratio": 0.7
+    },
+    {
+      "sent_id": "mikra:808fb05efa11:3137:0",
+      "ref": "Ezekiel 40:33",
+      "align_ratio": 0.765
+    },
+    {
+      "sent_id": "mikra:808fb05efa11:3140:0",
+      "ref": "Ezekiel 40:34",
+      "align_ratio": 0.727
+    },
+    {
+      "sent_id": "mikra:808fb05efa11:3146:0",
+      "ref": "Ezekiel 40:36",
+      "align_ratio": 0.786
+    },
+    {
+      "sent_id": "mikra:808fb05efa11:3149:0",
+      "ref": "Ezekiel 40:37",
+      "align_ratio": 0.727
+    },
+    {
+      "sent_id": "mikra:841d5e9edeba:1211:0",
+      "ref": "II Samuel 15:37",
+      "align_ratio": 0.75
+    },
+    {
+      "sent_id": "mikra:841d5e9edeba:1985:0",
+      "ref": "II Samuel 23:31",
+      "align_ratio": 0.75
+    },
+    {
+      "sent_id": "mikra:841d5e9edeba:221:0",
+      "ref": "II Samuel 3:15",
+      "align_ratio": 0.778
+    },
+    {
+      "sent_id": "mikra:841d5e9edeba:782:0",
+      "ref": "II Samuel 11:24",
+      "align_ratio": 0.786
+    },
+    {
+      "sent_id": "mikra:b215986ba956:1133:0",
+      "ref": "Joshua 15:27",
+      "align_ratio": 0.333
+    },
+    {
+      "sent_id": "mikra:b215986ba956:1136:0",
+      "ref": "Joshua 15:28",
+      "align_ratio": 0.75
+    },
+    {
+      "sent_id": "mikra:b215986ba956:1154:0",
+      "ref": "Joshua 15:34",
+      "align_ratio": 0.75
+    },
+    {
+      "sent_id": "mikra:b215986ba956:1163:0",
+      "ref": "Joshua 15:37",
+      "align_ratio": 0.667
+    },
+    {
+      "sent_id": "mikra:b215986ba956:1199:0",
+      "ref": "Joshua 15:49",
+      "align_ratio": 0.75
+    },
+    {
+      "sent_id": "mikra:b215986ba956:1211:0",
+      "ref": "Joshua 15:53",
+      "align_ratio": 0.667
+    },
+    {
+      "sent_id": "mikra:b215986ba956:1226:0",
+      "ref": "Joshua 15:58",
+      "align_ratio": 0.667
+    },
+    {
+      "sent_id": "mikra:b215986ba956:1232:0",
+      "ref": "Joshua 15:60",
+      "align_ratio": 0.714
+    },
+    {
+      "sent_id": "mikra:b215986ba956:1235:0",
+      "ref": "Joshua 15:61",
+      "align_ratio": 0.75
+    },
+    {
+      "sent_id": "mikra:b215986ba956:1238:0",
+      "ref": "Joshua 15:62",
+      "align_ratio": 0.667
+    },
+    {
+      "sent_id": "mikra:b215986ba956:1391:0",
+      "ref": "Joshua 18:22",
+      "align_ratio": 0.333
+    },
+    {
+      "sent_id": "mikra:b215986ba956:1418:0",
+      "ref": "Joshua 19:3",
+      "align_ratio": 0.667
+    },
+    {
+      "sent_id": "mikra:b215986ba956:1424:0",
+      "ref": "Joshua 19:5",
+      "align_ratio": 0.333
+    },
+    {
+      "sent_id": "mikra:b215986ba956:1472:0",
+      "ref": "Joshua 19:21",
+      "align_ratio": 0.25
+    },
+    {
+      "sent_id": "mikra:b215986ba956:1520:0",
+      "ref": "Joshua 19:37",
+      "align_ratio": 0.667
+    },
+    {
+      "sent_id": "mikra:b215986ba956:1523:0",
+      "ref": "Joshua 19:38",
+      "align_ratio": 0.667
+    },
+    {
+      "sent_id": "mikra:b215986ba956:1544:0",
+      "ref": "Joshua 19:45",
+      "align_ratio": 0.333
+    },
+    {
+      "sent_id": "mikra:b215986ba956:959:0",
+      "ref": "Joshua 13:17",
+      "align_ratio": 0.625
+    },
+    {
+      "sent_id": "mikra:b215986ba956:968:0",
+      "ref": "Joshua 13:20",
+      "align_ratio": 0.5
+    },
+    {
+      "sent_id": "mikra:b22fc4034dca:2435:0",
+      "ref": "I Kings 22:49",
+      "align_ratio": 0.692
+    },
+    {
+      "sent_id": "mikra:b22fc4034dca:407:0",
+      "ref": "I Kings 4:9",
+      "align_ratio": 0.714
+    },
+    {
+      "sent_id": "mikra:cc36da48baef:257:0",
+      "ref": "Zechariah 7:2",
+      "align_ratio": 0.667
+    },
+    {
+      "sent_id": "mikra:cd476c1e4298:56:0",
+      "ref": "Ruth 1:19",
+      "align_ratio": 0.733
+    },
+    {
+      "sent_id": "mikra:e14b4f4977e8:818:0",
+      "ref": "Ezra 10:37",
+      "align_ratio": 0.667
+    },
+    {
+      "sent_id": "mikra:e2d0778f8442:215:0",
+      "ref": "Isaiah 3:19",
+      "align_ratio": 0.667
+    },
+    {
+      "sent_id": "mikra:fb023e07433b:1109:0",
+      "ref": "Judges 12:10",
+      "align_ratio": 0.75
+    }
+  ],
+  "pilot_reproduction": {
+    "checked": true,
+    "pilot_run": "base__mikra_h500_default",
+    "verses": 500,
+    "identical": true,
+    "differing_keys": []
+  }
+}

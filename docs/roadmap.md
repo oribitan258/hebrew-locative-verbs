@@ -57,7 +57,7 @@ Detailed milestone definitions are kept in the approved plan and summarized here
 | M3 Pilot (gate) | ~1,000 units end to end; schema; storage and throughput benchmark; quality audit; BHSA check; **Modern coverage options for a user decision** | `docs/pilot_report.md` |
 | M4 Data layer | Parquet schemas, atomic shard writer, DuckDB catalog, Python API, CoNLL-U export, integrity tests | `src/hebloc/store`, `hebloc.data`, `docs/data_dictionary.md` |
 | M5 Full parse | All units in scope, resumable and sharded | `data/annotations/...` |
-| M6 Statistics | All §4 statistics plus extras; full-coverage vs default-filter; parser accuracy on Mikra vs BHSA | `data/stats`, `results/stats`, `docs/stats_report.md` |
+| M6 Statistics | Exactly the §4 statistics (R1–R6) per corpus, full view (D-046; R7 extras deferred); parser accuracy on Mikra vs BHSA. Built 2026-11-12; accuracy final; final run after the merge (`finish statistics`) | `data/stats`, `results/stats`, `docs/stats_report.md`, [m6_design.md](m6_design.md) |
 | M7 Review | Stop and review with the partners | — |
 
 ---

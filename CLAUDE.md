@@ -81,10 +81,15 @@ until the user explicitly opens that scope.
   later; one code path) → validation. Mikra and Hazal are complete locally: real but PROVISIONAL numbers.
   Ori's Modern slices are a scale test only, never reported. Parser accuracy (Mikra vs BHSA) can be final now.
   Do not register runs early; do not tune on partial Modern.
-- **`start statistics`** (Ori's message, in a new session) means: do `docs/HANDOFF.md` §7 — read the
-  handoff, review `project.pdf` §4 (and §3, §9), check the environment and data state, then write and
-  present the M6 design for approval. **Implement nothing before Ori approves the design.**
-  This is NOT the one-word "start" (which runs/checks this computer's M5 share).
+- **Design approved 2026-11-12 (D-046, `docs/m6_design.md`):** Part A = exactly the §4 items (R1–R6), per
+  corpus, full view; R5 covers EVERY Dicta inflection feature; Part B (R7 extras) deferred — do not build
+  it unless Ori opens it. Built, tested and committed; parser accuracy FINAL; Mikra + Hazal PROVISIONAL.
+- **`finish statistics`** (Ori's message, in a fresh session, in Plan Mode) means: do `docs/HANDOFF.md` §7 —
+  review the state read-only (docs, env, tests, `hebloc check`, `hebloc merge` report, where Efrat's and Adi's
+  folders are), then present the plan for: merge + validate all 31 slices → `plan register --write` (+ decision)
+  → `hebloc stats run --registered` (final, all five corpora, §4) → verify → report → STOP at M7.
+  **Execute nothing before Ori approves that plan.** If the partners' folders have not arrived, report and stop.
+  Neither trigger is the one-word "start" (which runs/checks this computer's M5 share).
 
 ## Data flow
 ```
@@ -158,7 +163,10 @@ uv run hebloc work --detach | --status   # M5: ALL of this person's slices in it
                                          #   --rehearsal N: diagnostic on N units/slice, allowed in draft
 uv run hebloc parse --slice S [--limit N]   # one assigned slice (refused in draft) / smoke test
 uv run hebloc merge [<folder|zip>...]    # Ori: verify + restore + exact-units check + completeness report
-uv run hebloc stats                      # later milestone (M6)
+uv run hebloc stats run --runs <run,…>   # M6 (D-046): §4 statistics; refuses partial corpora; provisional → data/stats/<id>/
+uv run hebloc stats run --registered     # M6 FINAL (after merge 31/31 + plan register) → results/stats + docs/stats_report.md
+uv run hebloc stats accuracy             # M6: Mikra vs BHSA on all of Mikra → results/stats/accuracy/ (final)
+uv run hebloc stats report|verify <dir>  # M6: re-render / re-hash a data/stats/<id> folder
 ```
 
 ## Repo map
@@ -220,7 +228,11 @@ notebooks/     exploration only — never pipeline logic
 - [ ] M5 full parsing run — approved; each person starts their share via PARTNER_START.md.
       Ori's share COMPLETE 2026-11-12 (12/12 slices, 3,504,707 units, `data/outbox/ori`); D-043 (excused
       "¨¨" tokenizer artifact in the coverage check) and D-044 (pandas ≤3.0.2, pyarrow <26: Smart App
-      Control blocks newer DLLs). Waiting for Efrat's and Adi's folders → `hebloc merge`.
-- [ ] M6 descriptive statistics + parser-accuracy report — workflow agreed (D-045); next step: Ori types
-      `start statistics` → M6 design for approval (HANDOFF §7). Final run after the merge.
+      Control blocks newer DLLs). **Waiting for Efrat's (9) and Adi's (10) slices** → merge 31/31 → register
+      (done inside `finish statistics`, HANDOFF §7).
+- [ ] M6 descriptive statistics + parser-accuracy report — design approved (D-046, `docs/m6_design.md`: Part A =
+      exactly §4; Part B deferred), `hebloc.stats` built + tested (D-047 matplotlib). DONE 2026-11-12: parser accuracy
+      (final, `results/stats/accuracy/`), PROVISIONAL Mikra + Hazal (`data/stats/provisional-20261112-27bb4080cf`).
+      Remaining: merge + register (all 31 slices) → final statistics for all five corpora → report:
+      Ori types `finish statistics` (HANDOFF §7). Ori's instruction: do not go beyond M6.
 - [ ] M7 review checkpoint (STOP)

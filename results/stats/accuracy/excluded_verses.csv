@@ -1,0 +1,110 @@
+sent_id,ref,align_ratio
+mikra:020d3483e6d1:1028:0,I Chronicles 8:20,0.667
+mikra:020d3483e6d1:1070:0,I Chronicles 8:34,0.714
+mikra:020d3483e6d1:1208:0,I Chronicles 9:40,0.714
+mikra:020d3483e6d1:1820:0,I Chronicles 16:38,0.778
+mikra:020d3483e6d1:2240:0,I Chronicles 23:15,0.75
+mikra:020d3483e6d1:314:0,I Chronicles 2:51,0.667
+mikra:020d3483e6d1:323:0,I Chronicles 2:54,0.75
+mikra:020d3483e6d1:491:0,I Chronicles 4:31,0.667
+mikra:1d16122e8633:455:0,Nehemiah 7:28,0.75
+mikra:1d16122e8633:950:0,Nehemiah 11:26,0.333
+mikra:1d16122e8633:953:0,Nehemiah 11:27,0.75
+mikra:1d16122e8633:959:0,Nehemiah 11:29,0.667
+mikra:275a501747bc:1265:0,Job 18:15,0.75
+mikra:275a501747bc:2405:0,Job 33:21,0.714
+mikra:275a501747bc:281:0,Job 5:12,0.714
+mikra:275a501747bc:3062:0,Job 40:26,0.667
+mikra:275a501747bc:413:0,Job 6:29,0.778
+mikra:31205b6e1741:2006:0,Psalms 44:15,0.714
+mikra:31205b6e1741:2627:0,Psalms 57:10,0.667
+mikra:31205b6e1741:4109:0,Psalms 83:12,0.75
+mikra:31205b6e1741:4394:0,Psalms 89:18,0.714
+mikra:31205b6e1741:4943:0,Psalms 102:4,0.75
+mikra:31205b6e1741:5609:0,Psalms 108:4,0.667
+mikra:31205b6e1741:6113:0,Psalms 119:15,0.75
+mikra:31205b6e1741:7151:0,Psalms 139:20,0.667
+mikra:31205b6e1741:7556:0,Psalms 149:7,0.5
+mikra:312ba94f5259:170:0,Lamentations 3:13,0.75
+mikra:312ba94f5259:368:0,Lamentations 4:13,0.75
+mikra:391395c39072:1904:0,Proverbs 22:20,0.667
+mikra:391395c39072:2303:0,Proverbs 26:27,0.75
+mikra:391395c39072:458:0,Proverbs 6:13,0.667
+mikra:391395c39072:872:0,Proverbs 11:3,0.667
+mikra:39a169957fae:95:0,Song of Songs 2:15,0.778
+mikra:512e32df0840:3449:0,Numbers 32:36,0.75
+mikra:512e32df0840:3518:0,Numbers 33:17,0.75
+mikra:512e32df0840:3524:0,Numbers 33:19,0.75
+mikra:512e32df0840:3527:0,Numbers 33:20,0.75
+mikra:512e32df0840:3560:0,Numbers 33:31,0.75
+mikra:512e32df0840:3563:0,Numbers 33:32,0.5
+mikra:512e32df0840:3566:0,Numbers 33:33,0.75
+mikra:512e32df0840:3572:0,Numbers 33:35,0.75
+mikra:512e32df0840:3614:0,Numbers 33:49,0.75
+mikra:5613689d119c:1340:0,Jeremiah 18:9,0.75
+mikra:5613689d119c:3470:0,Jeremiah 48:23,0.667
+mikra:5613689d119c:3659:0,Jeremiah 49:39,0.778
+mikra:667cdde7c257:1598:0,Exodus 20:14,0.5
+mikra:667cdde7c257:1601:0,Exodus 20:15,0.0
+mikra:667cdde7c257:1604:0,Exodus 20:16,0.0
+mikra:667cdde7c257:1607:0,Exodus 20:17,0.0
+mikra:667cdde7c257:1610:0,Exodus 20:18,0.111
+mikra:667cdde7c257:1613:0,Exodus 20:19,0.154
+mikra:667cdde7c257:1616:0,Exodus 20:20,0.0
+mikra:667cdde7c257:1619:0,Exodus 20:21,0.1
+mikra:667cdde7c257:1622:0,Exodus 20:22,0.062
+mikra:667cdde7c257:1625:0,Exodus 20:23,0.1
+mikra:73e8ff519b6e:335:0,Deuteronomy 3:29,0.75
+mikra:73e8ff519b6e:536:0,Deuteronomy 5:18,0.5
+mikra:73e8ff519b6e:539:0,Deuteronomy 5:19,0.5
+mikra:73e8ff519b6e:542:0,Deuteronomy 5:20,0.0
+mikra:73e8ff519b6e:545:0,Deuteronomy 5:21,0.0
+mikra:73e8ff519b6e:548:0,Deuteronomy 5:22,0.083
+mikra:73e8ff519b6e:551:0,Deuteronomy 5:23,0.067
+mikra:73e8ff519b6e:554:0,Deuteronomy 5:24,0.174
+mikra:73e8ff519b6e:557:0,Deuteronomy 5:25,0.167
+mikra:73e8ff519b6e:560:0,Deuteronomy 5:26,0.143
+mikra:73e8ff519b6e:563:0,Deuteronomy 5:27,0.0
+mikra:73e8ff519b6e:566:0,Deuteronomy 5:28,0.13
+mikra:73e8ff519b6e:569:0,Deuteronomy 5:29,0.0
+mikra:73e8ff519b6e:572:0,Deuteronomy 5:30,0.167
+mikra:7ed0fd1ad789:3098:0,Genesis 35:21,0.667
+mikra:808fb05efa11:1052:0,Ezekiel 16:53,0.786
+mikra:808fb05efa11:3104:0,Ezekiel 40:22,0.733
+mikra:808fb05efa11:3116:0,Ezekiel 40:26,0.769
+mikra:808fb05efa11:3125:0,Ezekiel 40:29,0.765
+mikra:808fb05efa11:3131:0,Ezekiel 40:31,0.7
+mikra:808fb05efa11:3137:0,Ezekiel 40:33,0.765
+mikra:808fb05efa11:3140:0,Ezekiel 40:34,0.727
+mikra:808fb05efa11:3146:0,Ezekiel 40:36,0.786
+mikra:808fb05efa11:3149:0,Ezekiel 40:37,0.727
+mikra:841d5e9edeba:1211:0,II Samuel 15:37,0.75
+mikra:841d5e9edeba:1985:0,II Samuel 23:31,0.75
+mikra:841d5e9edeba:221:0,II Samuel 3:15,0.778
+mikra:841d5e9edeba:782:0,II Samuel 11:24,0.786
+mikra:b215986ba956:1133:0,Joshua 15:27,0.333
+mikra:b215986ba956:1136:0,Joshua 15:28,0.75
+mikra:b215986ba956:1154:0,Joshua 15:34,0.75
+mikra:b215986ba956:1163:0,Joshua 15:37,0.667
+mikra:b215986ba956:1199:0,Joshua 15:49,0.75
+mikra:b215986ba956:1211:0,Joshua 15:53,0.667
+mikra:b215986ba956:1226:0,Joshua 15:58,0.667
+mikra:b215986ba956:1232:0,Joshua 15:60,0.714
+mikra:b215986ba956:1235:0,Joshua 15:61,0.75
+mikra:b215986ba956:1238:0,Joshua 15:62,0.667
+mikra:b215986ba956:1391:0,Joshua 18:22,0.333
+mikra:b215986ba956:1418:0,Joshua 19:3,0.667
+mikra:b215986ba956:1424:0,Joshua 19:5,0.333
+mikra:b215986ba956:1472:0,Joshua 19:21,0.25
+mikra:b215986ba956:1520:0,Joshua 19:37,0.667
+mikra:b215986ba956:1523:0,Joshua 19:38,0.667
+mikra:b215986ba956:1544:0,Joshua 19:45,0.333
+mikra:b215986ba956:959:0,Joshua 13:17,0.625
+mikra:b215986ba956:968:0,Joshua 13:20,0.5
+mikra:b22fc4034dca:2435:0,I Kings 22:49,0.692
+mikra:b22fc4034dca:407:0,I Kings 4:9,0.714
+mikra:cc36da48baef:257:0,Zechariah 7:2,0.667
+mikra:cd476c1e4298:56:0,Ruth 1:19,0.733
+mikra:e14b4f4977e8:818:0,Ezra 10:37,0.667
+mikra:e2d0778f8442:215:0,Isaiah 3:19,0.667
+mikra:fb023e07433b:1109:0,Judges 12:10,0.75

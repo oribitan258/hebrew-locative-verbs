@@ -150,8 +150,11 @@ def _bhsa_index():
 
 
 def _run_tokens_by_unit(rid: str) -> dict[str, list[dict]]:
+    """``rid``: a pilot run id (``base__default``) or, for M6, any run ref (``mikra/base-topk-v1__mikra``)."""
+    from hebloc.store.runs import resolve
+
     d = defaultdict(list)
-    for r in read_tokens(run_dir(rid)).to_pylist():
+    for r in read_tokens(resolve(rid).path if "/" in rid else run_dir(rid)).to_pylist():
         d[r["sent_id"]].append(r)
     return d
 
@@ -186,6 +189,7 @@ def bhsa_eval(rid: str, reading: str = "qere", min_align: float = 0.8, restrict:
               "excluded_examples": excluded[:15]})
     s["_rows"] = rows
     s["_per_verse"] = per_verse
+    s["_excluded"] = excluded            # complete list (the public key keeps 15 examples)
     return s
 
 

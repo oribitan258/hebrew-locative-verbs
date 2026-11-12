@@ -752,3 +752,47 @@ Refines D-040 after Ori's share completed (12/12 slices).
 - *Trigger.* In a new session, Ori's message `start statistics` starts M6 planning (CLAUDE.md):
   read `docs/HANDOFF.md`, review `project.pdf` §4, present the M6 design for approval, implement
   nothing before approval.
+
+### D-046 · M6 design approved: Part A = exactly project.pdf §4; Part B deferred (2026-11-12) · accepted (Ori)
+Design: [m6_design.md](m6_design.md).
+- *Scope.* Part A implements exactly the §4 items, per corpus, on the full view (D-015):
+  - R1: words and lemmas with their frequencies;
+  - R2: sentence lengths;
+  - R3: distinct words per sentence;
+  - R4: depth;
+  - R5: POS and inflection features;
+  - R6: relation types.
+  Required by project rules, not by §4: coverage per corpus, and parser accuracy on all of Mikra vs
+  BHSA. The optional R7 additions (Part B: sub-corpus breakdowns, curated view, prefix/suffix rates,
+  size-controlled vocabulary, diachronic indicators) are **deferred**. The manual audit stays deferred.
+- *R5 covers every inflection feature Dicta outputs* (Ori's requirement), verified in the model's label
+  set (`ALL_FEATURES`, `ALL_SUFFIX_POS` in `dicta_code/BertForMorphTagging.py`) and in all 7.9M Mikra +
+  Hazal words:
+  - Gender, Number, Person and Tense (all values, multi-values kept as given);
+  - the pronominal suffix type (PRON / ADP_PRON) and its Gender, Number and Person;
+  - definiteness, derived from the DET prefix, as Dicta's own UD converter does.
+  Dicta has no construct state, binyan or verbal form; the report states this.
+- *Definitions.*
+  1. Word = Dicta word with `upos ≠ PUNCT`; punctuation is counted separately.
+  2. Word type = `surface`; lemma = Dicta lemma, with `[BLANK]` counted, never typed.
+  3. Sentence = the unit (a verse in Mikra); empty and punctuation-only units are counted, not
+     measured.
+  4. Depth = levels on the longest root→word path, root = 1, punctuation leaves ignored.
+  5. Units parsed in several pieces (D-021) or with an invalid word-level tree (D-025) are excluded
+     from depth only, and the exclusion is reported in every depth table (D-021 option (b) without
+     the per-piece lower bound).
+- *Workflow* as D-045: an explicit run list now, `--registered` after the merge, one code path.
+  - Partial corpora are refused.
+  - Provisional outputs stay in `data/stats/`.
+  - Only the final run writes `results/stats/` and `docs/stats_report.md`.
+  - Parser accuracy (final now) goes to `results/stats/accuracy/`.
+
+### D-047 · matplotlib added for the M6 figures, pinned to a version Smart App Control accepts (2026-11-12) · accepted
+- *Need.* The report's figures (§9 asks for the statistics to be presented).
+- *Test (D-044 procedure).* In a throwaway venv with the signed python.org Python 3.12, matplotlib 3.11.2
+  (with pillow 13.0.0, kiwisolver 1.5.1, fonttools 4.68.0) imported and wrote a PNG. Then in the project
+  venv, together with pandas 3.0.2 and pyarrow 25.0.1: imports and PNG OK.
+- *Decision.* `pyproject.toml`: `matplotlib>=3.9,<=3.11.2` (→ 3.11.2). No other package changed. If
+  Windows starts blocking one of its files, follow D-044 (pin another version; never disable Smart App
+  Control). Charts carry no Hebrew text (matplotlib does not lay out right-to-left text); Hebrew words
+  appear only in the tables.

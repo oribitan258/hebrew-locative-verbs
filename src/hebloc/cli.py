@@ -477,6 +477,57 @@ def _cmd_parse(args: argparse.Namespace) -> int:
     return 0 if r["validation_ok"] and r["integrity_ok"] else 1
 
 
+def _cmd_stats(args: argparse.Namespace) -> int:
+    """M6 (docs/m6_design.md): run | accuracy | report | verify."""
+    from pathlib import Path
+
+    from hebloc.stats import compute as C
+    from hebloc.stats import report as REP
+    from hebloc.stats import runset as R
+
+    if args.action == "run":
+        if bool(args.runs) == args.registered:
+            print("REFUSED: give either --runs <run,...> or --registered")
+            return 2
+        try:
+            rs = R.from_registry() if args.registered else R.from_refs([r for x in args.runs for r in x.split(",") if r])
+            R.check(rs, scale_test=args.scale_test)
+        except R.RunSetRefusal as e:
+            print(f"REFUSED: {e}")
+            return 2
+        for c, rep in rs.checks.items():
+            print(f"{c}: {rep['units_in_runs']:,}/{rep['units_expected']:,} units, complete={rep['complete']} "
+                  f"({', '.join(rep['runs'])})")
+        try:
+            m = C.compute(rs, Path(args.out) if args.out else None, scale_test=args.scale_test)
+        except (C.StatsProblem, FileExistsError, ValueError) as e:
+            print(f"STOPPED: {e}")
+            return 1
+        print(f"status={m['status']} -> {m['path']}  ({m['timings_s']['total']} s)")
+        if m["reconciliation_problems"]:
+            print("reconciliation problems (scale test only):", *m["reconciliation_problems"], sep="\n  ")
+        if not args.scale_test and not args.no_report:
+            _json(REP.render(Path(m["path"])))
+        return 0
+    if args.action == "accuracy":
+        from hebloc.stats.accuracy import mikra_vs_bhsa
+
+        r = mikra_vs_bhsa(args.run)
+        for layer in r["layers"]:
+            print(f"{layer['layer']:32} n={layer['n']:>8,}  {100 * layer['agreement']:.1f}%  "
+                  f"[{100 * layer['ci95_low']:.1f}-{100 * layer['ci95_high']:.1f}]")
+        print("pilot reproduction:", r["pilot_reproduction"])
+        return 0 if r["pilot_reproduction"].get("identical", True) else 1
+    if args.action == "report":
+        _json(REP.render(Path(args.stats_dir)))
+        return 0
+    if args.action == "verify":
+        probs = C.verify(Path(args.stats_dir))
+        print("OK" if not probs else "\n".join(probs))
+        return 0 if not probs else 1
+    raise SystemExit(f"unknown stats action {args.action!r}")
+
+
 def _cmd_merge(args: argparse.Namespace) -> int:
     from pathlib import Path
 
@@ -640,6 +691,17 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--limit", type=int, default=None, help="SMOKE run of the first N units (allowed in draft)")
     p.add_argument("--threads", type=int, default=None)
     p.set_defaults(func=_cmd_parse)
+
+    p = sub.add_parser("stats", help="M6: descriptive statistics (project.pdf §4) and parser accuracy (docs/m6_design.md).")
+    p.add_argument("action", choices=["run", "accuracy", "report", "verify"])
+    p.add_argument("stats_dir", nargs="?", help="report/verify: a data/stats/<id> folder")
+    p.add_argument("--runs", action="append", help="run: explicit runs, comma-separated (now, before the merge)")
+    p.add_argument("--registered", action="store_true", help="run: the canonical runs of config/annotations.yaml (after the merge)")
+    p.add_argument("--scale-test", action="store_true", help="run: allow partial corpora; timing only, written to --out, never published")
+    p.add_argument("--out", help="run: output folder (required with --scale-test)")
+    p.add_argument("--no-report", action="store_true", help="run: skip CSV/PNG/Markdown")
+    p.add_argument("--run", default="mikra/base-topk-v1__mikra", help="accuracy: the full Mikra run")
+    p.set_defaults(func=_cmd_stats)
 
     p = sub.add_parser("merge", help="Team (Ori): verify, restore and check partners' result folders/bundles.")
     p.add_argument("paths", nargs="*", help="folders (e.g. a partner's outbox folder) and/or bundle .zip files; "

@@ -226,3 +226,31 @@ An uncompressed zip of every file of one run, at its path under `data/`, plus `B
 - row counts per table; validation result and fingerprint.
 
 A `<zip>.sha256` sidecar holds the digest of the zip itself. See [data_management.md](data_management.md).
+
+## Statistics: `data/stats/<status>-<YYYYMMDD>-<hash>/` (M6; `hebloc stats run`; D-046)
+
+One folder per computation. It is never overwritten: a different run set, code commit or stats code
+gives a new id. The folder is assembled as `<id>.partial` and renamed only after every
+reconciliation check passed. `status` is `provisional` for an explicit run list and `final` only for
+the registered runs of all five corpora (D-045). Design and definitions: [m6_design.md](m6_design.md).
+Python: `hebloc.stats.compute.load(<folder>)`; `hebloc stats verify <folder>` re-hashes every file.
+
+| File | One row per | Content |
+|---|---|---|
+| `manifest.json` | — | Runs and their fingerprints, completeness checks, code commit, `stats_code_sha256`, stats version, decisions, timings, row count and sha256 of every file |
+| `unit_metrics/<corpus>/<run_id>.parquet` | unit | `sent_id`, `corpus_id`, `doc_id`, `n_words` (non-punctuation Dicta words), `n_punct`, `n_distinct_words` (distinct `surface`), `n_pieces`, `n_error_pieces`, `tree_status` (`complete` \| `multi_piece` \| `invalid_tree` \| `parse_error` \| `no_words` \| `empty`), `depth` (root = 1; null unless `complete`) |
+| `coverage.parquet` | corpus | Units by status, tokens, words, punctuation, blank lemmas, pieces, `mst_fallback` pieces, words excluded from depth |
+| `lexicon.parquet` | corpus × kind | Tokens, types and types occurring once, for words and lemmas (R1) |
+| `word_freq.parquet` / `lemma_freq.parquet` | corpus × type | `rank`, `word`/`lemma`, `n`, `share`. Every type; `[BLANK]` lemmas excluded (R1) |
+| `sentence_stats.parquet` | corpus × measure | `length`, `distinct_words`, `depth`: units, mean, sd, min, p5/p25/p50/p75/p95/p99, max (R2–R4) |
+| `distributions.parquet` | corpus × measure × value | Number and share of units with that value (R2–R4) |
+| `depth_by_length.parquet` | corpus × length band | Units, mean length, mean/median/min/max depth (R4) |
+| `tree_status.parquet` | corpus × status | Units and words per tree status: what depth excludes (D-021, D-025) |
+| `pos.parquet` | corpus × UPOS | `n`, share of tokens, share of words (R5) |
+| `features.parquet` | corpus × UPOS × feature × value | Every Dicta inflection feature: Gender, Number, Person, Tense, `Suffix` (PRON/ADP_PRON), `Suffix.Gender/Number/Person`, `Definite (DET prefix)`. `(none)` = not marked; UPOS `(all words)` = all words (R5) |
+| `deprel.parquet` | corpus × relation | `n`, share of tokens, `n_words`, share of words (R6) |
+
+A provisional folder also holds `report/` (CSV, `figures/*.png`, `stats_report.md`), which is local
+only. The final run writes these to `results/stats/` and `docs/stats_report.md`. Parser accuracy
+(final) is in `results/stats/accuracy/`: `mikra_vs_bhsa.json`, `layers.csv`, `pos_confusion.csv`,
+`tense_confusion.csv` and `excluded_verses.csv` (references only, no corpus text).
