@@ -28,6 +28,33 @@ def test_truncated_output_is_detected():
     assert any("uncovered" in p for p in coverage_problems(FIX["text"], out))
 
 
+def _spans_out(text: str, spans: list[tuple[int, int]]) -> dict:
+    return {"text": text, "tokens": [{"token": text[s:e], "offsets": {"start": s, "end": e}} for s, e in spans]}
+
+
+def test_d043_diaeresis_pair_is_excused_and_reported():
+    # exactly what Dicta returned for modern:de177c697f4e:1564:1 (tapuz): "¨¨" -> one [UNK] on the 2nd "¨"
+    text = ".·:*¨¨*:·."
+    out = _spans_out(text, [(0, 1), (1, 2), (2, 3), (3, 4), (5, 6), (6, 7), (7, 8), (8, 9), (9, 10)])
+    excused: list[int] = []
+    assert coverage_problems(text, out, excused) == []
+    assert excused == [4]
+
+
+@pytest.mark.parametrize("text, spans", [
+    ("א ¨ ב", [(0, 1), (4, 5)]),                    # a single uncovered "¨"
+    ("*¨¨*", [(0, 1), (3, 4)]),                      # the pair dropped entirely
+    ("*¨¨¨*", [(0, 1), (3, 4), (4, 5)]),             # a triple: not the verified shape
+    ("*¨¨*", [(0, 1), (2, 4)]),                      # 2nd "¨" not a one-character word
+    ("*¨*", [(0, 1), (2, 3)]),                       # another character in the same place
+    ("*´´*", [(0, 1), (2, 3), (3, 4)]),              # a different spacing accent (U+00B4)
+    ("אב¨¨", [(0, 1), (3, 4)]),                      # an uncovered letter is never excused
+])
+def test_d043_exception_is_strictly_limited(text, spans):
+    excused: list[int] = []
+    assert any("uncovered" in p for p in coverage_problems(text, _spans_out(text, spans), excused))
+
+
 def test_cycle_and_two_roots_are_detected():
     out = copy.deepcopy(FIX)
     out["tokens"][2]["syntax"]["dep_head_idx"] = 3

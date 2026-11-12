@@ -5,8 +5,8 @@ description = "Data foundation for a study of Hebrew locative verbs across five 
 readme = "README.md"
 requires-python = ">=3.12,<3.13"
 dependencies = [
-    "pandas>=2.2",
-    "pyarrow>=17",
+    "pandas>=2.2,<=3.0.2",  # D-044: Smart App Control blocks pandas 3.0.6/3.1.x DLLs on Windows; 3.0.2 loads
+    "pyarrow>=17,<26",  # D-044: Smart App Control blocks pyarrow 26.x DLLs on Windows; 25.0.0 loads
     "duckdb>=1.1",
     "pyyaml>=6.0",
     "tqdm>=4.66",

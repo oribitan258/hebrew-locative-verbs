@@ -296,6 +296,10 @@ VS Code and says "follow PARTNER_START.md". The status says `stopped`, and step 
 slices are skipped, and the current slice continues at its first unfinished shard (≤ 500 sentences
 redone). Never delete anything in `data/annotations/` or `data/outbox/`.
 **The window shows `FAILED`** → STOP S6 (send Ori the window's last lines and `data/team/work.log`).
+One exception, fixed by Ori on 2026-11-12: if the last line of `data/team/work.log` is
+`WorkFailed: slice … failed its checks` with `coverage_failures` (decision D-043), or any command fails
+with "An Application Control policy has blocked this file" on a pandas/pyarrow file (D-044), do step 1
+(`git pull`, `uv sync`) and step 3 once: no sentence is parsed again. If it fails again → STOP S6.
 
 ## 11. Completion message and sending the results
 

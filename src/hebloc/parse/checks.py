@@ -21,23 +21,43 @@ def _ignorable(ch: str) -> bool:
     return ch.isspace() or unicodedata.category(ch).startswith("M")
 
 
-def coverage_problems(text: str, out: dict) -> list[str]:
+DIAERESIS = "¨"
+
+
+def _excused_diaeresis(text: str, i: int, spans: set[tuple[int, int]]) -> bool:
+    """D-043: the ONLY excused uncovered character. Dicta's tokenizer turns a pair "¨¨" (U+00A8,
+    forum-signature decoration such as ".·:*¨¨*:·.") into one [UNK] word whose offsets cover just
+    the SECOND "¨". Excused iff text[i] and text[i+1] are both U+00A8 and text[i+1] is exactly one
+    output word. Anything else uncovered (single/triple "¨", letters, truncation) still fails."""
+    return (text[i] == DIAERESIS and i + 1 < len(text) and text[i + 1] == DIAERESIS
+            and (i + 1, i + 2) in spans)
+
+
+def coverage_problems(text: str, out: dict, excused: list[int] | None = None) -> list[str]:
     """Every non-whitespace character of the piece text lies in exactly one output word, in order.
 
-    A failure here means the model dropped (e.g. truncated) or duplicated input."""
+    A failure here means the model dropped (e.g. truncated) or duplicated input. The single
+    verified tokenizer artifact of D-043 is not a failure; its positions are appended to
+    ``excused`` (when given) so that they are counted and reported, never silently ignored."""
     toks = out.get("tokens") or []
     covered = [0] * len(text)
     prev_end = 0
     probs = []
+    spans = set()
     for t in toks:
         s, e = t["offsets"]["start"], t["offsets"]["end"]
         if not (0 <= s < e <= len(text)) or s < prev_end:
             probs.append(f"bad/overlapping offsets {s}-{e}")
             continue
         prev_end = e
+        spans.add((s, e))
         for i in range(s, e):
             covered[i] += 1
     missing = [i for i, ch in enumerate(text) if not _ignorable(ch) and covered[i] == 0]
+    ok = [i for i in missing if _excused_diaeresis(text, i, spans)]
+    if excused is not None:
+        excused.extend(ok)
+    missing = [i for i in missing if i not in ok]
     if missing:
         probs.append(f"uncovered chars: {len(missing)} (first at {missing[0]}: {text[missing[0]:missing[0] + 20]!r})")
     return probs
@@ -118,8 +138,12 @@ def _check_shard(inputs: list[dict], pieces: list[dict], raws: list[dict], expec
         ptext = texts[r["sent_id"]][p["norm_char_start"]:p["norm_char_end"]]
         if out.get("text") != ptext:
             c["raw_text_not_piece_text"] += 1
-        cp, tp = coverage_problems(ptext, out), tree_problems(out)
+        excused: list[int] = []
+        cp, tp = coverage_problems(ptext, out, excused), tree_problems(out)
         c["coverage_failures"] += bool(cp)
+        if excused:   # D-043: reported, not a failure
+            c["coverage_excused_diaeresis_pairs"] += len(excused)
+            c["coverage_excused_pieces"] += 1
         c["model_invalid_trees"] += bool(tp)   # a property of the model output, reported not "fixed"
         for x in tp:
             c[f"model_tree:{x.split('=')[0]}"] += 1

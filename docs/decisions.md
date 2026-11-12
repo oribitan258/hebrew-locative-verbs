@@ -688,3 +688,42 @@ reference are needed).
   only the cleaned `main` was pushed. The old commit hashes now return "No commit found". Backups:
   `git-history-cleaned-f3ebbc9.bundle` and `git-history-before-clean.bundle` in
   `data/backups/pre-public-clean-2026-11-09/`.
+
+### D-043 · Coverage check: one verified tokenizer artifact ("¨¨") is excused (2026-11-12) · accepted (Ori)
+- *Problem.* Ori's last M5 slice, `modern-tapuz`, failed validation with `coverage_failures=7`; the 11 other
+  slices had 0. All 7 pieces are Tapuz forum signatures decorated with `.·:*¨¨*:·.` (sent_ids
+  `modern:42e6941a75cc:1231:2`, `modern:59697debe281:{159,161,168,169}:2`,
+  `modern:de177c697f4e:1564:{0,1}`).
+- *Cause (verified in the stored `dicta_raw`).* Dicta's tokenizer turns the pair "¨¨" (U+00A8 DIAERESIS,
+  twice) into ONE `[UNK]` word whose offsets cover only the second "¨", so the first is "uncovered".
+  No Hebrew word and no other character is lost; the parse is deterministic, so re-parsing cannot help.
+- *Decision.* `coverage_problems` excuses exactly this shape and nothing else: the uncovered character is
+  U+00A8, the next character is U+00A8, and that next character is exactly one output word. A single,
+  dropped or tripled "¨", any other accent (e.g. U+00B4), a letter, or a truncation still fails (tests in
+  `tests/test_parse.py`). Excused cases are counted, never silent: `checks.json` reports
+  `coverage_excused_diaeresis_pairs` and `coverage_excused_pieces`.
+- *No re-parse.* Shard keys (model, settings, unit texts) are unchanged, so `hebloc work` skipped every
+  parsed shard and only re-validated and packaged `modern-tapuz`: `ok=True`, `coverage_failures=0`,
+  7 excused pairs in 7 pieces. The other slices' bundles are untouched.
+- *Partners.* If a partner's run stopped with `coverage_failures`, `git pull` + `work --detach` resumes it the
+  same way (no re-parse). A failure of any other shape is still a STOP for Ori.
+
+### D-044 · Smart App Control: pandas and pyarrow pinned to versions Windows accepts (2026-11-12) · accepted (Ori)
+- *Problem.* From the morning of 2026-11-12 (after Windows updates KB5132688/KB5132061 of 2026-11-11),
+  Smart App Control (enforcing) began refusing some UNSIGNED native files of libraries that had loaded
+  for days: `pyarrow\arrow_compute.dll` (26.0.1), then `pandas\_libs\tslibs\period.pyd` (3.1.1), with no
+  file changed. Every `hebloc` command failed ("An Application Control policy has blocked this file").
+  Code Integrity log events 3033/3077. Network and the Defender cloud endpoints were reachable.
+- *Finding.* Verdicts are per file and per version, and can change over time. Tested in throwaway venvs:
+  pyarrow 26.0.0 and 26.0.1 blocked, 25.0.x loads; pandas 3.1.1, 3.1.0 and 3.0.6 blocked, 3.0.2 and 2.3.3
+  load. torch, transformers, tokenizers, safetensors, numpy, duckdb: not blocked.
+- *Decision.* Windows security stays ON (Smart App Control cannot be re-enabled once turned off).
+  `pyproject.toml`: `pyarrow>=17,<26` (→ 25.0.1) and `pandas>=2.2,<=3.0.2` (→ 3.0.2). No other package
+  changed in `uv.lock`.
+- *Verified.* All imports load; fast suite passes (D-043 tests included); `hebloc fingerprint` IDENTICAL;
+  `doctor` 0 FAIL. The parser stack (torch, transformers, tokenizers, model) is unchanged, so Dicta's
+  output cannot change: shard keys do not include library versions and no sentence was re-parsed.
+  Parquet files are read by content; the existing bundles and runs stay valid.
+- *If it happens again* (a different file blocked): find the file in the Code Integrity log, test other
+  versions of that package in a scratch venv, pin one that loads, record it here. Never disable
+  Smart App Control, never work around it.
