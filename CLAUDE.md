@@ -35,6 +35,8 @@ until the user explicitly opens that scope.
   research metadata, not historical truth. Duplicates are never removed across corpora/sources.
 - Every derived row is traceable: `sent_id` → `doc_id` → `rel_path` + `line_no` + char offsets (+ sha256).
 - Keep raw Dicta responses (`dicta_raw`); recomputing statistics must never require re-running Dicta.
+  Keep ALL parse data (`dicta_raw`, `inputs`, `pieces`, manifests, `checks.json`, `tokens`) and every bundle,
+  also after M6: §5–§8 use the same data. No cleanup/deletion without Ori's explicit approval (D-045).
 - No large run without an approved pilot (M3 gate). Runs are sharded, resumable, manifest-logged.
 - Modern corpus coverage: decided by the user — **Option A, all of Modern** (D-041).
 - Dicta output on historical Hebrew is NOT ground truth: measure and report its accuracy.
@@ -47,7 +49,8 @@ until the user explicitly opens that scope.
   and verifies the computer, then runs that person's share automatically (`hebloc work --detach`,
   resumable). Each person keeps the complete results locally; at completion they get simple
   instructions to send `data/outbox/<name>` to Ori by Google Drive, OneDrive or USB. No shared folder
-  is set up in advance. Ori merges; M6 statistics are computed centrally (D-040).
+  is set up in advance. Ori merges; M6 statistics are computed centrally (D-040, D-045).
+  **A partner's part ends when they send `data/outbox/<name>`: partners never compute statistics.**
 - **If the person's whole message is "start"** (or "go", "continue", "status"): it means *run or check
   this computer's share of M5*. Read `PARTNER_START.md` and follow it from §2: identity from
   `data/team/identity.json`; skip every section whose "Skip if" holds; then §10b (`git pull`, `uv sync`,
@@ -69,6 +72,19 @@ until the user explicitly opens that scope.
   required (all I/O names its encoding; the suite passes without it, D-039).
   In a NEW environment SAC may also block the generated `hebloc.exe`/`pytest.exe` launchers: use
   `uv run python -m hebloc …` and `uv run python -m pytest` (D-038).
+
+## M6 statistics workflow (Ori's computer only; D-040, D-045)
+- **Final statistics are computed ONCE, centrally**, after `hebloc merge` reports 31/31 COMPLETE and
+  `plan register --write`, over the registered runs of all five corpora. Never per person, never by
+  combining partial results (most §4 statistics are not additive; Modern is split across shares).
+- **Develop now:** design → Ori's approval → code (takes an explicit run list now, the registered runs
+  later; one code path) → validation. Mikra and Hazal are complete locally: real but PROVISIONAL numbers.
+  Ori's Modern slices are a scale test only, never reported. Parser accuracy (Mikra vs BHSA) can be final now.
+  Do not register runs early; do not tune on partial Modern.
+- **`start statistics`** (Ori's message, in a new session) means: do `docs/HANDOFF.md` §7 — read the
+  handoff, review `project.pdf` §4 (and §3, §9), check the environment and data state, then write and
+  present the M6 design for approval. **Implement nothing before Ori approves the design.**
+  This is NOT the one-word "start" (which runs/checks this computer's M5 share).
 
 ## Data flow
 ```
@@ -205,5 +221,6 @@ notebooks/     exploration only — never pipeline logic
       Ori's share COMPLETE 2026-11-12 (12/12 slices, 3,504,707 units, `data/outbox/ori`); D-043 (excused
       "¨¨" tokenizer artifact in the coverage check) and D-044 (pandas ≤3.0.2, pyarrow <26: Smart App
       Control blocks newer DLLs). Waiting for Efrat's and Adi's folders → `hebloc merge`.
-- [ ] M6 descriptive statistics + parser-accuracy report
+- [ ] M6 descriptive statistics + parser-accuracy report — workflow agreed (D-045); next step: Ori types
+      `start statistics` → M6 design for approval (HANDOFF §7). Final run after the merge.
 - [ ] M7 review checkpoint (STOP)

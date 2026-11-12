@@ -727,3 +727,28 @@ reference are needed).
 - *If it happens again* (a different file blocked): find the file in the Code Integrity log, test other
   versions of that package in a scratch venv, pin one that loads, record it here. Never disable
   Smart App Control, never work around it.
+
+### D-045 · M6 workflow: develop now, compute the final statistics once, centrally; keep all parse data (2026-11-12) · accepted (Ori)
+Refines D-040 after Ori's share completed (12/12 slices).
+- *Final statistics.* Computed ONCE, on Ori's computer, after `hebloc merge` reports 31/31 COMPLETE and
+  `plan register --write`, over the registered runs of all five corpora. Never per person, never by
+  combining partial results: most §4 statistics (distinct words, distributions, medians, top-N) are
+  not additive, and Modern/Haaretz is split by document across the three shares.
+- *Partners.* Efrat and Adi only parse and send `data/outbox/<name>`; they do not compute statistics.
+- *Development now (no redundant work).* M6 is designed, approved, implemented and validated now:
+  - the code takes an explicit list of runs now and the registered canonical runs after the merge
+    (same code path, no combine step);
+  - Mikra and Hazal are complete on Ori's computer: their numbers are real but PROVISIONAL until the
+    final run (which recomputes them in minutes);
+  - Ori's 9 Modern slices (~34% of Modern) are a scale/speed test only, never reported or stored as
+    results; Medieval (Efrat) and Haskala (Adi) wait for the merge;
+  - parser accuracy, Mikra vs BHSA, can be completed now (Mikra is complete);
+  - no early registration of runs, no tuning on partial Modern.
+- *Retention.* Keep ALL parse data: `dicta_raw` (the master copy), `inputs`, `pieces`, run manifests,
+  `checks.json`, `tokens`, and every bundle (own and received). §5–§8 (locative extraction, A/B frames,
+  classifiers, LLM) read the same data; re-creating `dicta_raw` would cost ~100 machine-hours plus a
+  new merge. Disk is not a constraint (797 GB free on 2026-11-12). No cleanup or deletion without
+  Ori's explicit approval; at most, bundles are MOVED to a verified off-machine copy (D-012).
+- *Trigger.* In a new session, Ori's message `start statistics` starts M6 planning (CLAUDE.md):
+  read `docs/HANDOFF.md`, review `project.pdf` §4, present the M6 design for approval, implement
+  nothing before approval.

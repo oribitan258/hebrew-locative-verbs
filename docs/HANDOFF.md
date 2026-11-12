@@ -1,60 +1,75 @@
-# Session Handoff: M5 approved (coverage A); partners run their shares
+# Session Handoff: Ori's M5 share complete; next is the M6 design (`start statistics`)
 
-*Updated 2026-11-09 (M3 gate + M4 approved, plan approved with coverage A, public repo: D-041; final M5 workflow D-039, M6 central statistics D-040, private GitHub repo; partner
-workflow D-038; team readiness 2026-11-08; M4 finished 2026-11-07).
+*Updated 2026-11-12 (Ori's M5 share complete; D-043 coverage exception, D-044 Smart App Control pins,
+D-045 agreed M6 workflow). Earlier: M5 approved 2026-11-09 (D-041), M4 finished 2026-11-07.
 This file summarizes and points to other documents; when they disagree, the linked documents win.*
 
 ---
 
 ## 0. Read first
 
-1. **Smart App Control: FIXED (D-035).** Windows Smart App Control (On, enforcing) blocks uv's
-   unsigned `python.exe`.
-   - The project venv now uses the **signed python.org Python 3.12.10**, installed per-user with winget.
-   - Recreate the venv with `uv venv --clear --python (py -3.12 -c "import sys; print(sys.executable)")`,
-     then `uv sync`.
-   - Do NOT let uv pick `~/.local/bin/python3.12.exe` (a blocked uv shim).
-2. **Team setup is built and verified** (D-036–D-039; §10, §12 and §13 below).
-   - Partners only clone, open the folder in VS Code with Claude Code, and say "Read PARTNER_START.md
-     and follow it."
-   - The parsing run starts with `hebloc work --detach` (its own window) and is checked with
-     `hebloc work --status`. The plan is APPROVED (coverage A, D-041): each person starts their share.
-   - M6 statistics are computed centrally after the merge (D-040).
-   - On Windows use `uv run python -m hebloc …` / `uv run python -m pytest`: Smart App Control blocks
-     the launchers of NEW environments (D-038). `uv run hebloc` still works in this repo's old venv.
-   - Partners' entry point: [`PARTNER_START.md`](../PARTNER_START.md).
-   - Plan: `config/parse_plan.yaml` (status **approved**, coverage **A**, settings `base-topk-v1`).
-   - Who parses what: [`WORK_PLAN.md`](WORK_PLAN.md).
-3. **The git history was rewritten** (D-034) before the first push to GitHub, to remove the course
-   documents and `docs/m2_sample_review.md`. **All commit hashes changed.** Manifests written before
-   the rewrite (`run.json`, `units/_manifest.json`, `documents.manifest.json`, bundles) still record
-   the OLD hashes as `code_commit`. Map old → new in §8 and in `data/backups/commit_map.txt`. The
-   original history is in `data/backups/git-history-pre-github.bundle`.
-   **Rewritten again on 2026-11-09 (D-042)** to remove the corpus-text audit sheets from the public
-   repository: every hash from §8 and later changed once more. Map:
-   `data/backups/pre-public-clean-2026-11-09/commit_map.txt` (with the pre-clean history bundle and
-   byte-identical copies of the two sheets, which stay local in `annotation/`).
+1. **Next step: M6 planning.** When Ori types **`start statistics`**, follow §7. Present the M6 design
+   for approval; **implement nothing before Ori approves it** (D-045).
+2. **Agreed M6 workflow (D-040, D-045).**
+   - Final statistics are computed ONCE on Ori's computer, after `hebloc merge` reports 31/31 COMPLETE
+     and `plan register --write`, over the registered runs of all five corpora.
+   - Never per person, never by combining partial results. Efrat and Adi only parse and send their
+     `data/outbox/<name>` folder.
+   - Develop now: design → approval → code that takes an explicit run list (later: the registered runs)
+     → validation on the complete local corpora (Mikra, Hazal). Their numbers are PROVISIONAL until the
+     final run. Ori's Modern slices are a scale test only, never reported. Parser accuracy (Mikra vs
+     BHSA) can be final now.
+3. **Keep all data (D-045).** Never delete or "clean up" `dicta_raw`, `inputs`, `pieces`, manifests,
+   `checks.json`, `tokens`, bundles or outboxes. §5–§8 need them. 797 GB were free on 2026-11-12.
+4. **Smart App Control (D-035, D-044).**
+   - The venv uses the signed python.org Python 3.12.10 (D-035).
+   - Since the 2026-11-11 Windows updates, SAC blocks some UNSIGNED library DLLs. `pyproject.toml`
+     pins `pyarrow>=17,<26` (25.0.1) and `pandas>=2.2,<=3.0.2` (3.0.2), which load.
+   - If a new "An Application Control policy has blocked this file" appears: find the file in the
+     Code Integrity log (events 3033/3077), test other versions in a scratch venv, pin one that loads,
+     record it in D-044. Never disable SAC, never work around it.
+   - Always `uv run python -m hebloc …` / `uv run python -m pytest` (D-038).
+5. **Git history was rewritten twice** (D-034, D-042): old `code_commit` values in early manifests map
+   to new hashes via §8 and `data/backups/pre-public-clean-2026-11-09/commit_map.txt`.
+6. **Current sections:** §0, §1, §5 (top), §7. §2–§4 are background; §6 and §8–§13 are the historical
+   record of earlier milestones (their to-do lists are done or superseded).
 
 ## 1. Status
 
-| Milestone | State | Commit (new hashes) |
+| Milestone | State | Commit |
 |---|---|---|
-| M0 Foundation | ✅ approved | `d332468`, `9ffea6a` |
-| M1 Inventory and catalog | ✅ approved | `7a27434`, `abb8f1d`, `31fdf67` |
-| M2 Unit extraction | ✅ approved | `49247c0` |
-| M2.1 Complete-sentence units (segment v2, D-020) | ✅ approved | `19e56f2`, `9ae5dd6` |
-| M3 Dicta pilot and benchmark | ✅ done. Gate decided 2026-11-09 (D-041; §6 below) | `2e50976` |
-| M4 Data layer and access API | ✅ approved 2026-11-09 (D-030–D-033 accepted, D-041) | `2b6f2b1` |
-| Collaboration setup (D-034) | ✅ hygiene test, history cleaned. Private GitHub repo created and pushed 2026-11-09 (§9, §13) | `77f9aa5`, `dcf1207` |
-| Team readiness (D-035–D-037) | ✅ `hebloc.team`, `PARTNER_START.md`, work plan (draft), verified from a clean clone (§10) | `eaffb62` + later |
-| Automatic partner workflow (D-038) | ✅ single entry point, archive install with name repair, `hebloc work`, exact `merge`; full-size and three-person rehearsal tested (§12). Full runs still gated | `eba82f3` + later |
-| Final M5 workflow (D-039, D-040) | ✅ detached run, lock, status, pinned threads, agreement diagnostics; central M6; private GitHub repo (§13) | this commit |
-| M3 gate + M4 approval, plan approved (D-041) | ✅ coverage A, equal work plan, public repo | this commit |
-| **M5 full parse** | **approved, not started**: each person runs their share via PARTNER_START.md; Ori merges | — |
-| M6 statistics, M7 review | not started (M6 central, D-040) | — |
+| M0–M2.1 Foundation, inventory, units | ✅ approved | see §8 |
+| M3 Dicta pilot + gate | ✅ decided 2026-11-09 (D-041) | `2e50976` |
+| M4 Data layer and access API | ✅ approved (D-030–D-033, D-041) | `2b6f2b1` |
+| Team workflow (D-034–D-042) | ✅ public repo, PARTNER_START.md, `hebloc work`/`merge` | up to `730cdbd` |
+| **M5 full parse: Ori's share** | ✅ **complete 2026-11-12**: 12/12 slices, 3,504,707 units, 12 verified bundles in `data/outbox/ori` (3.8 GB) | `4938012`, `c5f4627` |
+| M5: Efrat's share (9 slices) and Adi's (10 slices) | ⏳ on their computers; status unknown to this repo | — |
+| M5 merge + `plan register --write` | ⏳ after both folders arrive (PARTNER_START §12) | — |
+| **M6 statistics + parser accuracy** | **next: design for approval (`start statistics`, §7)**; workflow D-045 | — |
+| M7 review checkpoint | STOP after M6 | — |
 
-M5 is approved (D-041). Full parsing runs only through `hebloc work` (each person's own share);
-Ori starts his share when he chooses.
+**M5 events on 2026-11-12.**
+- `modern-tapuz` first failed validation with 7 coverage failures: forum signatures `.·:*¨¨*:·.`. Dicta
+  turns "¨¨" into one `[UNK]` word covering only the 2nd "¨". **D-043** excuses exactly that shape
+  (counted in `checks.json` as `coverage_excused_diaeresis_pairs`); tapuz was re-validated and packaged
+  without re-parsing (0 shard files rewritten; the 11 earlier bundles byte-identical).
+- Smart App Control began blocking pyarrow 26.0.1 and pandas 3.1.1 DLLs: **D-044** pins.
+- PARTNER_START §10b tells a partner's Claude to `git pull` + `uv sync` + resume once if their run
+  stopped for either reason.
+
+**Data on Ori's computer now (what M6 can use before the merge).**
+
+| Corpus | Parsed by | Local state | Run |
+|---|---|---|---|
+| Mikra | Ori | **complete** (23,206 units) | `mikra/base-topk-v1__mikra` |
+| Hazal | Ori | **complete** (418,758 units) | `hazal/base-topk-v1__hazal` |
+| Medieval | Efrat | not yet (after merge) | — |
+| Haskala | Adi | not yet (after merge) | — |
+| Modern | all three | **partial**: Ori's 9 slices, 3,062,743 of 8,877,117 units (34%) | `modern/base-topk-v1__modern-<slice>` |
+
+`config/annotations.yaml` (canonical registry) is **empty** until `plan register --write` (D-032).
+Until then pass runs explicitly: `hebloc.data.tokens(corpus, run='<collection>/<run_id>')` takes one
+run; `hebloc.data.coverage()` needs the registry.
 
 ## 2. Active scope
 
@@ -116,6 +131,17 @@ committed shards only; pilot code reads per-shard tokens; `hebloc pilot revalida
   unit-level indices are null instead of shifted; a missing head is null, not root (D-031).
 
 ## 5. Verification at handoff
+
+**2026-11-12** (after Ori's M5 share, D-043/D-044; pandas 3.0.2, pyarrow 25.0.1):
+
+| Check | Command | Result |
+|---|---|---|
+| Fast tests | `uv run python -m pytest -q` | **167 passed**, 1 deselected (~107 s) |
+| Data layer | `uv run python -m hebloc check` | `OK=True`, registry empty (`registered=none`) |
+| Derived data | `uv run python -m hebloc fingerprint` | IDENTICAL to the reference |
+| Machine | `uv run python -m hebloc doctor` | 0 FAIL |
+| Ori's bundles | `hebloc bundle verify` on each of the 12 zips | all `ok: True` |
+| Completeness | `uv run python -m hebloc merge` (no paths) | 12/31 slices, 3,504,707/9,709,662 units, 0 duplicates; missing exactly Efrat's 9 and Adi's 10 slices |
 
 **2026-11-08, morning** (before the D-035 fix; checked with git and the signed system Python). Evening results: §10.
 
@@ -192,29 +218,57 @@ Also check the machine's power and sleep settings before M5 (one benchmark shard
   measure (profile, multi-process, batch size, GPU smoke test with an output-agreement check) once
   Python runs again.
 
-## 7. Startup instructions for the next session
+## 7. Startup instructions for the next session: `start statistics` (M6 planning)
 
-0. Check that Python runs at all: `uv run python -c "print(1)"`. If you see *"An Application Control
-   policy has blocked this file"*, the venv uses uv's unsigned Python: recreate it as in §0.1 (python.org 3.12
-   via `uv venv --clear --python (py -3.12 ...)`), then `uv sync`.
-1. Read [CLAUDE.md](../CLAUDE.md), this file, [data_layer.md](data_layer.md) (§5 = M5 contract),
-   [PARTNERS.md](PARTNERS.md), [decisions.md](decisions.md) D-020–D-034, and
-   [pilot_report.md](pilot_report.md) §11–§15.
-2. Check:
+**Goal of that session:** a written M6 design that Ori approves. No statistics code, no statistics
+runs, no data changes before approval. Talk to Ori in English; end with a plain-language summary.
+
+1. **Read:**
+   - [CLAUDE.md](../CLAUDE.md) and this file (§0, §1, §5, §7);
+   - [decisions.md](decisions.md): D-015 (full/curated views), D-021 (multi-piece units), D-025
+     (invalid trees flagged), D-026 (normalization), D-031/D-032 (tokens, registry), D-040, D-041,
+     D-043, D-044, D-045;
+   - [data_layer.md](data_layer.md) and [data_dictionary.md](data_dictionary.md) (the `tokens` schema);
+   - [roadmap.md](roadmap.md) (the M6 row; R1–R8 only to see what later stages will need);
+   - [pilot_report.md](pilot_report.md) §11–§15 (parser accuracy on Mikra vs BHSA, invalid trees);
+   - **`project.pdf` §3, §4 and §9** (Hebrew, local only, not in git). If it is missing, ask Ori.
+2. **Check the environment and data (read-only):**
    ```
    git status --short; git log --oneline -3
    uv sync
-   uv run pytest                 # 138 expected; no model is loaded by the tests
-   uv run hebloc baseline        # Anchor check: OK
-   uv run hebloc check           # OK=True
+   uv run python -c "import pandas, pyarrow, duckdb, torch; print('imports OK')"   # SAC check (§0.4)
+   uv run python -m pytest -q          # expected result: §5
+   uv run python -m hebloc check       # OK=True
+   uv run python -m hebloc runs        # which runs exist
+   uv run python -m hebloc merge       # completeness report only (no paths = no changes)
    ```
-3. Ask for the M4 approval and the M3 gate decisions if they have not been given. Record each
-   one as a decision entry, and change D-030–D-033 from *proposed* to *accepted* only on approval.
-4. Only then plan M5, following the contract in [data_layer.md §5](data_layer.md). Start with
-   the historical corpora (≈ 36 h base, or 11 h with `topk`), and run Modern according to the D-004
-   decision. Bundle every finished run.
-5. Do not change `normalize.py`, `segment.py` or the vendored `dicta_code/` without an approved
-   decision entry.
+   If partners' folders have arrived but are not merged, tell Ori (merging is his action,
+   PARTNER_START §12); do not merge without his go-ahead.
+3. **Write the M6 design** as `docs/m6_design.md` and present a short summary. It must cover:
+   - **Every §4 requirement, per corpus** (Mikra, Hazal, Medieval, Haskala, Modern): words/lemmas and
+     their frequencies; sentence lengths; distinct words per sentence; sentence depth from the
+     dependency tree (define what it means); morphological categories (POS) and inflection features;
+     dependency-relation types; plus proposed additional statistics (§4 "any statistic you can think
+     of", §11 personal initiative).
+   - **Methodological decisions for Ori**, each with options and a recommendation: what a "word" is
+     (whitespace token vs Dicta word vs segment with prefixes split); punctuation, `[UNK]`, blank
+     lemmas; the depth definition; multi-piece units (D-021 a/b/c) and invalid trees (D-025); full
+     view (primary) vs curated view (D-015); breakdowns (Hazal strata, Haskala before/after 1881,
+     Modern by source/genre, Medieval by genre); size-dependent measures (type/token) across corpora
+     of very different size; how parse coverage is reported with every statistic.
+   - **Parser accuracy** (Mikra vs BHSA, final now) and whether/how a manual audit is done (deferred
+     by D-041; audit sheets are local only, D-042).
+   - **Validation:** unit tests on fixtures; totals reconciled with `units`/`tokens`; determinism;
+     sanity checks against known facts; provisional Mikra/Hazal outputs reviewed before the final run.
+   - **Output formats:** `data/stats/*.parquet` with a manifest (runs used, code commit, provisional or
+     final), `results/stats/` CSV + PNG, `docs/stats_report.md`; how the final run after the merge
+     replaces the provisional outputs.
+   - **Workflow** per D-045: explicit run lists now, registered runs after the merge, one code path.
+4. **Stop and wait for Ori's approval.** Record his decisions as decision entries (D-046 onward), then
+   implement in the approved order.
+5. **Never:** delete or rewrite parse data or bundles (D-045); change `normalize.py`, `segment.py` or
+   the vendored `dicta_code/` without an approved decision; compute final statistics before the merge
+   is COMPLETE and registered.
 
 ## 8. Commit hashes before and after the D-034 history rewrite
 
