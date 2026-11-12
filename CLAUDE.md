@@ -201,6 +201,9 @@ notebooks/     exploration only — never pipeline logic
       (base, MST fix, `topk`, D-025 flags, D-026 normalization; R5 not applied; D-021 + audit deferred to M6).
       GitHub repo is PUBLIC (no invitations; partners cannot push). Corpus-text audit sheets removed
       from git and from all history (D-042; local copies + pre-clean history bundle in data/backups/).
-- [ ] M5 full parsing run — approved; each person starts their share via PARTNER_START.md
+- [ ] M5 full parsing run — approved; each person starts their share via PARTNER_START.md.
+      Ori's share COMPLETE 2026-11-12 (12/12 slices, 3,504,707 units, `data/outbox/ori`); D-043 (excused
+      "¨¨" tokenizer artifact in the coverage check) and D-044 (pandas ≤3.0.2, pyarrow <26: Smart App
+      Control blocks newer DLLs). Waiting for Efrat's and Adi's folders → `hebloc merge`.
 - [ ] M6 descriptive statistics + parser-accuracy report
 - [ ] M7 review checkpoint (STOP)
