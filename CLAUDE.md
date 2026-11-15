@@ -51,10 +51,11 @@ until the user explicitly opens that scope.
   instructions to send `data/outbox/<name>` to Ori by Google Drive, OneDrive or USB. No shared folder
   is set up in advance. Ori merges; M6 statistics are computed centrally (D-040, D-045).
   **A partner's part ends when they send `data/outbox/<name>`: partners never compute statistics.**
-- **On ORI's computer (`data/team/identity.json` = ori, his share complete), `start` now means the next
-  stage (Ori, 2026-11-15): `docs/HANDOFF.md` §7A** — merge + validate Efrat's 9 slices, then PROVISIONAL
-  statistics for Mikra + Hazal + Medieval, then STOP. No registration, no final/Haskala/Modern statistics
-  (Adi's 10 slices pending). The rule below still applies on Efrat's and Adi's computers.
+- **On ORI's computer (`data/team/identity.json` = ori):** the `start` stage of `docs/HANDOFF.md` §7A
+  (merge Efrat + provisional Mikra/Hazal/Medieval) is DONE (2026-11-15, 21/31 slices merged). `start`/`status`
+  there now = a read-only status check: report 21/31 and whether Adi's folder has arrived; if it has, tell
+  Ori to type `finish statistics` (HANDOFF §7). No registration, no final/Haskala/Modern statistics before
+  31/31. The rule below still applies on Efrat's and Adi's computers.
 - **If the person's whole message is "start"** (or "go", "continue", "status"): it means *run or check
   this computer's share of M5*. Read `PARTNER_START.md` and follow it from §2: identity from
   `data/team/identity.json`; skip every section whose "Skip if" holds; then §10b (`git pull`, `uv sync`,
@@ -93,7 +94,7 @@ until the user explicitly opens that scope.
   folders are), then present the plan for: merge + validate all 31 slices → `plan register --write` (+ decision)
   → `hebloc stats run --registered` (final, all five corpora, §4) → verify → report → STOP at M7.
   **Execute nothing before Ori approves that plan.** If Adi's folder has not arrived, report and stop.
-- **Before that, `start` on Ori's computer** = HANDOFF §7A: merge Efrat + provisional Medieval (see Team section).
+- HANDOFF §7A (merge Efrat + provisional Medieval) was done 2026-11-15; `finish statistics` waits for Adi's folder.
 
 ## Data flow
 ```
@@ -232,13 +233,15 @@ notebooks/     exploration only — never pipeline logic
 - [ ] M5 full parsing run — approved; each person starts their share via PARTNER_START.md.
       Ori's share COMPLETE 2026-11-12 (12/12 slices, 3,504,707 units, `data/outbox/ori`); D-043 (excused
       "¨¨" tokenizer artifact in the coverage check) and D-044 (pandas ≤3.0.2, pyarrow <26: Smart App
-      Control blocks newer DLLs). **Efrat's 9 slices ARRIVED 2026-11-15** (`data/efrat-data1` + `data/efrat-data2`,
-      one outbox split in two; all 9 bundles verified read-only; NOT merged; HANDOFF §0.1). **Waiting for Adi's
-      10 slices** → merge 31/31 → register (done inside `finish statistics`, HANDOFF §7).
-      **Next session: `start` = merge Efrat's 9 slices + provisional Medieval statistics (HANDOFF §7A).**
+      Control blocks newer DLLs). **Efrat's 9 slices MERGED 2026-11-15** (MERGE OK, combined copy in
+      `C:\hebloc-incoming\efrat`; originals kept in `data/efrat-data1` + `data/efrat-data2`): **21/31 slices,
+      6,512,144/9,709,662 units, 0 overlap**; `hebloc check` OK=True. **Waiting for Adi's 10 slices** → merge
+      31/31 → register (done inside `finish statistics`, HANDOFF §7).
 - [ ] M6 descriptive statistics + parser-accuracy report — design approved (D-046, `docs/m6_design.md`: Part A =
       exactly §4; Part B deferred), `hebloc.stats` built + tested (D-047 matplotlib). DONE 2026-11-12: parser accuracy
       (final, `results/stats/accuracy/`), PROVISIONAL Mikra + Hazal (`data/stats/provisional-20261112-27bb4080cf`).
+      2026-11-15: PROVISIONAL Mikra + Hazal + Medieval (`data/stats/provisional-20261115-49160596a7`; Mikra/Hazal
+      tables identical to 2026-11-12; reconciliation 0 problems; verify OK).
       Remaining: merge + register (all 31 slices) → final statistics for all five corpora → report:
       Ori types `finish statistics` (HANDOFF §7). Ori's instruction: do not go beyond M6.
 - [ ] M7 review checkpoint (STOP)

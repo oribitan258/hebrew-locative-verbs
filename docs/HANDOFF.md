@@ -1,6 +1,8 @@
-# Session Handoff: next is `start` (merge Efrat + provisional Medieval); Adi's results still pending
+# Session Handoff: Efrat merged (21/31), provisional Medieval done; waiting for Adi → `finish statistics`
 
-*Updated 2026-11-15 (Efrat's output arrived in `data/efrat-data1` + `data/efrat-data2`, verified read-only, not merged;
+*Updated 2026-11-15, end of the `start` session (§7A done: Efrat's 9 slices merged, MERGE OK, 21/31; provisional
+Mikra + Hazal + Medieval statistics in `data/stats/provisional-20261115-49160596a7`; next: Adi's folder → `finish statistics`, §7).
+Before, 2026-11-15 (Efrat's output arrived in `data/efrat-data1` + `data/efrat-data2`, verified read-only, not merged;
 Adi's pending; Ori decided: next session `start` = merge Efrat + provisional Medieval, §7A). Before, 2026-11-12, end of session (M6 design approved D-046; `hebloc.stats` built, tested, committed; parser
 accuracy final; provisional Mikra + Hazal statistics; D-047 matplotlib; next: `finish statistics`, §7). Before: Ori's M5 share complete; D-043, D-044, D-045. Earlier: M5 approved 2026-11-09 (D-041), M4 finished 2026-11-07.
 This file summarizes and points to other documents; when they disagree, the linked documents win.*
@@ -11,35 +13,28 @@ This file summarizes and points to other documents; when they disagree, the link
 
 1. **State on 2026-11-15.**
    - **M5:** Ori's share is complete (12/12 slices, 3,504,707 units).
-   - **Efrat's output ARRIVED (2026-11-15), verified read-only, NOT merged yet.**
-     - It is in `data/efrat-data1/efrat/` + `data/efrat-data2/efrat/`: one outbox folder that the upload
-       split in two. `DELIVERY.json` is in `efrat-data1`; some zips and their `.sha256` sidecars are in
-       different halves.
-     - Checked for all 9 slices (`medieval`, `modern-a7`, `modern-haaretz-b01/b04/b05/b06/b09/b12/b18`):
-       - each zip is present, with bytes and sha256 = `DELIVERY.json` = its sidecar;
-       - `hebloc.store.bundle.verify` is OK: every member's sha256, and the corpora anchor;
-       - each run name = its slice; model = base `dicta-il/dictabert-joint@7b1256fc0846`;
-       - units per slice = the work plan; 3,007,437 units in total.
-     - `DELIVERY.json`: `complete: true`, coverage A, `settings_id` base-topk-v1, `plan_sha256` = the
-       approved plan, code `d98ff36`.
-     - **Before merging, put all files of BOTH halves into ONE folder** (copy, e.g. into
-       `C:\hebloc-incoming\efrat\`; names are unique). Merging the halves separately reports false
-       "MISSING"/sidecar problems, because `DELIVERY.json` expects every zip next to it. Keep the
-       originals in `data/` (D-045).
-     - Merging is still Ori's action, done inside `finish statistics`.
+   - **Efrat's output MERGED (2026-11-15, §7A): `MERGE OK`, 9 lines `OK … person=efrat`.**
+     - Result: `full coverage A: 21/31 slices OK; units 6,512,144/9,709,662; units in more than one run: 0;
+       NOT complete` (missing only Adi's 10 slices).
+     - Merged from the combined copy `C:\hebloc-incoming\efrat\` (20 files, sizes checked against the
+       originals). The originals stay in `data/efrat-data1` + `data/efrat-data2` (D-045).
+     - Before merging they were verified read-only (each zip's sha256 = `DELIVERY.json` = sidecar; bundle
+       verify OK; model base; units = work plan; `complete: true`, coverage A, base-topk-v1, approved plan).
+     - After merging: `hebloc check` OK=True (registry empty); `hebloc runs`: `medieval/base-topk-v1__medieval`
+       (115,415 units = the whole corpus) and 8 Modern runs complete, tokens up to date.
+     - Ori may tell Efrat: MERGE OK, she may free her space.
    - **Adi's output (10 slices: `haskala`, `modern-knesset`, `modern-medical`, `modern-literary`,
      `modern-haaretz-b02/b03/b14/b16/b17/b19`, ≈3,197,518 units) has NOT arrived yet.**
    - **M6:** built, tested and committed.
      - Parser accuracy is FINAL.
-     - Mikra and Hazal statistics are PROVISIONAL.
+     - Mikra, Hazal and Medieval statistics are PROVISIONAL: `data/stats/provisional-20261115-49160596a7`
+       (§7A; Mikra/Hazal tables identical to the 2026-11-12 run).
      - The final statistics for all five corpora need the merged, registered dataset.
    - **Ori's instruction:** do not go beyond M6.
 2. **Next steps (Ori's decision, 2026-11-15).**
-   - **Now: `start`** (Ori's computer, fresh session) → **§7A**:
-     - merge and validate Efrat's 9 slices (21/31, NOT complete);
-     - compute PROVISIONAL statistics for Mikra, Hazal and Medieval;
-     - stop for review.
-     No registration; no final, Haskala or Modern statistics.
+   - **§7A (`start`) is DONE (2026-11-15):** Efrat merged (21/31), provisional Mikra + Hazal + Medieval.
+     `start`/`status` on Ori's computer now = read-only status check (21/31; has Adi's folder arrived?).
+     No registration; no final, Haskala or Modern statistics before 31/31.
    - **Adi's results are still pending.** Haskala and 9 Modern slices are hers. Without them, Haskala
      and Modern cannot be computed, and nothing can be registered or finalized.
    - **When Adi's folder arrives: `finish statistics`** (fresh session, Plan Mode) → **§7**:
@@ -113,10 +108,10 @@ This file summarizes and points to other documents; when they disagree, the link
 | M4 Data layer and access API | ✅ approved (D-030–D-033, D-041) | `2b6f2b1` |
 | Team workflow (D-034–D-042) | ✅ public repo, PARTNER_START.md, `hebloc work`/`merge` | up to `730cdbd` |
 | **M5 full parse: Ori's share** | ✅ **complete 2026-11-12**: 12/12 slices, 3,504,707 units, 12 verified bundles in `data/outbox/ori` (3.8 GB) | `4938012`, `c5f4627` |
-| M5: Efrat's share (9 slices) | ✅ **arrived 2026-11-15**, all 9 bundles verified read-only (§0.1); not merged yet | — |
+| M5: Efrat's share (9 slices) | ✅ **merged 2026-11-15** (MERGE OK, 21/31 slices, 6,512,144 units, §0.1) | — |
 | M5: Adi's share (10 slices) | ⏳ not arrived yet | — |
-| M5 merge + `plan register --write` | ⏳ after both folders arrive (PARTNER_START §12) | — |
-| **M6 statistics + parser accuracy** | design approved (D-046); built + tested; accuracy FINAL; Mikra + Hazal PROVISIONAL; **final run after merge + register: `finish statistics` (§7)** | "M6: …" (2026-11-12) |
+| M5 merge + `plan register --write` | ⏳ Ori + Efrat merged (21/31); Adi's merge + register in `finish statistics` | — |
+| **M6 statistics + parser accuracy** | design approved (D-046); built + tested; accuracy FINAL; Mikra + Hazal + Medieval PROVISIONAL (2026-11-15); **final run after merge + register: `finish statistics` (§7)** | "M6: …" (2026-11-12) |
 | M7 review checkpoint | STOP after M6 | — |
 
 **M5 events on 2026-11-12.**
@@ -128,15 +123,15 @@ This file summarizes and points to other documents; when they disagree, the link
 - PARTNER_START §10b tells a partner's Claude to `git pull` + `uv sync` + resume once if their run
   stopped for either reason.
 
-**Data on Ori's computer now (what M6 can use before the merge).**
+**Data on Ori's computer now (after merging Efrat, 2026-11-15).**
 
 | Corpus | Parsed by | Local state | Run |
 |---|---|---|---|
 | Mikra | Ori | **complete** (23,206 units) | `mikra/base-topk-v1__mikra` |
 | Hazal | Ori | **complete** (418,758 units) | `hazal/base-topk-v1__hazal` |
-| Medieval | Efrat | not yet (after merge) | — |
+| Medieval | Efrat | **complete** (115,415 units, merged) | `medieval/base-topk-v1__medieval` |
 | Haskala | Adi | not yet (after merge) | — |
-| Modern | all three | **partial**: Ori's 9 slices, 3,062,743 of 8,877,117 units (34%) | `modern/base-topk-v1__modern-<slice>` |
+| Modern | all three | **partial**: Ori's 9 + Efrat's 8 slices, 5,954,765 of 8,877,117 units (67%) | `modern/base-topk-v1__modern-<slice>` |
 
 `config/annotations.yaml` (canonical registry) is **empty** until `plan register --write` (D-032).
 Until then pass runs explicitly: `hebloc.data.tokens(corpus, run='<collection>/<run_id>')` takes one
@@ -202,6 +197,26 @@ committed shards only; pilot code reads per-shard tokens; `hebloc pilot revalida
   unit-level indices are null instead of shifted; a missing head is null, not root (D-031).
 
 ## 5. Verification at handoff
+
+**2026-11-15, end of the `start` session (§7A):**
+
+| Check | Command | Result |
+|---|---|---|
+| Fast tests | `uv run python -m pytest -q` | **178 passed**, 1 deselected (155 s). The first attempt stopped once with a collection error in `tests/test_units.py` (cause not captured); the file passed alone and the full rerun passed |
+| Merge | `hebloc merge "C:\hebloc-incoming\efrat"` | 9 × OK, `MERGE OK`, **21/31**, 6,512,144 units, 0 in more than one run |
+| Data layer | `hebloc check` | `OK=True`, registry empty; Medieval invalid_tree_share 0.0081 |
+| Runs | `hebloc runs` | 9 new runs complete, tokens up to date |
+| Provisional stats | `hebloc stats run --runs mikra…,hazal…,medieval…` | `provisional-20261115-49160596a7`, 90.6 s, code `6a90386` (clean), reconciliation 0 problems |
+| Verify | `hebloc stats verify <folder>` | OK |
+| Mikra/Hazal unchanged | compare with `provisional-20261112-27bb4080cf` | all 11 tables + unit metrics identical |
+| Extremes traced | `hebloc.data.trace` + source line | longest = *Minchat Kenaot* l.902 (1,257 words, 4 pieces; rhymed prose separated only by commas); deepest = *Akeidat Yitzchak* l.4724 (388 words, depth 102, recomputed independently from heads = 102; source line = `text_raw` span) |
+
+**Medieval (provisional) for the report:** 115,415 sentences; 3,469,269 words; 164,711 word types, 18,065
+lemmas; length mean 30.1 / median 21 / max 1,257 (longest of the three corpora); depth mean 5.71 / median 6 /
+max 102; 930 invalid trees (0.81%), 73 multi-piece units (excluded from depth only). PROPN only 3.4% of words
+(Mikra 11.4%, Hazal 9.7%). Remember: Rambam is pre-tokenized; several Thought works are translations from
+Arabic; pilot head agreement was lowest on Medieval (57%, pilot report §8.2). The long-unit question of §0.3
+applies to Medieval too.
 
 **2026-11-12, end of session (M6 built):**
 
@@ -302,6 +317,8 @@ Also check the machine's power and sleep settings before M5 (one benchmark shard
   Python runs again.
 
 ## 7A. `start` on Ori's computer: merge Efrat's share + provisional Medieval statistics
+
+> **DONE 2026-11-15** (results: §0.1, §5). Kept below as the record of what was run.
 
 *Approved by Ori on 2026-11-15. Applies only when `data/team/identity.json` says `ori`. On Efrat's or Adi's
 computer, `start` still means their own M5 share (CLAUDE.md, PARTNER_START.md).*
