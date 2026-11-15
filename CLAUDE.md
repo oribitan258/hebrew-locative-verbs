@@ -51,6 +51,10 @@ until the user explicitly opens that scope.
   instructions to send `data/outbox/<name>` to Ori by Google Drive, OneDrive or USB. No shared folder
   is set up in advance. Ori merges; M6 statistics are computed centrally (D-040, D-045).
   **A partner's part ends when they send `data/outbox/<name>`: partners never compute statistics.**
+- **On ORI's computer (`data/team/identity.json` = ori, his share complete), `start` now means the next
+  stage (Ori, 2026-11-15): `docs/HANDOFF.md` §7A** — merge + validate Efrat's 9 slices, then PROVISIONAL
+  statistics for Mikra + Hazal + Medieval, then STOP. No registration, no final/Haskala/Modern statistics
+  (Adi's 10 slices pending). The rule below still applies on Efrat's and Adi's computers.
 - **If the person's whole message is "start"** (or "go", "continue", "status"): it means *run or check
   this computer's share of M5*. Read `PARTNER_START.md` and follow it from §2: identity from
   `data/team/identity.json`; skip every section whose "Skip if" holds; then §10b (`git pull`, `uv sync`,
@@ -88,8 +92,8 @@ until the user explicitly opens that scope.
   review the state read-only (docs, env, tests, `hebloc check`, `hebloc merge` report, where Efrat's and Adi's
   folders are), then present the plan for: merge + validate all 31 slices → `plan register --write` (+ decision)
   → `hebloc stats run --registered` (final, all five corpora, §4) → verify → report → STOP at M7.
-  **Execute nothing before Ori approves that plan.** If the partners' folders have not arrived, report and stop.
-  Neither trigger is the one-word "start" (which runs/checks this computer's M5 share).
+  **Execute nothing before Ori approves that plan.** If Adi's folder has not arrived, report and stop.
+- **Before that, `start` on Ori's computer** = HANDOFF §7A: merge Efrat + provisional Medieval (see Team section).
 
 ## Data flow
 ```
@@ -228,8 +232,10 @@ notebooks/     exploration only — never pipeline logic
 - [ ] M5 full parsing run — approved; each person starts their share via PARTNER_START.md.
       Ori's share COMPLETE 2026-11-12 (12/12 slices, 3,504,707 units, `data/outbox/ori`); D-043 (excused
       "¨¨" tokenizer artifact in the coverage check) and D-044 (pandas ≤3.0.2, pyarrow <26: Smart App
-      Control blocks newer DLLs). **Waiting for Efrat's (9) and Adi's (10) slices** → merge 31/31 → register
-      (done inside `finish statistics`, HANDOFF §7).
+      Control blocks newer DLLs). **Efrat's 9 slices ARRIVED 2026-11-15** (`data/efrat-data1` + `data/efrat-data2`,
+      one outbox split in two; all 9 bundles verified read-only; NOT merged; HANDOFF §0.1). **Waiting for Adi's
+      10 slices** → merge 31/31 → register (done inside `finish statistics`, HANDOFF §7).
+      **Next session: `start` = merge Efrat's 9 slices + provisional Medieval statistics (HANDOFF §7A).**
 - [ ] M6 descriptive statistics + parser-accuracy report — design approved (D-046, `docs/m6_design.md`: Part A =
       exactly §4; Part B deferred), `hebloc.stats` built + tested (D-047 matplotlib). DONE 2026-11-12: parser accuracy
       (final, `results/stats/accuracy/`), PROVISIONAL Mikra + Hazal (`data/stats/provisional-20261112-27bb4080cf`).

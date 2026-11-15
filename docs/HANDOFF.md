@@ -1,6 +1,7 @@
-# Session Handoff: M6 built; waiting for Efrat's and Adi's outputs; next is `finish statistics`
+# Session Handoff: next is `start` (merge Efrat + provisional Medieval); Adi's results still pending
 
-*Updated 2026-11-12, end of session (M6 design approved D-046; `hebloc.stats` built, tested, committed; parser
+*Updated 2026-11-15 (Efrat's output arrived in `data/efrat-data1` + `data/efrat-data2`, verified read-only, not merged;
+Adi's pending; Ori decided: next session `start` = merge Efrat + provisional Medieval, §7A). Before, 2026-11-12, end of session (M6 design approved D-046; `hebloc.stats` built, tested, committed; parser
 accuracy final; provisional Mikra + Hazal statistics; D-047 matplotlib; next: `finish statistics`, §7). Before: Ori's M5 share complete; D-043, D-044, D-045. Earlier: M5 approved 2026-11-09 (D-041), M4 finished 2026-11-07.
 This file summarizes and points to other documents; when they disagree, the linked documents win.*
 
@@ -8,19 +9,50 @@ This file summarizes and points to other documents; when they disagree, the link
 
 ## 0. Read first
 
-1. **State on 2026-11-12, end of session.**
-   - **M5:** Ori's share is complete (12/12 slices). **Waiting for Efrat's (9 slices) and Adi's
-     (10 slices) `data/outbox/<name>` folders.**
+1. **State on 2026-11-15.**
+   - **M5:** Ori's share is complete (12/12 slices, 3,504,707 units).
+   - **Efrat's output ARRIVED (2026-11-15), verified read-only, NOT merged yet.**
+     - It is in `data/efrat-data1/efrat/` + `data/efrat-data2/efrat/`: one outbox folder that the upload
+       split in two. `DELIVERY.json` is in `efrat-data1`; some zips and their `.sha256` sidecars are in
+       different halves.
+     - Checked for all 9 slices (`medieval`, `modern-a7`, `modern-haaretz-b01/b04/b05/b06/b09/b12/b18`):
+       - each zip is present, with bytes and sha256 = `DELIVERY.json` = its sidecar;
+       - `hebloc.store.bundle.verify` is OK: every member's sha256, and the corpora anchor;
+       - each run name = its slice; model = base `dicta-il/dictabert-joint@7b1256fc0846`;
+       - units per slice = the work plan; 3,007,437 units in total.
+     - `DELIVERY.json`: `complete: true`, coverage A, `settings_id` base-topk-v1, `plan_sha256` = the
+       approved plan, code `d98ff36`.
+     - **Before merging, put all files of BOTH halves into ONE folder** (copy, e.g. into
+       `C:\hebloc-incoming\efrat\`; names are unique). Merging the halves separately reports false
+       "MISSING"/sidecar problems, because `DELIVERY.json` expects every zip next to it. Keep the
+       originals in `data/` (D-045).
+     - Merging is still Ori's action, done inside `finish statistics`.
+   - **Adi's output (10 slices: `haskala`, `modern-knesset`, `modern-medical`, `modern-literary`,
+     `modern-haaretz-b02/b03/b14/b16/b17/b19`, ≈3,197,518 units) has NOT arrived yet.**
    - **M6:** built, tested and committed.
      - Parser accuracy is FINAL.
      - Mikra and Hazal statistics are PROVISIONAL.
      - The final statistics for all five corpora need the merged, registered dataset.
-   - **Ori's instruction:** stop here; do not go beyond M6.
-2. **Next step: when Ori types `finish statistics`** (in a fresh session, in Plan Mode), follow **§7**.
-   - Review the state, then present the plan for the remaining steps: merge and validate all 31 slices,
-     register the complete dataset, compute the final §4 statistics for all five corpora, and write the
-     final report.
-   - **Execute nothing before Ori approves that plan.**
+   - **Ori's instruction:** do not go beyond M6.
+2. **Next steps (Ori's decision, 2026-11-15).**
+   - **Now: `start`** (Ori's computer, fresh session) → **§7A**:
+     - merge and validate Efrat's 9 slices (21/31, NOT complete);
+     - compute PROVISIONAL statistics for Mikra, Hazal and Medieval;
+     - stop for review.
+     No registration; no final, Haskala or Modern statistics.
+   - **Adi's results are still pending.** Haskala and 9 Modern slices are hers. Without them, Haskala
+     and Modern cannot be computed, and nothing can be registered or finalized.
+   - **When Adi's folder arrives: `finish statistics`** (fresh session, Plan Mode) → **§7**:
+     - merge Adi → 31/31 COMPLETE;
+     - `plan register --write` (all 31 slices) + decision entry;
+     - final statistics for all five corpora (`hebloc stats run --registered`);
+     - report;
+     - M7 STOP.
+   - Details of the `finish statistics` session:
+     - review the state, then present the plan for the remaining steps: merge and validate all 31
+       slices, register the complete dataset, compute the final §4 statistics for all five corpora, and
+       write the final report;
+     - **execute nothing before Ori approves that plan.**
 3. **M6 as built** ([m6_design.md](m6_design.md), D-046, D-047).
    - Part A = exactly `project.pdf` §4 (R1–R6), per corpus, full view:
      - R1: words and lemmas with frequencies;
@@ -69,7 +101,7 @@ This file summarizes and points to other documents; when they disagree, the link
    - Always `uv run python -m hebloc …` / `uv run python -m pytest` (D-038).
 7. **Git history was rewritten twice** (D-034, D-042): old `code_commit` values in early manifests map
    to new hashes via §8 and `data/backups/pre-public-clean-2026-11-09/commit_map.txt`.
-8. **Current sections:** §0, §1, §5 (top), §7. §2–§4 are background; §6 and §8–§13 are the historical
+8. **Current sections:** §0, §1, §5 (top), §7A (next: `start`), §7 (after Adi: `finish statistics`). §2–§4 are background; §6 and §8–§13 are the historical
    record of earlier milestones (their to-do lists are done or superseded).
 
 ## 1. Status
@@ -81,7 +113,8 @@ This file summarizes and points to other documents; when they disagree, the link
 | M4 Data layer and access API | ✅ approved (D-030–D-033, D-041) | `2b6f2b1` |
 | Team workflow (D-034–D-042) | ✅ public repo, PARTNER_START.md, `hebloc work`/`merge` | up to `730cdbd` |
 | **M5 full parse: Ori's share** | ✅ **complete 2026-11-12**: 12/12 slices, 3,504,707 units, 12 verified bundles in `data/outbox/ori` (3.8 GB) | `4938012`, `c5f4627` |
-| M5: Efrat's share (9 slices) and Adi's (10 slices) | ⏳ on their computers; status unknown to this repo | — |
+| M5: Efrat's share (9 slices) | ✅ **arrived 2026-11-15**, all 9 bundles verified read-only (§0.1); not merged yet | — |
+| M5: Adi's share (10 slices) | ⏳ not arrived yet | — |
 | M5 merge + `plan register --write` | ⏳ after both folders arrive (PARTNER_START §12) | — |
 | **M6 statistics + parser accuracy** | design approved (D-046); built + tested; accuracy FINAL; Mikra + Hazal PROVISIONAL; **final run after merge + register: `finish statistics` (§7)** | "M6: …" (2026-11-12) |
 | M7 review checkpoint | STOP after M6 | — |
@@ -268,6 +301,86 @@ Also check the machine's power and sleep settings before M5 (one benchmark shard
   measure (profile, multi-process, batch size, GPU smoke test with an output-agreement check) once
   Python runs again.
 
+## 7A. `start` on Ori's computer: merge Efrat's share + provisional Medieval statistics
+
+*Approved by Ori on 2026-11-15. Applies only when `data/team/identity.json` says `ori`. On Efrat's or Adi's
+computer, `start` still means their own M5 share (CLAUDE.md, PARTNER_START.md).*
+
+**Goal:**
+- merge and validate Efrat's 9 slices now;
+- compute PROVISIONAL statistics for the three complete corpora: Mikra, Hazal and Medieval;
+- stop for Ori's review.
+
+Ori asked for execution, so no separate plan approval is needed. Still stop at once on any FAIL.
+
+**Why now:**
+- merging is incremental and safe to repeat;
+- it runs the full checks (exact sentences per slice) while Efrat still has her copy;
+- Medieval is entirely in Efrat's share, so it becomes complete.
+
+**Do not** register runs, and do not compute final, Haskala or Modern statistics: Adi's 10 slices are
+missing, and those statistics are not additive (D-045). The code refuses incomplete corpora anyway.
+
+### Steps
+
+1. **State (read-only).**
+   - Run:
+     ```
+     uv run python -m hebloc whoami                 # must be ori
+     git status --short; git pull; uv sync
+     uv run python -c "import pandas, pyarrow, duckdb, torch, matplotlib; print('imports OK')"
+     uv run python -m pytest -q                     # 178 passed, 1 deselected
+     uv run python -m hebloc check                  # OK=True
+     uv run python -m hebloc merge                  # report only: 12/31 slices before this stage
+     ```
+   - Check free disk space: about 4 GB of zips get copied, and about the same again is restored.
+2. **Combine Efrat's split delivery.**
+   - **Copy, never move:** the originals in `data/efrat-data1` and `data/efrat-data2` stay as backups
+     (D-045).
+   - Copy every file of `data/efrat-data1/efrat/` and `data/efrat-data2/efrat/` into one new folder
+     `C:\hebloc-incoming\efrat\`. Expect 20 files: 9 zips, 9 `.sha256` files, `DELIVERY.json`,
+     `HOW_TO_SEND.txt`.
+   - All 9 bundles were already verified read-only on 2026-11-15 (§0.1); merge re-checks them.
+3. **Merge:** `uv run python -m hebloc merge "C:\hebloc-incoming\efrat"` (PARTNER_START §12,
+   `/merge-results`).
+   - Expected:
+     - 9 lines `OK … person=efrat`, and `MERGE OK`;
+     - `full coverage A: 21/31 slices OK; units 6,512,144/9,709,662; units in more than one run: 0;
+       NOT complete`;
+     - missing only Adi's 10 slices: `haskala`, `modern-knesset`, `modern-medical`,
+       `modern-literary`, `modern-haaretz-b02/b03/b14/b16/b17/b19`.
+   - Any `FAIL`, `CONFLICT` or `MISSING`: stop and report to Ori; never use `--overwrite` unless he asks.
+4. **Validate.**
+   - `uv run python -m hebloc check` → `OK=True` (registry still empty).
+   - `uv run python -m hebloc runs` → `medieval/base-topk-v1__medieval` and the 8 new Modern runs:
+     complete, `tokens_up_to_date` n/n. If tokens are missing, run `hebloc tokens <run>`; never re-parse.
+5. **Provisional statistics (3 corpora).**
+   - Commit code/docs first if anything changed, so `code_commit` has no `+dirty`.
+   - Run `uv run python -m hebloc stats run --runs mikra/base-topk-v1__mikra,hazal/base-topk-v1__hazal,medieval/base-topk-v1__medieval`.
+   - This creates a new `data/stats/provisional-<date>-<hash>/` with `report/stats_report.md`, CSV and
+     figures. Reconciliation must report 0 problems. Expected time: a few minutes (Medieval has 115,415
+     units).
+6. **Verify.**
+   - `uv run python -m hebloc stats verify <folder>` → OK.
+   - The Mikra and Hazal tables must equal those in `data/stats/provisional-20261112-27bb4080cf`
+     (same runs, same definitions).
+   - Trace Medieval's extreme units (longest, deepest) with `hebloc.data.trace`.
+   - Look at the figures.
+   - Note Medieval facts for the report:
+     - Rambam is pre-tokenized;
+     - some Thought works are translations;
+     - parser head agreement was lowest on Medieval in the pilot (57%, pilot report §8.2).
+7. **Close.**
+   - Update §0/§1 of this file and the CLAUDE.md status: Efrat merged, Medieval provisional, Adi still
+     pending.
+   - Commit and push the docs (Ori's standing request for this stage).
+   - Tell Ori to let Efrat know MERGE OK, so she may free her space (her copy was the backup).
+   - Give a plain-language summary and **STOP**.
+
+**Next, after this stage:** Adi's folder arrives → `finish statistics` (§7): merge Adi → 31/31 COMPLETE →
+`plan register --write` + decision entry → `hebloc stats run --registered` (final, all five corpora) →
+report → M7 STOP.
+
 ## 7. `finish statistics`: final M6 run (fresh session, Plan Mode)
 
 **Goal of that session:** an approved plan for the remaining M6 steps, then its execution in order,
@@ -292,8 +405,11 @@ checks are fine).
    uv run python -m hebloc runs
    uv run python -m hebloc merge              # completeness report only (no paths = no changes)
    ```
-3. **Ask Ori where Efrat's and Adi's folders are.**
-   - If they have not arrived, report that and stop. Nothing else can be finalized.
+3. **Locate the partners' folders.**
+   - Efrat's: merged in the `start` stage (§7A); if not, `data/efrat-data1/efrat` + `data/efrat-data2/efrat`
+     (verified 2026-11-15, §0.1). Re-merging is safe (identical bundles are skipped).
+   - Adi's: ask Ori. If Adi's has not arrived, report that and stop: the final statistics need
+     31/31. Efrat's may be merged meanwhile, only with Ori's go-ahead.
    - If only one has arrived, it may be merged (merging is incremental and safe to repeat), but the
      final statistics still wait for 31/31.
 
@@ -301,7 +417,9 @@ checks are fine).
 
 1. **Merge** (PARTNER_START §12).
    - Ori copies each received folder outside the project, e.g. `C:\hebloc-incoming\efrat` and
-     `…\adi`.
+     `…\adi`. **Efrat's arrived split in two:** copy the files of BOTH `data/efrat-data1/efrat` and
+     `data/efrat-data2/efrat` into the single folder `C:\hebloc-incoming\efrat` (18 + 2 files: 9 zips,
+     9 sidecars, `DELIVERY.json`, `HOW_TO_SEND.txt`). Check Adi's folder for the same split.
    - Run `uv run python -m hebloc merge "C:\hebloc-incoming"`.
    - Success = `MERGE OK` and `full coverage A: 31/31 slices OK; units 9,709,662/9,709,662; units in
      more than one run: 0; COMPLETE`.

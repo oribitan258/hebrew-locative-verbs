@@ -796,3 +796,20 @@ Design: [m6_design.md](m6_design.md).
   Windows starts blocking one of its files, follow D-044 (pin another version; never disable Smart App
   Control). Charts carry no Hebrew text (matplotlib does not lay out right-to-left text); Hebrew words
   appear only in the tables.
+
+### D-048 · Merge Efrat's share before Adi's; provisional Medieval statistics; `start` on Ori's computer (2026-11-15) · accepted (Ori)
+- *Situation.* Efrat's 9 slices arrived on 2026-11-15, as one outbox split by the upload into
+  `data/efrat-data1` and `data/efrat-data2`. Read-only check of all 9 bundles: sha256 = `DELIVERY.json` =
+  sidecar, `bundle.verify` OK (members, corpora anchor), approved settings and model, units = work plan
+  (3,007,437). Adi's 10 slices (Haskala + 9 Modern) have not arrived.
+- *Decision.*
+  - Merge Efrat's share now: merging is incremental and repeatable, and the full checks run while Efrat
+    still has her copy. Before merging, copy both halves into one folder (`DELIVERY.json` expects every
+    zip beside it); the originals stay in `data/` (D-045).
+  - Compute PROVISIONAL statistics for the complete corpora Mikra, Hazal and Medieval.
+  - Do **not** register runs or compute final, Haskala or Modern statistics before Adi's share is merged
+    (31/31). D-040 and D-045 are unchanged: final statistics are computed once, from the registered runs
+    of all five corpora.
+- *Trigger.* On Ori's computer (identity `ori`, his share complete), `start` in a new session runs this
+  stage (`docs/HANDOFF.md` §7A) and stops for review. On the partners' computers, `start` keeps its M5
+  meaning. After Adi's folder arrives: `finish statistics` (HANDOFF §7).
