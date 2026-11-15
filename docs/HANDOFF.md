@@ -74,6 +74,7 @@ This file summarizes and points to other documents; when they disagree, the link
      paragraphs; up to 1,955 words; one 362-word Tosefta unit has depth 187, verified) stay in the depth
      statistics as defined (recommended: keep, and discuss in the report). The alternative is to exclude
      units above a length from depth only, which would need a decision entry. Ask at `finish statistics`.
+     Medieval has the same phenomenon (2026-11-15): units up to 1,257 words, max depth 102, verified (§5).
 4. **Agreed workflow (D-040, D-045).**
    - Final statistics are computed ONCE on Ori's computer, after `hebloc merge` reports 31/31 COMPLETE
      and `plan register --write`, over the registered runs of all five corpora.
@@ -96,7 +97,8 @@ This file summarizes and points to other documents; when they disagree, the link
    - Always `uv run python -m hebloc …` / `uv run python -m pytest` (D-038).
 7. **Git history was rewritten twice** (D-034, D-042): old `code_commit` values in early manifests map
    to new hashes via §8 and `data/backups/pre-public-clean-2026-11-09/commit_map.txt`.
-8. **Current sections:** §0, §1, §5 (top), §7A (next: `start`), §7 (after Adi: `finish statistics`). §2–§4 are background; §6 and §8–§13 are the historical
+8. **Current sections:** §0, §1, §5 (top), §7 (next, after Adi's folder arrives: `finish statistics`).
+   §7A (`start`: merge Efrat + provisional Medieval) is DONE (2026-11-15). §2–§4 are background; §6 and §8–§13 are the historical
    record of earlier milestones (their to-do lists are done or superseded).
 
 ## 1. Status
@@ -423,21 +425,20 @@ checks are fine).
    uv run python -m hebloc merge              # completeness report only (no paths = no changes)
    ```
 3. **Locate the partners' folders.**
-   - Efrat's: merged in the `start` stage (§7A); if not, `data/efrat-data1/efrat` + `data/efrat-data2/efrat`
-     (verified 2026-11-15, §0.1). Re-merging is safe (identical bundles are skipped).
-   - Adi's: ask Ori. If Adi's has not arrived, report that and stop: the final statistics need
-     31/31. Efrat's may be merged meanwhile, only with Ori's go-ahead.
-   - If only one has arrived, it may be merged (merging is incremental and safe to repeat), but the
-     final statistics still wait for 31/31.
+   - Efrat's: **already MERGED on 2026-11-15** (§7A, §0.1). `hebloc merge` with no paths must report
+     21/31 with only Adi's 10 slices missing. Do not merge her folder again (it is safe but unnecessary).
+   - Adi's: ask Ori where he put it. If Adi's has not arrived, report that and stop: the final
+     statistics need 31/31.
 
 ### 7.2 The plan to present (adapt to what 7.1 found)
 
 1. **Merge** (PARTNER_START §12).
-   - Ori copies each received folder outside the project, e.g. `C:\hebloc-incoming\efrat` and
-     `…\adi`. **Efrat's arrived split in two:** copy the files of BOTH `data/efrat-data1/efrat` and
-     `data/efrat-data2/efrat` into the single folder `C:\hebloc-incoming\efrat` (18 + 2 files: 9 zips,
-     9 sidecars, `DELIVERY.json`, `HOW_TO_SEND.txt`). Check Adi's folder for the same split.
-   - Run `uv run python -m hebloc merge "C:\hebloc-incoming"`.
+   - Only Adi's folder remains (Efrat's is merged). Copy, never move, all its files into ONE folder
+     `C:\hebloc-incoming\adi` (expect 10 zips, 10 `.sha256` sidecars, `DELIVERY.json`,
+     `HOW_TO_SEND.txt`). **Efrat's upload arrived split in two; check Adi's for the same:** if her files
+     are in several folders, combine them first, or the merge reports false "MISSING"/sidecar problems.
+     Keep the originals (D-045).
+   - Run `uv run python -m hebloc merge "C:\hebloc-incoming\adi"`.
    - Success = `MERGE OK` and `full coverage A: 31/31 slices OK; units 9,709,662/9,709,662; units in
      more than one run: 0; COMPLETE`.
    - Any FAIL or CONFLICT: stop and report to Ori with the merge report (`data/team/merge_report.json`);

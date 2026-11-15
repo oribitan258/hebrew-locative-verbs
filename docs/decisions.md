@@ -813,3 +813,9 @@ Design: [m6_design.md](m6_design.md).
 - *Trigger.* On Ori's computer (identity `ori`, his share complete), `start` in a new session runs this
   stage (`docs/HANDOFF.md` §7A) and stops for review. On the partners' computers, `start` keeps its M5
   meaning. After Adi's folder arrives: `finish statistics` (HANDOFF §7).
+- *Outcome (2026-11-15).* Done. Merge of the combined folder `C:\hebloc-incoming\efrat`: 9 × OK, `MERGE OK`,
+  21/31 slices, 6,512,144/9,709,662 units, 0 in more than one run; `hebloc check` OK=True (registry empty).
+  Provisional statistics `data/stats/provisional-20261115-49160596a7` (Mikra, Hazal, Medieval): reconciliation
+  0 problems, `stats verify` OK, Mikra/Hazal tables identical to `provisional-20261112-27bb4080cf`. Since then
+  `start` on Ori's computer is a read-only status check; the next stage is `finish statistics` after Adi's
+  folder arrives.

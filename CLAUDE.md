@@ -88,10 +88,11 @@ until the user explicitly opens that scope.
   Do not register runs early; do not tune on partial Modern.
 - **Design approved 2026-11-12 (D-046, `docs/m6_design.md`):** Part A = exactly the §4 items (R1–R6), per
   corpus, full view; R5 covers EVERY Dicta inflection feature; Part B (R7 extras) deferred — do not build
-  it unless Ori opens it. Built, tested and committed; parser accuracy FINAL; Mikra + Hazal PROVISIONAL.
+  it unless Ori opens it. Built, tested and committed; parser accuracy FINAL; Mikra + Hazal + Medieval PROVISIONAL.
 - **`finish statistics`** (Ori's message, in a fresh session, in Plan Mode) means: do `docs/HANDOFF.md` §7 —
-  review the state read-only (docs, env, tests, `hebloc check`, `hebloc merge` report, where Efrat's and Adi's
-  folders are), then present the plan for: merge + validate all 31 slices → `plan register --write` (+ decision)
+  review the state read-only (docs, env, tests, `hebloc check`, `hebloc merge` report = 21/31, where Adi's
+  folder is; Efrat's is already merged), then present the plan for: merge Adi (check for a split upload) +
+  validate all 31 slices → `plan register --write` (+ decision)
   → `hebloc stats run --registered` (final, all five corpora, §4) → verify → report → STOP at M7.
   **Execute nothing before Ori approves that plan.** If Adi's folder has not arrived, report and stop.
 - HANDOFF §7A (merge Efrat + provisional Medieval) was done 2026-11-15; `finish statistics` waits for Adi's folder.
