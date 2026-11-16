@@ -819,3 +819,23 @@ Design: [m6_design.md](m6_design.md).
   0 problems, `stats verify` OK, Mikra/Hazal tables identical to `provisional-20261112-27bb4080cf`. Since then
   `start` on Ori's computer is a read-only status check; the next stage is `finish statistics` after Adi's
   folder arrives.
+
+### D-049 · Adi's share merged: 31/31 COMPLETE; the 31 runs registered as canonical; long units stay in depth (2026-11-15) · accepted (Ori)
+- *Delivery.* Adi's 10 slices (`haskala`, `modern-knesset`, `modern-medical`, `modern-literary`,
+  `modern-haaretz-b02/b03/b14/b16/b17/b19`; 3,197,518 units) arrived split by the upload into `data/adi-data1/adi`
+  and `data/adi-data2/adi` (22 files). Read-only check before merging: every zip's size and sha256 = `DELIVERY.json`
+  = sidecar; `complete: true`, coverage A, base-topk-v1, approved plan; each slice's units = `docs/WORK_PLAN.md`.
+  Adi ran code `730cdbd` (before D-043/D-044); `merge` restores and re-validates every run with the current code,
+  so this does not matter. `modern-medical` has 2 fewer pieces than units: empty units get no pieces by design.
+- *Merge.* Both halves copied (never moved) into `C:\hebloc-incoming\adi` (22 files, sizes = originals); originals
+  kept (D-045). `hebloc merge`: 10 × OK, `MERGE OK`, **full coverage A: 31/31 slices OK; units
+  9,709,662/9,709,662; units in more than one run: 0; COMPLETE** (≈2 h, mostly re-validation of `modern-knesset`).
+  `hebloc check` OK=True; `hebloc runs`: every run complete, tokens up to date.
+- *Registration.* `hebloc plan register --write`: `config/annotations.yaml` now names 31 canonical runs —
+  `mikra/base-topk-v1__mikra`, `hazal/base-topk-v1__hazal`, `medieval/base-topk-v1__medieval`,
+  `haskala/base-topk-v1__haskala`, and 27 Modern runs `modern/base-topk-v1__modern-<slice>` (a7, news-other,
+  knesset, blogs, medical, tapuz, literary, haaretz-b00 … b19).
+- *Depth and very long units (open question of 2026-11-12, decided by Ori).* Paragraph-length "sentences" in Hazal
+  (up to 1,955 words; depth up to 187) and Medieval (up to 1,257 words; depth up to 102) STAY in the depth
+  statistics as defined in D-046 (only multi-piece and invalid-tree units are excluded). The report discusses them.
+- *Next.* Final statistics `hebloc stats run --registered` (all five corpora, D-045/D-046).

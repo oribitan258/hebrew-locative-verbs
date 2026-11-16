@@ -18,4 +18,40 @@
 #     mikra: [mikra/base_v1]
 #     modern: [modern/base_v1_nonhaaretz, modern/base_v1_haaretz10]
 
-canonical: {}
+canonical:
+  haskala:
+  - haskala/base-topk-v1__haskala
+  hazal:
+  - hazal/base-topk-v1__hazal
+  medieval:
+  - medieval/base-topk-v1__medieval
+  mikra:
+  - mikra/base-topk-v1__mikra
+  modern:
+  - modern/base-topk-v1__modern-a7
+  - modern/base-topk-v1__modern-news-other
+  - modern/base-topk-v1__modern-knesset
+  - modern/base-topk-v1__modern-blogs
+  - modern/base-topk-v1__modern-medical
+  - modern/base-topk-v1__modern-tapuz
+  - modern/base-topk-v1__modern-literary
+  - modern/base-topk-v1__modern-haaretz-b00
+  - modern/base-topk-v1__modern-haaretz-b01
+  - modern/base-topk-v1__modern-haaretz-b02
+  - modern/base-topk-v1__modern-haaretz-b03
+  - modern/base-topk-v1__modern-haaretz-b04
+  - modern/base-topk-v1__modern-haaretz-b05
+  - modern/base-topk-v1__modern-haaretz-b06
+  - modern/base-topk-v1__modern-haaretz-b07
+  - modern/base-topk-v1__modern-haaretz-b08
+  - modern/base-topk-v1__modern-haaretz-b09
+  - modern/base-topk-v1__modern-haaretz-b10
+  - modern/base-topk-v1__modern-haaretz-b11
+  - modern/base-topk-v1__modern-haaretz-b12
+  - modern/base-topk-v1__modern-haaretz-b13
+  - modern/base-topk-v1__modern-haaretz-b14
+  - modern/base-topk-v1__modern-haaretz-b15
+  - modern/base-topk-v1__modern-haaretz-b16
+  - modern/base-topk-v1__modern-haaretz-b17
+  - modern/base-topk-v1__modern-haaretz-b18
+  - modern/base-topk-v1__modern-haaretz-b19
