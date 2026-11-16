@@ -251,6 +251,8 @@ Python: `hebloc.stats.compute.load(<folder>)`; `hebloc stats verify <folder>` re
 | `deprel.parquet` | corpus × relation | `n`, share of tokens, `n_words`, share of words (R6) |
 
 A provisional folder also holds `report/` (CSV, `figures/*.png`, `stats_report.md`), which is local
-only. The final run writes these to `results/stats/` and `docs/stats_report.md`. Parser accuracy
+only. The final run writes these to `results/stats/` and `docs/stats_report.md` (final:
+`final-20261116-565826e3c1`). The report CSVs are UTF-8 with a BOM, so Excel shows the Hebrew (D-050); read
+them with `encoding="utf-8-sig"` in pandas. Parser accuracy
 (final) is in `results/stats/accuracy/`: `mikra_vs_bhsa.json`, `layers.csv`, `pos_confusion.csv`,
 `tense_confusion.csv` and `excluded_verses.csv` (references only, no corpus text).

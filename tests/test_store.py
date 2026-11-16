@@ -376,15 +376,28 @@ def _pilot(run_id: str = "base__default"):
     return d
 
 
-def test_real_pilot_tokens_via_api_match_validation():
+def test_real_pilot_tokens_via_api_match_validation(tmp_path, monkeypatch):
     from hebloc import data
+    from hebloc.store import runs as R
 
     d = _pilot()
     checks = json.loads((d / "checks.json").read_text(encoding="utf-8"))
     t = data.tokens(run="pilot/base__default", columns=["sent_id", "piece_tree_valid"])
     assert len(t) == checks["tokens"]
-    with pytest.raises(LookupError):
-        data.tokens("mikra")                         # no canonical run before M5: never guessed
+    # with an empty registry, a corpus without a canonical run is refused: never guessed (D-032)
+    empty = tmp_path / "annotations.yaml"
+    empty.write_text("canonical: {}\n", encoding="utf-8")
+    real_canonical_runs = R.canonical_runs
+    with monkeypatch.context() as m:
+        m.setattr(R, "canonical_runs", lambda *a, **k: real_canonical_runs(*a, **{**k, "config": empty}))
+        with pytest.raises(LookupError):
+            data.tokens("mikra")
+    # with the real registry (filled in M5, D-049), the canonical Mikra tokens are exactly the validated run's
+    canon = R.canonical_runs("mikra")
+    if canon:
+        (run,) = canon["mikra"]
+        expected = json.loads((run.path / "checks.json").read_text(encoding="utf-8"))["tokens"]
+        assert len(data.tokens("mikra", columns=["sent_id"])) == expected
     mikra = t[t.sent_id.str.startswith("mikra:")].sent_id.iloc[0]
     tr = data.trace_token(mikra, 0, run="pilot/base__default")
     assert tr["verified"] and tr["parsed_text_is_text_norm"]

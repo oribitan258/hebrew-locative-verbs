@@ -239,3 +239,19 @@ def test_depth_matches_pilot_tree_depths():
             assert words.max() <= d.max()
         checked += 1
     assert checked > 900
+
+
+def test_csv_has_bom_for_excel_and_round_trips(tmp_path):
+    """Report CSVs are UTF-8 with a BOM (Excel shows Hebrew correctly) and read back unchanged."""
+    from hebloc.stats import report as REP
+
+    t = pa.table({"corpus_id": ["mikra", "hazal"], "word": ["בראשית", "אמר"], "n": [3, 2]})
+    tables = {name: t for name in REP.TABLES}
+    if "word_freq" in tables:
+        tables["word_freq"] = tables["lemma_freq"] = t.append_column("rank", pa.array([1, 2]))
+    written = REP.write_csv(tables, tmp_path)
+    for name in written:
+        raw = (tmp_path / name).read_bytes()
+        assert raw.startswith(b"\xef\xbb\xbf"), name
+        back = pd.read_csv(tmp_path / name, encoding="utf-8-sig")
+        assert list(back["word"]) == ["בראשית", "אמר"] and "corpus_id" in back.columns

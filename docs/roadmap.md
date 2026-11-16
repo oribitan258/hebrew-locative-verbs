@@ -30,18 +30,22 @@ stative and symmetric. MH inherits the property. When MH loses an alternation, F
 
 Assignment stages (`project.pdf`):
 
-| § | Stage |
-|---|---|
-| §1 | Background reading |
-| §2 | Corpora |
-| §3 | Dicta parsing |
-| §4 | Statistics |
-| §5 | Test the claim (Mikra first, then the other corpora) |
-| §6 | Extend to all verbs in one corpus |
-| §7 | Classifiers (lexical, morphological, syntactic and word2vec features; 10-fold CV; Acc/P/R/F1) |
-| §8 | LLM integration |
-| §9–10 | Report and submission |
-| §11 | Personal initiative |
+§2–§4 are closed (2026-11-16, D-050). Summary for the professor: [SECTIONS_2-4.md](SECTIONS_2-4.md).
+
+| § | Stage | Status (reviewed 2026-11-16) |
+|---|---|---|
+| §1 | Background reading and summaries (paper ch. 1–3; morphology/syntax of each period, with sources; classifiers; Acc/P/R/F) | **Not started in the repo.** Only an internal paper summary (§0 above) exists |
+| §2 | Corpora | **Done** (M1: 404,294 files cataloged; M2: 9,709,662 units) |
+| §3 | Dicta parsing of every verse/sentence | **Done** (M5: all units of all five corpora, all of Modern, 31/31, D-049). Dicta has no construct state or binyan (§3.2 lists construct) |
+| §4 | Statistics R1–R6 | **Done, final** (2026-11-16); analysis draft awaits Ori's approval |
+| §4 | "Any additional statistic" (R7) | **Deferred** by Ori (Part B, D-046). Parser accuracy vs BHSA was done as an extra |
+| §5 | Test the claim (Mikra first, then the other corpora) | Not started (Part 2, R1–R3) |
+| §6 | Extend to all verbs in one corpus | Not started (R4) |
+| §7 | Classifiers (lexical, morphological, syntactic and word2vec features; 10-fold CV; Acc/P/R/F1) | Not started (R5–R6) |
+| §8 | LLM integration | Not started (R7) |
+| §9 | Report | Partial: only the §4 part exists (`stats_report.md` + draft `stats_analysis.md`) |
+| §10 | Submission (report, data, code) | Not started. Code is in the public repo; a data package is still to be chosen |
+| §11 | Personal initiative | Ongoing. Examples: parser accuracy on all of Mikra vs BHSA; full provenance; exact-units merge |
 
 ---
 
@@ -57,7 +61,7 @@ Detailed milestone definitions are kept in the approved plan and summarized here
 | M3 Pilot (gate) | ~1,000 units end to end; schema; storage and throughput benchmark; quality audit; BHSA check; **Modern coverage options for a user decision** | `docs/pilot_report.md` |
 | M4 Data layer | Parquet schemas, atomic shard writer, DuckDB catalog, Python API, CoNLL-U export, integrity tests | `src/hebloc/store`, `hebloc.data`, `docs/data_dictionary.md` |
 | M5 Full parse | All units in scope, resumable and sharded | `data/annotations/...` |
-| M6 Statistics | Exactly the §4 statistics (R1–R6) per corpus, full view (D-046; R7 extras deferred); parser accuracy on Mikra vs BHSA. Built 2026-11-12; accuracy final; provisional Mikra + Hazal + Medieval 2026-11-15 (21/31 slices merged); final run after Adi's share is merged (`finish statistics`) | `data/stats`, `results/stats`, `docs/stats_report.md`, [m6_design.md](m6_design.md) |
+| M6 Statistics | Exactly the §4 statistics (R1–R6) per corpus, full view (D-046; R7 extras deferred); parser accuracy on Mikra vs BHSA. Built 2026-11-12; accuracy final; **FINAL statistics for all five corpora 2026-11-16** (31/31 merged and registered, D-049; `final-20261116-565826e3c1`); analysis draft [stats_analysis.md](stats_analysis.md) | `data/stats`, `results/stats`, `docs/stats_report.md`, [stats_analysis.md](stats_analysis.md), [m6_design.md](m6_design.md) |
 | M7 Review | Stop and review with the partners | — |
 
 ---

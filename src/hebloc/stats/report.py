@@ -57,8 +57,15 @@ def _md_table(head: list[str], rows: list[list[str]], align: str | None = None) 
 
 # ------------------------------------------------------------------------------------------ CSV
 
+CSV_BOM = "﻿"   # UTF-8 with BOM: Excel then shows the Hebrew correctly; pandas/DuckDB read it unchanged
+
+
 def write_csv(tables: dict[str, pa.Table], out: Path) -> list[str]:
+    import io
+
     import pyarrow.csv as pacsv
+
+    from hebloc.store.io import atomic_write_text
 
     out.mkdir(parents=True, exist_ok=True)
     written = []
@@ -69,7 +76,9 @@ def write_csv(tables: dict[str, pa.Table], out: Path) -> list[str]:
             name = f"{name}_top{TOP_CSV}"
         if "measure_order" in t.column_names:
             t = t.drop(["measure_order"])
-        pacsv.write_csv(t, out / f"{name}.csv")
+        buf = io.BytesIO()
+        pacsv.write_csv(t, buf)
+        atomic_write_text(CSV_BOM + buf.getvalue().decode("utf-8"), out / f"{name}.csv")
         written.append(f"{name}.csv")
     return written
 

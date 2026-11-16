@@ -51,11 +51,9 @@ until the user explicitly opens that scope.
   instructions to send `data/outbox/<name>` to Ori by Google Drive, OneDrive or USB. No shared folder
   is set up in advance. Ori merges; M6 statistics are computed centrally (D-040, D-045).
   **A partner's part ends when they send `data/outbox/<name>`: partners never compute statistics.**
-- **On ORI's computer (`data/team/identity.json` = ori):** the `start` stage of `docs/HANDOFF.md` §7A
-  (merge Efrat + provisional Mikra/Hazal/Medieval) is DONE (2026-11-15, 21/31 slices merged). `start`/`status`
-  there now = a read-only status check: report 21/31 and whether Adi's folder has arrived; if it has, tell
-  Ori to type `finish statistics` (HANDOFF §7). No registration, no final/Haskala/Modern statistics before
-  31/31. The rule below still applies on Efrat's and Adi's computers.
+- **On ORI's computer (`data/team/identity.json` = ori):** M5 is COMPLETE (all 31 slices merged and registered,
+  D-049) and the final M6 statistics exist (2026-11-16). `start`/`status` there = a read-only status check
+  (31/31, registry, final stats; M7 review pending). The rule below still applies on Efrat's and Adi's computers.
 - **If the person's whole message is "start"** (or "go", "continue", "status"): it means *run or check
   this computer's share of M5*. Read `PARTNER_START.md` and follow it from §2: identity from
   `data/team/identity.json`; skip every section whose "Skip if" holds; then §10b (`git pull`, `uv sync`,
@@ -95,7 +93,8 @@ until the user explicitly opens that scope.
   validate all 31 slices → `plan register --write` (+ decision)
   → `hebloc stats run --registered` (final, all five corpora, §4) → verify → report → STOP at M7.
   **Execute nothing before Ori approves that plan.** If Adi's folder has not arrived, report and stop.
-- HANDOFF §7A (merge Efrat + provisional Medieval) was done 2026-11-15; `finish statistics` waits for Adi's folder.
+- HANDOFF §7A (merge Efrat + provisional Medieval) was done 2026-11-15; `finish statistics` was done 2026-11-16
+  (Adi merged → 31/31, registered D-049, final statistics `data/stats/final-20261116-565826e3c1`).
 
 ## Data flow
 ```
@@ -231,18 +230,28 @@ notebooks/     exploration only — never pipeline logic
       (base, MST fix, `topk`, D-025 flags, D-026 normalization; R5 not applied; D-021 + audit deferred to M6).
       GitHub repo is PUBLIC (no invitations; partners cannot push). Corpus-text audit sheets removed
       from git and from all history (D-042; local copies + pre-clean history bundle in data/backups/).
-- [ ] M5 full parsing run — approved; each person starts their share via PARTNER_START.md.
+- [x] M5 full parsing run — **COMPLETE 2026-11-16**: Adi's 10 slices merged (MERGE OK, 31/31 slices,
+      9,709,662/9,709,662 units, 0 overlap, COMPLETE); `hebloc check --deep` OK; 31 canonical runs registered
+      (`config/annotations.yaml`, D-049). Earlier history:
       Ori's share COMPLETE 2026-11-12 (12/12 slices, 3,504,707 units, `data/outbox/ori`); D-043 (excused
       "¨¨" tokenizer artifact in the coverage check) and D-044 (pandas ≤3.0.2, pyarrow <26: Smart App
       Control blocks newer DLLs). **Efrat's 9 slices MERGED 2026-11-15** (MERGE OK, combined copy in
       `C:\hebloc-incoming\efrat`; originals kept in `data/efrat-data1` + `data/efrat-data2`): **21/31 slices,
       6,512,144/9,709,662 units, 0 overlap**; `hebloc check` OK=True. **Waiting for Adi's 10 slices** → merge
       31/31 → register (done inside `finish statistics`, HANDOFF §7).
-- [ ] M6 descriptive statistics + parser-accuracy report — design approved (D-046, `docs/m6_design.md`: Part A =
+- [x] M6 descriptive statistics + parser-accuracy report — **DONE 2026-11-16** (only the analysis wording awaits Ori) — design approved (D-046, `docs/m6_design.md`: Part A =
       exactly §4; Part B deferred), `hebloc.stats` built + tested (D-047 matplotlib). DONE 2026-11-12: parser accuracy
       (final, `results/stats/accuracy/`), PROVISIONAL Mikra + Hazal (`data/stats/provisional-20261112-27bb4080cf`).
       2026-11-15: PROVISIONAL Mikra + Hazal + Medieval (`data/stats/provisional-20261115-49160596a7`; Mikra/Hazal
       tables identical to 2026-11-12; reconciliation 0 problems; verify OK).
-      Remaining: merge + register (all 31 slices) → final statistics for all five corpora → report:
-      Ori types `finish statistics` (HANDOFF §7). Ori's instruction: do not go beyond M6.
-- [ ] M7 review checkpoint (STOP)
+      **2026-11-16: FINAL statistics, all five corpora** (`hebloc stats run --registered` →
+      `data/stats/final-20261116-565826e3c1`, `results/stats/`, `docs/stats_report.md`; reconciliation 0 problems;
+      `stats verify` OK; Mikra/Hazal/Medieval identical to provisional; backup `data/backups/stats/`).
+      Hand-written analysis: `docs/stats_analysis.md` (separate file: re-rendering overwrites stats_report.md).
+      **Closeout of assignment §2–§4 (2026-11-16, D-050):** verified and committed; CSVs UTF-8 with BOM; summary for
+      the professor `docs/SECTIONS_2-4.md`. Ori's instruction: do not go beyond M6.
+- [ ] M7 review checkpoint (STOP): Ori + partners review the §4 results and `docs/stats_analysis.md` (wording
+      not yet approved). Assignment status per project.pdf section: `docs/roadmap.md` (table at the top).
+      Remaining after M7, only when Ori opens it: §5 (Mikra first: verb lexicon from the paper → frames →
+      preposition identity; roadmap Part 2 R1–R3), §6, §7, §8, §1 background summaries, §9 report, §10 submission;
+      §4 R7 extras deferred (Part B).

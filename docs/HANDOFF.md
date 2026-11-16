@@ -1,4 +1,47 @@
-# Session Handoff: Efrat merged (21/31), provisional Medieval done; waiting for Adi → `finish statistics`
+# Session Handoff: assignment §2–§4 CLOSED (2026-11-16) → M7 review; §5 next only when Ori opens it
+
+> **2026-11-16, closeout of §2–§4 (D-050).** Summary for the professor: [SECTIONS_2-4.md](SECTIONS_2-4.md).
+> - **Verified.** Every §2 sub-corpus is present and parsed. The 201 files without units are all empty,
+>   placeholder or auxiliary. Test suite passes.
+> - **Fixed.** Report CSVs are now UTF-8 with a BOM, so Excel shows the Hebrew. The re-render left the report and
+>   figures byte-identical.
+> - **Analysis draft.** One fact in `stats_analysis.md` was made precise: the pilot's 57% is base-vs-tiny head
+>   agreement. The draft's wording still awaits Ori.
+> - **Committed and pushed.**
+> - **Next: M7 review, then §5 on Mikra (roadmap Part 2 R1–R2), only when Ori opens it.**
+>
+> **2026-11-16, `finish statistics` (§7) DONE.**
+> - **Merge.** Adi's 10 slices arrived split in `data/adi-data1|2`. They were copied into `C:\hebloc-incoming\adi`
+>   (22 files) and merged: 10 × OK, `MERGE OK`, **31/31 slices, 9,709,662/9,709,662 units, 0 overlap, COMPLETE**.
+> - **Checks.** `hebloc check` OK. `hebloc check --deep` OK (1 h 44 min).
+> - **Registry.** `plan register --write` → 31 canonical runs (D-049, commit `2d632ef`).
+> - **Final statistics.** `hebloc stats run --registered` → `data/stats/final-20261116-565826e3c1` (74 min,
+>   including a ~35 min stall on one shard, probably the PC sleeping).
+>   - It also wrote `results/stats/*.csv`, `results/stats/figures/*.png` and `docs/stats_report.md`.
+>   - Status `final`, code `2d632ef` clean, reconciliation 0 problems, `stats verify` OK.
+>   - Mikra/Hazal/Medieval: all 11 tables + unit metrics identical to `provisional-20261115-49160596a7`.
+>   - Determinism: an independent recompute (`--out` scratch folder, 34 min) gave 42/43 files byte-identical.
+>     `manifest.json` differs only in `created_utc` and `timings_s`; its per-file hashes are equal.
+>   - Backup: `data/backups/stats/final-20261116-565826e3c1.zip` + `.sha256`.
+> - **Extremes traced and verified.**
+>   - Haskala: longest 6,433 words, a paragraph of *Sefer HaBrit*, multi-piece; deepest 86 (recomputed 86).
+>   - Modern: longest 1,272 words, a Haaretz results table; deepest 112, an HTML-entity junk line in blogs
+>     (recomputed 112).
+>   - Modern has 288,102 punctuation-only units, 241,405 of them in blogs; they are counted, not measured.
+> - **Analysis.** Hand-written draft: [stats_analysis.md](stats_analysis.md). It is a separate file because
+>   `stats report` re-renders `stats_report.md`.
+> - **Decision.** Ori decided (D-049) that long units stay in the depth statistics.
+> - **Next: M7 review with the partners (STOP).** Do not start §5 or Part B. Ori may tell Adi: MERGE OK.
+>   `stats_analysis.md` wording is NOT yet approved by Ori.
+> - **Assignment status by project.pdf section** (reviewed 2026-11-16): see the table at the top of
+>   [roadmap.md](roadmap.md). Done: §2, §3, §4 R1–R6. Deferred: §4 R7. Partial: §9 (§4 part only), §11.
+>   Not started: §1, §5–§8, §10.
+> - **The next assignment stage is §5 on Mikra** (roadmap Part 2 R1–R2). It opens only when Ori says so.
+>   1. Build the verb lexicon from the paper (95 A, 45 A/B, 37 B).
+>   2. Extract obj/PP frames from the registered Mikra run.
+>   3. Assign Locatum/Location roles.
+>   4. Test preposition identity, then compare with the paper.
+> - The sections below are the record up to 2026-11-15.
 
 *Updated 2026-11-15, end of the `start` session (§7A done: Efrat's 9 slices merged, MERGE OK, 21/31; provisional
 Mikra + Hazal + Medieval statistics in `data/stats/provisional-20261115-49160596a7`; next: Adi's folder → `finish statistics`, §7).

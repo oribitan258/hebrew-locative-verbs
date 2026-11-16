@@ -3,6 +3,9 @@
 Academic NLP mini-project (Ben-Gurion University, 2027). It tests Doron & Dubnov's (2017)
 *Locative Alternation Preposition Identity* on five Hebrew corpora, using Dicta's parser.
 
+- **Results of assignment §2–§4 (corpora, Dicta analysis, statistics): [docs/SECTIONS_2-4.md](docs/SECTIONS_2-4.md)**:
+  what was done, method, findings, limitations, and where every result is. Statistics report:
+  [docs/stats_report.md](docs/stats_report.md); tables and figures: `results/stats/`
 - **New partner? Start with [docs/PARTNERS.md](docs/PARTNERS.md)** (installation, corpora, checks,
   parsing tasks, sharing results)
 - Current state and pending decisions: [docs/HANDOFF.md](docs/HANDOFF.md)

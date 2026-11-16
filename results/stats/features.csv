@@ -1,0 +1,2113 @@
+﻿"corpus_id","upos","feature","value","n","share"
+"mikra","(all words)","Definite (DET prefix)","(none)",280719,0.9188416897425322
+"mikra","(all words)","Definite (DET prefix)","Def",24795,0.08115831025746774
+"mikra","(all words)","Gender","Masc",133880,0.4382123241488115
+"mikra","(all words)","Gender","(none)",117926,0.3859921312934923
+"mikra","(all words)","Gender","Fem",44717,0.14636645129192116
+"mikra","(all words)","Gender","Fem,Masc",8991,0.029429093265775055
+"mikra","(all words)","Number","Sing",140785,0.46081357973775344
+"mikra","(all words)","Number","(none)",114657,0.3752921306388578
+"mikra","(all words)","Number","Plur",50058,0.16384846520945032
+"mikra","(all words)","Number","Dual",14,0.00004582441393847745
+"mikra","(all words)","Person","(none)",236809,0.775116688596922
+"mikra","(all words)","Person","3",47515,0.1555247877347683
+"mikra","(all words)","Person","2",10738,0.035147325490812203
+"mikra","(all words)","Person","1",7910,0.02589079387523976
+"mikra","(all words)","Person","1,2,3",2542,0.008320404302257835
+"mikra","(all words)","Suffix","(none)",270826,0.8864601949501496
+"mikra","(all words)","Suffix","PRON",24710,0.0808800906014127
+"mikra","(all words)","Suffix","ADP_PRON",9978,0.03265971444843772
+"mikra","(all words)","Suffix.Gender","Masc",26473,0.7631745848708487
+"mikra","(all words)","Suffix.Gender","(none)",3245,0.09354820110701106
+"mikra","(all words)","Suffix.Gender","Fem",3236,0.09328874538745388
+"mikra","(all words)","Suffix.Gender","Fem,Masc",1734,0.049988468634686346
+"mikra","(all words)","Suffix.Number","Sing",25393,0.7320398985239852
+"mikra","(all words)","Suffix.Number","Plur",8807,0.25389183579335795
+"mikra","(all words)","Suffix.Number","(none)",488,0.014068265682656827
+"mikra","(all words)","Suffix.Person","3",20813,0.6000057656826568
+"mikra","(all words)","Suffix.Person","1",6568,0.1893450184501845
+"mikra","(all words)","Suffix.Person","2",5942,0.17129843173431733
+"mikra","(all words)","Suffix.Person","(none)",1365,0.03935078413284133
+"mikra","(all words)","Tense","(none)",251961,0.8247117971680512
+"mikra","(all words)","Tense","Fut",26754,0.0875704550364304
+"mikra","(all words)","Tense","Past",23290,0.07623218575908142
+"mikra","(all words)","Tense","Imp",2971,0.00972459527222975
+"mikra","(all words)","Tense","Pres",538,0.001760966764207205
+"mikra","ADJ","Definite (DET prefix)","(none)",5426,0.7452273039417663
+"mikra","ADJ","Definite (DET prefix)","Def",1855,0.25477269605823377
+"mikra","ADJ","Gender","Masc",5480,0.7526438676006043
+"mikra","ADJ","Gender","Fem",1616,0.22194753467930228
+"mikra","ADJ","Gender","(none)",185,0.025408597720093393
+"mikra","ADJ","Number","Sing",5762,0.7913748111523142
+"mikra","ADJ","Number","Plur",1315,0.18060705946985303
+"mikra","ADJ","Number","(none)",204,0.028018129377832716
+"mikra","ADJ","Person","(none)",7244,0.9949182804559813
+"mikra","ADJ","Person","1,2,3",22,0.0030215629721192143
+"mikra","ADJ","Person","1",5,0.0006867188572998214
+"mikra","ADJ","Person","2",5,0.0006867188572998214
+"mikra","ADJ","Person","3",5,0.0006867188572998214
+"mikra","ADJ","Suffix","(none)",7270,0.9984892185139403
+"mikra","ADJ","Suffix","PRON",9,0.0012360939431396785
+"mikra","ADJ","Suffix","ADP_PRON",2,0.0002746875429199286
+"mikra","ADJ","Suffix.Gender","Masc",6,0.5454545454545454
+"mikra","ADJ","Suffix.Gender","(none)",5,0.45454545454545453
+"mikra","ADJ","Suffix.Number","Sing",9,0.8181818181818182
+"mikra","ADJ","Suffix.Number","Plur",2,0.18181818181818182
+"mikra","ADJ","Suffix.Person","1",5,0.45454545454545453
+"mikra","ADJ","Suffix.Person","3",3,0.2727272727272727
+"mikra","ADJ","Suffix.Person","(none)",2,0.18181818181818182
+"mikra","ADJ","Suffix.Person","2",1,0.09090909090909091
+"mikra","ADJ","Tense","(none)",7278,0.99958796868562
+"mikra","ADJ","Tense","Imp",1,0.0001373437714599643
+"mikra","ADJ","Tense","Past",1,0.0001373437714599643
+"mikra","ADJ","Tense","Pres",1,0.0001373437714599643
+"mikra","ADP","Definite (DET prefix)","(none)",36518,1
+"mikra","ADP","Gender","(none)",36235,0.9922503970644614
+"mikra","ADP","Gender","Masc",196,0.005367216167369516
+"mikra","ADP","Gender","Fem",84,0.0023002355003012213
+"mikra","ADP","Gender","Fem,Masc",3,0.00008215126786790076
+"mikra","ADP","Number","(none)",35852,0.981762418533326
+"mikra","ADP","Number","Sing",429,0.011747631305109809
+"mikra","ADP","Number","Plur",237,0.00648995016156416
+"mikra","ADP","Person","(none)",35907,0.9832685251109042
+"mikra","ADP","Person","2",407,0.011145188674078536
+"mikra","ADP","Person","1",128,0.003505120762363766
+"mikra","ADP","Person","3",76,0.002081165452653486
+"mikra","ADP","Suffix","(none)",24774,0.6784051700531245
+"mikra","ADP","Suffix","PRON",11741,0.3215126786790076
+"mikra","ADP","Suffix","ADP_PRON",3,0.00008215126786790076
+"mikra","ADP","Suffix.Gender","Masc",8661,0.7374829700272479
+"mikra","ADP","Suffix.Gender","Fem,Masc",1293,0.11009877384196186
+"mikra","ADP","Suffix.Gender","Fem",1168,0.0994550408719346
+"mikra","ADP","Suffix.Gender","(none)",622,0.052963215258855584
+"mikra","ADP","Suffix.Number","Sing",8095,0.6892881471389646
+"mikra","ADP","Suffix.Number","Plur",3549,0.30219686648501365
+"mikra","ADP","Suffix.Number","(none)",100,0.0085149863760218
+"mikra","ADP","Suffix.Person","3",6638,0.565224795640327
+"mikra","ADP","Suffix.Person","2",2572,0.21900544959128065
+"mikra","ADP","Suffix.Person","1",2367,0.20154972752043596
+"mikra","ADP","Suffix.Person","(none)",167,0.014220027247956403
+"mikra","ADP","Tense","(none)",36517,0.999972616244044
+"mikra","ADP","Tense","Imp",1,0.00002738375595596692
+"mikra","ADV","Definite (DET prefix)","(none)",15931,0.9801882729342275
+"mikra","ADV","Definite (DET prefix)","Def",322,0.019811727065772472
+"mikra","ADV","Gender","(none)",16209,0.9972928074816957
+"mikra","ADV","Gender","Masc",41,0.00252261121023811
+"mikra","ADV","Gender","Fem",3,0.00018458130806620315
+"mikra","ADV","Number","(none)",16196,0.9964929551467422
+"mikra","ADV","Number","Sing",53,0.0032609364425029226
+"mikra","ADV","Number","Plur",4,0.00024610841075493753
+"mikra","ADV","Person","(none)",16236,0.9989540392542915
+"mikra","ADV","Person","3",13,0.0007998523349535471
+"mikra","ADV","Person","2",4,0.00024610841075493753
+"mikra","ADV","Suffix","(none)",16158,0.9941549252445703
+"mikra","ADV","Suffix","PRON",94,0.005783547652741032
+"mikra","ADV","Suffix","ADP_PRON",1,0.00006152710268873438
+"mikra","ADV","Suffix.Gender","Fem",48,0.5052631578947369
+"mikra","ADV","Suffix.Gender","(none)",26,0.2736842105263158
+"mikra","ADV","Suffix.Gender","Masc",21,0.22105263157894736
+"mikra","ADV","Suffix.Number","Sing",68,0.7157894736842105
+"mikra","ADV","Suffix.Number","Plur",15,0.15789473684210525
+"mikra","ADV","Suffix.Number","(none)",12,0.12631578947368421
+"mikra","ADV","Suffix.Person","3",71,0.7473684210526316
+"mikra","ADV","Suffix.Person","(none)",13,0.1368421052631579
+"mikra","ADV","Suffix.Person","1",7,0.07368421052631578
+"mikra","ADV","Suffix.Person","2",4,0.042105263157894736
+"mikra","ADV","Tense","(none)",16248,0.9996923644865563
+"mikra","ADV","Tense","Imp",5,0.0003076355134436719
+"mikra","AUX","Definite (DET prefix)","(none)",2737,1
+"mikra","AUX","Gender","Masc",1804,0.6591158202411399
+"mikra","AUX","Gender","Fem,Masc",377,0.13774205334307635
+"mikra","AUX","Gender","Fem",352,0.1286079649251005
+"mikra","AUX","Gender","(none)",204,0.07453416149068323
+"mikra","AUX","Number","Sing",2014,0.7358421629521373
+"mikra","AUX","Number","Plur",580,0.21191085129704054
+"mikra","AUX","Number","(none)",143,0.05224698575082207
+"mikra","AUX","Person","3",2110,0.7709170624771647
+"mikra","AUX","Person","1",323,0.11801242236024845
+"mikra","AUX","Person","2",163,0.059554256485202774
+"mikra","AUX","Person","(none)",135,0.049324077457069786
+"mikra","AUX","Person","1,2,3",6,0.0021921812203142127
+"mikra","AUX","Suffix","(none)",2737,1
+"mikra","AUX","Tense","Past",1121,0.40957252466203875
+"mikra","AUX","Tense","Fut",1030,0.3763244428206065
+"mikra","AUX","Tense","(none)",584,0.2133723054439167
+"mikra","AUX","Tense","Imp",2,0.0007307270734380709
+"mikra","CCONJ","Definite (DET prefix)","(none)",596,1
+"mikra","CCONJ","Gender","(none)",596,1
+"mikra","CCONJ","Number","(none)",596,1
+"mikra","CCONJ","Person","(none)",596,1
+"mikra","CCONJ","Suffix","(none)",596,1
+"mikra","CCONJ","Tense","(none)",596,1
+"mikra","DET","Definite (DET prefix)","(none)",5762,0.9996530187369882
+"mikra","DET","Definite (DET prefix)","Def",2,0.00034698126301179735
+"mikra","DET","Gender","(none)",5699,0.9887231089521166
+"mikra","DET","Gender","Masc",64,0.011103400416377515
+"mikra","DET","Gender","Fem",1,0.00017349063150589867
+"mikra","DET","Number","(none)",5727,0.9935808466342817
+"mikra","DET","Number","Sing",27,0.004684247050659264
+"mikra","DET","Number","Plur",10,0.0017349063150589867
+"mikra","DET","Person","(none)",5764,1
+"mikra","DET","Suffix","(none)",5677,0.9849063150589868
+"mikra","DET","Suffix","PRON",86,0.014920194309507287
+"mikra","DET","Suffix","ADP_PRON",1,0.00017349063150589867
+"mikra","DET","Suffix.Gender","Masc",62,0.7126436781609196
+"mikra","DET","Suffix.Gender","(none)",25,0.28735632183908044
+"mikra","DET","Suffix.Number","Plur",80,0.9195402298850575
+"mikra","DET","Suffix.Number","Sing",7,0.08045977011494253
+"mikra","DET","Suffix.Person","3",60,0.6896551724137931
+"mikra","DET","Suffix.Person","1",15,0.1724137931034483
+"mikra","DET","Suffix.Person","(none)",6,0.06896551724137931
+"mikra","DET","Suffix.Person","2",6,0.06896551724137931
+"mikra","DET","Tense","(none)",5764,1
+"mikra","INTJ","Definite (DET prefix)","(none)",61,1
+"mikra","INTJ","Gender","(none)",57,0.9344262295081968
+"mikra","INTJ","Gender","Masc",4,0.06557377049180328
+"mikra","INTJ","Number","(none)",58,0.9508196721311475
+"mikra","INTJ","Number","Plur",2,0.03278688524590164
+"mikra","INTJ","Number","Sing",1,0.01639344262295082
+"mikra","INTJ","Person","(none)",52,0.8524590163934426
+"mikra","INTJ","Person","2",9,0.14754098360655737
+"mikra","INTJ","Suffix","(none)",59,0.9672131147540983
+"mikra","INTJ","Suffix","PRON",2,0.03278688524590164
+"mikra","INTJ","Suffix.Gender","Fem",1,0.5
+"mikra","INTJ","Suffix.Gender","Masc",1,0.5
+"mikra","INTJ","Suffix.Number","Sing",2,1
+"mikra","INTJ","Suffix.Person","3",2,1
+"mikra","INTJ","Tense","(none)",57,0.9344262295081968
+"mikra","INTJ","Tense","Imp",4,0.06557377049180328
+"mikra","NOUN","Definite (DET prefix)","(none)",87852,0.8185070621995304
+"mikra","NOUN","Definite (DET prefix)","Def",19480,0.18149293780046957
+"mikra","NOUN","Gender","Masc",73223,0.6822103380166213
+"mikra","NOUN","Gender","Fem",30908,0.2879663101404986
+"mikra","NOUN","Gender","(none)",2572,0.023963030596653376
+"mikra","NOUN","Gender","Fem,Masc",629,0.005860321246226661
+"mikra","NOUN","Number","Sing",77059,0.7179499124212723
+"mikra","NOUN","Number","Plur",27693,0.25801252189468193
+"mikra","NOUN","Number","(none)",2566,0.023907129281109083
+"mikra","NOUN","Number","Dual",14,0.00013043640293668244
+"mikra","NOUN","Person","(none)",107249,0.9992266984683039
+"mikra","NOUN","Person","2",28,0.0002608728058733649
+"mikra","NOUN","Person","1,2,3",21,0.00019565460440502366
+"mikra","NOUN","Person","1",19,0.00017702083255692616
+"mikra","NOUN","Person","3",15,0.00013975328886073118
+"mikra","NOUN","Suffix","(none)",86265,0.8037211642380651
+"mikra","NOUN","Suffix","PRON",11355,0.10579323966757351
+"mikra","NOUN","Suffix","ADP_PRON",9712,0.09048559609436142
+"mikra","NOUN","Suffix.Gender","Masc",16581,0.7870603313238714
+"mikra","NOUN","Suffix.Gender","(none)",2182,0.10357431053306118
+"mikra","NOUN","Suffix.Gender","Fem",1866,0.08857454787107799
+"mikra","NOUN","Suffix.Gender","Fem,Masc",438,0.02079081027198937
+"mikra","NOUN","Suffix.Number","Sing",16033,0.7610480846822044
+"mikra","NOUN","Suffix.Number","Plur",4781,0.2269426116675369
+"mikra","NOUN","Suffix.Number","(none)",253,0.012009303650258698
+"mikra","NOUN","Suffix.Person","3",13086,0.6211610575782028
+"mikra","NOUN","Suffix.Person","1",3993,0.18953814021930032
+"mikra","NOUN","Suffix.Person","2",3123,0.14824132529548584
+"mikra","NOUN","Suffix.Person","(none)",865,0.041059476907010964
+"mikra","NOUN","Tense","(none)",107305,0.9997484440800507
+"mikra","NOUN","Tense","Past",21,0.00019565460440502366
+"mikra","NOUN","Tense","Imp",5,0.00004658442962024373
+"mikra","NOUN","Tense","Fut",1,0.000009316885924048747
+"mikra","NUM","Definite (DET prefix)","(none)",6194,0.9353669586227725
+"mikra","NUM","Definite (DET prefix)","Def",428,0.06463304137722742
+"mikra","NUM","Gender","Masc",3308,0.4995469646632437
+"mikra","NUM","Gender","Fem",2741,0.4139232860163093
+"mikra","NUM","Gender","(none)",300,0.0453035336756267
+"mikra","NUM","Gender","Fem,Masc",273,0.0412262156448203
+"mikra","NUM","Number","Sing",3590,0.5421322863183329
+"mikra","NUM","Number","(none)",1612,0.24343098761703413
+"mikra","NUM","Number","Plur",1420,0.21443672606463304
+"mikra","NUM","Person","(none)",6620,0.9996979764421625
+"mikra","NUM","Person","3",2,0.0003020235578375113
+"mikra","NUM","Suffix","(none)",6568,0.9918453639383872
+"mikra","NUM","Suffix","PRON",52,0.007852612503775294
+"mikra","NUM","Suffix","ADP_PRON",2,0.0003020235578375113
+"mikra","NUM","Suffix.Gender","Masc",51,0.9444444444444444
+"mikra","NUM","Suffix.Gender","Fem",2,0.037037037037037035
+"mikra","NUM","Suffix.Gender","(none)",1,0.018518518518518517
+"mikra","NUM","Suffix.Number","Plur",41,0.7592592592592593
+"mikra","NUM","Suffix.Number","Sing",12,0.2222222222222222
+"mikra","NUM","Suffix.Number","(none)",1,0.018518518518518517
+"mikra","NUM","Suffix.Person","3",47,0.8703703703703703
+"mikra","NUM","Suffix.Person","1",3,0.05555555555555555
+"mikra","NUM","Suffix.Person","2",3,0.05555555555555555
+"mikra","NUM","Suffix.Person","(none)",1,0.018518518518518517
+"mikra","NUM","Tense","(none)",6622,1
+"mikra","PRON","Definite (DET prefix)","(none)",8432,0.8282094096847068
+"mikra","PRON","Definite (DET prefix)","Def",1749,0.1717905903152932
+"mikra","PRON","Gender","Masc",7281,0.7151556821530302
+"mikra","PRON","Gender","(none)",1300,0.12768883213829682
+"mikra","PRON","Gender","Fem",1244,0.12218839013849327
+"mikra","PRON","Gender","Fem,Masc",356,0.03496709557017975
+"mikra","PRON","Number","Sing",6818,0.6696788134760829
+"mikra","PRON","Number","Plur",2518,0.24732344563402417
+"mikra","PRON","Number","(none)",845,0.08299774088989294
+"mikra","PRON","Person","3",5988,0.5881544052647087
+"mikra","PRON","Person","2",1866,0.1832825852077399
+"mikra","PRON","Person","1",1664,0.16344170513701994
+"mikra","PRON","Person","(none)",663,0.06512130439053138
+"mikra","PRON","Suffix","(none)",9884,0.9708280129653276
+"mikra","PRON","Suffix","PRON",297,0.029171987034672428
+"mikra","PRON","Suffix.Gender","(none)",149,0.5016835016835017
+"mikra","PRON","Suffix.Gender","Masc",126,0.42424242424242425
+"mikra","PRON","Suffix.Gender","Fem",19,0.06397306397306397
+"mikra","PRON","Suffix.Gender","Fem,Masc",3,0.010101010101010102
+"mikra","PRON","Suffix.Number","Sing",138,0.46464646464646464
+"mikra","PRON","Suffix.Number","Plur",102,0.3434343434343434
+"mikra","PRON","Suffix.Number","(none)",57,0.1919191919191919
+"mikra","PRON","Suffix.Person","3",100,0.3367003367003367
+"mikra","PRON","Suffix.Person","(none)",93,0.31313131313131315
+"mikra","PRON","Suffix.Person","2",77,0.25925925925925924
+"mikra","PRON","Suffix.Person","1",27,0.09090909090909091
+"mikra","PRON","Tense","(none)",10178,0.9997053334642962
+"mikra","PRON","Tense","Imp",3,0.0002946665357037619
+"mikra","PROPN","Definite (DET prefix)","(none)",34016,0.9796388560896236
+"mikra","PROPN","Definite (DET prefix)","Def",707,0.020361143910376408
+"mikra","PROPN","Gender","(none)",32724,0.9424300895659937
+"mikra","PROPN","Gender","Masc",1643,0.04731734009158195
+"mikra","PROPN","Gender","Fem",356,0.01025257034242433
+"mikra","PROPN","Number","(none)",32610,0.9391469631080264
+"mikra","PROPN","Number","Sing",1910,0.055006767848400195
+"mikra","PROPN","Number","Plur",203,0.005846269043573424
+"mikra","PROPN","Person","(none)",34718,0.9998560032255277
+"mikra","PROPN","Person","3",3,0.00008639806468335109
+"mikra","PROPN","Person","1",1,0.000028799354894450365
+"mikra","PROPN","Person","1,2,3",1,0.000028799354894450365
+"mikra","PROPN","Suffix","(none)",34639,0.9975808541888662
+"mikra","PROPN","Suffix","PRON",80,0.002303948391556029
+"mikra","PROPN","Suffix","ADP_PRON",4,0.00011519741957780146
+"mikra","PROPN","Suffix.Gender","(none)",35,0.4166666666666667
+"mikra","PROPN","Suffix.Gender","Masc",30,0.35714285714285715
+"mikra","PROPN","Suffix.Gender","Fem",19,0.2261904761904762
+"mikra","PROPN","Suffix.Number","Sing",73,0.8690476190476191
+"mikra","PROPN","Suffix.Number","(none)",7,0.08333333333333333
+"mikra","PROPN","Suffix.Number","Plur",4,0.047619047619047616
+"mikra","PROPN","Suffix.Person","3",50,0.5952380952380952
+"mikra","PROPN","Suffix.Person","(none)",18,0.21428571428571427
+"mikra","PROPN","Suffix.Person","1",13,0.15476190476190477
+"mikra","PROPN","Suffix.Person","2",3,0.03571428571428571
+"mikra","PROPN","Tense","(none)",34722,0.9999712006451056
+"mikra","PROPN","Tense","Past",1,0.000028799354894450365
+"mikra","SCONJ","Definite (DET prefix)","(none)",11293,0.9970863499911707
+"mikra","SCONJ","Definite (DET prefix)","Def",33,0.0029136500088292423
+"mikra","SCONJ","Gender","(none)",11325,0.99991170757549
+"mikra","SCONJ","Gender","Masc",1,0.00008829242450997704
+"mikra","SCONJ","Number","(none)",11326,1
+"mikra","SCONJ","Person","(none)",11326,1
+"mikra","SCONJ","Suffix","(none)",11325,0.99991170757549
+"mikra","SCONJ","Suffix","PRON",1,0.00008829242450997704
+"mikra","SCONJ","Suffix.Gender","Masc",1,1
+"mikra","SCONJ","Suffix.Number","Sing",1,1
+"mikra","SCONJ","Suffix.Person","3",1,1
+"mikra","SCONJ","Tense","(none)",11326,1
+"mikra","VERB","Definite (DET prefix)","(none)",65652,0.996675319943526
+"mikra","VERB","Definite (DET prefix)","Def",219,0.0033246800564740173
+"mikra","VERB","Gender","Masc",40835,0.6199237904388881
+"mikra","VERB","Gender","(none)",10273,0.15595633890482913
+"mikra","VERB","Gender","Fem",7410,0.11249259917110717
+"mikra","VERB","Gender","Fem,Masc",7353,0.11162727148517557
+"mikra","VERB","Number","Sing",43122,0.6546431661884593
+"mikra","VERB","Number","Plur",16073,0.2440072262452369
+"mikra","VERB","Number","(none)",6676,0.10134960756630383
+"mikra","VERB","Person","3",39301,0.5966358488560976
+"mikra","VERB","Person","(none)",10052,0.15260129647341014
+"mikra","VERB","Person","2",8256,0.1253358837728287
+"mikra","VERB","Person","1",5770,0.08759545171623324
+"mikra","VERB","Person","1,2,3",2492,0.03783151918143037
+"mikra","VERB","Suffix","(none)",64628,0.9811297839717023
+"mikra","VERB","Suffix","PRON",991,0.015044556785231741
+"mikra","VERB","Suffix","ADP_PRON",252,0.0038256592430659926
+"mikra","VERB","Suffix.Gender","Masc",932,0.7497988736926791
+"mikra","VERB","Suffix.Gender","(none)",198,0.1592920353982301
+"mikra","VERB","Suffix.Gender","Fem",113,0.09090909090909091
+"mikra","VERB","Suffix.Number","Sing",952,0.7658889782783588
+"mikra","VERB","Suffix.Number","Plur",233,0.18744971842316976
+"mikra","VERB","Suffix.Number","(none)",58,0.04666130329847144
+"mikra","VERB","Suffix.Person","3",754,0.6065969428801288
+"mikra","VERB","Suffix.Person","(none)",199,0.16009654062751408
+"mikra","VERB","Suffix.Person","2",153,0.12308930008045052
+"mikra","VERB","Suffix.Person","1",137,0.11021721641190668
+"mikra","VERB","Tense","Fut",25723,0.3905056853547084
+"mikra","VERB","Tense","Past",22146,0.33620257776563284
+"mikra","VERB","Tense","(none)",14515,0.22035493616310667
+"mikra","VERB","Tense","Imp",2950,0.04478450304382809
+"mikra","VERB","Tense","Pres",537,0.008152297672723961
+"mikra","X","Definite (DET prefix)","(none)",249,1
+"mikra","X","Gender","(none)",247,0.9919678714859438
+"mikra","X","Gender","Fem",2,0.008032128514056224
+"mikra","X","Number","(none)",246,0.9879518072289156
+"mikra","X","Number","Plur",3,0.012048192771084338
+"mikra","X","Person","(none)",247,0.9919678714859438
+"mikra","X","Person","3",2,0.008032128514056224
+"mikra","X","Suffix","(none)",246,0.9879518072289156
+"mikra","X","Suffix","PRON",2,0.008032128514056224
+"mikra","X","Suffix","ADP_PRON",1,0.004016064257028112
+"mikra","X","Suffix.Gender","(none)",2,0.6666666666666666
+"mikra","X","Suffix.Gender","Masc",1,0.3333333333333333
+"mikra","X","Suffix.Number","Sing",3,1
+"mikra","X","Suffix.Person","(none)",1,0.3333333333333333
+"mikra","X","Suffix.Person","1",1,0.3333333333333333
+"mikra","X","Suffix.Person","3",1,0.3333333333333333
+"mikra","X","Tense","(none)",249,1
+"hazal","(all words)","Definite (DET prefix)","(none)",6055296,0.9315903061497647
+"hazal","(all words)","Definite (DET prefix)","Def",444660,0.06840969385023529
+"hazal","(all words)","Gender","Masc",2844772,0.43766019339207834
+"hazal","(all words)","Gender","(none)",2644327,0.40682229233551737
+"hazal","(all words)","Gender","Fem",883618,0.1359421509930221
+"hazal","(all words)","Gender","Fem,Masc",127239,0.0195753632793822
+"hazal","(all words)","Number","Sing",3058426,0.4705302620510047
+"hazal","(all words)","Number","(none)",2584207,0.39757299895568526
+"hazal","(all words)","Number","Plur",857133,0.13186750802620817
+"hazal","(all words)","Number","Dual",188,0.00002892327271138451
+"hazal","(all words)","Number","Plur,Sing",2,3.076943905466437e-7
+"hazal","(all words)","Person","(none)",4921205,0.7571135866150479
+"hazal","(all words)","Person","3",1103459,0.16976407224910445
+"hazal","(all words)","Person","1,2,3",270854,0.04167012822856032
+"hazal","(all words)","Person","2",108343,0.01666826667749751
+"hazal","(all words)","Person","1",96095,0.014783946229789863
+"hazal","(all words)","Suffix","(none)",6019416,0.926070268783358
+"hazal","(all words)","Suffix","PRON",315672,0.04856525182632006
+"hazal","(all words)","Suffix","ADP_PRON",164868,0.025364479390322027
+"hazal","(all words)","Suffix.Gender","Masc",349792,0.7279144296000333
+"hazal","(all words)","Suffix.Gender","Fem",65491,0.1362862612893828
+"hazal","(all words)","Suffix.Gender","(none)",47814,0.09950056186789862
+"hazal","(all words)","Suffix.Gender","Fem,Masc",17443,0.036298747242685316
+"hazal","(all words)","Suffix.Number","Sing",360962,0.7511591126649186
+"hazal","(all words)","Suffix.Number","Plur",108386,0.22555042244142007
+"hazal","(all words)","Suffix.Number","(none)",11192,0.023290464893661298
+"hazal","(all words)","Suffix.Person","3",364213,0.7579244183626753
+"hazal","(all words)","Suffix.Person","1",52770,0.10981395929579224
+"hazal","(all words)","Suffix.Person","2",39012,0.08118366837308029
+"hazal","(all words)","Suffix.Person","(none)",24545,0.05107795396845216
+"hazal","(all words)","Tense","(none)",5636787,0.8672038703031221
+"hazal","(all words)","Tense","Past",581986,0.08953691378833949
+"hazal","(all words)","Tense","Fut",185085,0.028474808137162775
+"hazal","(all words)","Tense","Pres",68181,0.010489455620930357
+"hazal","(all words)","Tense","Imp",27917,0.004294952150445326
+"hazal","ADJ","Definite (DET prefix)","(none)",192652,0.8448352226631877
+"hazal","ADJ","Definite (DET prefix)","Def",35383,0.15516477733681233
+"hazal","ADJ","Gender","Masc",175914,0.7714342096607977
+"hazal","ADJ","Gender","Fem",46212,0.20265310149757712
+"hazal","ADJ","Gender","(none)",5907,0.025903918258162125
+"hazal","ADJ","Gender","Fem,Masc",2,0.000008770583463064881
+"hazal","ADJ","Number","Sing",179260,0.7861073957945053
+"hazal","ADJ","Number","Plur",43396,0.19030411998158178
+"hazal","ADJ","Number","(none)",5379,0.023588484223912996
+"hazal","ADJ","Person","(none)",225570,0.9891902558817726
+"hazal","ADJ","Person","1,2,3",2123,0.00930997434604337
+"hazal","ADJ","Person","3",281,0.0012322669765606157
+"hazal","ADJ","Person","2",44,0.00019295283618742736
+"hazal","ADJ","Person","1",17,0.00007454995943605149
+"hazal","ADJ","Suffix","(none)",227863,0.9992457298221764
+"hazal","ADJ","Suffix","PRON",124,0.0005437761747100225
+"hazal","ADJ","Suffix","ADP_PRON",48,0.00021049400311355714
+"hazal","ADJ","Suffix.Gender","Masc",88,0.5116279069767442
+"hazal","ADJ","Suffix.Gender","(none)",66,0.38372093023255816
+"hazal","ADJ","Suffix.Gender","Fem",18,0.10465116279069768
+"hazal","ADJ","Suffix.Number","Sing",109,0.6337209302325582
+"hazal","ADJ","Suffix.Number","Plur",44,0.2558139534883721
+"hazal","ADJ","Suffix.Number","(none)",19,0.11046511627906977
+"hazal","ADJ","Suffix.Person","3",71,0.4127906976744186
+"hazal","ADJ","Suffix.Person","(none)",53,0.3081395348837209
+"hazal","ADJ","Suffix.Person","1",41,0.23837209302325582
+"hazal","ADJ","Suffix.Person","2",7,0.040697674418604654
+"hazal","ADJ","Tense","(none)",227786,0.9989080623588484
+"hazal","ADJ","Tense","Past",215,0.0009428377222794746
+"hazal","ADJ","Tense","Pres",30,0.0001315587519459732
+"hazal","ADJ","Tense","Imp",4,0.000017541166926129762
+"hazal","ADP","Definite (DET prefix)","(none)",591257,1
+"hazal","ADP","Gender","(none)",581667,0.9837803188799457
+"hazal","ADP","Gender","Masc",6144,0.01039142031299418
+"hazal","ADP","Gender","Fem",3386,0.005726782093066128
+"hazal","ADP","Gender","Fem,Masc",60,0.00010147871399408379
+"hazal","ADP","Number","(none)",573349,0.9697119864965658
+"hazal","ADP","Number","Sing",11397,0.019275881723176215
+"hazal","ADP","Number","Plur",6511,0.011012131780257993
+"hazal","ADP","Person","(none)",579014,0.9792932684095073
+"hazal","ADP","Person","2",5897,0.009973666273718535
+"hazal","ADP","Person","1",4169,0.007051079310688922
+"hazal","ADP","Person","3",2177,0.00368198600608534
+"hazal","ADP","Suffix","(none)",386608,0.6538747109970791
+"hazal","ADP","Suffix","PRON",204498,0.3458699009060358
+"hazal","ADP","Suffix","ADP_PRON",151,0.0002553880968851109
+"hazal","ADP","Suffix.Gender","Masc",147811,0.7222659284921988
+"hazal","ADP","Suffix.Gender","Fem",30704,0.1500324946615913
+"hazal","ADP","Suffix.Gender","Fem,Masc",14337,0.0700565358247536
+"hazal","ADP","Suffix.Gender","(none)",11797,0.05764504102145625
+"hazal","ADP","Suffix.Number","Sing",146605,0.716372911668271
+"hazal","ADP","Suffix.Number","Plur",56207,0.2746507434680844
+"hazal","ADP","Suffix.Number","(none)",1837,0.008976344863644582
+"hazal","ADP","Suffix.Person","3",151859,0.7420461375330444
+"hazal","ADP","Suffix.Person","1",24520,0.11981490258931146
+"hazal","ADP","Suffix.Person","2",23096,0.11285664723502191
+"hazal","ADP","Suffix.Person","(none)",5174,0.025282312642622245
+"hazal","ADP","Tense","(none)",591253,0.9999932347524004
+"hazal","ADP","Tense","Past",3,0.000005073935699704189
+"hazal","ADP","Tense","Imp",1,0.0000016913118999013965
+"hazal","ADV","Definite (DET prefix)","(none)",523156,0.9864204933271489
+"hazal","ADV","Definite (DET prefix)","Def",7202,0.013579506672851169
+"hazal","ADV","Gender","(none)",527725,0.9950354288989701
+"hazal","ADV","Gender","Masc",2215,0.0041764242266544484
+"hazal","ADV","Gender","Fem",413,0.0007787192801843283
+"hazal","ADV","Gender","Fem,Masc",5,0.000009427594191093563
+"hazal","ADV","Number","(none)",527192,0.9940304473581996
+"hazal","ADV","Number","Sing",2782,0.005245513407924458
+"hazal","ADV","Number","Plur",384,0.0007240392338759856
+"hazal","ADV","Person","(none)",529576,0.9985255242685129
+"hazal","ADV","Person","3",758,0.0014292232793697841
+"hazal","ADV","Person","1",17,0.000032053820249718116
+"hazal","ADV","Person","2",7,0.000013198631867530988
+"hazal","ADV","Suffix","(none)",529759,0.998870574215907
+"hazal","ADV","Suffix","PRON",583,0.0010992574826815095
+"hazal","ADV","Suffix","ADP_PRON",16,0.000030168301411499404
+"hazal","ADV","Suffix.Gender","Fem",215,0.3589315525876461
+"hazal","ADV","Suffix.Gender","(none)",196,0.327212020033389
+"hazal","ADV","Suffix.Gender","Masc",187,0.3121869782971619
+"hazal","ADV","Suffix.Gender","Fem,Masc",1,0.001669449081803005
+"hazal","ADV","Suffix.Number","Sing",461,0.7696160267111853
+"hazal","ADV","Suffix.Number","Plur",77,0.1285475792988314
+"hazal","ADV","Suffix.Number","(none)",61,0.1018363939899833
+"hazal","ADV","Suffix.Person","3",375,0.6260434056761269
+"hazal","ADV","Suffix.Person","(none)",162,0.2704507512520868
+"hazal","ADV","Suffix.Person","1",40,0.0667779632721202
+"hazal","ADV","Suffix.Person","2",22,0.03672787979966611
+"hazal","ADV","Tense","(none)",530342,0.9999698316985886
+"hazal","ADV","Tense","Imp",9,0.000016969669543968414
+"hazal","ADV","Tense","Past",4,0.000007542075352874851
+"hazal","ADV","Tense","Fut",3,0.000005656556514656138
+"hazal","AUX","Definite (DET prefix)","(none)",162270,0.999698125296484
+"hazal","AUX","Definite (DET prefix)","Def",49,0.0003018747035159162
+"hazal","AUX","Gender","Masc",105238,0.6483406132368977
+"hazal","AUX","Gender","Fem,Masc",22682,0.1397371841866941
+"hazal","AUX","Gender","Fem",20678,0.12739112488371662
+"hazal","AUX","Gender","(none)",13721,0.08453107769269155
+"hazal","AUX","Number","Sing",112211,0.6912992317596831
+"hazal","AUX","Number","Plur",38525,0.23734128475409533
+"hazal","AUX","Number","(none)",11583,0.07135948348622158
+"hazal","AUX","Person","3",118194,0.7281587491297999
+"hazal","AUX","Person","(none)",21476,0.13230737005526155
+"hazal","AUX","Person","1,2,3",10299,0.06344913411245756
+"hazal","AUX","Person","1",9465,0.05831110344445197
+"hazal","AUX","Person","2",2885,0.017773643258028944
+"hazal","AUX","Suffix","(none)",162315,0.9999753571670599
+"hazal","AUX","Suffix","PRON",4,0.00002464283294007479
+"hazal","AUX","Suffix.Gender","(none)",2,0.5
+"hazal","AUX","Suffix.Gender","Masc",2,0.5
+"hazal","AUX","Suffix.Number","Sing",2,0.5
+"hazal","AUX","Suffix.Number","(none)",1,0.25
+"hazal","AUX","Suffix.Number","Plur",1,0.25
+"hazal","AUX","Suffix.Person","(none)",2,0.5
+"hazal","AUX","Suffix.Person","3",2,0.5
+"hazal","AUX","Tense","Past",75353,0.46422784763336394
+"hazal","AUX","Tense","(none)",68312,0.4208503009505973
+"hazal","AUX","Tense","Fut",18474,0.11381292393373542
+"hazal","AUX","Tense","Imp",172,0.001059641816423216
+"hazal","AUX","Tense","Pres",8,0.00004928566588014958
+"hazal","CCONJ","Definite (DET prefix)","(none)",82007,0.9999634190952323
+"hazal","CCONJ","Definite (DET prefix)","Def",3,0.00003658090476771126
+"hazal","CCONJ","Gender","(none)",81980,0.9996341909523229
+"hazal","CCONJ","Gender","Masc",30,0.00036580904767711256
+"hazal","CCONJ","Number","(none)",81974,0.9995610291427874
+"hazal","CCONJ","Number","Sing",26,0.0003170345079868309
+"hazal","CCONJ","Number","Plur",10,0.00012193634922570419
+"hazal","CCONJ","Person","(none)",81936,0.9990976710157298
+"hazal","CCONJ","Person","3",72,0.0008779417144250701
+"hazal","CCONJ","Person","1",1,0.000012193634922570418
+"hazal","CCONJ","Person","2",1,0.000012193634922570418
+"hazal","CCONJ","Suffix","(none)",82010,1
+"hazal","CCONJ","Tense","(none)",82008,0.9999756127301549
+"hazal","CCONJ","Tense","Fut",1,0.000012193634922570418
+"hazal","CCONJ","Tense","Past",1,0.000012193634922570418
+"hazal","DET","Definite (DET prefix)","(none)",84986,0.9994707812444873
+"hazal","DET","Definite (DET prefix)","Def",45,0.0005292187555126954
+"hazal","DET","Gender","(none)",81691,0.9607202079241688
+"hazal","DET","Gender","Masc",3212,0.03777445872681728
+"hazal","DET","Gender","Fem",128,0.001505333349013889
+"hazal","DET","Number","(none)",82097,0.9654949371405722
+"hazal","DET","Number","Sing",1548,0.018205125189636722
+"hazal","DET","Number","Plur",1386,0.016299937669791018
+"hazal","DET","Person","(none)",85020,0.9998706354153191
+"hazal","DET","Person","3",6,0.00007056250073502605
+"hazal","DET","Person","2",5,0.00005880208394585504
+"hazal","DET","Suffix","(none)",81624,0.9599322599992943
+"hazal","DET","Suffix","PRON",3404,0.04003245875033811
+"hazal","DET","Suffix","ADP_PRON",3,0.00003528125036751303
+"hazal","DET","Suffix.Gender","Masc",2036,0.5975931904901673
+"hazal","DET","Suffix.Gender","Fem",796,0.23363663046668623
+"hazal","DET","Suffix.Gender","(none)",575,0.16877017904314645
+"hazal","DET","Suffix.Number","Plur",2290,0.6721455826240094
+"hazal","DET","Suffix.Number","Sing",979,0.28734957440563547
+"hazal","DET","Suffix.Number","(none)",138,0.04050484297035515
+"hazal","DET","Suffix.Person","3",3009,0.8831816847666569
+"hazal","DET","Suffix.Person","(none)",175,0.05136483710008805
+"hazal","DET","Suffix.Person","2",131,0.03845024948635163
+"hazal","DET","Suffix.Person","1",92,0.027003228646903434
+"hazal","DET","Tense","(none)",85031,1
+"hazal","INTJ","Definite (DET prefix)","(none)",1977,1
+"hazal","INTJ","Gender","(none)",1941,0.9817905918057663
+"hazal","INTJ","Gender","Masc",28,0.014162873039959535
+"hazal","INTJ","Gender","Fem",8,0.004046535154274153
+"hazal","INTJ","Number","(none)",1911,0.9666160849772383
+"hazal","INTJ","Number","Plur",36,0.018209408194233688
+"hazal","INTJ","Number","Sing",30,0.015174506828528073
+"hazal","INTJ","Person","(none)",1748,0.8841679312089024
+"hazal","INTJ","Person","2",229,0.11583206879109763
+"hazal","INTJ","Suffix","(none)",1975,0.9989883662114315
+"hazal","INTJ","Suffix","PRON",2,0.0010116337885685382
+"hazal","INTJ","Suffix.Gender","(none)",2,1
+"hazal","INTJ","Suffix.Number","Sing",2,1
+"hazal","INTJ","Suffix.Person","(none)",2,1
+"hazal","INTJ","Tense","(none)",1858,0.939807789580172
+"hazal","INTJ","Tense","Imp",119,0.06019221041982802
+"hazal","NOUN","Definite (DET prefix)","(none)",1584956,0.8183738022237667
+"hazal","NOUN","Definite (DET prefix)","Def",351758,0.18162619777623334
+"hazal","NOUN","Gender","Masc",1266315,0.6538471865231521
+"hazal","NOUN","Gender","Fem",597109,0.3083103648757638
+"hazal","NOUN","Gender","(none)",67276,0.03473718886732889
+"hazal","NOUN","Gender","Fem,Masc",6014,0.0031052597337552163
+"hazal","NOUN","Number","Sing",1442689,0.7449158729683371
+"hazal","NOUN","Number","Plur",429603,0.22182056824084506
+"hazal","NOUN","Number","(none)",64242,0.033170617860974826
+"hazal","NOUN","Number","Dual",178,0.00009190825284476696
+"hazal","NOUN","Number","Plur,Sing",2,0.0000010326769982558085
+"hazal","NOUN","Person","(none)",1933709,0.9984484028101206
+"hazal","NOUN","Person","1,2,3",1812,0.0009356053604197626
+"hazal","NOUN","Person","3",601,0.00031031943797587045
+"hazal","NOUN","Person","2",469,0.0002421627560909871
+"hazal","NOUN","Person","1",123,0.00006350963539273222
+"hazal","NOUN","Suffix","(none)",1690013,0.8726187759266469
+"hazal","NOUN","Suffix","ADP_PRON",159423,0.08231623254646789
+"hazal","NOUN","Suffix","PRON",87278,0.04506499152688523
+"hazal","NOUN","Suffix.Gender","Masc",185018,0.7499685854536463
+"hazal","NOUN","Suffix.Gender","(none)",29374,0.11906721091523748
+"hazal","NOUN","Suffix.Gender","Fem",29280,0.11868618286914119
+"hazal","NOUN","Suffix.Gender","Fem,Masc",3029,0.012278020761975022
+"hazal","NOUN","Suffix.Number","Sing",197117,0.7990117591740609
+"hazal","NOUN","Suffix.Number","Plur",42714,0.17314076554209346
+"hazal","NOUN","Suffix.Number","(none)",6870,0.027847475283845628
+"hazal","NOUN","Suffix.Person","3",190964,0.7740706361141625
+"hazal","NOUN","Suffix.Person","1",26800,0.10863352803596256
+"hazal","NOUN","Suffix.Person","(none)",14635,0.05932282398531015
+"hazal","NOUN","Suffix.Person","2",14302,0.0579730118645648
+"hazal","NOUN","Tense","(none)",1936138,0.9997025890245024
+"hazal","NOUN","Tense","Past",452,0.00023338500160581272
+"hazal","NOUN","Tense","Imp",82,0.00004233975692848815
+"hazal","NOUN","Tense","Fut",22,0.000011359446980813894
+"hazal","NOUN","Tense","Pres",20,0.000010326769982558086
+"hazal","NUM","Definite (DET prefix)","(none)",271017,0.9841564383760621
+"hazal","NUM","Definite (DET prefix)","Def",4363,0.01584356162393783
+"hazal","NUM","Gender","(none)",166948,0.6062459147360012
+"hazal","NUM","Gender","Masc",66003,0.2396797153024911
+"hazal","NUM","Gender","Fem",40421,0.14678262764180405
+"hazal","NUM","Gender","Fem,Masc",2008,0.007291742319703682
+"hazal","NUM","Number","(none)",186129,0.6758987580797443
+"hazal","NUM","Number","Sing",70737,0.2568705062096013
+"hazal","NUM","Number","Plur",18504,0.06719442225288692
+"hazal","NUM","Number","Dual",10,0.00003631345776744862
+"hazal","NUM","Person","(none)",275318,0.9997748565618418
+"hazal","NUM","Person","3",61,0.00022151209238143656
+"hazal","NUM","Person","1,2,3",1,0.0000036313457767448616
+"hazal","NUM","Suffix","(none)",274566,0.9970440845377296
+"hazal","NUM","Suffix","PRON",808,0.002934127387609848
+"hazal","NUM","Suffix","ADP_PRON",6,0.00002178807466046917
+"hazal","NUM","Suffix.Gender","Masc",694,0.8525798525798526
+"hazal","NUM","Suffix.Gender","(none)",71,0.08722358722358722
+"hazal","NUM","Suffix.Gender","Fem",49,0.060196560196560195
+"hazal","NUM","Suffix.Number","Plur",785,0.9643734643734644
+"hazal","NUM","Suffix.Number","(none)",19,0.02334152334152334
+"hazal","NUM","Suffix.Number","Sing",10,0.012285012285012284
+"hazal","NUM","Suffix.Person","3",681,0.8366093366093366
+"hazal","NUM","Suffix.Person","(none)",71,0.08722358722358722
+"hazal","NUM","Suffix.Person","1",47,0.05773955773955774
+"hazal","NUM","Suffix.Person","2",15,0.018427518427518427
+"hazal","NUM","Tense","(none)",275380,1
+"hazal","PRON","Definite (DET prefix)","(none)",368955,0.9619626431387273
+"hazal","PRON","Definite (DET prefix)","Def",14589,0.03803735686127276
+"hazal","PRON","Gender","Masc",223838,0.5836044886636214
+"hazal","PRON","Gender","(none)",80065,0.20875049537993035
+"hazal","PRON","Gender","Fem",57878,0.1509031558308825
+"hazal","PRON","Gender","Fem,Masc",21763,0.05674186012556578
+"hazal","PRON","Number","Sing",247407,0.6450550653901508
+"hazal","PRON","Number","(none)",70265,0.18319932002586406
+"hazal","PRON","Number","Plur",65872,0.17174561458398516
+"hazal","PRON","Person","3",257071,0.6702516530046096
+"hazal","PRON","Person","(none)",62655,0.1633580501845942
+"hazal","PRON","Person","1",32334,0.08430323509167136
+"hazal","PRON","Person","2",31480,0.08207663266795986
+"hazal","PRON","Person","1,2,3",4,0.000010429051164925015
+"hazal","PRON","Suffix","(none)",375280,0.9784535802932649
+"hazal","PRON","Suffix","PRON",8263,0.02154381244394385
+"hazal","PRON","Suffix","ADP_PRON",1,0.0000026072627912312538
+"hazal","PRON","Suffix.Gender","Masc",3394,0.4106969990319458
+"hazal","PRON","Suffix.Gender","(none)",2609,0.3157066795740561
+"hazal","PRON","Suffix.Gender","Fem",2209,0.2673039690222652
+"hazal","PRON","Suffix.Gender","Fem,Masc",52,0.0062923523717328175
+"hazal","PRON","Suffix.Number","Sing",3737,0.45220232333010646
+"hazal","PRON","Suffix.Number","Plur",3300,0.39932236205227495
+"hazal","PRON","Suffix.Number","(none)",1227,0.1484753146176186
+"hazal","PRON","Suffix.Person","3",5230,0.632865440464666
+"hazal","PRON","Suffix.Person","(none)",1935,0.23414811229428847
+"hazal","PRON","Suffix.Person","2",759,0.09184414327202323
+"hazal","PRON","Suffix.Person","1",340,0.04114230396902226
+"hazal","PRON","Tense","(none)",383497,0.9998774586488122
+"hazal","PRON","Tense","Imp",23,0.00005996704419831884
+"hazal","PRON","Tense","Past",19,0.00004953799303339382
+"hazal","PRON","Tense","Fut",5,0.00001303631395615627
+"hazal","PROPN","Definite (DET prefix)","(none)",611041,0.9664363823857831
+"hazal","PROPN","Definite (DET prefix)","Def",21221,0.03356361761421689
+"hazal","PROPN","Gender","(none)",578867,0.9155492501526266
+"hazal","PROPN","Gender","Masc",43961,0.06952972027419013
+"hazal","PROPN","Gender","Fem",9430,0.014914703081950205
+"hazal","PROPN","Gender","Fem,Masc",4,0.000006326491233064774
+"hazal","PROPN","Number","(none)",578906,0.9156109334421489
+"hazal","PROPN","Number","Sing",46892,0.07416545672521835
+"hazal","PROPN","Number","Plur",6464,0.010223609832632674
+"hazal","PROPN","Person","(none)",632099,0.9997421954822526
+"hazal","PROPN","Person","1,2,3",63,0.00009964223692077019
+"hazal","PROPN","Person","3",52,0.00008224438602984206
+"hazal","PROPN","Person","1",27,0.000042703815823187225
+"hazal","PROPN","Person","2",21,0.00003321407897359006
+"hazal","PROPN","Suffix","(none)",631189,0.9983029187267304
+"hazal","PROPN","Suffix","PRON",932,0.0014740724573040923
+"hazal","PROPN","Suffix","ADP_PRON",141,0.00022300881596553328
+"hazal","PROPN","Suffix.Gender","(none)",582,0.5424044734389561
+"hazal","PROPN","Suffix.Gender","Masc",275,0.25629077353215285
+"hazal","PROPN","Suffix.Gender","Fem",211,0.1966449207828518
+"hazal","PROPN","Suffix.Gender","Fem,Masc",5,0.004659832246039142
+"hazal","PROPN","Suffix.Number","Sing",929,0.8657968313140727
+"hazal","PROPN","Suffix.Number","Plur",85,0.07921714818266543
+"hazal","PROPN","Suffix.Number","(none)",59,0.05498602050326188
+"hazal","PROPN","Suffix.Person","3",404,0.3765144454799627
+"hazal","PROPN","Suffix.Person","(none)",257,0.23951537744641194
+"hazal","PROPN","Suffix.Person","1",252,0.23485554520037277
+"hazal","PROPN","Suffix.Person","2",160,0.14911463187325255
+"hazal","PROPN","Tense","(none)",632191,0.9998877047806131
+"hazal","PROPN","Tense","Past",59,0.00009331574568770541
+"hazal","PROPN","Tense","Fut",9,0.000014234605274395742
+"hazal","PROPN","Tense","Imp",2,0.000003163245616532387
+"hazal","PROPN","Tense","Pres",1,0.0000015816228082661934
+"hazal","SCONJ","Definite (DET prefix)","(none)",103854,0.9988170460774979
+"hazal","SCONJ","Definite (DET prefix)","Def",123,0.001182953922502092
+"hazal","SCONJ","Gender","(none)",103953,0.9997691797224386
+"hazal","SCONJ","Gender","Masc",19,0.0001827327197360955
+"hazal","SCONJ","Gender","Fem",5,0.00004808755782528828
+"hazal","SCONJ","Number","(none)",103934,0.9995864470027025
+"hazal","SCONJ","Number","Plur",36,0.00034623041634207567
+"hazal","SCONJ","Number","Sing",7,0.00006732258095540359
+"hazal","SCONJ","Person","(none)",103835,0.9986343133577618
+"hazal","SCONJ","Person","3",142,0.0013656866422381874
+"hazal","SCONJ","Suffix","(none)",103973,0.9999615299537398
+"hazal","SCONJ","Suffix","PRON",4,0.00003847004626023063
+"hazal","SCONJ","Suffix.Gender","Masc",4,1
+"hazal","SCONJ","Suffix.Number","Sing",4,1
+"hazal","SCONJ","Suffix.Person","3",3,0.75
+"hazal","SCONJ","Suffix.Person","1",1,0.25
+"hazal","SCONJ","Tense","(none)",103977,1
+"hazal","SYM","Definite (DET prefix)","(none)",368,0.997289972899729
+"hazal","SYM","Definite (DET prefix)","Def",1,0.0027100271002710027
+"hazal","SYM","Gender","(none)",341,0.924119241192412
+"hazal","SYM","Gender","Masc",28,0.07588075880758807
+"hazal","SYM","Number","(none)",350,0.948509485094851
+"hazal","SYM","Number","Sing",19,0.051490514905149054
+"hazal","SYM","Person","(none)",369,1
+"hazal","SYM","Suffix","(none)",369,1
+"hazal","SYM","Tense","(none)",369,1
+"hazal","VERB","Definite (DET prefix)","(none)",1412328,0.9932073921913491
+"hazal","VERB","Definite (DET prefix)","Def",9659,0.006792607808650853
+"hazal","VERB","Gender","Masc",951391,0.6690574527052638
+"hazal","VERB","Gender","(none)",288253,0.2027114171929842
+"hazal","VERB","Gender","Fem",107643,0.07569900428062985
+"hazal","VERB","Gender","Fem,Masc",74700,0.052532125821122135
+"hazal","VERB","Number","Sing",942836,0.6630412233023227
+"hazal","VERB","Number","Plur",246122,0.1730831575816094
+"hazal","VERB","Number","(none)",233029,0.16387561911606788
+"hazal","VERB","Person","3",724039,0.5091741345033394
+"hazal","VERB","Person","(none)",324211,0.2279985682006938
+"hazal","VERB","Person","1,2,3",256545,0.1804130417507333
+"hazal","VERB","Person","2",67277,0.04731196558055735
+"hazal","VERB","Person","1",49915,0.03510228996467619
+"hazal","VERB","Suffix","(none)",1407190,0.9895941383430369
+"hazal","VERB","Suffix","PRON",9727,0.006840428217698193
+"hazal","VERB","Suffix","ADP_PRON",5070,0.003565433439264916
+"hazal","VERB","Suffix.Gender","Masc",10274,0.6943299317429209
+"hazal","VERB","Suffix.Gender","(none)",2507,0.16942623504764479
+"hazal","VERB","Suffix.Gender","Fem",1997,0.1349597891464486
+"hazal","VERB","Suffix.Gender","Fem,Masc",19,0.0012840440629857403
+"hazal","VERB","Suffix.Number","Sing",10960,0.7406906805433534
+"hazal","VERB","Suffix.Number","Plur",2880,0.19463404744204907
+"hazal","VERB","Suffix.Number","(none)",957,0.06467527201459755
+"hazal","VERB","Suffix.Person","3",11601,0.7840102723525039
+"hazal","VERB","Suffix.Person","(none)",2050,0.1385415962695141
+"hazal","VERB","Suffix.Person","1",629,0.0425086166114753
+"hazal","VERB","Suffix.Person","2",517,0.034939514766506724
+"hazal","VERB","Tense","(none)",653927,0.4598684798102936
+"hazal","VERB","Tense","Past",505875,0.3557521974532819
+"hazal","VERB","Tense","Fut",166569,0.11713820168538812
+"hazal","VERB","Tense","Pres",68122,0.0479062044871015
+"hazal","VERB","Tense","Imp",27494,0.019334916563934833
+"hazal","X","Definite (DET prefix)","(none)",64472,0.9959218981710332
+"hazal","X","Definite (DET prefix)","Def",264,0.004078101828966881
+"hazal","X","Gender","(none)",63992,0.9885071675729116
+"hazal","X","Gender","Masc",436,0.006735046959960455
+"hazal","X","Gender","Fem",307,0.004742338111715275
+"hazal","X","Gender","Fem,Masc",1,0.000015447355412753335
+"hazal","X","Number","(none)",63867,0.9865762481463174
+"hazal","X","Number","Sing",585,0.009036702916460701
+"hazal","X","Number","Plur",284,0.004387048937221948
+"hazal","X","Person","(none)",64669,0.9989650271873455
+"hazal","X","Person","2",28,0.00043252595155709344
+"hazal","X","Person","1",27,0.0004170785961443401
+"hazal","X","Person","1,2,3",7,0.00010813148788927336
+"hazal","X","Person","3",5,0.00007723677706376669
+"hazal","X","Suffix","(none)",64682,0.9991658428077114
+"hazal","X","Suffix","PRON",45,0.0006951309935739001
+"hazal","X","Suffix","ADP_PRON",9,0.00013902619871478003
+"hazal","X","Suffix.Gender","(none)",33,0.6111111111111112
+"hazal","X","Suffix.Gender","Fem",12,0.2222222222222222
+"hazal","X","Suffix.Gender","Masc",9,0.16666666666666666
+"hazal","X","Suffix.Number","Sing",47,0.8703703703703703
+"hazal","X","Suffix.Number","(none)",4,0.07407407407407407
+"hazal","X","Suffix.Number","Plur",3,0.05555555555555555
+"hazal","X","Suffix.Person","(none)",29,0.5370370370370371
+"hazal","X","Suffix.Person","3",14,0.25925925925925924
+"hazal","X","Suffix.Person","1",8,0.14814814814814814
+"hazal","X","Suffix.Person","2",3,0.05555555555555555
+"hazal","X","Tense","(none)",64718,0.9997219476025705
+"hazal","X","Tense","Imp",11,0.0001699209095402867
+"hazal","X","Tense","Past",5,0.00007723677706376669
+"hazal","X","Tense","Fut",2,0.00003089471082550667
+"medieval","(all words)","Definite (DET prefix)","(none)",3064125,0.8832192026620017
+"medieval","(all words)","Definite (DET prefix)","Def",405144,0.11678079733799829
+"medieval","(all words)","Gender","Masc",1567514,0.4518283246413005
+"medieval","(all words)","Gender","(none)",1243565,0.35845159311659025
+"medieval","(all words)","Gender","Fem",578344,0.1667048591504435
+"medieval","(all words)","Gender","Fem,Masc",79846,0.023015223091665708
+"medieval","(all words)","Number","Sing",1751149,0.5047602247043974
+"medieval","(all words)","Number","(none)",1215731,0.35042857731700827
+"medieval","(all words)","Number","Plur",502294,0.14478381468833926
+"medieval","(all words)","Number","Dual",92,0.000026518554773354272
+"medieval","(all words)","Number","Plur,Sing",3,8.647354817398132e-7
+"medieval","(all words)","Person","(none)",2604449,0.7507198202272582
+"medieval","(all words)","Person","3",627451,0.1808597142510425
+"medieval","(all words)","Person","1,2,3",164336,0.04736905670906465
+"medieval","(all words)","Person","1",43583,0.012562588833555426
+"medieval","(all words)","Person","2",29450,0.008488819979079167
+"medieval","(all words)","Suffix","(none)",3171658,0.9142150695146442
+"medieval","(all words)","Suffix","PRON",167158,0.04818248455222123
+"medieval","(all words)","Suffix","ADP_PRON",130453,0.037602445933134616
+"medieval","(all words)","Suffix.Gender","Masc",222514,0.7476672569226271
+"medieval","(all words)","Suffix.Gender","(none)",33134,0.1113332504510922
+"medieval","(all words)","Suffix.Gender","Fem",32632,0.1096464848409501
+"medieval","(all words)","Suffix.Gender","Fem,Masc",9331,0.03135300778533052
+"medieval","(all words)","Suffix.Number","Sing",211298,0.7099804778721217
+"medieval","(all words)","Suffix.Number","Plur",75213,0.2527225136167682
+"medieval","(all words)","Suffix.Number","(none)",11100,0.03729700851111014
+"medieval","(all words)","Suffix.Person","3",241363,0.8110016094835204
+"medieval","(all words)","Suffix.Person","1",24635,0.08277583825866651
+"medieval","(all words)","Suffix.Person","(none)",17814,0.05985665852404649
+"medieval","(all words)","Suffix.Person","2",13799,0.04636589373376656
+"medieval","(all words)","Tense","(none)",3057878,0.8814185351438588
+"medieval","(all words)","Tense","Past",245595,0.0707915702126298
+"medieval","(all words)","Tense","Fut",146085,0.042108294283320205
+"medieval","(all words)","Tense","Pres",13579,0.0039140810355149745
+"medieval","(all words)","Tense","Imp",6132,0.0017675193246761783
+"medieval","ADJ","Definite (DET prefix)","(none)",113937,0.6829568000767253
+"medieval","ADJ","Definite (DET prefix)","Def",52892,0.31704319992327473
+"medieval","ADJ","Gender","Masc",122757,0.7358253061518082
+"medieval","ADJ","Gender","Fem",41382,0.24805039891146025
+"medieval","ADJ","Gender","(none)",2690,0.016124294936731624
+"medieval","ADJ","Number","Sing",125484,0.752171385070941
+"medieval","ADJ","Number","Plur",38601,0.23138063526125555
+"medieval","ADJ","Number","(none)",2741,0.016429997182744006
+"medieval","ADJ","Number","Dual",3,0.000017982485059551995
+"medieval","ADJ","Person","(none)",163738,0.9814720462269749
+"medieval","ADJ","Person","1,2,3",2870,0.01720324404030474
+"medieval","ADJ","Person","3",191,0.0011448848821248104
+"medieval","ADJ","Person","2",17,0.00010190074867079464
+"medieval","ADJ","Person","1",13,0.00007792410192472531
+"medieval","ADJ","Suffix","(none)",166643,0.9988850859263078
+"medieval","ADJ","Suffix","ADP_PRON",160,0.0009590658698427732
+"medieval","ADJ","Suffix","PRON",26,0.00015584820384945063
+"medieval","ADJ","Suffix.Gender","Masc",114,0.6129032258064516
+"medieval","ADJ","Suffix.Gender","(none)",66,0.3548387096774194
+"medieval","ADJ","Suffix.Gender","Fem",6,0.03225806451612903
+"medieval","ADJ","Suffix.Number","Plur",105,0.5645161290322581
+"medieval","ADJ","Suffix.Number","Sing",41,0.22043010752688172
+"medieval","ADJ","Suffix.Number","(none)",40,0.21505376344086022
+"medieval","ADJ","Suffix.Person","3",132,0.7096774193548387
+"medieval","ADJ","Suffix.Person","(none)",42,0.22580645161290322
+"medieval","ADJ","Suffix.Person","1",12,0.06451612903225806
+"medieval","ADJ","Tense","(none)",166729,0.9994005838313482
+"medieval","ADJ","Tense","Past",89,0.0005334803901000426
+"medieval","ADJ","Tense","Pres",10,0.00005994161686517332
+"medieval","ADJ","Tense","Fut",1,0.0000059941616865173324
+"medieval","ADP","Definite (DET prefix)","(none)",355421,0.9999971864431577
+"medieval","ADP","Definite (DET prefix)","Def",1,0.000002813556842288885
+"medieval","ADP","Gender","(none)",351131,0.9879270275897384
+"medieval","ADP","Gender","Fem",2336,0.006572468783586835
+"medieval","ADP","Gender","Masc",1905,0.005359825784560325
+"medieval","ADP","Gender","Fem,Masc",50,0.00014067784211444423
+"medieval","ADP","Number","(none)",348573,0.9807299491871634
+"medieval","ADP","Number","Sing",4034,0.011349888301793362
+"medieval","ADP","Number","Plur",2815,0.007920162511043211
+"medieval","ADP","Person","(none)",350252,0.9854539111253665
+"medieval","ADP","Person","2",2086,0.005869079573014613
+"medieval","ADP","Person","1",1888,0.005311995318241414
+"medieval","ADP","Person","3",1196,0.003365013983377506
+"medieval","ADP","Suffix","(none)",226290,0.6366797778415517
+"medieval","ADP","Suffix","PRON",128875,0.36259713804998
+"medieval","ADP","Suffix","ADP_PRON",257,0.0007230841084682434
+"medieval","ADP","Suffix.Gender","Masc",100402,0.7775144813059505
+"medieval","ADP","Suffix.Gender","Fem",17550,0.13590744354613885
+"medieval","ADP","Suffix.Gender","Fem,Masc",6929,0.0536582721556237
+"medieval","ADP","Suffix.Gender","(none)",4251,0.03291980299228696
+"medieval","ADP","Suffix.Number","Sing",90016,0.6970851531765945
+"medieval","ADP","Suffix.Number","Plur",38412,0.29746306105380543
+"medieval","ADP","Suffix.Number","(none)",704,0.005451785769600099
+"medieval","ADP","Suffix.Person","3",108030,0.836585819161788
+"medieval","ADP","Suffix.Person","1",10540,0.08162190626645603
+"medieval","ADP","Suffix.Person","2",8674,0.06717157637146486
+"medieval","ADP","Suffix.Person","(none)",1888,0.014620698200291176
+"medieval","ADP","Tense","(none)",355422,1
+"medieval","ADV","Definite (DET prefix)","(none)",294455,0.9884854893667019
+"medieval","ADV","Definite (DET prefix)","Def",3430,0.011514510633298084
+"medieval","ADV","Gender","(none)",296012,0.9937123386541786
+"medieval","ADV","Gender","Masc",1316,0.004417812242979673
+"medieval","ADV","Gender","Fem",557,0.0018698491028417007
+"medieval","ADV","Number","(none)",295799,0.9929972976148513
+"medieval","ADV","Number","Sing",1908,0.006405156352283599
+"medieval","ADV","Number","Plur",178,0.0005975460328650318
+"medieval","ADV","Person","(none)",297314,0.9980831528945734
+"medieval","ADV","Person","3",569,0.0019101331050573208
+"medieval","ADV","Person","1",1,0.00000335700018463501
+"medieval","ADV","Person","2",1,0.00000335700018463501
+"medieval","ADV","Suffix","(none)",297719,0.9994427379693506
+"medieval","ADV","Suffix","PRON",160,0.0005371200295416017
+"medieval","ADV","Suffix","ADP_PRON",6,0.00002014200110781006
+"medieval","ADV","Suffix.Gender","Masc",60,0.3614457831325301
+"medieval","ADV","Suffix.Gender","Fem",55,0.3313253012048193
+"medieval","ADV","Suffix.Gender","(none)",49,0.29518072289156627
+"medieval","ADV","Suffix.Gender","Fem,Masc",2,0.012048192771084338
+"medieval","ADV","Suffix.Number","Sing",115,0.6927710843373494
+"medieval","ADV","Suffix.Number","Plur",37,0.22289156626506024
+"medieval","ADV","Suffix.Number","(none)",14,0.08433734939759036
+"medieval","ADV","Suffix.Person","3",122,0.7349397590361446
+"medieval","ADV","Suffix.Person","(none)",24,0.14457831325301204
+"medieval","ADV","Suffix.Person","1",15,0.09036144578313253
+"medieval","ADV","Suffix.Person","2",5,0.030120481927710843
+"medieval","ADV","Tense","(none)",297883,0.9999932859996308
+"medieval","ADV","Tense","Imp",2,0.00000671400036927002
+"medieval","AUX","Definite (DET prefix)","(none)",108855,0.9984681990790849
+"medieval","AUX","Definite (DET prefix)","Def",167,0.0015318009209150446
+"medieval","AUX","Gender","Masc",73173,0.6711764597971052
+"medieval","AUX","Gender","Fem",15286,0.14021023279705014
+"medieval","AUX","Gender","(none)",10722,0.09834712259910844
+"medieval","AUX","Gender","Fem,Masc",9841,0.09026618480673626
+"medieval","AUX","Number","Sing",79941,0.7332556731668838
+"medieval","AUX","Number","Plur",19072,0.17493716864486067
+"medieval","AUX","Number","(none)",10009,0.09180715818825558
+"medieval","AUX","Person","3",76420,0.7009594393792079
+"medieval","AUX","Person","(none)",16562,0.1519142925281136
+"medieval","AUX","Person","1,2,3",12188,0.11179394984498542
+"medieval","AUX","Person","1",2269,0.02081231311111519
+"medieval","AUX","Person","2",1583,0.014520005136577939
+"medieval","AUX","Suffix","(none)",109016,0.9999449652363743
+"medieval","AUX","Suffix","PRON",5,0.000045862303021408525
+"medieval","AUX","Suffix","ADP_PRON",1,0.000009172460604281705
+"medieval","AUX","Suffix.Gender","(none)",4,0.6666666666666666
+"medieval","AUX","Suffix.Gender","Masc",2,0.3333333333333333
+"medieval","AUX","Suffix.Number","(none)",2,0.3333333333333333
+"medieval","AUX","Suffix.Number","Plur",2,0.3333333333333333
+"medieval","AUX","Suffix.Number","Sing",2,0.3333333333333333
+"medieval","AUX","Suffix.Person","(none)",3,0.5
+"medieval","AUX","Suffix.Person","1",2,0.3333333333333333
+"medieval","AUX","Suffix.Person","3",1,0.16666666666666666
+"medieval","AUX","Tense","(none)",59221,0.5432022894461668
+"medieval","AUX","Tense","Past",29631,0.2717891801654712
+"medieval","AUX","Tense","Fut",20132,0.18465997688539929
+"medieval","AUX","Tense","Imp",38,0.0003485535029627048
+"medieval","CCONJ","Definite (DET prefix)","(none)",54170,0.999944621859598
+"medieval","CCONJ","Definite (DET prefix)","Def",3,0.0000553781404020453
+"medieval","CCONJ","Gender","(none)",54133,0.9992616247946394
+"medieval","CCONJ","Gender","Masc",39,0.0007199158252265889
+"medieval","CCONJ","Gender","Fem",1,0.0000184593801340151
+"medieval","CCONJ","Number","(none)",54080,0.9982832776475365
+"medieval","CCONJ","Number","Sing",83,0.0015321285511232534
+"medieval","CCONJ","Number","Plur",10,0.000184593801340151
+"medieval","CCONJ","Person","(none)",54115,0.9989293559522271
+"medieval","CCONJ","Person","3",58,0.0010706440477728759
+"medieval","CCONJ","Suffix","(none)",54173,1
+"medieval","CCONJ","Tense","(none)",54173,1
+"medieval","DET","Definite (DET prefix)","(none)",62784,0.99909294887096
+"medieval","DET","Definite (DET prefix)","Def",57,0.0009070511290399579
+"medieval","DET","Gender","(none)",58497,0.9308731560605338
+"medieval","DET","Gender","Masc",4249,0.06761509205773301
+"medieval","DET","Gender","Fem",95,0.0015117518817332634
+"medieval","DET","Number","(none)",59349,0.9444311834630257
+"medieval","DET","Number","Sing",1848,0.029407552394137584
+"medieval","DET","Number","Plur",1644,0.026161264142836683
+"medieval","DET","Person","(none)",62837,0.9999363472891902
+"medieval","DET","Person","1",2,0.000031826355404910806
+"medieval","DET","Person","3",2,0.000031826355404910806
+"medieval","DET","Suffix","(none)",60985,0.9704651421842427
+"medieval","DET","Suffix","PRON",1846,0.029375726038732675
+"medieval","DET","Suffix","ADP_PRON",10,0.00015913177702455404
+"medieval","DET","Suffix.Gender","Masc",890,0.4795258620689655
+"medieval","DET","Suffix.Gender","(none)",589,0.3173491379310345
+"medieval","DET","Suffix.Gender","Fem",377,0.203125
+"medieval","DET","Suffix.Number","Plur",1319,0.7106681034482759
+"medieval","DET","Suffix.Number","Sing",401,0.21605603448275862
+"medieval","DET","Suffix.Number","(none)",136,0.07327586206896551
+"medieval","DET","Suffix.Person","3",1639,0.8830818965517241
+"medieval","DET","Suffix.Person","(none)",128,0.06896551724137931
+"medieval","DET","Suffix.Person","1",69,0.037176724137931036
+"medieval","DET","Suffix.Person","2",20,0.010775862068965518
+"medieval","DET","Tense","(none)",62841,1
+"medieval","INTJ","Definite (DET prefix)","(none)",235,1
+"medieval","INTJ","Gender","(none)",230,0.9787234042553191
+"medieval","INTJ","Gender","Masc",4,0.01702127659574468
+"medieval","INTJ","Gender","Fem",1,0.00425531914893617
+"medieval","INTJ","Number","(none)",229,0.9744680851063829
+"medieval","INTJ","Number","Sing",4,0.01702127659574468
+"medieval","INTJ","Number","Plur",2,0.00851063829787234
+"medieval","INTJ","Person","(none)",228,0.9702127659574468
+"medieval","INTJ","Person","2",7,0.029787234042553193
+"medieval","INTJ","Suffix","(none)",235,1
+"medieval","INTJ","Tense","(none)",235,1
+"medieval","NOUN","Definite (DET prefix)","(none)",844209,0.7345770484100431
+"medieval","NOUN","Definite (DET prefix)","Def",305036,0.2654229515899569
+"medieval","NOUN","Gender","Masc",720377,0.6268263077063637
+"medieval","NOUN","Gender","Fem",402150,0.34992538579676224
+"medieval","NOUN","Gender","(none)",23474,0.02042558375281163
+"medieval","NOUN","Gender","Fem,Masc",3244,0.002822722744062406
+"medieval","NOUN","Number","Sing",874403,0.76084994931455
+"medieval","NOUN","Number","Plur",252500,0.21970946142902514
+"medieval","NOUN","Number","(none)",22255,0.01936488738258596
+"medieval","NOUN","Number","Dual",84,0.00007309146439619054
+"medieval","NOUN","Number","Plur,Sing",3,0.0000026104094427210908
+"medieval","NOUN","Person","(none)",1146376,0.9975035784362777
+"medieval","NOUN","Person","1,2,3",2100,0.0018272866099047636
+"medieval","NOUN","Person","3",558,0.0004855361563461229
+"medieval","NOUN","Person","2",134,0.00011659828844154205
+"medieval","NOUN","Person","1",77,0.00006700050902984132
+"medieval","NOUN","Suffix","(none)",994691,0.8655169263298949
+"medieval","NOUN","Suffix","ADP_PRON",127185,0.11066830832416065
+"medieval","NOUN","Suffix","PRON",27369,0.02381476534594451
+"medieval","NOUN","Suffix.Gender","Masc",114060,0.7379944873636399
+"medieval","NOUN","Suffix.Gender","(none)",25816,0.1670354698034344
+"medieval","NOUN","Suffix.Gender","Fem",12319,0.0797067691551173
+"medieval","NOUN","Suffix.Gender","Fem,Masc",2359,0.015263273677808404
+"medieval","NOUN","Suffix.Number","Sing",113995,0.7375739223831153
+"medieval","NOUN","Suffix.Number","Plur",31459,0.20354698034343982
+"medieval","NOUN","Suffix.Number","(none)",9100,0.05887909727344488
+"medieval","NOUN","Suffix.Person","3",122080,0.7898857357299067
+"medieval","NOUN","Suffix.Person","(none)",14041,0.09084850602378457
+"medieval","NOUN","Suffix.Person","1",13682,0.08852569328519481
+"medieval","NOUN","Suffix.Person","2",4751,0.030740064961113915
+"medieval","NOUN","Tense","(none)",1149076,0.9998529469347267
+"medieval","NOUN","Tense","Past",148,0.0001287801991742405
+"medieval","NOUN","Tense","Pres",10,0.000008701364809070302
+"medieval","NOUN","Tense","Fut",8,0.000006961091847256242
+"medieval","NOUN","Tense","Imp",3,0.0000026104094427210908
+"medieval","NUM","Definite (DET prefix)","(none)",89961,0.9240796285643849
+"medieval","NUM","Definite (DET prefix)","Def",7391,0.07592037143561509
+"medieval","NUM","Gender","(none)",45867,0.47114594461336184
+"medieval","NUM","Gender","Masc",34005,0.34929944942065905
+"medieval","NUM","Gender","Fem",16978,0.17439806064590352
+"medieval","NUM","Gender","Fem,Masc",502,0.005156545320075602
+"medieval","NUM","Number","(none)",50787,0.5216841975511546
+"medieval","NUM","Number","Sing",36834,0.3783589448598899
+"medieval","NUM","Number","Plur",9726,0.09990549757580738
+"medieval","NUM","Number","Dual",5,0.00005136001314816337
+"medieval","NUM","Person","(none)",97307,0.9995377598816665
+"medieval","NUM","Person","3",45,0.0004622401183334703
+"medieval","NUM","Suffix","(none)",97161,0.9980380474977402
+"medieval","NUM","Suffix","PRON",189,0.0019414084970005752
+"medieval","NUM","Suffix","ADP_PRON",2,0.000020544005259265346
+"medieval","NUM","Suffix.Gender","Masc",153,0.8010471204188482
+"medieval","NUM","Suffix.Gender","(none)",24,0.1256544502617801
+"medieval","NUM","Suffix.Gender","Fem",14,0.07329842931937172
+"medieval","NUM","Suffix.Number","Plur",182,0.9528795811518325
+"medieval","NUM","Suffix.Number","(none)",7,0.03664921465968586
+"medieval","NUM","Suffix.Number","Sing",2,0.010471204188481676
+"medieval","NUM","Suffix.Person","3",152,0.7958115183246073
+"medieval","NUM","Suffix.Person","(none)",24,0.1256544502617801
+"medieval","NUM","Suffix.Person","1",15,0.07853403141361257
+"medieval","NUM","Tense","(none)",97352,1
+"medieval","PRON","Definite (DET prefix)","(none)",213796,0.9221346652347002
+"medieval","PRON","Definite (DET prefix)","Def",18053,0.07786533476529983
+"medieval","PRON","Gender","Masc",148477,0.6404038835621461
+"medieval","PRON","Gender","Fem",36765,0.1585730367609953
+"medieval","PRON","Gender","(none)",33820,0.1458708038421559
+"medieval","PRON","Gender","Fem,Masc",12787,0.05515227583470276
+"medieval","PRON","Number","Sing",160202,0.6909755918722962
+"medieval","PRON","Number","Plur",42013,0.1812084589538881
+"medieval","PRON","Number","(none)",29634,0.12781594917381572
+"medieval","PRON","Person","3",191730,0.8269606511134402
+"medieval","PRON","Person","(none)",22542,0.09722707451832874
+"medieval","PRON","Person","1",10204,0.04401140397413834
+"medieval","PRON","Person","2",7365,0.03176636517733525
+"medieval","PRON","Person","1,2,3",8,0.000034505216757458515
+"medieval","PRON","Suffix","(none)",226700,0.9777915798644807
+"medieval","PRON","Suffix","PRON",5148,0.022204106983424555
+"medieval","PRON","Suffix","ADP_PRON",1,0.000004313152094682314
+"medieval","PRON","Suffix.Gender","Masc",2394,0.46494464944649444
+"medieval","PRON","Suffix.Gender","Fem",1558,0.3025830258302583
+"medieval","PRON","Suffix.Gender","(none)",1161,0.22548067585939016
+"medieval","PRON","Suffix.Gender","Fem,Masc",36,0.006991648863857059
+"medieval","PRON","Suffix.Number","Plur",2548,0.4948533695863274
+"medieval","PRON","Suffix.Number","Sing",2006,0.3895902116915906
+"medieval","PRON","Suffix.Number","(none)",595,0.11555641872208196
+"medieval","PRON","Suffix.Person","3",4004,0.7776267236356574
+"medieval","PRON","Suffix.Person","(none)",796,0.1545931248786172
+"medieval","PRON","Suffix.Person","2",226,0.043892017867547095
+"medieval","PRON","Suffix.Person","1",123,0.02388813361817829
+"medieval","PRON","Tense","(none)",231833,0.9999309895664851
+"medieval","PRON","Tense","Past",10,0.000043131520946823146
+"medieval","PRON","Tense","Imp",5,0.000021565760473411573
+"medieval","PRON","Tense","Fut",1,0.000004313152094682314
+"medieval","PROPN","Definite (DET prefix)","(none)",111175,0.9549804150632215
+"medieval","PROPN","Definite (DET prefix)","Def",5241,0.04501958493677845
+"medieval","PROPN","Gender","(none)",105477,0.9060352528862012
+"medieval","PROPN","Gender","Masc",8129,0.06982717152281473
+"medieval","PROPN","Gender","Fem",2808,0.024120395821880154
+"medieval","PROPN","Gender","Fem,Masc",2,0.000017179769103903244
+"medieval","PROPN","Number","(none)",105347,0.9049185678944475
+"medieval","PROPN","Number","Sing",9218,0.07918155579989004
+"medieval","PROPN","Number","Plur",1851,0.01589987630566245
+"medieval","PROPN","Person","(none)",116370,0.9996048653106102
+"medieval","PROPN","Person","1,2,3",27,0.0002319268829026938
+"medieval","PROPN","Person","3",11,0.00009448873007146783
+"medieval","PROPN","Person","2",7,0.00006012919186366135
+"medieval","PROPN","Person","1",1,0.000008589884551951622
+"medieval","PROPN","Suffix","(none)",116260,0.9986599780098956
+"medieval","PROPN","Suffix","PRON",130,0.0011166849917537108
+"medieval","PROPN","Suffix","ADP_PRON",26,0.00022333699835074217
+"medieval","PROPN","Suffix.Gender","(none)",100,0.6410256410256411
+"medieval","PROPN","Suffix.Gender","Masc",37,0.23717948717948717
+"medieval","PROPN","Suffix.Gender","Fem",18,0.11538461538461539
+"medieval","PROPN","Suffix.Gender","Fem,Masc",1,0.00641025641025641
+"medieval","PROPN","Suffix.Number","Sing",132,0.8461538461538461
+"medieval","PROPN","Suffix.Number","Plur",13,0.08333333333333333
+"medieval","PROPN","Suffix.Number","(none)",11,0.07051282051282051
+"medieval","PROPN","Suffix.Person","3",56,0.358974358974359
+"medieval","PROPN","Suffix.Person","(none)",45,0.28846153846153844
+"medieval","PROPN","Suffix.Person","1",40,0.2564102564102564
+"medieval","PROPN","Suffix.Person","2",15,0.09615384615384616
+"medieval","PROPN","Tense","(none)",116413,0.9999742303463441
+"medieval","PROPN","Tense","Past",3,0.000025769653655854866
+"medieval","SCONJ","Definite (DET prefix)","(none)",106610,0.9994562567967901
+"medieval","SCONJ","Definite (DET prefix)","Def",58,0.0005437432032099599
+"medieval","SCONJ","Gender","(none)",106660,0.9999250009374883
+"medieval","SCONJ","Gender","Masc",6,0.00005624929688378895
+"medieval","SCONJ","Gender","Fem",2,0.00001874976562792965
+"medieval","SCONJ","Number","(none)",106661,0.9999343758203022
+"medieval","SCONJ","Number","Sing",4,0.0000374995312558593
+"medieval","SCONJ","Number","Plur",3,0.000028124648441894476
+"medieval","SCONJ","Person","(none)",106587,0.9992406344920689
+"medieval","SCONJ","Person","3",81,0.0007593655079311508
+"medieval","SCONJ","Suffix","(none)",106664,0.9999625004687441
+"medieval","SCONJ","Suffix","PRON",4,0.0000374995312558593
+"medieval","SCONJ","Suffix.Gender","Masc",4,1
+"medieval","SCONJ","Suffix.Number","Sing",3,0.75
+"medieval","SCONJ","Suffix.Number","Plur",1,0.25
+"medieval","SCONJ","Suffix.Person","3",3,0.75
+"medieval","SCONJ","Suffix.Person","1",1,0.25
+"medieval","SCONJ","Tense","(none)",106668,1
+"medieval","SYM","Definite (DET prefix)","(none)",741,1
+"medieval","SYM","Gender","(none)",731,0.9865047233468286
+"medieval","SYM","Gender","Masc",10,0.01349527665317139
+"medieval","SYM","Number","(none)",737,0.9946018893387314
+"medieval","SYM","Number","Sing",4,0.005398110661268556
+"medieval","SYM","Person","(none)",741,1
+"medieval","SYM","Suffix","(none)",741,1
+"medieval","SYM","Tense","(none)",741,1
+"medieval","VERB","Definite (DET prefix)","(none)",697099,0.9821795653944293
+"medieval","VERB","Definite (DET prefix)","Def",12648,0.017820434605570718
+"medieval","VERB","Gender","Masc",452959,0.6381978366939205
+"medieval","VERB","Gender","(none)",143461,0.2021297730036196
+"medieval","VERB","Gender","Fem",59908,0.08440754240595592
+"medieval","VERB","Gender","Fem,Masc",53419,0.07526484789650396
+"medieval","VERB","Number","Sing",457033,0.643937910269434
+"medieval","VERB","Number","Plur",133766,0.1884699759209972
+"medieval","VERB","Number","(none)",118948,0.16759211380956876
+"medieval","VERB","Person","3",356589,0.5024170584729488
+"medieval","VERB","Person","(none)",158646,0.22352472078078525
+"medieval","VERB","Person","1,2,3",147140,0.20731331023590097
+"medieval","VERB","Person","1",29127,0.04103856726410961
+"medieval","VERB","Person","2",18245,0.025706343246255356
+"medieval","VERB","Suffix","(none)",703544,0.9912602659821035
+"medieval","VERB","Suffix","PRON",3401,0.004791848362867331
+"medieval","VERB","Suffix","ADP_PRON",2802,0.003947885655029186
+"medieval","VERB","Suffix.Gender","Masc",4396,0.7086893438658713
+"medieval","VERB","Suffix.Gender","(none)",1069,0.17233596646783814
+"medieval","VERB","Suffix.Gender","Fem",734,0.11832984039980654
+"medieval","VERB","Suffix.Gender","Fem,Masc",4,0.0006448492664839593
+"medieval","VERB","Suffix.Number","Sing",4578,0.7380299854908915
+"medieval","VERB","Suffix.Number","Plur",1134,0.1828147670482025
+"medieval","VERB","Suffix.Number","(none)",491,0.07915524746090602
+"medieval","VERB","Suffix.Person","3",5141,0.8287925197485088
+"medieval","VERB","Suffix.Person","(none)",819,0.1320328873125907
+"medieval","VERB","Suffix.Person","1",135,0.02176366274383363
+"medieval","VERB","Suffix.Person","2",108,0.0174109301950669
+"medieval","VERB","Tense","(none)",348453,0.4909538187551339
+"medieval","VERB","Tense","Past",215712,0.30392801942100495
+"medieval","VERB","Tense","Fut",125942,0.17744632946669728
+"medieval","VERB","Tense","Pres",13559,0.01910399057692389
+"medieval","VERB","Tense","Imp",6081,0.00856784178024
+"medieval","X","Definite (DET prefix)","(none)",10677,0.984599778679454
+"medieval","X","Definite (DET prefix)","Def",167,0.015400221320545924
+"medieval","X","Gender","(none)",10660,0.9830320914791589
+"medieval","X","Gender","Masc",108,0.009959424566580598
+"medieval","X","Gender","Fem",75,0.006916267060125415
+"medieval","X","Gender","Fem,Masc",1,0.00009221689413500554
+"medieval","X","Number","(none)",10582,0.9758391737366285
+"medieval","X","Number","Sing",149,0.013740317226115824
+"medieval","X","Number","Plur",113,0.010420509037255625
+"medieval","X","Person","(none)",10834,0.9990778310586499
+"medieval","X","Person","2",5,0.00046108447067502766
+"medieval","X","Person","1,2,3",3,0.0002766506824050166
+"medieval","X","Person","1",1,0.00009221689413500554
+"medieval","X","Person","3",1,0.00009221689413500554
+"medieval","X","Suffix","(none)",10836,0.9992622648469199
+"medieval","X","Suffix","PRON",5,0.00046108447067502766
+"medieval","X","Suffix","ADP_PRON",3,0.0002766506824050166
+"medieval","X","Suffix.Gender","(none)",5,0.625
+"medieval","X","Suffix.Gender","Masc",2,0.25
+"medieval","X","Suffix.Gender","Fem",1,0.125
+"medieval","X","Suffix.Number","Sing",7,0.875
+"medieval","X","Suffix.Number","Plur",1,0.125
+"medieval","X","Suffix.Person","(none)",4,0.5
+"medieval","X","Suffix.Person","3",3,0.375
+"medieval","X","Suffix.Person","1",1,0.125
+"medieval","X","Tense","(none)",10838,0.99944669863519
+"medieval","X","Tense","Imp",3,0.0002766506824050166
+"medieval","X","Tense","Past",2,0.00018443378827001107
+"medieval","X","Tense","Fut",1,0.00009221689413500554
+"haskala","(all words)","Definite (DET prefix)","(none)",4719301,0.8809499764702984
+"haskala","(all words)","Definite (DET prefix)","Def",637758,0.11905002352970165
+"haskala","(all words)","Gender","Masc",2264350,0.4226852831002981
+"haskala","(all words)","Gender","(none)",1936434,0.36147333826265493
+"haskala","(all words)","Gender","Fem",1003750,0.18736959962546615
+"haskala","(all words)","Gender","Fem,Masc",152525,0.028471779011580794
+"haskala","(all words)","Number","Sing",2518533,0.47013351915668655
+"haskala","(all words)","Number","(none)",1902456,0.35513067897889494
+"haskala","(all words)","Number","Plur",935584,0.1746450804443259
+"haskala","(all words)","Number","Dual",301,0.00005618754618905635
+"haskala","(all words)","Number","Plur,Sing",185,0.000034533873903572835
+"haskala","(all words)","Person","(none)",4242539,0.7919530100377838
+"haskala","(all words)","Person","3",747966,0.13962250555762032
+"haskala","(all words)","Person","1,2,3",214047,0.03995606544561111
+"haskala","(all words)","Person","1",106571,0.019893564733933302
+"haskala","(all words)","Person","2",45936,0.00857485422505147
+"haskala","(all words)","Suffix","(none)",4873636,0.9097596274373682
+"haskala","(all words)","Suffix","ADP_PRON",243832,0.04551601914408634
+"haskala","(all words)","Suffix","PRON",239591,0.04472435341854551
+"haskala","(all words)","Suffix.Gender","Masc",335267,0.6935272008158486
+"haskala","(all words)","Suffix.Gender","Fem",65953,0.13642917279484013
+"haskala","(all words)","Suffix.Gender","(none)",51375,0.10627338790252015
+"haskala","(all words)","Suffix.Gender","Fem,Masc",30828,0.06377023848679107
+"haskala","(all words)","Suffix.Number","Sing",348349,0.7205883873957176
+"haskala","(all words)","Suffix.Number","Plur",122802,0.2540259772497378
+"haskala","(all words)","Suffix.Number","(none)",12272,0.02538563535454457
+"haskala","(all words)","Suffix.Person","3",356154,0.7367336680298621
+"haskala","(all words)","Suffix.Person","1",87983,0.18200002896014464
+"haskala","(all words)","Suffix.Person","(none)",20744,0.04291066002238206
+"haskala","(all words)","Suffix.Person","2",18542,0.038355642987611266
+"haskala","(all words)","Tense","(none)",4805114,0.8969686538826621
+"haskala","(all words)","Tense","Past",321012,0.059923177997479586
+"haskala","(all words)","Tense","Fut",199974,0.03732906432428689
+"haskala","(all words)","Tense","Pres",19726,0.0036822443060642042
+"haskala","(all words)","Tense","Imp",11233,0.002096859489507209
+"haskala","ADJ","Definite (DET prefix)","(none)",243615,0.7103078685953039
+"haskala","ADJ","Definite (DET prefix)","Def",99356,0.289692131404696
+"haskala","ADJ","Gender","Masc",237235,0.6917057127278983
+"haskala","ADJ","Gender","Fem",99488,0.2900770035950561
+"haskala","ADJ","Gender","(none)",6243,0.018202705184986484
+"haskala","ADJ","Gender","Fem,Masc",5,0.000014578492059095375
+"haskala","ADJ","Number","Sing",234566,0.6839237136667532
+"haskala","ADJ","Number","Plur",102163,0.29787649684667217
+"haskala","ADJ","Number","(none)",6235,0.018179379597691933
+"haskala","ADJ","Number","Dual",7,0.000020409888882733526
+"haskala","ADJ","Person","(none)",338537,0.9870717932419942
+"haskala","ADJ","Person","1,2,3",4196,0.012234270535992839
+"haskala","ADJ","Person","3",194,0.0005656454918929006
+"haskala","ADJ","Person","1",22,0.00006414536506001965
+"haskala","ADJ","Person","2",22,0.00006414536506001965
+"haskala","ADJ","Suffix","(none)",342376,0.9982651594449676
+"haskala","ADJ","Suffix","ADP_PRON",498,0.0014520178090858993
+"haskala","ADJ","Suffix","PRON",97,0.0002828227459464503
+"haskala","ADJ","Suffix.Gender","Masc",492,0.826890756302521
+"haskala","ADJ","Suffix.Gender","(none)",98,0.16470588235294117
+"haskala","ADJ","Suffix.Gender","Fem",4,0.0067226890756302525
+"haskala","ADJ","Suffix.Gender","Fem,Masc",1,0.0016806722689075631
+"haskala","ADJ","Suffix.Number","Plur",458,0.7697478991596639
+"haskala","ADJ","Suffix.Number","Sing",113,0.1899159663865546
+"haskala","ADJ","Suffix.Number","(none)",24,0.040336134453781515
+"haskala","ADJ","Suffix.Person","3",486,0.8168067226890756
+"haskala","ADJ","Suffix.Person","1",76,0.12773109243697478
+"haskala","ADJ","Suffix.Person","(none)",33,0.05546218487394958
+"haskala","ADJ","Tense","(none)",342841,0.9996209592064635
+"haskala","ADJ","Tense","Past",112,0.0003265582221237364
+"haskala","ADJ","Tense","Pres",14,0.00004081977776546705
+"haskala","ADJ","Tense","Imp",4,0.0000116627936472763
+"haskala","ADP","Definite (DET prefix)","(none)",546996,0.9999981718364086
+"haskala","ADP","Definite (DET prefix)","Def",1,0.000001828163591390812
+"haskala","ADP","Gender","(none)",543509,0.9936233653932288
+"haskala","ADP","Gender","Fem",1702,0.003111534432547162
+"haskala","ADP","Gender","Masc",1671,0.003054861361214047
+"haskala","ADP","Gender","Fem,Masc",115,0.00021023881300994337
+"haskala","ADP","Number","(none)",539179,0.9857074170425066
+"haskala","ADP","Number","Sing",4890,0.008939719961901071
+"haskala","ADP","Number","Plur",2928,0.005352862995592298
+"haskala","ADP","Person","(none)",539778,0.9868024870337497
+"haskala","ADP","Person","1",4102,0.007499127051885111
+"haskala","ADP","Person","2",2172,0.003970771320500843
+"haskala","ADP","Person","3",945,0.0017276145938643175
+"haskala","ADP","Suffix","(none)",374713,0.6850366638208254
+"haskala","ADP","Suffix","PRON",172030,0.3144989826269614
+"haskala","ADP","Suffix","ADP_PRON",254,0.00046435355221326625
+"haskala","ADP","Suffix.Gender","Masc",115642,0.6712289011167607
+"haskala","ADP","Suffix.Gender","Fem",27764,0.16115251561375404
+"haskala","ADP","Suffix.Gender","Fem,Masc",21917,0.12721436697545913
+"haskala","ADP","Suffix.Gender","(none)",6961,0.04040421629402614
+"haskala","ADP","Suffix.Number","Sing",120470,0.6992523972046156
+"haskala","ADP","Suffix.Number","Plur",51018,0.2961273246499965
+"haskala","ADP","Suffix.Number","(none)",796,0.004620278145387848
+"haskala","ADP","Suffix.Person","3",126218,0.7326159132595017
+"haskala","ADP","Suffix.Person","1",33338,0.19350607137052772
+"haskala","ADP","Suffix.Person","2",10905,0.06329664971790765
+"haskala","ADP","Suffix.Person","(none)",1823,0.010581365652062873
+"haskala","ADP","Tense","(none)",546992,0.999990859182043
+"haskala","ADP","Tense","Past",3,0.000005484490774172436
+"haskala","ADP","Tense","Imp",2,0.000003656327182781624
+"haskala","ADV","Definite (DET prefix)","(none)",471326,0.9769629383964845
+"haskala","ADV","Definite (DET prefix)","Def",11114,0.023037061603515464
+"haskala","ADV","Gender","(none)",480042,0.9950294337119642
+"haskala","ADV","Gender","Masc",1843,0.003820164165492082
+"haskala","ADV","Gender","Fem",555,0.001150402122543736
+"haskala","ADV","Number","(none)",479874,0.9946812038802753
+"haskala","ADV","Number","Sing",2356,0.004883508830113589
+"haskala","ADV","Number","Plur",210,0.00043528728961114336
+"haskala","ADV","Person","(none)",481878,0.9988350883011359
+"haskala","ADV","Person","3",550,0.0011400381394577564
+"haskala","ADV","Person","2",7,0.000014509576320371446
+"haskala","ADV","Person","1",5,0.000010363983085979604
+"haskala","ADV","Suffix","(none)",481057,0.997133322278418
+"haskala","ADV","Suffix","PRON",1340,0.002777547467042534
+"haskala","ADV","Suffix","ADP_PRON",43,0.0000891302545394246
+"haskala","ADV","Suffix.Gender","Fem",696,0.5032537960954447
+"haskala","ADV","Suffix.Gender","Masc",421,0.30441070137382503
+"haskala","ADV","Suffix.Gender","(none)",266,0.19233550253073028
+"haskala","ADV","Suffix.Number","Sing",1064,0.7693420101229211
+"haskala","ADV","Suffix.Number","Plur",195,0.14099783080260303
+"haskala","ADV","Suffix.Number","(none)",124,0.08966015907447578
+"haskala","ADV","Suffix.Person","3",1070,0.7736804049168474
+"haskala","ADV","Suffix.Person","1",162,0.11713665943600868
+"haskala","ADV","Suffix.Person","(none)",146,0.10556760665220535
+"haskala","ADV","Suffix.Person","2",5,0.0036153289949385392
+"haskala","ADV","Tense","(none)",482413,0.9999440344913357
+"haskala","ADV","Tense","Imp",21,0.00004352872896111434
+"haskala","ADV","Tense","Past",5,0.000010363983085979604
+"haskala","ADV","Tense","Fut",1,0.0000020727966171959206
+"haskala","AUX","Definite (DET prefix)","(none)",117834,0.9990758247628092
+"haskala","AUX","Definite (DET prefix)","Def",109,0.0009241752371908465
+"haskala","AUX","Gender","Masc",70885,0.6010106576905794
+"haskala","AUX","Gender","Fem",19844,0.16825076520013904
+"haskala","AUX","Gender","Fem,Masc",16195,0.13731209143399778
+"haskala","AUX","Gender","(none)",11019,0.09342648567528382
+"haskala","AUX","Number","Sing",82046,0.6956411147757815
+"haskala","AUX","Number","Plur",25980,0.22027589598365313
+"haskala","AUX","Number","(none)",9917,0.08408298924056536
+"haskala","AUX","Person","3",80142,0.6794977234765947
+"haskala","AUX","Person","(none)",14480,0.12277116912406841
+"haskala","AUX","Person","1,2,3",10182,0.08632983729428623
+"haskala","AUX","Person","1",10029,0.0850326004934587
+"haskala","AUX","Person","2",3110,0.02636866961159204
+"haskala","AUX","Suffix","(none)",117933,0.9999152132809916
+"haskala","AUX","Suffix","PRON",10,0.00008478671900833453
+"haskala","AUX","Suffix.Gender","(none)",5,0.5
+"haskala","AUX","Suffix.Gender","Masc",3,0.3
+"haskala","AUX","Suffix.Gender","Fem",2,0.2
+"haskala","AUX","Suffix.Number","Sing",5,0.5
+"haskala","AUX","Suffix.Number","Plur",3,0.3
+"haskala","AUX","Suffix.Number","(none)",2,0.2
+"haskala","AUX","Suffix.Person","1",4,0.4
+"haskala","AUX","Suffix.Person","3",4,0.4
+"haskala","AUX","Suffix.Person","(none)",2,0.2
+"haskala","AUX","Tense","(none)",60531,0.5132224888293497
+"haskala","AUX","Tense","Past",39152,0.33195696226143134
+"haskala","AUX","Tense","Fut",18227,0.15454075273649134
+"haskala","AUX","Tense","Imp",23,0.00019500945371916942
+"haskala","AUX","Tense","Pres",10,0.00008478671900833453
+"haskala","CCONJ","Definite (DET prefix)","(none)",65510,0.9994965137390721
+"haskala","CCONJ","Definite (DET prefix)","Def",33,0.0005034862609279404
+"haskala","CCONJ","Gender","(none)",65518,0.9996185710144485
+"haskala","CCONJ","Gender","Masc",15,0.00022885739133088201
+"haskala","CCONJ","Gender","Fem,Masc",10,0.00015257159422058802
+"haskala","CCONJ","Number","(none)",65516,0.9995880566956045
+"haskala","CCONJ","Number","Sing",20,0.00030514318844117604
+"haskala","CCONJ","Number","Plur",7,0.00010680011595441161
+"haskala","CCONJ","Person","(none)",65461,0.9987489129273912
+"haskala","CCONJ","Person","3",71,0.0010832583189661748
+"haskala","CCONJ","Person","2",7,0.00010680011595441161
+"haskala","CCONJ","Person","1",2,0.0000305143188441176
+"haskala","CCONJ","Person","1,2,3",2,0.0000305143188441176
+"haskala","CCONJ","Suffix","(none)",65542,0.9999847428405779
+"haskala","CCONJ","Suffix","ADP_PRON",1,0.0000152571594220588
+"haskala","CCONJ","Suffix.Gender","(none)",1,1
+"haskala","CCONJ","Suffix.Number","Sing",1,1
+"haskala","CCONJ","Suffix.Person","(none)",1,1
+"haskala","CCONJ","Tense","(none)",65522,0.9996795996521368
+"haskala","CCONJ","Tense","Past",19,0.00028988602901911724
+"haskala","CCONJ","Tense","Fut",1,0.0000152571594220588
+"haskala","CCONJ","Tense","Imp",1,0.0000152571594220588
+"haskala","DET","Definite (DET prefix)","(none)",103821,0.9992492709265729
+"haskala","DET","Definite (DET prefix)","Def",78,0.0007507290734270782
+"haskala","DET","Gender","(none)",99351,0.956226720180175
+"haskala","DET","Gender","Masc",3911,0.03764232572017055
+"haskala","DET","Gender","Fem",637,0.006130954099654472
+"haskala","DET","Number","(none)",101152,0.973560861990972
+"haskala","DET","Number","Sing",2026,0.019499706445682826
+"haskala","DET","Number","Plur",721,0.006939431563345172
+"haskala","DET","Person","(none)",103883,0.9998460042926304
+"haskala","DET","Person","3",16,0.00015399570736965708
+"haskala","DET","Suffix","(none)",102147,0.9831374700430225
+"haskala","DET","Suffix","PRON",1743,0.016775907371582018
+"haskala","DET","Suffix","ADP_PRON",9,0.0000866225853954321
+"haskala","DET","Suffix.Gender","Masc",1181,0.6740867579908676
+"haskala","DET","Suffix.Gender","(none)",470,0.2682648401826484
+"haskala","DET","Suffix.Gender","Fem",99,0.05650684931506849
+"haskala","DET","Suffix.Gender","Fem,Masc",2,0.001141552511415525
+"haskala","DET","Suffix.Number","Plur",1380,0.7876712328767124
+"haskala","DET","Suffix.Number","Sing",337,0.192351598173516
+"haskala","DET","Suffix.Number","(none)",35,0.01997716894977169
+"haskala","DET","Suffix.Person","3",1265,0.7220319634703196
+"haskala","DET","Suffix.Person","1",363,0.2071917808219178
+"haskala","DET","Suffix.Person","(none)",86,0.04908675799086758
+"haskala","DET","Suffix.Person","2",38,0.021689497716894976
+"haskala","DET","Tense","(none)",103899,1
+"haskala","INTJ","Definite (DET prefix)","(none)",3766,1
+"haskala","INTJ","Gender","(none)",3683,0.9779607010090281
+"haskala","INTJ","Gender","Masc",59,0.015666489644184812
+"haskala","INTJ","Gender","Fem",24,0.006372809346787042
+"haskala","INTJ","Number","(none)",3634,0.9649495485926712
+"haskala","INTJ","Number","Sing",85,0.02257036643653744
+"haskala","INTJ","Number","Plur",47,0.01248008497079129
+"haskala","INTJ","Person","(none)",3655,0.97052575677111
+"haskala","INTJ","Person","2",109,0.028943175783324483
+"haskala","INTJ","Person","1",2,0.0005310674455655868
+"haskala","INTJ","Suffix","(none)",3762,0.9989378651088688
+"haskala","INTJ","Suffix","PRON",4,0.0010621348911311736
+"haskala","INTJ","Suffix.Gender","(none)",2,0.5
+"haskala","INTJ","Suffix.Gender","Masc",2,0.5
+"haskala","INTJ","Suffix.Number","Sing",3,0.75
+"haskala","INTJ","Suffix.Number","Plur",1,0.25
+"haskala","INTJ","Suffix.Person","1",2,0.5
+"haskala","INTJ","Suffix.Person","(none)",1,0.25
+"haskala","INTJ","Suffix.Person","3",1,0.25
+"haskala","INTJ","Tense","(none)",3691,0.9800849707912905
+"haskala","INTJ","Tense","Imp",75,0.019915029208709505
+"haskala","NOUN","Definite (DET prefix)","(none)",1475704,0.7639350338611203
+"haskala","NOUN","Definite (DET prefix)","Def",456010,0.23606496613887978
+"haskala","NOUN","Gender","Masc",1205614,0.6241161993959768
+"haskala","NOUN","Gender","Fem",671697,0.34772072884495325
+"haskala","NOUN","Gender","(none)",43900,0.02272593147846938
+"haskala","NOUN","Gender","Fem,Masc",10503,0.0054371402806005446
+"haskala","NOUN","Number","Sing",1384481,0.716711169458833
+"haskala","NOUN","Number","Plur",503590,0.26069594153171743
+"haskala","NOUN","Number","(none)",43208,0.022367700394571866
+"haskala","NOUN","Number","Dual",283,0.00014650201841473427
+"haskala","NOUN","Number","Plur,Sing",152,0.00007868659646303749
+"haskala","NOUN","Person","(none)",1928971,0.9985800175388282
+"haskala","NOUN","Person","1,2,3",1997,0.001033796928530828
+"haskala","NOUN","Person","1",342,0.00017704484204183435
+"haskala","NOUN","Person","3",302,0.00015633784297261396
+"haskala","NOUN","Person","2",102,0.000052802847626511996
+"haskala","NOUN","Suffix","(none)",1635859,0.8468432697593951
+"haskala","NOUN","Suffix","ADP_PRON",239627,0.12404890164900187
+"haskala","NOUN","Suffix","PRON",56228,0.029107828591603106
+"haskala","NOUN","Suffix.Gender","Masc",210653,0.7120143313447466
+"haskala","NOUN","Suffix.Gender","(none)",40985,0.13853069916006153
+"haskala","NOUN","Suffix.Gender","Fem",35427,0.11974446941914113
+"haskala","NOUN","Suffix.Gender","Fem,Masc",8790,0.029710500076050767
+"haskala","NOUN","Suffix.Number","Sing",218973,0.7401362153757753
+"haskala","NOUN","Suffix.Number","Plur",66435,0.22455256798093662
+"haskala","NOUN","Suffix.Number","(none)",10447,0.035311216643288096
+"haskala","NOUN","Suffix.Person","3",218655,0.7390613645197817
+"haskala","NOUN","Suffix.Person","1",53070,0.1793784117219584
+"haskala","NOUN","Suffix.Person","(none)",17069,0.05769380270740734
+"haskala","NOUN","Suffix.Person","2",7061,0.023866421050852613
+"haskala","NOUN","Tense","(none)",1931364,0.9998188137581443
+"haskala","NOUN","Tense","Past",255,0.00013200711906628
+"haskala","NOUN","Tense","Pres",41,0.000021224674045950903
+"haskala","NOUN","Tense","Fut",28,0.000014494899348454274
+"haskala","NOUN","Tense","Imp",26,0.000013459549394993255
+"haskala","NUM","Definite (DET prefix)","(none)",110242,0.9375196659551489
+"haskala","NUM","Definite (DET prefix)","Def",7347,0.062480334044851135
+"haskala","NUM","Gender","Masc",42897,0.3648045310360663
+"haskala","NUM","Gender","(none)",42838,0.36430278342361955
+"haskala","NUM","Gender","Fem",30542,0.25973517931099
+"haskala","NUM","Gender","Fem,Masc",1312,0.011157506229324172
+"haskala","NUM","Number","Sing",52472,0.4462322155983978
+"haskala","NUM","Number","(none)",49214,0.41852554235515227
+"haskala","NUM","Number","Plur",15892,0.13514869588141748
+"haskala","NUM","Number","Dual",11,0.00009354616503244351
+"haskala","NUM","Person","(none)",117506,0.999294151663846
+"haskala","NUM","Person","3",82,0.0006973441393327607
+"haskala","NUM","Person","2",1,0.000008504196821131228
+"haskala","NUM","Suffix","(none)",117240,0.9970320353094252
+"haskala","NUM","Suffix","PRON",340,0.0028914269191846176
+"haskala","NUM","Suffix","ADP_PRON",9,0.00007653777139018105
+"haskala","NUM","Suffix.Gender","Masc",297,0.8510028653295129
+"haskala","NUM","Suffix.Gender","(none)",38,0.10888252148997135
+"haskala","NUM","Suffix.Gender","Fem",14,0.04011461318051576
+"haskala","NUM","Suffix.Number","Plur",315,0.9025787965616046
+"haskala","NUM","Suffix.Number","(none)",29,0.0830945558739255
+"haskala","NUM","Suffix.Number","Sing",5,0.014326647564469915
+"haskala","NUM","Suffix.Person","3",209,0.5988538681948424
+"haskala","NUM","Suffix.Person","(none)",65,0.18624641833810887
+"haskala","NUM","Suffix.Person","1",55,0.15759312320916904
+"haskala","NUM","Suffix.Person","2",20,0.05730659025787966
+"haskala","NUM","Tense","(none)",117587,0.9999829916063577
+"haskala","NUM","Tense","Fut",1,0.000008504196821131228
+"haskala","NUM","Tense","Past",1,0.000008504196821131228
+"haskala","PRON","Definite (DET prefix)","(none)",241825,0.8558419864240262
+"haskala","PRON","Definite (DET prefix)","Def",40733,0.14415801357597377
+"haskala","PRON","Gender","Masc",172890,0.6118743762342599
+"haskala","PRON","Gender","Fem",59713,0.21133006320826167
+"haskala","PRON","Gender","(none)",33871,0.11987273409353123
+"haskala","PRON","Gender","Fem,Masc",16084,0.056922826463947224
+"haskala","PRON","Number","Sing",196960,0.6970604265318979
+"haskala","PRON","Number","Plur",57557,0.2036997713743727
+"haskala","PRON","Number","(none)",28041,0.09923980209372943
+"haskala","PRON","Person","3",217760,0.7706736316083778
+"haskala","PRON","Person","1",30711,0.10868918947614295
+"haskala","PRON","Person","(none)",20698,0.07325221724389329
+"haskala","PRON","Person","2",13388,0.047381422575188105
+"haskala","PRON","Person","1,2,3",1,0.000003539096397907686
+"haskala","PRON","Suffix","(none)",279177,0.9880343150786741
+"haskala","PRON","Suffix","PRON",3381,0.011965684921325888
+"haskala","PRON","Suffix.Gender","Masc",1378,0.4075717243419107
+"haskala","PRON","Suffix.Gender","(none)",1186,0.3507837917775806
+"haskala","PRON","Suffix.Gender","Fem",714,0.2111801242236025
+"haskala","PRON","Suffix.Gender","Fem,Masc",103,0.03046435965690624
+"haskala","PRON","Suffix.Number","Sing",1686,0.4986690328305235
+"haskala","PRON","Suffix.Number","Plur",1296,0.38331854480922806
+"haskala","PRON","Suffix.Number","(none)",399,0.11801242236024845
+"haskala","PRON","Suffix.Person","3",2101,0.6214137829044661
+"haskala","PRON","Suffix.Person","(none)",539,0.15942028985507245
+"haskala","PRON","Suffix.Person","1",391,0.11564625850340136
+"haskala","PRON","Suffix.Person","2",350,0.10351966873706005
+"haskala","PRON","Tense","(none)",282519,0.9998619752404816
+"haskala","PRON","Tense","Imp",27,0.00009555560274350753
+"haskala","PRON","Tense","Past",11,0.00003893006037698455
+"haskala","PRON","Tense","Fut",1,0.000003539096397907686
+"haskala","PROPN","Definite (DET prefix)","(none)",199690,0.9528194753266087
+"haskala","PROPN","Definite (DET prefix)","Def",9888,0.04718052467339129
+"haskala","PROPN","Gender","(none)",198811,0.9486253328116501
+"haskala","PROPN","Gender","Masc",7623,0.036373092595596866
+"haskala","PROPN","Gender","Fem",3144,0.015001574592753057
+"haskala","PROPN","Number","(none)",198807,0.9486062468388857
+"haskala","PROPN","Number","Sing",9808,0.04679880521810496
+"haskala","PROPN","Number","Plur",963,0.0045949479430092855
+"haskala","PROPN","Person","(none)",209517,0.9997089389153442
+"haskala","PROPN","Person","1,2,3",32,0.00015268778211453493
+"haskala","PROPN","Person","3",17,0.00008111538424834668
+"haskala","PROPN","Person","2",10,0.000047714931910792164
+"haskala","PROPN","Person","1",2,0.000009542986382158433
+"haskala","PROPN","Suffix","(none)",209352,0.9989216425388161
+"haskala","PROPN","Suffix","PRON",164,0.0007825248833369915
+"haskala","PROPN","Suffix","ADP_PRON",62,0.00029583257784691143
+"haskala","PROPN","Suffix.Gender","(none)",102,0.45132743362831856
+"haskala","PROPN","Suffix.Gender","Masc",65,0.28761061946902655
+"haskala","PROPN","Suffix.Gender","Fem",56,0.24778761061946902
+"haskala","PROPN","Suffix.Gender","Fem,Masc",3,0.01327433628318584
+"haskala","PROPN","Suffix.Number","Sing",196,0.8672566371681416
+"haskala","PROPN","Suffix.Number","Plur",17,0.0752212389380531
+"haskala","PROPN","Suffix.Number","(none)",13,0.05752212389380531
+"haskala","PROPN","Suffix.Person","3",125,0.5530973451327433
+"haskala","PROPN","Suffix.Person","1",67,0.29646017699115046
+"haskala","PROPN","Suffix.Person","(none)",32,0.1415929203539823
+"haskala","PROPN","Suffix.Person","2",2,0.008849557522123894
+"haskala","PROPN","Tense","(none)",209563,0.9999284276021339
+"haskala","PROPN","Tense","Past",9,0.00004294343871971295
+"haskala","PROPN","Tense","Fut",5,0.000023857465955396082
+"haskala","PROPN","Tense","Imp",1,0.000004771493191079217
+"haskala","SCONJ","Definite (DET prefix)","(none)",171977,0.9985194388963723
+"haskala","SCONJ","Definite (DET prefix)","Def",255,0.001480561103627665
+"haskala","SCONJ","Gender","(none)",172223,0.9999477449022249
+"haskala","SCONJ","Gender","Fem",9,0.00005225509777509406
+"haskala","SCONJ","Number","(none)",172220,0.9999303265362999
+"haskala","SCONJ","Number","Sing",7,0.00004064285382507316
+"haskala","SCONJ","Number","Plur",5,0.000029030609875052256
+"haskala","SCONJ","Person","(none)",172169,0.9996342143155743
+"haskala","SCONJ","Person","3",63,0.00036578568442565844
+"haskala","SCONJ","Suffix","(none)",172223,0.9999477449022249
+"haskala","SCONJ","Suffix","PRON",8,0.000046448975800083605
+"haskala","SCONJ","Suffix","ADP_PRON",1,0.000005806121975010451
+"haskala","SCONJ","Suffix.Gender","Masc",9,1
+"haskala","SCONJ","Suffix.Number","Sing",6,0.6666666666666666
+"haskala","SCONJ","Suffix.Number","Plur",3,0.3333333333333333
+"haskala","SCONJ","Suffix.Person","3",7,0.7777777777777778
+"haskala","SCONJ","Suffix.Person","1",2,0.2222222222222222
+"haskala","SCONJ","Tense","(none)",172231,0.999994193878025
+"haskala","SCONJ","Tense","Fut",1,0.000005806121975010451
+"haskala","SYM","Definite (DET prefix)","(none)",2589,1
+"haskala","SYM","Gender","(none)",2394,0.9246813441483198
+"haskala","SYM","Gender","Masc",195,0.07531865585168018
+"haskala","SYM","Number","(none)",2411,0.9312475859405176
+"haskala","SYM","Number","Sing",145,0.05600617999227501
+"haskala","SYM","Number","Plur,Sing",33,0.012746234067207415
+"haskala","SYM","Person","(none)",2589,1
+"haskala","SYM","Suffix","(none)",2589,1
+"haskala","SYM","Tense","(none)",2589,1
+"haskala","VERB","Definite (DET prefix)","(none)",947671,0.9869640112144705
+"haskala","VERB","Definite (DET prefix)","Def",12517,0.013035988785529501
+"haskala","VERB","Gender","Masc",519394,0.5409294846425908
+"haskala","VERB","Gender","(none)",216169,0.22513195332580702
+"haskala","VERB","Gender","Fem",116325,0.12114815015392819
+"haskala","VERB","Gender","Fem,Masc",108300,0.11279041187767395
+"haskala","VERB","Number","Sing",548512,0.5712547959357959
+"haskala","VERB","Number","Plur",225431,0.234777980978725
+"haskala","VERB","Number","(none)",186245,0.1939672230854791
+"haskala","VERB","Person","3",447824,0.4663919982336792
+"haskala","VERB","Person","(none)",226399,0.23578611688544326
+"haskala","VERB","Person","1,2,3",197628,0.2058221931538407
+"haskala","VERB","Person","1",61351,0.06389477893912442
+"haskala","VERB","Person","2",26986,0.028104912787912367
+"haskala","VERB","Suffix","(none)",952622,0.9921202931092661
+"haskala","VERB","Suffix","PRON",4239,0.004414760442746629
+"haskala","VERB","Suffix","ADP_PRON",3327,0.0034649464479872692
+"haskala","VERB","Suffix.Gender","Masc",5123,0.6771081152524452
+"haskala","VERB","Suffix.Gender","(none)",1254,0.16574147501982553
+"haskala","VERB","Suffix.Gender","Fem",1177,0.1555643669045731
+"haskala","VERB","Suffix.Gender","Fem,Masc",12,0.0015860428231562252
+"haskala","VERB","Suffix.Number","Sing",5486,0.7250859106529209
+"haskala","VERB","Suffix.Number","Plur",1680,0.22204599524187152
+"haskala","VERB","Suffix.Number","(none)",400,0.05286809410520751
+"haskala","VERB","Suffix.Person","3",6012,0.7946074544012688
+"haskala","VERB","Suffix.Person","(none)",944,0.12476870208828972
+"haskala","VERB","Suffix.Person","1",449,0.059344435633095424
+"haskala","VERB","Suffix.Person","2",161,0.021279407877346022
+"haskala","VERB","Tense","(none)",466328,0.48566322428524417
+"haskala","VERB","Tense","Past",281440,0.293109266102055
+"haskala","VERB","Tense","Fut",181707,0.18924106529138043
+"haskala","VERB","Tense","Pres",19661,0.020476198411144484
+"haskala","VERB","Tense","Imp",11052,0.011510245910175923
+"haskala","X","Definite (DET prefix)","(none)",16735,0.981409805301431
+"haskala","X","Definite (DET prefix)","Def",317,0.018590194698569082
+"haskala","X","Gender","(none)",16863,0.9889162561576355
+"haskala","X","Gender","Masc",118,0.00692000938306357
+"haskala","X","Gender","Fem",70,0.004105090311986864
+"haskala","X","Gender","Fem,Masc",1,0.00005864414731409805
+"haskala","X","Number","(none)",16803,0.9853976073187896
+"haskala","X","Number","Sing",159,0.00932441942294159
+"haskala","X","Number","Plur",90,0.005277973258268825
+"haskala","X","Person","(none)",17018,0.9980060989913206
+"haskala","X","Person","2",22,0.0012901712409101572
+"haskala","X","Person","1,2,3",9,0.0005277973258268825
+"haskala","X","Person","1",3,0.00017593244194229416
+"haskala","X","Suffix","(none)",17044,0.9995308468214872
+"haskala","X","Suffix","PRON",7,0.00041050903119868636
+"haskala","X","Suffix","ADP_PRON",1,0.00005864414731409805
+"haskala","X","Suffix.Gender","(none)",7,0.875
+"haskala","X","Suffix.Gender","Masc",1,0.125
+"haskala","X","Suffix.Number","Sing",4,0.5
+"haskala","X","Suffix.Number","(none)",3,0.375
+"haskala","X","Suffix.Number","Plur",1,0.125
+"haskala","X","Suffix.Person","1",4,0.5
+"haskala","X","Suffix.Person","(none)",3,0.375
+"haskala","X","Suffix.Person","3",1,0.125
+"haskala","X","Tense","(none)",17044,0.9995308468214872
+"haskala","X","Tense","Past",5,0.00029322073657049027
+"haskala","X","Tense","Fut",2,0.0001172882946281961
+"haskala","X","Tense","Imp",1,0.00005864414731409805
+"modern","(all words)","Definite (DET prefix)","(none)",117552367,0.8428966862436803
+"modern","(all words)","Definite (DET prefix)","Def",21910000,0.15710331375631964
+"modern","(all words)","Gender","Masc",55037989,0.3946440189130018
+"modern","(all words)","Gender","(none)",52769649,0.37837912933171425
+"modern","(all words)","Gender","Fem",30379935,0.21783607759934262
+"modern","(all words)","Gender","Fem,Masc",1274794,0.009140774155941294
+"modern","(all words)","Number","Sing",63292120,0.45382938323425986
+"modern","(all words)","Number","(none)",53117767,0.38087527225176093
+"modern","(all words)","Number","Plur",22666837,0.1625301325912531
+"modern","(all words)","Number","Plur,Sing",281932,0.002021563279504642
+"modern","(all words)","Number","Dual",103711,0.0007436486432214363
+"modern","(all words)","Person","(none)",117006957,0.8389858821197262
+"modern","(all words)","Person","3",17538953,0.1257611883211476
+"modern","(all words)","Person","1",2299391,0.016487537458761185
+"modern","(all words)","Person","1,2,3",2102777,0.0150777377814045
+"modern","(all words)","Person","2",514289,0.003687654318960469
+"modern","(all words)","Suffix","(none)",134523911,0.9645893289621278
+"modern","(all words)","Suffix","PRON",3946524,0.028298128627058224
+"modern","(all words)","Suffix","ADP_PRON",991932,0.007112542410813951
+"modern","(all words)","Suffix.Gender","Masc",3317497,0.6717680586806889
+"modern","(all words)","Suffix.Gender","Fem",1329696,0.2692533860785638
+"modern","(all words)","Suffix.Gender","Fem,Masc",151677,0.030713445659939057
+"modern","(all words)","Suffix.Gender","(none)",139586,0.028265109580808252
+"modern","(all words)","Suffix.Number","Sing",3598163,0.7286008015460703
+"modern","(all words)","Suffix.Number","Plur",1326176,0.26854061269352203
+"modern","(all words)","Suffix.Number","(none)",14117,0.0028585857604077063
+"modern","(all words)","Suffix.Person","3",4101597,0.830542380047529
+"modern","(all words)","Suffix.Person","1",686643,0.13904001574581204
+"modern","(all words)","Suffix.Person","2",133167,0.026965310615301625
+"modern","(all words)","Suffix.Person","(none)",17049,0.0034522935913572986
+"modern","(all words)","Tense","(none)",125530467,0.9001027997753688
+"modern","(all words)","Tense","Past",7978756,0.05721081730959005
+"modern","(all words)","Tense","Pres",3789570,0.027172706741740587
+"modern","(all words)","Tense","Fut",2100129,0.015058750580362658
+"modern","(all words)","Tense","Imp",63445,0.0004549255929379142
+"modern","ADJ","Definite (DET prefix)","(none)",6896857,0.6275315262197971
+"modern","ADJ","Definite (DET prefix)","Def",4093598,0.3724684737802029
+"modern","ADJ","Gender","Masc",6857458,0.6239466882854259
+"modern","ADJ","Gender","Fem",4082755,0.3714818904221891
+"modern","ADJ","Gender","(none)",49770,0.004528474935751068
+"modern","ADJ","Gender","Fem,Masc",472,0.00004294635663400651
+"modern","ADJ","Number","Sing",7921037,0.7207196608329682
+"modern","ADJ","Number","Plur",3014346,0.27426944562349787
+"modern","ADJ","Number","(none)",54434,0.00495284317164303
+"modern","ADJ","Number","Dual",638,0.00005805037189088168
+"modern","ADJ","Person","(none)",10942292,0.9956177428505008
+"modern","ADJ","Person","1,2,3",31213,0.0028400098085111128
+"modern","ADJ","Person","3",15054,0.0013697340101024025
+"modern","ADJ","Person","1",1682,0.00015304188953050625
+"modern","ADJ","Person","2",214,0.000019471441355248715
+"modern","ADJ","Suffix","(none)",10988615,0.9998325819995624
+"modern","ADJ","Suffix","PRON",1542,0.00014030356341025008
+"modern","ADJ","Suffix","ADP_PRON",298,0.000027114437027402414
+"modern","ADJ","Suffix.Gender","Masc",841,0.45706521739130435
+"modern","ADJ","Suffix.Gender","(none)",662,0.35978260869565215
+"modern","ADJ","Suffix.Gender","Fem",320,0.17391304347826086
+"modern","ADJ","Suffix.Gender","Fem,Masc",17,0.00923913043478261
+"modern","ADJ","Suffix.Number","Sing",1226,0.6663043478260869
+"modern","ADJ","Suffix.Number","Plur",482,0.2619565217391304
+"modern","ADJ","Suffix.Number","(none)",132,0.07173913043478261
+"modern","ADJ","Suffix.Person","3",896,0.48695652173913045
+"modern","ADJ","Suffix.Person","1",659,0.3581521739130435
+"modern","ADJ","Suffix.Person","(none)",269,0.14619565217391303
+"modern","ADJ","Suffix.Person","2",16,0.008695652173913044
+"modern","ADJ","Tense","(none)",10976790,0.9987566483826192
+"modern","ADJ","Tense","Pres",11425,0.0010395383994566195
+"modern","ADJ","Tense","Past",2143,0.0001949873776836355
+"modern","ADJ","Tense","Fut",74,0.0000067331152349925455
+"modern","ADJ","Tense","Imp",23,0.0000020927250054706563
+"modern","ADP","Definite (DET prefix)","(none)",14643264,0.9999941953169319
+"modern","ADP","Definite (DET prefix)","Def",85,0.000005804683068060455
+"modern","ADP","Gender","(none)",14613315,0.9979489664556926
+"modern","ADP","Gender","Fem",17012,0.0011617560982805232
+"modern","ADP","Gender","Masc",12133,0.000828567290173853
+"modern","ADP","Gender","Fem,Masc",889,0.00006071015585300876
+"modern","ADP","Number","(none)",14607485,0.9975508334876128
+"modern","ADP","Number","Sing",24210,0.0016533103185616897
+"modern","ADP","Number","Plur",11654,0.0007958561938256064
+"modern","ADP","Person","(none)",14620382,0.9984315746350101
+"modern","ADP","Person","1",10575,0.0007221708640557567
+"modern","ADP","Person","3",8610,0.0005879802496000061
+"modern","ADP","Person","2",3753,0.0002562938300521281
+"modern","ADP","Person","1,2,3",29,0.0000019804212820441554
+"modern","ADP","Suffix","(none)",12831959,0.8762994722040702
+"modern","ADP","Suffix","PRON",1810367,0.12363066672794591
+"modern","ADP","Suffix","ADP_PRON",1023,0.00006986106798383348
+"modern","ADP","Suffix.Gender","Masc",1152556,0.6362826337784795
+"modern","ADP","Suffix.Gender","Fem",523776,0.2891569457709273
+"modern","ADP","Suffix.Gender","Fem,Masc",112972,0.0623675740729495
+"modern","ADP","Suffix.Gender","(none)",22086,0.012192846377643687
+"modern","ADP","Suffix.Number","Sing",1255477,0.6931014303932339
+"modern","ADP","Suffix.Number","Plur",553597,0.3056199934856657
+"modern","ADP","Suffix.Number","(none)",2316,0.0012785761211003704
+"modern","ADP","Suffix.Person","3",1355235,0.7481740541793871
+"modern","ADP","Suffix.Person","1",359063,0.19822511993551914
+"modern","ADP","Suffix.Person","2",94059,0.0519264211461916
+"modern","ADP","Suffix.Person","(none)",3033,0.001674404738902169
+"modern","ADP","Tense","(none)",14643328,0.9999985659018302
+"modern","ADP","Tense","Past",12,8.194846684320643e-7
+"modern","ADP","Tense","Imp",9,6.146135013240482e-7
+"modern","ADV","Definite (DET prefix)","(none)",8765889,0.9851197386286681
+"modern","ADV","Definite (DET prefix)","Def",132409,0.01488026137133191
+"modern","ADV","Gender","(none)",8861720,0.9958893262509302
+"modern","ADV","Gender","Masc",24977,0.002806941282478964
+"modern","ADV","Gender","Fem",11599,0.0013035077045070865
+"modern","ADV","Gender","Fem,Masc",2,2.2476208371533523e-7
+"modern","ADV","Number","(none)",8860038,0.9957003013385256
+"modern","ADV","Number","Sing",35549,0.003995033656998226
+"modern","ADV","Number","Plur",2254,0.0002533068683471828
+"modern","ADV","Number","Dual",457,0.000051358136128954096
+"modern","ADV","Person","(none)",8896480,0.9997956912659027
+"modern","ADV","Person","3",1560,0.00017531442529796146
+"modern","ADV","Person","2",176,0.0000197790633669495
+"modern","ADV","Person","1",79,0.000008878102306755741
+"modern","ADV","Person","1,2,3",3,3.3714312557300283e-7
+"modern","ADV","Suffix","(none)",8890165,0.9990860049865716
+"modern","ADV","Suffix","PRON",7629,0.0008573549683321462
+"modern","ADV","Suffix","ADP_PRON",504,0.00005664004509626448
+"modern","ADV","Suffix.Gender","Masc",3877,0.47669986474855525
+"modern","ADV","Suffix.Gender","Fem",2787,0.34267797860568056
+"modern","ADV","Suffix.Gender","(none)",1438,0.17681052502151728
+"modern","ADV","Suffix.Gender","Fem,Masc",31,0.0038116316242468953
+"modern","ADV","Suffix.Number","Sing",5582,0.6863396040821346
+"modern","ADV","Suffix.Number","Plur",1982,0.24369851223410796
+"modern","ADV","Suffix.Number","(none)",569,0.06996188368375753
+"modern","ADV","Suffix.Person","3",6688,0.822328783966556
+"modern","ADV","Suffix.Person","1",842,0.10352883314889955
+"modern","ADV","Suffix.Person","(none)",552,0.06787163408336407
+"modern","ADV","Suffix.Person","2",51,0.006270748801180376
+"modern","ADV","Tense","(none)",8898085,0.9999760628380843
+"modern","ADV","Tense","Imp",180,0.00002022858753438017
+"modern","ADV","Tense","Fut",18,0.000002022858753438017
+"modern","ADV","Tense","Past",10,0.0000011238104185766762
+"modern","ADV","Tense","Pres",5,5.619052092883381e-7
+"modern","AUX","Definite (DET prefix)","(none)",2185369,0.9998613698670249
+"modern","AUX","Definite (DET prefix)","Def",303,0.0001386301329751216
+"modern","AUX","Gender","Masc",1329913,0.6084686997866102
+"modern","AUX","Gender","Fem",591963,0.27083798483944527
+"modern","AUX","Gender","(none)",184752,0.0845286941498999
+"modern","AUX","Gender","Fem,Masc",79044,0.036164621224044596
+"modern","AUX","Number","Sing",1529719,0.6998849781668979
+"modern","AUX","Number","Plur",475102,0.217371133454608
+"modern","AUX","Number","(none)",180851,0.08274388837849413
+"modern","AUX","Person","3",1298665,0.5941719526077106
+"modern","AUX","Person","(none)",560369,0.25638293394434297
+"modern","AUX","Person","1,2,3",189100,0.08651801368183332
+"modern","AUX","Person","1",112051,0.05126615521450611
+"modern","AUX","Person","2",25487,0.011660944551607011
+"modern","AUX","Suffix","(none)",2185529,0.9999345738976388
+"modern","AUX","Suffix","PRON",116,0.00005307292219509606
+"modern","AUX","Suffix","ADP_PRON",27,0.000012353180166099945
+"modern","AUX","Suffix.Gender","(none)",47,0.32867132867132864
+"modern","AUX","Suffix.Gender","Fem",47,0.32867132867132864
+"modern","AUX","Suffix.Gender","Masc",39,0.2727272727272727
+"modern","AUX","Suffix.Gender","Fem,Masc",10,0.06993006993006994
+"modern","AUX","Suffix.Number","Sing",105,0.7342657342657343
+"modern","AUX","Suffix.Number","Plur",26,0.18181818181818182
+"modern","AUX","Suffix.Number","(none)",12,0.08391608391608392
+"modern","AUX","Suffix.Person","3",82,0.5734265734265734
+"modern","AUX","Suffix.Person","1",32,0.22377622377622378
+"modern","AUX","Suffix.Person","(none)",23,0.16083916083916083
+"modern","AUX","Suffix.Person","2",6,0.04195804195804196
+"modern","AUX","Tense","(none)",1244807,0.5695305608526805
+"modern","AUX","Tense","Past",685182,0.31348802565069234
+"modern","AUX","Tense","Fut",235865,0.10791417925470977
+"modern","AUX","Tense","Pres",19749,0.009035665003715105
+"modern","AUX","Tense","Imp",69,0.000031569238202255415
+"modern","CCONJ","Definite (DET prefix)","(none)",1215937,0.999957236455264
+"modern","CCONJ","Definite (DET prefix)","Def",52,0.00004276354473601324
+"modern","CCONJ","Gender","(none)",1215755,0.999807564048688
+"modern","CCONJ","Gender","Masc",231,0.00018996882373113573
+"modern","CCONJ","Gender","Fem,Masc",2,0.0000016447517206158936
+"modern","CCONJ","Gender","Fem",1,8.223758603079468e-7
+"modern","CCONJ","Number","(none)",1215834,0.9998725317416522
+"modern","CCONJ","Number","Sing",128,0.00010526411011941719
+"modern","CCONJ","Number","Plur",27,0.000022204148228314564
+"modern","CCONJ","Person","(none)",1215970,0.9999843748586541
+"modern","CCONJ","Person","3",15,0.000012335637904619203
+"modern","CCONJ","Person","1",3,0.0000024671275809238408
+"modern","CCONJ","Person","2",1,8.223758603079468e-7
+"modern","CCONJ","Suffix","(none)",1215982,0.9999942433689778
+"modern","CCONJ","Suffix","PRON",7,0.000005756631022155628
+"modern","CCONJ","Suffix.Gender","Masc",5,0.7142857142857143
+"modern","CCONJ","Suffix.Gender","(none)",2,0.2857142857142857
+"modern","CCONJ","Suffix.Number","Sing",5,0.7142857142857143
+"modern","CCONJ","Suffix.Number","(none)",2,0.2857142857142857
+"modern","CCONJ","Suffix.Person","3",5,0.7142857142857143
+"modern","CCONJ","Suffix.Person","(none)",1,0.14285714285714285
+"modern","CCONJ","Suffix.Person","2",1,0.14285714285714285
+"modern","CCONJ","Tense","(none)",1215988,0.9999991776241397
+"modern","CCONJ","Tense","Imp",1,8.223758603079468e-7
+"modern","DET","Definite (DET prefix)","(none)",1516463,0.9988631191505142
+"modern","DET","Definite (DET prefix)","Def",1726,0.0011368808494858018
+"modern","DET","Gender","(none)",1470155,0.968360987992931
+"modern","DET","Gender","Masc",38934,0.025645028385793862
+"modern","DET","Gender","Fem",9050,0.005961049645334013
+"modern","DET","Gender","Fem,Masc",50,0.0000329339759410719
+"modern","DET","Number","(none)",1478138,0.9736192265916825
+"modern","DET","Number","Sing",31188,0.020542896833003005
+"modern","DET","Number","Plur",8863,0.005837876575314404
+"modern","DET","Person","(none)",1516060,0.9985976713044291
+"modern","DET","Person","3",2096,0.001380592271449734
+"modern","DET","Person","2",22,0.000014490949414071634
+"modern","DET","Person","1",10,0.000006586795188214379
+"modern","DET","Person","1,2,3",1,6.586795188214379e-7
+"modern","DET","Suffix","(none)",1478852,0.9740895237681211
+"modern","DET","Suffix","PRON",39288,0.025878200935456654
+"modern","DET","Suffix","ADP_PRON",49,0.00003227529642225046
+"modern","DET","Suffix.Gender","Masc",31849,0.8096448636144088
+"modern","DET","Suffix.Gender","Fem",4882,0.1241070747642169
+"modern","DET","Suffix.Gender","(none)",2582,0.0656379490047538
+"modern","DET","Suffix.Gender","Fem,Masc",24,0.0006101126166204845
+"modern","DET","Suffix.Number","Plur",30629,0.7786308056028676
+"modern","DET","Suffix.Number","Sing",7974,0.20270991687215598
+"modern","DET","Suffix.Number","(none)",734,0.018659277524976484
+"modern","DET","Suffix.Person","3",22543,0.573073696519816
+"modern","DET","Suffix.Person","1",14473,0.36792332918117804
+"modern","DET","Suffix.Person","2",1352,0.03436967740295396
+"modern","DET","Suffix.Person","(none)",969,0.02463329689605206
+"modern","DET","Tense","(none)",1518189,1
+"modern","INTJ","Definite (DET prefix)","(none)",49499,0.9998182111981901
+"modern","INTJ","Definite (DET prefix)","Def",9,0.00018178880180980852
+"modern","INTJ","Gender","(none)",45761,0.9243152621798497
+"modern","INTJ","Gender","Fem",3210,0.0648380059788317
+"modern","INTJ","Gender","Masc",537,0.010846731841318574
+"modern","INTJ","Number","(none)",47760,0.9646925749373838
+"modern","INTJ","Number","Sing",1643,0.03318655570816838
+"modern","INTJ","Number","Plur",105,0.002120869354447766
+"modern","INTJ","Person","(none)",49199,0.9937585844711966
+"modern","INTJ","Person","2",290,0.005857639169427164
+"modern","INTJ","Person","1",17,0.00034337884786297165
+"modern","INTJ","Person","3",2,0.00004039751151329078
+"modern","INTJ","Suffix","(none)",49446,0.998747677143088
+"modern","INTJ","Suffix","PRON",62,0.0012523228569120142
+"modern","INTJ","Suffix.Gender","(none)",58,0.9354838709677419
+"modern","INTJ","Suffix.Gender","Fem",2,0.03225806451612903
+"modern","INTJ","Suffix.Gender","Masc",2,0.03225806451612903
+"modern","INTJ","Suffix.Number","Sing",52,0.8387096774193549
+"modern","INTJ","Suffix.Number","Plur",6,0.0967741935483871
+"modern","INTJ","Suffix.Number","(none)",4,0.06451612903225806
+"modern","INTJ","Suffix.Person","(none)",30,0.4838709677419355
+"modern","INTJ","Suffix.Person","1",27,0.43548387096774194
+"modern","INTJ","Suffix.Person","2",4,0.06451612903225806
+"modern","INTJ","Suffix.Person","3",1,0.016129032258064516
+"modern","INTJ","Tense","(none)",49290,0.9955966712450514
+"modern","INTJ","Tense","Imp",205,0.004140744930112305
+"modern","INTJ","Tense","Fut",13,0.0002625838248363901
+"modern","NOUN","Definite (DET prefix)","(none)",33739958,0.6775529248012111
+"modern","NOUN","Definite (DET prefix)","Def",16056828,0.32244707519878896
+"modern","NOUN","Gender","Masc",30549431,0.6134819825520467
+"modern","NOUN","Gender","Fem",18967766,0.3809034181442955
+"modern","NOUN","Gender","(none)",245385,0.0049277276649942825
+"modern","NOUN","Gender","Fem,Masc",34204,0.0006868716386635876
+"modern","NOUN","Number","Sing",36462793,0.7322318552847968
+"modern","NOUN","Number","Plur",12932427,0.2597040499762374
+"modern","NOUN","Number","(none)",260166,0.005224554050536514
+"modern","NOUN","Number","Dual",102437,0.0020571006329605287
+"modern","NOUN","Number","Plur,Sing",38963,0.0007824400554686401
+"modern","NOUN","Person","(none)",49785578,0.9997749252331265
+"modern","NOUN","Person","1,2,3",6683,0.00013420544852031212
+"modern","NOUN","Person","3",3043,0.00006110836149144244
+"modern","NOUN","Person","1",1079,0.000021668065083557802
+"modern","NOUN","Person","2",403,0.000008092891778196288
+"modern","NOUN","Suffix","(none)",46825100,0.9403237389658039
+"modern","NOUN","Suffix","PRON",1992124,0.04000507181326923
+"modern","NOUN","Suffix","ADP_PRON",979562,0.019671189220926828
+"modern","NOUN","Suffix.Gender","Masc",2062208,0.693952187411456
+"modern","NOUN","Suffix.Gender","Fem",774220,0.2605322365821961
+"modern","NOUN","Suffix.Gender","(none)",97096,0.03267370778743111
+"modern","NOUN","Suffix.Gender","Fem,Masc",38162,0.012841868218916804
+"modern","NOUN","Suffix.Number","Sing",2271223,0.7642876804615293
+"modern","NOUN","Suffix.Number","Plur",695036,0.23388608352295634
+"modern","NOUN","Suffix.Number","(none)",5427,0.0018262360155144252
+"modern","NOUN","Suffix.Person","3",2629243,0.8847647429775555
+"modern","NOUN","Suffix.Person","1",299183,0.1006778643504058
+"modern","NOUN","Suffix.Person","2",35763,0.01203458238858345
+"modern","NOUN","Suffix.Person","(none)",7497,0.0025228102834552505
+"modern","NOUN","Tense","(none)",49794226,0.999948591059672
+"modern","NOUN","Tense","Past",1455,0.000029218753194232255
+"modern","NOUN","Tense","Pres",939,0.000018856638659370506
+"modern","NOUN","Tense","Imp",95,0.0000019077536449842364
+"modern","NOUN","Tense","Fut",71,0.0000014257948294092714
+"modern","NUM","Definite (DET prefix)","(none)",5595531,0.9822064600408047
+"modern","NUM","Definite (DET prefix)","Def",101368,0.017793539959195345
+"modern","NUM","Gender","(none)",3870311,0.6793715317754448
+"modern","NUM","Gender","Masc",1291249,0.2266582223065566
+"modern","NUM","Gender","Fem",526940,0.09249593506923678
+"modern","NUM","Gender","Fem,Masc",8399,0.0014743108487617561
+"modern","NUM","Number","(none)",4294447,0.7538218599276554
+"modern","NUM","Number","Sing",1115259,0.19576597724481337
+"modern","NUM","Number","Plur",287014,0.05038074222484899
+"modern","NUM","Number","Dual",179,0.00003142060268226626
+"modern","NUM","Person","(none)",5696684,0.9999622601699626
+"modern","NUM","Person","3",205,0.00003598448910538874
+"modern","NUM","Person","1",5,8.776704659850912e-7
+"modern","NUM","Person","2",4,7.021363727880729e-7
+"modern","NUM","Person","1,2,3",1,1.7553409319701823e-7
+"modern","NUM","Suffix","(none)",5686648,0.9982006000106374
+"modern","NUM","Suffix","PRON",10112,0.0017750007504082484
+"modern","NUM","Suffix","ADP_PRON",139,0.000024399238954385536
+"modern","NUM","Suffix.Gender","Masc",8357,0.8152375378011901
+"modern","NUM","Suffix.Gender","Fem",1378,0.13442590966734952
+"modern","NUM","Suffix.Gender","(none)",515,0.050239001073066045
+"modern","NUM","Suffix.Gender","Fem,Masc",1,0.000097551458394303
+"modern","NUM","Suffix.Number","Plur",10020,0.977465613110916
+"modern","NUM","Suffix.Number","(none)",201,0.0196078431372549
+"modern","NUM","Suffix.Number","Sing",30,0.0029265437518290896
+"modern","NUM","Suffix.Person","3",8340,0.813579163008487
+"modern","NUM","Suffix.Person","1",1295,0.12632913862062237
+"modern","NUM","Suffix.Person","(none)",420,0.04097161252560726
+"modern","NUM","Suffix.Person","2",196,0.019120085845283387
+"modern","NUM","Tense","(none)",5696896,0.9999994733977204
+"modern","NUM","Tense","Past",3,5.266022795910547e-7
+"modern","PRON","Definite (DET prefix)","(none)",5885638,0.9395906319319226
+"modern","PRON","Definite (DET prefix)","Def",378407,0.06040936806807742
+"modern","PRON","Gender","Masc",3707329,0.5918426511942363
+"modern","PRON","Gender","Fem",1671467,0.2668350881898198
+"modern","PRON","Gender","(none)",706919,0.11285343575916201
+"modern","PRON","Gender","Fem,Masc",178330,0.02846882485678184
+"modern","PRON","Number","Sing",4319518,0.6895732709455312
+"modern","PRON","Number","Plur",1283732,0.20493658650281088
+"modern","PRON","Number","(none)",660795,0.10549014255165791
+"modern","PRON","Person","3",4446652,0.7098691021536403
+"modern","PRON","Person","1",1017219,0.16239011692923663
+"modern","PRON","Person","(none)",572360,0.09137226823881374
+"modern","PRON","Person","2",227813,0.03636835303705513
+"modern","PRON","Person","1,2,3",1,1.5964125417362104e-7
+"modern","PRON","Suffix","(none)",6239061,0.9960115229057263
+"modern","PRON","Suffix","PRON",24979,0.00398767888800288
+"modern","PRON","Suffix","ADP_PRON",5,7.982062708681052e-7
+"modern","PRON","Suffix.Gender","Masc",13416,0.5369836695485111
+"modern","PRON","Suffix.Gender","Fem",6744,0.26993275696445723
+"modern","PRON","Suffix.Gender","(none)",4509,0.18047550432276657
+"modern","PRON","Suffix.Gender","Fem,Masc",315,0.01260806916426513
+"modern","PRON","Suffix.Number","Sing",12981,0.5195725264169068
+"modern","PRON","Suffix.Number","Plur",8617,0.3449007364713417
+"modern","PRON","Suffix.Number","(none)",3386,0.13552673711175153
+"modern","PRON","Suffix.Person","3",20346,0.8143611911623438
+"modern","PRON","Suffix.Person","(none)",2255,0.09025776496958053
+"modern","PRON","Suffix.Person","1",1635,0.0654418828049952
+"modern","PRON","Suffix.Person","2",748,0.029939161063080373
+"modern","PRON","Tense","(none)",6263951,0.9999849937221077
+"modern","PRON","Tense","Past",42,0.000006704932675292083
+"modern","PRON","Tense","Imp",41,0.000006545291421118463
+"modern","PRON","Tense","Pres",6,9.578475250417262e-7
+"modern","PRON","Tense","Fut",5,7.982062708681052e-7
+"modern","PROPN","Definite (DET prefix)","(none)",14649698,0.9321141580242844
+"modern","PROPN","Definite (DET prefix)","Def",1066937,0.06788584197571554
+"modern","PROPN","Gender","(none)",14638736,0.9314166804789956
+"modern","PROPN","Gender","Masc",727203,0.04626963723468796
+"modern","PROPN","Gender","Fem",350614,0.02230846488449977
+"modern","PROPN","Gender","Fem,Masc",82,0.000005217401816610235
+"modern","PROPN","Number","(none)",14645841,0.9318687492583495
+"modern","PROPN","Number","Sing",946843,0.06024463888103274
+"modern","PROPN","Number","Plur",123951,0.007886611860617747
+"modern","PROPN","Person","(none)",15715645,0.9999370094170922
+"modern","PROPN","Person","3",476,0.000030286381276908193
+"modern","PROPN","Person","2",245,0.00001558857859840863
+"modern","PROPN","Person","1,2,3",147,0.000009353147159045178
+"modern","PROPN","Person","1",122,0.000007762475873493276
+"modern","PROPN","Suffix","(none)",15702701,0.9991134234522848
+"modern","PROPN","Suffix","PRON",13458,0.0008562901664382993
+"modern","PROPN","Suffix","ADP_PRON",476,0.000030286381276908193
+"modern","PROPN","Suffix.Gender","(none)",9150,0.656667145112674
+"modern","PROPN","Suffix.Gender","Masc",3465,0.2486723123295536
+"modern","PROPN","Suffix.Gender","Fem",1212,0.08698148413951486
+"modern","PROPN","Suffix.Gender","Fem,Masc",107,0.0076790584182575
+"modern","PROPN","Suffix.Number","Plur",7595,0.545069613894072
+"modern","PROPN","Suffix.Number","Sing",5742,0.4120855461461174
+"modern","PROPN","Suffix.Number","(none)",597,0.04284483995981053
+"modern","PROPN","Suffix.Person","1",8269,0.5934405052389837
+"modern","PROPN","Suffix.Person","3",4257,0.30551169800488015
+"modern","PROPN","Suffix.Person","(none)",1161,0.08332137218314913
+"modern","PROPN","Suffix.Person","2",247,0.017726424572986937
+"modern","PROPN","Tense","(none)",15716291,0.9999781123631108
+"modern","PROPN","Tense","Past",162,0.000010307549930376319
+"modern","PROPN","Tense","Imp",99,0.000006299058290785528
+"modern","PROPN","Tense","Fut",45,0.0000028632083139934218
+"modern","PROPN","Tense","Pres",38,0.0000024178203540388893
+"modern","SCONJ","Definite (DET prefix)","(none)",1793163,0.9999793664956502
+"modern","SCONJ","Definite (DET prefix)","Def",37,0.00002063350434976578
+"modern","SCONJ","Gender","(none)",1792606,0.9996687486058443
+"modern","SCONJ","Gender","Fem",365,0.00020354673209904082
+"modern","SCONJ","Gender","Masc",229,0.0001277046620566585
+"modern","SCONJ","Number","(none)",1792462,0.9995884452375642
+"modern","SCONJ","Number","Sing",693,0.00038645995984831587
+"modern","SCONJ","Number","Plur",45,0.000025094802587552977
+"modern","SCONJ","Person","(none)",1793080,0.9999330805264331
+"modern","SCONJ","Person","3",116,0.00006468882444791434
+"modern","SCONJ","Person","1",2,0.000001115324559446799
+"modern","SCONJ","Person","2",2,0.000001115324559446799
+"modern","SCONJ","Suffix","(none)",1792025,0.999344746821325
+"modern","SCONJ","Suffix","PRON",1169,0.0006519072049966541
+"modern","SCONJ","Suffix","ADP_PRON",6,0.000003345973678340397
+"modern","SCONJ","Suffix.Gender","Masc",924,0.7863829787234042
+"modern","SCONJ","Suffix.Gender","Fem",229,0.19489361702127658
+"modern","SCONJ","Suffix.Gender","(none)",21,0.017872340425531916
+"modern","SCONJ","Suffix.Gender","Fem,Masc",1,0.000851063829787234
+"modern","SCONJ","Suffix.Number","Sing",963,0.8195744680851064
+"modern","SCONJ","Suffix.Number","Plur",209,0.1778723404255319
+"modern","SCONJ","Suffix.Number","(none)",3,0.002553191489361702
+"modern","SCONJ","Suffix.Person","3",1098,0.934468085106383
+"modern","SCONJ","Suffix.Person","1",63,0.05361702127659575
+"modern","SCONJ","Suffix.Person","(none)",10,0.00851063829787234
+"modern","SCONJ","Suffix.Person","2",4,0.003404255319148936
+"modern","SCONJ","Tense","(none)",1793169,0.9999827124693286
+"modern","SCONJ","Tense","Past",29,0.000016172206111978586
+"modern","SCONJ","Tense","Fut",2,0.000001115324559446799
+"modern","SYM","Definite (DET prefix)","(none)",641083,0.9999922007587102
+"modern","SYM","Definite (DET prefix)","Def",5,0.000007799241289807327
+"modern","SYM","Gender","Masc",387115,0.6038406583807527
+"modern","SYM","Gender","(none)",253939,0.3961063067784766
+"modern","SYM","Gender","Fem,Masc",33,0.000051474992512728365
+"modern","SYM","Gender","Fem",1,0.0000015598482579614655
+"modern","SYM","Number","(none)",272027,0.4243208420684836
+"modern","SYM","Number","Plur,Sing",242969,0.3789947713886393
+"modern","SYM","Number","Sing",108938,0.16992674952580614
+"modern","SYM","Number","Plur",17154,0.02675763701707098
+"modern","SYM","Person","(none)",641080,0.9999875212139363
+"modern","SYM","Person","3",5,0.000007799241289807327
+"modern","SYM","Person","1",3,0.000004679544773884397
+"modern","SYM","Suffix","(none)",641088,1
+"modern","SYM","Tense","(none)",641088,1
+"modern","VERB","Definite (DET prefix)","(none)",19536433,0.9961237897040427
+"modern","VERB","Definite (DET prefix)","Def",76022,0.0038762102959573395
+"modern","VERB","Gender","Masc",10103064,0.5151351016484168
+"modern","VERB","Gender","(none)",4389211,0.22379712279773237
+"modern","VERB","Gender","Fem",4146897,0.21144201478091346
+"modern","VERB","Gender","Fem,Masc",973283,0.0496257607729374
+"modern","VERB","Number","Sing",10780615,0.5496820770270728
+"modern","VERB","Number","Plur",4509813,0.22994637846205385
+"modern","VERB","Number","(none)",4322027,0.22037154451087332
+"modern","VERB","Person","3",11762439,0.599743326370921
+"modern","VERB","Person","(none)",4562093,0.23261203148713408
+"modern","VERB","Person","1,2,3",1875553,0.09563071017881239
+"modern","VERB","Person","1",1156520,0.05896865027861122
+"modern","VERB","Person","2",255850,0.013045281684521392
+"modern","VERB","Suffix","(none)",19557070,0.9971760292120492
+"modern","VERB","Suffix","PRON",45550,0.0023225037355088895
+"modern","VERB","Suffix","ADP_PRON",9835,0.0005014670524419304
+"modern","VERB","Suffix.Gender","Masc",39871,0.7198880563329422
+"modern","VERB","Suffix.Gender","Fem",14094,0.2544732328247721
+"modern","VERB","Suffix.Gender","(none)",1383,0.024970659925972735
+"modern","VERB","Suffix.Gender","Fem,Masc",37,0.0006680509163130812
+"modern","VERB","Suffix.Number","Sing",36742,0.6633926153290602
+"modern","VERB","Suffix.Number","Plur",17915,0.3234630315067257
+"modern","VERB","Suffix.Number","(none)",728,0.013144353164214138
+"modern","VERB","Suffix.Person","3",52787,0.9530919924167194
+"modern","VERB","Suffix.Person","1",1076,0.019427642863591225
+"modern","VERB","Suffix.Person","(none)",803,0.014498510427010924
+"modern","VERB","Suffix.Person","2",719,0.012981854292678523
+"modern","VERB","Tense","Past",7289710,0.37168778717401774
+"modern","VERB","Tense","(none)",6638603,0.338489138662141
+"modern","VERB","Tense","Pres",3757408,0.1915827467800436
+"modern","VERB","Tense","Fut",1864030,0.09504317536993712
+"modern","VERB","Tense","Imp",62704,0.0031971520138605798
+"modern","X","Definite (DET prefix)","(none)",437585,0.9949658821416147
+"modern","X","Definite (DET prefix)","Def",2214,0.0050341178583853076
+"modern","X","Gender","(none)",431314,0.9807070957414638
+"modern","X","Gender","Masc",8186,0.01861304823339753
+"modern","X","Gender","Fem",295,0.0006707609612573017
+"modern","X","Gender","Fem,Masc",4,0.000009095063881454937
+"modern","X","Number","(none)",425462,0.9674010172828952
+"modern","X","Number","Sing",13987,0.03180316462747755
+"modern","X","Number","Plur",350,0.000795818089627307
+"modern","X","Person","(none)",439685,0.9997407906793785
+"modern","X","Person","1,2,3",46,0.00010459323463673178
+"modern","X","Person","2",29,0.0000659392131405483
+"modern","X","Person","1",24,0.00005457038328872963
+"modern","X","Person","3",15,0.00003410648955545602
+"modern","X","Suffix","(none)",439670,0.9997066841898231
+"modern","X","Suffix","PRON",121,0.00027512568241401183
+"modern","X","Suffix","ADP_PRON",8,0.000018190127762909875
+"modern","X","Suffix.Gender","Masc",87,0.6744186046511628
+"modern","X","Suffix.Gender","(none)",37,0.2868217054263566
+"modern","X","Suffix.Gender","Fem",5,0.03875968992248062
+"modern","X","Suffix.Number","Plur",62,0.4806201550387597
+"modern","X","Suffix.Number","Sing",61,0.4728682170542636
+"modern","X","Suffix.Number","(none)",6,0.046511627906976744
+"modern","X","Suffix.Person","3",76,0.5891472868217055
+"modern","X","Suffix.Person","(none)",26,0.20155038759689922
+"modern","X","Suffix.Person","1",26,0.20155038759689922
+"modern","X","Suffix.Person","2",1,0.007751937984496124
+"modern","X","Tense","(none)",439766,0.999924965722978
+"modern","X","Tense","Imp",19,0.00004320155343691095
+"modern","X","Tense","Past",8,0.000018190127762909875
+"modern","X","Tense","Fut",6,0.000013642595822182407

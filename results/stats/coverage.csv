@@ -1,0 +1,6 @@
+﻿"corpus_id","unit_label","units","units_empty","units_parse_error","units_punctuation_only","units_measured","units_with_depth","units_multi_piece","units_invalid_tree","words","punctuation_tokens","words_in_multi_piece","words_in_invalid_tree","words_in_depth_units","pieces","error_pieces","tokens","words_lemma_blank","mst_fallback_pieces"
+"mikra","verse",23206,2,0,0,23204,23077,0,127,305514,23210,0,1825,303689,23204,0,328724,21737,0
+"hazal","sentence",418758,1,0,16,418741,417065,149,1527,6499956,1062398,101003,51094,6347859,418970,0,7562354,304292,0
+"medieval","sentence",115415,3,0,3,115409,114406,73,930,3469269,357580,41323,47040,3380906,115497,0,3826849,123854,0
+"haskala","sentence",275166,193,0,4193,270780,269317,206,1257,5357059,1099740,157968,53813,5145278,275305,0,6456799,267490,0
+"modern","sentence",8877117,107,0,288102,8588908,8585227,305,3376,139462367,29277649,154758,105577,139202032,8877432,0,168740016,4624993,0

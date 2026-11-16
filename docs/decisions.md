@@ -839,3 +839,21 @@ Design: [m6_design.md](m6_design.md).
   (up to 1,955 words; depth up to 187) and Medieval (up to 1,257 words; depth up to 102) STAY in the depth
   statistics as defined in D-046 (only multi-piece and invalid-tree units are excluded). The report discusses them.
 - *Next.* Final statistics `hebloc stats run --registered` (all five corpora, D-045/D-046).
+
+### D-050 · Closeout of assignment §2–§4: CSV encoding, separate analysis file, summary document (2026-11-16) · accepted (Ori's closeout request)
+- *CSV with BOM.* `results/stats/*.csv` were UTF-8 without a BOM, so Excel showed the Hebrew garbled. The writer
+  (`hebloc.stats.report.write_csv`) now writes UTF-8 **with** a BOM, atomically; pandas (`utf-8-sig`) and DuckDB
+  read it unchanged (test `test_csv_has_bom_for_excel_and_round_trips`). The final report was re-rendered from
+  `data/stats/final-20261116-565826e3c1`: `stats_report.md` and all 7 figures byte-identical; every CSV = its
+  previous bytes plus the 3-byte BOM. The statistics themselves did not change.
+- *Hand-written analysis in its own file.* `hebloc stats report` rewrites `docs/stats_report.md` completely, so the
+  §9 analysis lives in `docs/stats_analysis.md` (draft; wording to be approved by Ori).
+- *Summary.* `docs/SECTIONS_2-4.md` summarises §2–§4 for the professor (method, verification, findings,
+  limitations, where every result is); linked from `README.md`.
+- *Verified before closing.* Every sub-corpus listed in project.pdf §2 is present and parsed; the 201 files
+  without units are all empty, placeholder or auxiliary files (91 Rambam, 100 7-Zip logs, 3 Haskala, 7 Modern).
+- *Test updated for the registered state.* `tests/test_store.py::test_real_pilot_tokens_via_api_match_validation`
+  asserted the pre-M5 state (`data.tokens("mikra")` must refuse because no canonical run exists). After D-049 the
+  API correctly returns the canonical Mikra run, so the test failed. It now checks the never-guess rule against a
+  temporary empty registry, and, with the real registry, that the canonical Mikra tokens equal the validated run's
+  `checks.json` count (328,724). No code changed.
