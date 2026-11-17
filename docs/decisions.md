@@ -915,5 +915,7 @@ Design: [m6_design.md](m6_design.md).
   - quick self-test PASS: Mikra, Hazal, Medieval and Haskala; `unit_metrics` and all 11 tables identical, 0
     reconciliation problems;
   - the 3 examples and `deliver` work.
-  - The Modern self-test is very slow on this 16 GB laptop (the official feature table builds ~1.25 billion rows),
-    so the full self-test is documented as optional. Modern's data identity is proven by the lossless hashes.
+  - Modern self-test (same package tools, memory cap): PASS in 71 min. `unit_metrics` (8,877,117 units) and all 11
+    tables are identical, 0 reconciliation problems. **All five corpora are reproduced from the package.** It is
+    documented as optional for Efrat (1–2 hours on a 16 GB laptop: the official feature table builds ~1.25 billion
+    rows).
