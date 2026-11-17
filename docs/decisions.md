@@ -919,3 +919,15 @@ Design: [m6_design.md](m6_design.md).
     tables are identical, 0 reconciliation problems. **All five corpora are reproduced from the package.** It is
     documented as optional for Efrat (1–2 hours on a 16 GB laptop: the official feature table builds ~1.25 billion
     rows).
+
+### D-052 · Disk cleanup of duplicates and test copies (2026-11-17) · accepted (Ori)
+- *Deleted* (24.4 GB; 765 GB free afterwards):
+  - `C:\hebloc-incoming\efrat` and `\adi`: the merge working copies. Before deletion, each of their 20 + 22 files
+    was checked to have an identical original (name and size) in `data/efrat-data1|2/efrat` and
+    `data/adi-data1|2/adi`, which stay as the delivered backups (D-045).
+  - The package test extractions in the Claude session scratchpad (not project data).
+- *Kept on purpose:*
+  - all parse data, bundles (`data/outbox/ori`, partner deliveries) and stats folders (D-045);
+  - `data/share/hebloc-analysis-pack/` + zip until Efrat is done (`hebloc pack refresh` needs the folder; a
+    rebuild takes about an hour);
+  - `data/units_v1` (1 GB, superseded since M2.1) until a final cleanup at the end of the project.

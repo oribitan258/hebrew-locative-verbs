@@ -237,7 +237,7 @@ notebooks/     exploration only — never pipeline logic
       Ori's share COMPLETE 2026-11-12 (12/12 slices, 3,504,707 units, `data/outbox/ori`); D-043 (excused
       "¨¨" tokenizer artifact in the coverage check) and D-044 (pandas ≤3.0.2, pyarrow <26: Smart App
       Control blocks newer DLLs). **Efrat's 9 slices MERGED 2026-11-15** (MERGE OK, combined copy in
-      `C:\hebloc-incoming\efrat`; originals kept in `data/efrat-data1` + `data/efrat-data2`): **21/31 slices,
+      `C:\hebloc-incoming\efrat`, deleted 2026-11-17 per D-052; originals kept in `data/efrat-data1` + `data/efrat-data2`): **21/31 slices,
       6,512,144/9,709,662 units, 0 overlap**; `hebloc check` OK=True. **Waiting for Adi's 10 slices** → merge
       31/31 → register (done inside `finish statistics`, HANDOFF §7).
 - [x] M6 descriptive statistics + parser-accuracy report — **DONE 2026-11-16** (only the analysis wording awaits Ori) — design approved (D-046, `docs/m6_design.md`: Part A =

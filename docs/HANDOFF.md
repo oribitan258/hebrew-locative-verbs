@@ -1,5 +1,10 @@
 # Session Handoff: assignment §2–§4 CLOSED (2026-11-16) → M7 review; §5 next only when Ori opens it
 
+> **2026-11-17, disk cleanup (D-052, approved by Ori).** Deleted only duplicates and test copies (24.4 GB): the merge
+> copies in `C:\hebloc-incoming` (every file has an identical original in `data/efrat-data1|2`, `data/adi-data1|2`)
+> and the package test extractions in the session scratchpad. Kept: all parse data and bundles, the package folder
+> + zip in `data/share` (keep until Efrat is done; `pack refresh` needs the folder), `data/units_v1` (final cleanup).
+>
 > **2026-11-16, analysis package for Efrat (D-051).**
 > - **What.** `hebloc pack analysis` → `data/share/hebloc-analysis-pack/` + `hebloc-analysis-pack.zip`
 >   (5.15 GiB, 209 files, `.zip.sha256`).
