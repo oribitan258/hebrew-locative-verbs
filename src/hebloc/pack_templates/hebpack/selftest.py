@@ -1,7 +1,7 @@
 """Recompute the official §4 statistics from the package data and compare them with official/.
 
     python -m hebpack.selftest --quick        # Mikra, Hazal, Medieval, Haskala (a few minutes)
-    python -m hebpack.selftest                # all five corpora incl. Modern (about 40 minutes)
+    python -m hebpack.selftest                # all five corpora incl. Modern (1-2 hours on a laptop)
     python -m hebpack.selftest --corpus hazal
 
 It runs the verbatim official code (hebpack/_official) on the package's tokens, pieces and run units, then compares

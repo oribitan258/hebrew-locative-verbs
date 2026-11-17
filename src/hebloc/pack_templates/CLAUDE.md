@@ -204,8 +204,11 @@ Her accepted findings enter the final report, crediting her.
 
 **Other commands:**
 - `uv run python -m hebpack.verify`: re-check every file.
-- `uv run python -m hebpack.selftest`: full reproduction of the official statistics, all five corpora, about 40
-  minutes. It already passed when the package was built (`VERIFICATION.json`).
+- `uv run python -m hebpack.selftest`: full reproduction of the official statistics, all five corpora. Modern alone
+  can take 1–2 hours on a 16 GB laptop, so it is optional; do not run it unless she asks.
+  - Not needed for trust: when the package was built, every data file was proven identical to the data behind the
+    official statistics (`VERIFICATION.json`).
+  - The quick self-test, run by `start`, reproduces four corpora end to end.
 
 ## What this package is not
 - It cannot re-run the parser.

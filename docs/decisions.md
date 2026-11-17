@@ -892,3 +892,28 @@ Design: [m6_design.md](m6_design.md).
     (the shim path); results are in the outcome below.
 - *Privacy.* The package contains corpus text: private Google Drive transfer only, never git or a public link
   (data_management.md §5). Results come back as a zipped `analyses/` folder with `REPORT.md`.
+- *`start` workflow (Ori, 2026-11-17).* Efrat only opens the extracted folder in VS Code, launches Claude Code and
+  types `start`. Her CLAUDE.md then:
+  - installs missing prerequisites (python.org 3.12, uv) and builds the environment;
+  - runs `hebpack.start --first`: file checksums plus the quick self-test, once; state kept in
+    `analyses/_status.json`;
+  - explains the data in plain language and offers a menu of explorations;
+  - guides each analysis (script, CSV, figures, interpretation, caveats → `analyses/NN_topic/`, logged in
+    `analyses/REPORT.md`);
+  - packages her work for Ori with `hebpack.deliver` ("send to Ori").
+
+  Supporting changes:
+  - the zip holds files at its root, so "Extract All" gives one folder with CLAUDE.md inside;
+  - `pyproject` sets `python-preference = "only-system"`, so uv never uses a downloaded Python (Smart App
+    Control);
+  - DuckDB is capped at half the RAM;
+  - `hebloc pack refresh` updates docs and tools only, and proves the 189 data files unchanged.
+- *Outcome (2026-11-17).* Final zip `data/share/hebloc-analysis-pack.zip`: 5,534,159,993 bytes, sha256
+  `4448ec8b…5cb48a` (`.zip.sha256`), 212 files. Tested from the extracted zip in a fresh python.org venv:
+  - `hebpack.verify` OK (sha256 of every file);
+  - `start --first` READY (18.7 min the first time);
+  - quick self-test PASS: Mikra, Hazal, Medieval and Haskala; `unit_metrics` and all 11 tables identical, 0
+    reconciliation problems;
+  - the 3 examples and `deliver` work.
+  - The Modern self-test is very slow on this 16 GB laptop (the official feature table builds ~1.25 billion rows),
+    so the full self-test is documented as optional. Modern's data identity is proven by the lossless hashes.
