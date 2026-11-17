@@ -477,6 +477,30 @@ def _cmd_parse(args: argparse.Namespace) -> int:
     return 0 if r["validation_ok"] and r["integrity_ok"] else 1
 
 
+def _cmd_pack(args: argparse.Namespace) -> int:
+    """D-051: build or verify the standalone analysis package."""
+    from pathlib import Path
+
+    from hebloc import pack as PK
+
+    if args.action == "verify":
+        folder = Path(args.out) if args.out else PK.SHARE_DIR / PK.PACK_NAME
+        probs = PK.verify_package(folder)
+        print("OK" if not probs else "\n".join(probs[:50]))
+        return 0 if not probs else 1
+    try:
+        if args.action == "refresh":
+            r = PK.refresh(Path(args.out) if args.out else None, zip_it=not args.no_zip)
+        else:
+            r = PK.build(Path(args.out) if args.out else None, zip_it=not args.no_zip,
+                         raw_sample_shards=args.raw_sample_shards)
+    except PK.PackRefusal as e:
+        print(f"REFUSED: {e}")
+        return 2
+    _json(r)
+    return 0
+
+
 def _cmd_stats(args: argparse.Namespace) -> int:
     """M6 (docs/m6_design.md): run | accuracy | report | verify."""
     from pathlib import Path
@@ -702,6 +726,16 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--no-report", action="store_true", help="run: skip CSV/PNG/Markdown")
     p.add_argument("--run", default="mikra/base-topk-v1__mikra", help="accuracy: the full Mikra run")
     p.set_defaults(func=_cmd_stats)
+
+    p = sub.add_parser("pack", help="Standalone analysis package (D-051): all registered parses + sentences + catalog "
+                                    "+ official statistics + tools, for private sharing (never git).")
+    p.add_argument("action", choices=["analysis", "refresh", "verify"])
+    p.add_argument("--out", default=None, help="analysis: package folder (default data/share/hebloc-analysis-pack); "
+                                               "verify: the package folder to re-hash")
+    p.add_argument("--no-zip", action="store_true", help="analysis: do not create the .zip next to the folder")
+    p.add_argument("--raw-sample-shards", type=int, default=3,
+                   help="analysis: random shards per corpus (besides all of Mikra) re-derived from Dicta's raw JSON")
+    p.set_defaults(func=_cmd_pack)
 
     p = sub.add_parser("merge", help="Team (Ori): verify, restore and check partners' result folders/bundles.")
     p.add_argument("paths", nargs="*", help="folders (e.g. a partner's outbox folder) and/or bundle .zip files; "

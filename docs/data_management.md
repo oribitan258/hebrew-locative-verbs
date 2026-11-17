@@ -65,6 +65,15 @@ cost days.
   ```
   `restore` refuses to overwrite different existing files unless `--overwrite` is given.
 - **No re-running Dicta** is needed by partners. All statistics and future research read the stored annotations through `hebloc.data`.
+- **Analysis package (D-051).** For exploring the results without the repository:
+  - `uv run python -m hebloc pack analysis` builds `data/share/hebloc-analysis-pack/` plus a zip. It contains:
+    - all registered tokens, sentences, the catalog and pieces;
+    - the official statistics;
+    - the `hebpack` tools and a dedicated CLAUDE.md.
+  - Lossless checks are recorded in `VERIFICATION.json`. The package's own `hebpack.selftest` reproduces the
+    official statistics.
+  - It is shared privately (Google Drive), never through git.
+  - `hebloc pack verify` re-hashes a built package.
 
 ## 5. Licensing and privacy caveat
 

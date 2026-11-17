@@ -1,5 +1,17 @@
 # Session Handoff: assignment §2–§4 CLOSED (2026-11-16) → M7 review; §5 next only when Ori opens it
 
+> **2026-11-16, analysis package for Efrat (D-051).**
+> - **What.** `hebloc pack analysis` → `data/share/hebloc-analysis-pack/` + `hebloc-analysis-pack.zip`
+>   (5.15 GiB, 209 files, `.zip.sha256`).
+> - **Contents.** All tokens, sentences, catalog and pieces; the official statistics; `hebpack` tools; her own
+>   CLAUDE.md.
+> - **Verified.**
+>   - Lossless: `VERIFICATION.json`.
+>   - Zip extracted into a fresh python.org venv: `hebpack.verify` OK, then `hebpack.selftest` (see D-051
+>     outcome).
+> - **Hand-over.** Ori uploads the zip to Google Drive privately (never git). Efrat returns `analyses/` +
+>   `REPORT.md`; Ori reviews before anything enters the report.
+>
 > **2026-11-16, closeout of §2–§4 (D-050).** Summary for the professor: [SECTIONS_2-4.md](SECTIONS_2-4.md).
 > - **Verified.** Every §2 sub-corpus is present and parsed. The 201 files without units are all empty,
 >   placeholder or auxiliary. Test suite passes.

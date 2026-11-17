@@ -857,3 +857,38 @@ Design: [m6_design.md](m6_design.md).
   API correctly returns the canonical Mikra run, so the test failed. It now checks the never-guess rule against a
   temporary empty registry, and, with the real registry, that the canonical Mikra tokens equal the validated run's
   `checks.json` count (328,724). No code changed.
+
+### D-051 · Standalone analysis package for Efrat (additional statistics), private transfer (2026-11-16) · accepted (Ori)
+- *Need.* Efrat will explore the results and produce additional statistics, comparisons and figures (§4 R7, §9
+  analysis, §11 initiative), independently, without Dicta and without the main repository. Her findings enter the
+  final report only after Ori's review.
+- *What.* `hebloc pack analysis` (`src/hebloc/pack.py`, templates in `src/hebloc/pack_templates/`) builds
+  `data/share/hebloc-analysis-pack/` (gitignored) + one zip (5.15 GiB, 209 files). Contents:
+  - **all** token columns of the 31 registered runs (186,914,742 tokens), plus `corpus_id`, `doc_id`, `shard`;
+  - the pieces with Dicta's piece status;
+  - the run units (`text_sha1`);
+  - the sentences and the catalog (byte-identical copies);
+  - the official statistics (Parquet incl. complete frequency lists and `unit_metrics`, CSV, figures, accuracy,
+    report);
+  - project docs;
+  - `hebpack` tools (DuckDB views, charts, verify, self-test, examples);
+  - CLAUDE.md, README, ASSIGNMENT, RESEARCH_IDEAS, DATA_DICTIONARY;
+  - `pyproject.toml` + `uv.lock` pinned to the exact versions of the main project (Smart App Control-safe).
+- *Not included.*
+  - `dicta_raw` (6.8 GB): verified redundant. Re-deriving all of Mikra + 3 random shards per other corpus
+    (430,718 tokens) gave 0 field mismatches; segmentation never exceeds 2 parts; `dep_head` and `root_idx` are
+    derivable; all 38,543 `ner_entities` equal the BIO spans of the `ner` tags.
+  - `inputs` text: equals `text_norm` for every unit (sha1).
+  - Models and corpora.
+- *Lossless checks* (`VERIFICATION.json`, run before publishing):
+  - per run, row count + order-independent content hashes over every source column: equal for tokens, pieces,
+    piece status and run units, 31/31 runs;
+  - `sha1(text_norm)` = `text_sha1` for all 9,709,662 units;
+  - vendored statistics code byte-identical.
+- *Reproduction.*
+  - The package's `hebpack.selftest` runs the official `metrics.py` / `tables.py` (verbatim copies) on the package
+    data, shard by shard as the official run did, and compares `unit_metrics` and all 11 tables with `official/`.
+  - It was tested from the extracted zip in a fresh python.org-3.12 venv where the main project is not importable
+    (the shim path); results are in the outcome below.
+- *Privacy.* The package contains corpus text: private Google Drive transfer only, never git or a public link
+  (data_management.md §5). Results come back as a zipped `analyses/` folder with `REPORT.md`.

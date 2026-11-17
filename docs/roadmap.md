@@ -38,7 +38,7 @@ Assignment stages (`project.pdf`):
 | §2 | Corpora | **Done** (M1: 404,294 files cataloged; M2: 9,709,662 units) |
 | §3 | Dicta parsing of every verse/sentence | **Done** (M5: all units of all five corpora, all of Modern, 31/31, D-049). Dicta has no construct state or binyan (§3.2 lists construct) |
 | §4 | Statistics R1–R6 | **Done, final** (2026-11-16); analysis draft awaits Ori's approval |
-| §4 | "Any additional statistic" (R7) | **Deferred** by Ori (Part B, D-046). Parser accuracy vs BHSA was done as an extra |
+| §4 | "Any additional statistic" (R7) | **In progress, exploratory (Efrat):** analysis package D-051; findings reviewed by Ori before the report. Part B of the main design stays deferred (D-046). Parser accuracy vs BHSA was done as an extra |
 | §5 | Test the claim (Mikra first, then the other corpora) | Not started (Part 2, R1–R3) |
 | §6 | Extend to all verbs in one corpus | Not started (R4) |
 | §7 | Classifiers (lexical, morphological, syntactic and word2vec features; 10-fold CV; Acc/P/R/F1) | Not started (R5–R6) |

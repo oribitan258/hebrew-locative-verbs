@@ -1,0 +1,33 @@
+[project]
+name = "hebloc-analysis-pack"
+version = "1.0.0"
+description = "Hebrew corpora analysis package: Dicta parses of five corpora, official statistics, and tools"
+requires-python = ">=3.12,<3.13"
+# Exact versions that Windows Smart App Control accepts (tested in the main project, D-044/D-047).
+# Adding other packages: see CLAUDE.md, "Adding a Python package".
+dependencies = [
+    "duckdb==2.0.0",
+    "pandas==3.0.2",
+    "pyarrow==25.0.1",
+    "numpy==2.5.4",
+    "matplotlib==3.11.2",
+    "tqdm==4.70.1",
+]
+
+[tool.uv]
+package = false
+# Windows Smart App Control blocks the unsigned Python that uv downloads: use only the installed python.org Python.
+python-preference = "only-system"
+python-downloads = "never"
+constraint-dependencies = [
+    "pillow==13.0.0",
+    "contourpy==1.4.0",
+    "cycler==0.12.1",
+    "fonttools==4.68.0",
+    "kiwisolver==1.5.1",
+    "packaging==26.3",
+    "pyparsing==3.3.3",
+    "python-dateutil==4.0.0",
+    "tzdata==2026.6",
+    "colorama==0.4.6",
+]

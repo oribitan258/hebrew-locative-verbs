@@ -172,6 +172,7 @@ uv run hebloc stats run --runs <run,…>   # M6 (D-046): §4 statistics; refuses
 uv run hebloc stats run --registered     # M6 FINAL (after merge 31/31 + plan register) → results/stats + docs/stats_report.md
 uv run hebloc stats accuracy             # M6: Mikra vs BHSA on all of Mikra → results/stats/accuracy/ (final)
 uv run hebloc stats report|verify <dir>  # M6: re-render / re-hash a data/stats/<id> folder
+uv run hebloc pack analysis|verify       # D-051: standalone analysis package (data/share/, private, never git)
 ```
 
 ## Repo map
@@ -250,6 +251,10 @@ notebooks/     exploration only — never pipeline logic
       Hand-written analysis: `docs/stats_analysis.md` (separate file: re-rendering overwrites stats_report.md).
       **Closeout of assignment §2–§4 (2026-11-16, D-050):** verified and committed; CSVs UTF-8 with BOM; summary for
       the professor `docs/SECTIONS_2-4.md`. Ori's instruction: do not go beyond M6.
+      **Analysis package for Efrat (D-051):** `uv run python -m hebloc pack analysis` → `data/share/hebloc-analysis-pack/`
+      + zip (5.15 GiB; all tokens/sentences/catalog/pieces + official stats + `hebpack` tools + its own CLAUDE.md;
+      lossless-verified; self-test reproduces the official tables). Private Drive transfer only, NEVER git. Her
+      additional statistics (§4 R7) come back as `analyses/` + REPORT.md for Ori's review.
 - [ ] M7 review checkpoint (STOP): Ori + partners review the §4 results and `docs/stats_analysis.md` (wording
       not yet approved). Assignment status per project.pdf section: `docs/roadmap.md` (table at the top).
       Remaining after M7, only when Ori opens it: §5 (Mikra first: verb lexicon from the paper → frames →
