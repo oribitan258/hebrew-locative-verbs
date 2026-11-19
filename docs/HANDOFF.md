@@ -1,4 +1,88 @@
-# Session Handoff: assignment §2–§4 CLOSED (2026-11-16) → M7 review; §5 next only when Ori opens it
+# Session Handoff: §2–§4 CLOSED → next session DISCUSSES §5–§6 (no planning or implementation yet)
+
+## ★ Next session (prepared 2026-11-19): discuss assignment §5 and §6
+
+**Ori's instruction.**
+- Discuss §5 and §6: their dependencies, their feasibility, and the most efficient division of work between
+  Ori, Efrat and Adi.
+- **`project.pdf` is the source of truth.** Read its §5, §6 and the appendix (local copy in the repo root, not in
+  git) and follow its exact requirements. Where `docs/roadmap.md` Part 2 differs, the PDF wins.
+- **Do not plan or implement anything** until Ori opens the scope (CLAUDE.md "CURRENT SCOPE"). Discussion only:
+  options, trade-offs, questions.
+
+**Read first.**
+1. `project.pdf` §5, §6, §7 (it consumes §5–§6 output), §9 and the appendix.
+2. `DoronDubnov_revised.pdf`: chapters 1–3 (the assignment's reading), and where the verb classes are listed.
+   The roadmap notes §4.1, §5, §6.1, footnote 33 and Tables 1–4; counts 95 A, 45 A/B, 37 B. **Verify these
+   against the paper.**
+3. `docs/roadmap.md`: the table of assignment status at the top, and Part 2 R1–R4 (an earlier draft, not
+   approved).
+4. `docs/SECTIONS_2-4.md` (what exists, limitations), `docs/data_dictionary.md` (token fields).
+
+**What the PDF requires (English rendering; check the Hebrew original).**
+- **§5, testing the paper's central claim.** Stage 1 on the Mikra corpus; stage 2 on all other corpora:
+  1. find all locative verbs;
+  2. classify them **automatically, by syntactic structure**, into the paper's categories;
+  3. find the preposition in each structure and check whether it is identical;
+  4. produce statistics of the data;
+  5. compare with what the paper says.
+- **§6, extending the paper's scope.** In **one** corpus:
+  1. classify all verbs by their membership in each of the paper's categories;
+  2. check whether there are verbs that, like locative verbs, appear in both syntactic structures;
+  3. if so, try to characterise them.
+- **Downstream.**
+  - §7 builds "a dataset with each verb's category" and trains classifiers on verb feature vectors, so it
+    depends on §5/§6 labels.
+  - §8 (LLM / AI tools) may assist.
+  - §9 reports the results of §5–§8.
+
+**What already exists (no re-parsing needed).**
+- **Parses:** all 9,709,662 units of the five corpora (31 registered runs, D-049). Per word: lemma, POS,
+  features, prefixes (ב/מ/ל… with `prefix_upos`), pronominal suffix (object/possessive), `head` /
+  `head_sent`, `deprel`. The labels in use include `obj`, `obl`, `case`, `case:acc` (= את), `nsubj`, `xcomp`,
+  `obl:npmod`. There is **no** `iobj` and no passive label (`nsubj:pass`), so passives must be recognised another
+  way. Every hit traces to its verse or
+  sentence (`ref`).
+- **Access:**
+  - Python API `hebloc.data`;
+  - DuckDB views;
+  - Efrat's standalone package (D-051: same data plus `hebpack` tools) can serve partners without the repo.
+- **For Mikra:** BHSA expert annotation (`data/external/bhsa`: verbal stem, phrase functions) for validation,
+  and parser agreement figures (`results/stats/accuracy/`).
+
+**Known constraints relevant to feasibility (facts, not a plan).**
+- **Dicta has no binyan.** Its verb lemma is the binyan's dictionary form, while the paper cites
+  roots/templates. Verb-lemma agreement with BHSA is 41.6% (qal) and 7.9% (other stems), largely by
+  convention, so mapping the paper's verbs to Dicta lemmas is a real task.
+- **Syntax reliability drops in the historical corpora:** base-vs-tiny head agreement is 57–71% there, against
+  89% in Modern. `dep` is about 7 times more frequent in Hazal and Medieval. There is no dependency gold
+  standard; the manual audit is still deferred.
+- **Frame A vs Frame B is largely a semantic decision on the same shape** (V + obj + PP[ב]): which noun is the
+  Locatum and which the Location. This is the methodological crux.
+- **The paper's own pitfalls** (roadmap R2): elided ב- with indefinites, partitive מן, instrumental ב-, על
+  instead of ב-.
+- **Units:** a verse is not a sentence. Paragraph-length units exist in the older corpora.
+
+**Team status (for the division-of-work discussion).**
+- **Ori:** full repo and all data; does merges, registration and statistics.
+- **Efrat:** has her repo clone and her parse share, and receives the analysis package (D-051) for §4 extra
+  statistics. Whether she has downloaded it and run `start` is unknown: ask Ori.
+- **Adi:** has her repo clone and her parse share; no package yet.
+- All three have VS Code and Claude Code, and Python 3.12 + uv from M5.
+
+**Open questions to raise (do not answer them for Ori).**
+1. Who builds the verb lexicon from the paper, and who checks it?
+2. Mikra stage 1 before stage 2: what is the minimum to reach the stage-1 comparison with the paper?
+3. Which corpus for §6?
+4. How to validate the automatic frame classification: the paper's examples, BHSA, a hand-checked sample?
+5. Can partners work from a package (like D-051) rather than the full repo?
+6. How do §5–§6 outputs feed §7?
+
+**Still pending from earlier.**
+- Ori's approval of the wording of `docs/stats_analysis.md`.
+- The M7 review with the partners.
+- §1 background summaries.
+- Efrat's package upload/hand-over: Ori's action.
 
 > **2026-11-17, disk cleanup (D-052, approved by Ori).** Deleted only duplicates and test copies (24.4 GB): the merge
 > copies in `C:\hebloc-incoming` (every file has an identical original in `data/efrat-data1|2`, `data/adi-data1|2`)

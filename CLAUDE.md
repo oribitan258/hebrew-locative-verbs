@@ -11,6 +11,9 @@ classification, classifiers, LLM) are roadmap-only: `docs/roadmap.md`. Do not im
 until the user explicitly opens that scope.
 
 - **New session? Start with `docs/HANDOFF.md`** (current state, checks to run, next milestone).
+  **Next session (prepared 2026-11-19): DISCUSS assignment §5 and §6** (dependencies, feasibility, division of work
+  between Ori, Efrat and Adi). Read HANDOFF "★ Next session" first. `project.pdf` is the source of truth for every
+  requirement. Discussion only: no planning or implementation until Ori opens the scope.
 - **On a partner's computer (Efrat/Adi, or any fresh setup)? Execute `PARTNER_START.md`** (tested,
   step-by-step: identify the partner, set up, verify, parse only their slices, package results).
 - Spec (authoritative, Hebrew): `project.pdf`. Paper: `DoronDubnov_revised.pdf`. Both are local copies in the
@@ -256,7 +259,8 @@ notebooks/     exploration only — never pipeline logic
       lossless-verified; self-test reproduces the official tables). Private Drive transfer only, NEVER git. Her
       additional statistics (§4 R7) come back as `analyses/` + REPORT.md for Ori's review.
 - [ ] M7 review checkpoint (STOP): Ori + partners review the §4 results and `docs/stats_analysis.md` (wording
-      not yet approved). Assignment status per project.pdf section: `docs/roadmap.md` (table at the top).
+      not yet approved). D-052 (2026-11-17): disk cleanup of duplicates only. 2026-11-19: context prepared for a
+      §5–§6 discussion session (HANDOFF "★ Next session"). Assignment status per project.pdf section: `docs/roadmap.md` (table at the top).
       Remaining after M7, only when Ori opens it: §5 (Mikra first: verb lexicon from the paper → frames →
       preposition identity; roadmap Part 2 R1–R3), §6, §7, §8, §1 background summaries, §9 report, §10 submission;
       §4 R7 extras deferred (Part B).
