@@ -1,7 +1,8 @@
 # Project Roadmap — Hebrew Locative Verbs Across Periods
 
-Status: **living document.** The *active scope* is Part 1. Part 2 is the long-term plan. It will not
-be implemented until it has been discussed with the project partners and explicitly opened.
+Status: **living document.** Part 1 (M0–M6) is done; M7 review is pending. **Since 2026-11-19 Ori has opened
+the PLANNING of §5 on Mikra only** (Plan Mode, strictly per `project.pdf` and the paper). Implementation needs
+Ori's explicit approval of that plan. The rest of Part 2 stays closed until Ori explicitly opens it.
 
 Authoritative spec: `project.pdf` (Hebrew; local copy, not in git). Paper: Doron & Dubnov (2017), *The locative alternation
 in Biblical (and Modern) Hebrew*, `DoronDubnov_revised.pdf`.
@@ -39,9 +40,9 @@ Assignment stages (`project.pdf`):
 | §3 | Dicta parsing of every verse/sentence | **Done** (M5: all units of all five corpora, all of Modern, 31/31, D-049). Dicta has no construct state or binyan (§3.2 lists construct) |
 | §4 | Statistics R1–R6 | **Done, final** (2026-11-16); analysis draft awaits Ori's approval |
 | §4 | "Any additional statistic" (R7) | **In progress, exploratory (Efrat):** analysis package D-051; findings reviewed by Ori before the report. Part B of the main design stays deferred (D-046). Parser accuracy vs BHSA was done as an extra |
-| §5 | Test the claim (Mikra first, then the other corpora) | Not started (Part 2, R1–R3) |
-| §6 | Extend to all verbs in one corpus | Not started (R4) |
-| §7 | Classifiers (lexical, morphological, syntactic and word2vec features; 10-fold CV; Acc/P/R/F1) | Not started (R5–R6) |
+| §5 | Test the claim (Mikra first, then the other corpora) | Not started (Part 2, R1–R3). **Owners: Ori + Adi** (agreed 2026-11-19). Next: plan stage 1 (Mikra) in Plan Mode |
+| §6 | Extend to all verbs in one corpus | Not started (R4). **Owner: Efrat**, on her computer, reusing the shared §5 components; starts after the §5 Mikra gate |
+| §7 | Classifiers (lexical, morphological, syntactic and word2vec features; 10-fold CV; Acc/P/R/F1) | Not started (R5–R6). **Out of scope for now** (2026-11-19) |
 | §8 | LLM integration | Not started (R7) |
 | §9 | Report | Partial: only the §4 part exists (`stats_report.md` + draft `stats_analysis.md`) |
 | §10 | Submission (report, data, code) | Not started. Code is in the public repo; a data package is still to be chosen |
@@ -66,7 +67,17 @@ Detailed milestone definitions are kept in the approved plan and summarized here
 
 ---
 
-## Part 2 — Long-term roadmap (NOT in active scope)
+## Part 2 — Long-term roadmap (only §5 stage-1 PLANNING is open; nothing here is approved for implementation)
+
+> **Agreed division of work for §5–§6 (Ori, 2026-11-19).** `project.pdf` and the paper win over R1–R4 below,
+> which are an earlier, unapproved draft. Details: `docs/HANDOFF.md` "★ Agreed §5–§6 workflow".
+> - **§5 (R1–R3): Ori + Adi** develop the shared methodology and extraction code. Stage 1 is Mikra; stage 2 is
+>   the other corpora.
+> - **§6 (R4): Efrat**, alone, on her computer. She reuses the shared §5 frame definitions and code, and starts
+>   only after they are validated on Mikra.
+> - **Gate:** after the Mikra validation, STOP and notify Ori. Then write a standalone handoff document for Efrat
+>   and Adi: methodology, frame definitions, shared code, data requirements, consistent reuse.
+> - **§7 (R5–R6):** out of scope for now.
 
 ### R1 — Locative-verb lexicon (§5 prerequisite)
 - Transcribe the paper's verb classes into `config/locative_verbs.yaml`. For each verb: root/lemma, binyan, class (A, A/B, B), putting/removal, paper section and page, and example references with the expected frame.

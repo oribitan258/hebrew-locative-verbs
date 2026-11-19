@@ -5,15 +5,25 @@ Test Doron & Dubnov (2017) "Locative Alternation Preposition Identity" (verbs th
 Frame A [Locatum = direct object] and Frame B [Location = direct object] keep the same preposition:
 ב- for putting, מן/מ- for removal) on 5 Hebrew corpora, using Dicta's parser.
 
-**CURRENT SCOPE: data foundation only** — inventory → unit extraction → Dicta parse → data layer →
-assignment §4 descriptive statistics → STOP for review. Later stages (locative extraction, A/B
-classification, classifiers, LLM) are roadmap-only: `docs/roadmap.md`. Do not implement them
-until the user explicitly opens that scope.
+**CURRENT SCOPE (opened by Ori 2026-11-19): PLANNING of §5 on Mikra only.** The data foundation (M0–M6:
+inventory → units → Dicta parse → data layer → §4 statistics) is done. Ori has opened **planning** of
+assignment §5 stage 1 (Mikra), in Plan Mode, strictly per `project.pdf` and the paper. **Implementation of
+anything requires Ori's explicit approval of the plan.** Everything else stays roadmap-only (`docs/roadmap.md`)
+until Ori explicitly opens it: §5 stage 2 (other corpora), §6 (Efrat, after the Mikra gate), §7 classifiers,
+§8 LLM, and §4 R7/Part B.
 
 - **New session? Start with `docs/HANDOFF.md`** (current state, checks to run, next milestone).
-  **Next session (prepared 2026-11-19): DISCUSS assignment §5 and §6** (dependencies, feasibility, division of work
-  between Ori, Efrat and Adi). Read HANDOFF "★ Next session" first. `project.pdf` is the source of truth for every
-  requirement. Discussion only: no planning or implementation until Ori opens the scope.
+  **Next session: PLAN §5 on Mikra only, in Plan Mode**, strictly following `project.pdf` and the paper.
+  Read HANDOFF "★ Next session" and "★ Agreed §5–§6 workflow" first. Implement nothing before Ori approves the plan.
+  `project.pdf` is the source of truth for every requirement.
+- **Agreed §5–§6 workflow (Ori, 2026-11-19; details in HANDOFF):**
+  - Ori + Adi develop the shared §5 methodology and extraction code: Mikra first, then the other corpora.
+  - Efrat does ALL of §6 on her computer, alone, reusing the shared §5 components (no separate extractor). She
+    WAITS until they are agreed, implemented and validated on Mikra.
+  - §7 is out of scope for now.
+  - **Gate:** once the §5 methodology is validated on Mikra, STOP and notify Ori. Then write a standalone handoff
+    document for Efrat and Adi (methodology, frame definitions, shared code + commit, data requirements, consistent
+    reuse, what to return). Efrat gives it to her Claude Code to start §6 while §5 continues.
 - **On a partner's computer (Efrat/Adi, or any fresh setup)? Execute `PARTNER_START.md`** (tested,
   step-by-step: identify the partner, set up, verify, parse only their slices, package results).
 - Spec (authoritative, Hebrew): `project.pdf`. Paper: `DoronDubnov_revised.pdf`. Both are local copies in the
@@ -259,8 +269,8 @@ notebooks/     exploration only — never pipeline logic
       lossless-verified; self-test reproduces the official tables). Private Drive transfer only, NEVER git. Her
       additional statistics (§4 R7) come back as `analyses/` + REPORT.md for Ori's review.
 - [ ] M7 review checkpoint (STOP): Ori + partners review the §4 results and `docs/stats_analysis.md` (wording
-      not yet approved). D-052 (2026-11-17): disk cleanup of duplicates only. 2026-11-19: context prepared for a
-      §5–§6 discussion session (HANDOFF "★ Next session"). Assignment status per project.pdf section: `docs/roadmap.md` (table at the top).
+      not yet approved). D-052 (2026-11-17): disk cleanup of duplicates only. 2026-11-19: §5–§6 division of work agreed
+      (Ori + Adi: §5; Efrat: §6 after the §5 Mikra gate; §7 out of scope); next = plan §5 on Mikra (HANDOFF "★ Next session"). Assignment status per project.pdf section: `docs/roadmap.md` (table at the top).
       Remaining after M7, only when Ori opens it: §5 (Mikra first: verb lexicon from the paper → frames →
       preposition identity; roadmap Part 2 R1–R3), §6, §7, §8, §1 background summaries, §9 report, §10 submission;
       §4 R7 extras deferred (Part B).

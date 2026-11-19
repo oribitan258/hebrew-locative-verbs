@@ -1,14 +1,49 @@
-# Session Handoff: §2–§4 CLOSED → next session DISCUSSES §5–§6 (no planning or implementation yet)
+# Session Handoff: §2–§4 CLOSED → §5–§6 division AGREED → next session PLANS §5 on Mikra (Plan Mode)
 
-## ★ Next session (prepared 2026-11-19): discuss assignment §5 and §6
+## ★ Next session: plan §5 on Mikra (fresh session, Plan Mode)
 
-**Ori's instruction.**
-- Discuss §5 and §6: their dependencies, their feasibility, and the most efficient division of work between
-  Ori, Efrat and Adi.
-- **`project.pdf` is the source of truth.** Read its §5, §6 and the appendix (local copy in the repo root, not in
-  git) and follow its exact requirements. Where `docs/roadmap.md` Part 2 differs, the PDF wins.
-- **Do not plan or implement anything** until Ori opens the scope (CLAUDE.md "CURRENT SCOPE"). Discussion only:
-  options, trade-offs, questions.
+**Ori's instruction (2026-11-19).**
+- **Scope:** Ori has lifted the M0–M7 restriction for **planning §5 on Mikra only** (CLAUDE.md "CURRENT SCOPE").
+  Implementation still needs Ori's explicit approval of the plan.
+- Plan **§5 on Mikra only**, strictly following `project.pdf` §5 and the paper (`DoronDubnov_revised.pdf`).
+  Where `docs/roadmap.md` Part 2 differs, the PDF and the paper win.
+- **Plan Mode.** Present the plan; **implement nothing before Ori approves it.**
+- The division of work below is agreed. Do not re-open it; record any new question as an open item.
+
+## ★ Agreed §5–§6 workflow (decided by Ori, 2026-11-19)
+
+| Who | What | When |
+|---|---|---|
+| **Ori + Adi** | **§5:** develop together the shared methodology and extraction code: the paper's verb lexicon, frame definitions (Frame A / Frame B, Locatum vs Location), object + PP + preposition extraction, preposition-identity test, statistics, comparison with the paper. Stage 1 = Mikra; stage 2 = the other four corpora. | Now (planning in the next session) |
+| **Efrat** | **All of §6**, alone, on her computer: classify all verbs of one corpus by the paper's categories; find verbs that, like locative verbs, appear in both structures; characterise them. She **reuses the shared §5 components** (same frame definitions, same extraction code); she does not build a separate extractor. | **Waits** until the §5 components are agreed, implemented and validated on Mikra |
+| — | §7 (classifiers) | **Out of scope for now** |
+
+- **Gate (STOP):** when the §5 methodology is agreed, implemented **and validated on Mikra**, stop and notify Ori.
+  Then prepare a **standalone handoff document for Efrat and Adi**. Efrat gives it to her Claude Code to start
+  §6 while Ori and Adi continue §5 stage 2. It must explain, self-contained (her Claude Code has no other context):
+  - the methodology and the exact frame definitions (with examples);
+  - the shared code: where it is, which git commit, how to run it;
+  - the data requirements (which tokens/tables, from the repo or the D-051 package) and how to verify them;
+  - how to reuse everything consistently: no re-defining frames or categories, same commit, provenance to `sent_id`;
+  - what to return to Ori, and how (never git for data).
+- **Why this order:** §6 ("classify all verbs by the paper's categories", "appear in both structures") uses the
+  same frame machinery as §5 step 2. One shared method keeps the report consistent and gives §7 one coherent
+  verb→category dataset. A verb Efrat finds alternating that the paper does not list is fed back to §5 (missing
+  lexicon entry or extraction bug).
+- **Assessment given to Ori (2026-11-19, review only):** the split is feasible.
+  - Stage 2 runs on existing parses in minutes per corpus (tens of minutes for Modern), so running corpora on
+    Adi's computer shares the work but gains little speed.
+  - If Adi runs corpora: start only after Mikra is validated, use the same git commit, verify on return. The
+    official statistics are computed centrally, once (the D-040 principle).
+- **Open items for the planning sessions (not decided):**
+  - How Adi's code enters the repo, since partners cannot push (fork + pull request, or a return folder).
+  - Data access: Adi has no D-051 package (only her own Modern slices). Whether Efrat has downloaded hers is
+    unknown: ask Ori.
+  - The shared code should read the token schema, so it also runs from the package.
+  - §6 corpus choice (Mikra: paper lists + BHSA as references; Modern: more data and a better parser, no gold).
+  - The name and location of the standalone handoff document.
+
+## Background for §5–§6 (prepared 2026-11-19 for the discussion; still valid as planning context)
 
 **Read first.**
 1. `project.pdf` §5, §6, §7 (it consumes §5–§6 output), §9 and the appendix.
