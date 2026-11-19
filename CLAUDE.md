@@ -5,39 +5,63 @@ Test Doron & Dubnov (2017) "Locative Alternation Preposition Identity" (verbs th
 Frame A [Locatum = direct object] and Frame B [Location = direct object] keep the same preposition:
 ב- for putting, מן/מ- for removal) on 5 Hebrew corpora, using Dicta's parser.
 
-**CURRENT SCOPE (opened by Ori 2026-11-19): PLANNING of §5 and §6.** The data foundation (M0–M6:
-inventory → units → Dicta parse → data layer → §4 statistics) is done. Ori has opened **planning** of
-assignment §5 (Mikra first) and §6, in Plan Mode, strictly per `project.pdf` and the paper. The goal of the
-planning stage is ONE shared research methodology for both sections. **Implementation of anything requires
-Ori's explicit approval.** §7 classifiers, §8 LLM and §4 R7/Part B stay roadmap-only (`docs/roadmap.md`) until
-Ori explicitly opens them.
+**CURRENT SCOPE (2026-11-19): CHECKPOINT 1 REACHED.**
+- **What was approved.** The shared §5–§6 methodology **`S56-v1`** (D-053–D-056).
+  - It is written in full in **`docs/EFRAT_SECTION_6.md`** §5, which is normative for Ori, Adi and Efrat.
+  - That document is also Efrat's self-contained §6 handoff.
+- **Next stage (Ori's computer).** Stage 3 = **plan, then implement, §5 on Mikra**: release R1, then the shared code
+  and validation, then CHECKPOINT 2 (tag `s56-v1`).
+  - Plan it in a **fresh session in Plan Mode**.
+  - **Nothing is implemented without Ori's explicit approval of that plan.**
+- **Never use a paid external API** (no LLM API), D-054. External API use would need Ori's separate approval.
+  Claude Code may assist only with human-reviewed steps (noun-type proposals, code and docs, reading audits); never
+  gold labels or run-time labelling.
+- **Still roadmap-only** (`docs/roadmap.md`) until Ori explicitly opens them: §7 classifiers, the rest of §8, and §4
+  R7/Part B.
 
 - **New session? Start with `docs/HANDOFF.md`** (current state, checks to run, next milestone).
-  **Next session: PLAN §5 and §6 in Plan Mode**, strictly following `project.pdf` and the paper.
-  Read HANDOFF "★ Next session" and "★ Agreed §5–§6 workflow" first. `project.pdf` is the source of truth.
-- **Agreed §5–§6 workflow (Ori, 2026-11-19; details in HANDOFF):**
-  - **Ori leads §5**: Ori implements and validates Mikra first. Then the remaining corpora are divided between Ori
-    and **Adi** (stage 2). Adi's workflow is prepared exactly like M5: assignments, data, automated detached
-    execution, validation, outbox packaging, verified merge on Ori's computer, and central statistics. She uses her
-    EXISTING folder and repo clone (no separate project, no duplicate code). Her Claude Code handoff is
-    `docs/ADI_SECTION_5.md` (proposed name), and CLAUDE.md will be updated so that she types `start`. This is
-    written only after Mikra is validated (**CHECKPOINT 2**: STOP, tell Ori it is ready for Adi).
-  - **Efrat is responsible for §6**, on her computer. She is WAITING for the shared research methodology and
-    reuses it (no own frame definitions or extractor).
+  **Next session on Ori's computer: PLAN stage 3 (§5 on Mikra, release R1 first) in Plan Mode**, strictly per
+  `S56-v1` (`docs/EFRAT_SECTION_6.md` §5), `project.pdf` and the paper. `project.pdf` is the source of truth.
+- **Agreed §5–§6 workflow (Ori, 2026-11-19; details in HANDOFF and EFRAT_SECTION_6.md §3):**
+  - **Ori leads §5.**
+    - **Stage 1:** Ori implements and validates Mikra first.
+    - **Stage 2:** Ori and **Adi** divide the remaining corpora **by corpus**, with a reasonably **balanced
+      workload**, and work **in parallel**. **The split is decided at CHECKPOINT 2** (D-056).
+    - **Adi's workflow** is prepared exactly like M5: assignments, data, automated detached execution, validation,
+      outbox packaging, and a verified merge on Ori's computer.
+    - Central statistics are computed once, on Ori's computer.
+    - Adi uses her EXISTING folder and repo clone (no separate project, no duplicate code). Her data today is
+      Haskala + 9 Modern slices.
+    - Her Claude Code handoff is `docs/ADI_SECTION_5.md`, and CLAUDE.md will be updated so that she types `start`.
+      Both are written only after Mikra is validated (**CHECKPOINT 2**: STOP, tell Ori it is ready for Adi).
+  - **Efrat is responsible for §6 on Modern**, on her computer, following `docs/EFRAT_SECTION_6.md`. She reuses the
+    shared code and definitions: no frame definitions or extractor of her own.
   - §7 is out of scope.
-  - **One shared methodology** for §5 and §6, written in `docs/EFRAT_SECTION_6.md` (self-contained, for Efrat's
-    Claude Code): exact §5/§6 requirements; division of work and dependencies; approved methodology, frame
-    definitions, classification rules, extraction logic and decisions; how to reuse it and the shared code;
-    required data, expected outputs and integration with the main project.
-  - **MANDATORY CHECKPOINT 1:** once Ori approves the shared methodology, STOP, complete `docs/EFRAT_SECTION_6.md`
-    and tell Ori explicitly that it is ready to transfer to Efrat. No implementation until Ori approves the next stage.
+  - **One shared methodology `S56-v1`** for §5 and §6, written in `docs/EFRAT_SECTION_6.md`, which is
+    self-contained. It contains:
+    - the exact §5/§6 requirements;
+    - the division of work and dependencies;
+    - the methodology;
+    - AI-tool policy;
+    - interfaces and output formats;
+    - data;
+    - what Efrat may do now and what must wait;
+    - answers to her Claude Code's six points;
+    - STOP rules.
+  - **CHECKPOINT 1: DONE 2026-11-19.** The methodology was approved, and the document is committed and pushed.
+  - **Releases.**
+    - **R1** (early stage 3): lexicon, annotation guideline, gold sampler, noun lists.
+    - **R2 = tag `s56-v1`** = CHECKPOINT 2: frozen, Mikra-validated code plus noun types.
+    - Adi and Efrat run only R2.
   - **Compatibility:** Ori, Adi and Efrat use the same methodology, the same pinned code version and the same
-    output schemas and manifests.
+    output schemas and manifests. Cross-checks: repo input = package input, and partners' rows are byte-identical
+    to Ori's.
   - **Session management:** separate sessions, one stage at a time, each ending at an explicit approval
     checkpoint. At the end of each stage, update the docs (CLAUDE.md, HANDOFF, roadmap, decisions) and memory:
     what is complete, what was decided, what comes next.
-- **On a partner's computer (Efrat/Adi, or any fresh setup)? Execute `PARTNER_START.md`** (tested,
-  step-by-step: identify the partner, set up, verify, parse only their slices, package results).
+- **On Efrat's computer, for §6: follow `docs/EFRAT_SECTION_6.md`** (see "Team" below).
+- **On Adi's computer, or on any fresh setup: execute `PARTNER_START.md`** (tested, step-by-step: identify the
+  partner, set up, verify, parse only their slices, package results).
 - Spec (authoritative, Hebrew): `project.pdf`. Paper: `DoronDubnov_revised.pdf`. Both are local copies in the
   repo root, NOT in git (copyright, D-034); partners use their own course copies. Partner guide: `docs/PARTNERS.md`.
 - Decisions log: `docs/decisions.md`. Roadmap: `docs/roadmap.md`. Corpus facts: `docs/corpus_report.md`.
@@ -78,12 +102,34 @@ Ori explicitly opens them.
   **A partner's part ends when they send `data/outbox/<name>`: partners never compute statistics.**
 - **On ORI's computer (`data/team/identity.json` = ori):** M5 is COMPLETE (all 31 slices merged and registered,
   D-049) and the final M6 statistics exist (2026-11-16). `start`/`status` there = a read-only status check
-  (31/31, registry, final stats; M7 review pending). The rule below still applies on Efrat's and Adi's computers.
-- **If the person's whole message is "start"** (or "go", "continue", "status"): it means *run or check
-  this computer's share of M5*. Read `PARTNER_START.md` and follow it from §2: identity from
-  `data/team/identity.json`; skip every section whose "Skip if" holds; then §10b (`git pull`, `uv sync`,
-  `work --status`, and `work --detach` if not started/stopped), or §11 if complete. Never run it in
-  the foreground; never run anyone else's slices.
+  (31/31, registry, final stats; M7 review pending; §5–§6 CHECKPOINT 1 done). The two rules below apply on
+  Efrat's and Adi's computers.
+- **On EFRAT's computer (`data/team/identity.json` = efrat): §6 is AUTHORIZED, staged as in
+  `docs/EFRAT_SECTION_6.md` §9** (D-055, D-056).
+  - Her M5 share is complete; never re-run it.
+  - **If her whole message is "start"** (or "go", "continue", "status"), or she asks about §6: read
+    `docs/EFRAT_SECTION_6.md` and follow its §9 "Start here".
+    - First `git status`: if tracked files are modified, STOP and report; never discard them.
+    - Then `git pull`, `uv sync`, tests, `whoami`.
+    - Then report which stage is unlocked (after CHECKPOINT 1 / after R1 / after R2 = tag `s56-v1`) and do only the
+      steps of that stage.
+  - Plan Mode for non-trivial steps.
+  - Obey the STOP rules in §12:
+    - no own extractor or frame rules;
+    - no BHSA;
+    - no paid API;
+    - no `config/` edits;
+    - no AI pre-labelling of gold;
+    - no git commits.
+  - Results go in `data/outbox/efrat-s6/`.
+- **If the person's whole message is "start"** (or "go", "continue", "status") **on ADI's computer** (or on a fresh
+  partner setup): until CHECKPOINT 2 it still means *run or check this computer's share of M5*.
+  - Read `PARTNER_START.md` and follow it from §2: identity from `data/team/identity.json`; skip every section whose
+    "Skip if" holds.
+  - Then §10b (`git pull`, `uv sync`, `work --status`, and `work --detach` if not started/stopped), or §11 if
+    complete. Adi's share is complete, so it is a status check.
+  - Never run it in the foreground; never run anyone else's slices.
+  - At CHECKPOINT 2 this rule changes to Adi's §5 stage-2 workflow (`docs/ADI_SECTION_5.md`).
 - Execution guide for Claude Code: **`PARTNER_START.md`** (single source of the tested commands);
   overview: `docs/PARTNERS.md`; who parses what: `docs/WORK_PLAN.md` (generated).
   Slash commands: `/partner-setup`, `/partner-parse`, `/merge-results` (Ori).
@@ -282,8 +328,18 @@ notebooks/     exploration only — never pipeline logic
       additional statistics (§4 R7) come back as `analyses/` + REPORT.md for Ori's review.
 - [ ] M7 review checkpoint (STOP): Ori + partners review the §4 results and `docs/stats_analysis.md` (wording
       not yet approved). D-052 (2026-11-17): disk cleanup of duplicates only. 2026-11-19: §5–§6 workflow agreed (Ori leads §5,
-      Adi runs part of stage 2 via `docs/ADI_SECTION_5.md`; Efrat: §6 via `docs/EFRAT_SECTION_6.md`; §7 out of scope;
-      checkpoint 1 = methodology approved → Efrat's doc; checkpoint 2 = Mikra validated → Adi's workflow); next = plan §5 + §6 (HANDOFF "★ Next session"). Assignment status per project.pdf section: `docs/roadmap.md` (table at the top).
-      Remaining after M7, only when Ori opens it: §5 (Mikra first: verb lexicon from the paper → frames →
-      preposition identity; roadmap Part 2 R1–R3), §6, §7, §8, §1 background summaries, §9 report, §10 submission;
-      §4 R7 extras deferred (Part B).
+      Adi runs part of stage 2 via `docs/ADI_SECTION_5.md`; Efrat: §6 via `docs/EFRAT_SECTION_6.md`; §7 out of scope).
+      Assignment status per project.pdf section: `docs/roadmap.md` (table at the top).
+- [x] **§5–§6 CHECKPOINT 1 (2026-11-19).**
+  - Shared methodology `S56-v1` approved (D-053 local-first methodology; D-054 local role resolver, no paid API;
+    D-055 §6 = Modern, all verbs, D-051 package, no BHSA in §6; D-056 interfaces, releases, transfers, balanced
+    stage-2 split decided at CHECKPOINT 2).
+  - `docs/EFRAT_SECTION_6.md` (the self-contained handoff, answering Efrat's Claude Code's six points) committed
+    and pushed.
+- [ ] **Stage 3 (next; Plan Mode first; needs Ori's approval):**
+  - §5 on Mikra: R1 (lexicon, guideline, gold sampler, noun lists), then the shared extractor, local resolver,
+    classes, identity and statistics, then Mikra validation (BHSA identification + human gold);
+  - then **CHECKPOINT 2**: tag `s56-v1`, decide the balanced Ori/Adi split, build and test Adi's M5-style workflow,
+    `docs/ADI_SECTION_5.md`, Adi's `start`.
+  - Still closed until Ori opens them: §7, the rest of §8, §4 R7 extras (Part B); later §1 summaries, §9 report,
+    §10 submission.

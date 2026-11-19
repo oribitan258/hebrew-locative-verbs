@@ -1,5 +1,9 @@
 # PARTNER_START: the single entry point for Claude Code on a team member's computer
 
+> **Assignment §6 (Efrat), since 2026-11-19: do NOT use this file for §6.** Follow `docs/EFRAT_SECTION_6.md`
+> (its §9 "Start here"). This file is for the M5 parse share, and Efrat's share is complete. Adi's §5 stage-2
+> workflow will get its own document (`docs/ADI_SECTION_5.md`) at CHECKPOINT 2.
+
 **This file is an instruction script for Claude Code.** The person cloned the repository, opened it
 in VS Code with Claude Code, and asked you to follow this file. Execute it top to bottom. It:
 

@@ -1,11 +1,103 @@
-# Session Handoff: §2–§4 CLOSED → §5–§6 workflow AGREED → next session PLANS §5 + §6 (Plan Mode)
+# Session Handoff: §5–§6 CHECKPOINT 1 REACHED → next session PLANS stage 3 (§5 on Mikra, Plan Mode)
 
-> **Two mandatory checkpoints (Ori, 2026-11-19):** **CHECKPOINT 1** = shared methodology approved → STOP, complete
-> `docs/EFRAT_SECTION_6.md`, tell Ori it is ready for Efrat. **CHECKPOINT 2** = §5 validated on Mikra → STOP, split
-> stage 2 Ori/Adi, build + test Adi's M5-style workflow, write `docs/ADI_SECTION_5.md`, update CLAUDE.md for her
-> `start`, tell Ori it is ready for Adi. Nothing proceeds past a checkpoint without Ori's explicit approval.
+> **Two mandatory checkpoints (Ori, 2026-11-19):**
+> - **CHECKPOINT 1** = shared methodology approved → STOP, complete `docs/EFRAT_SECTION_6.md`, tell Ori it is ready
+>   for Efrat. **DONE 2026-11-19.**
+> - **CHECKPOINT 2** = §5 validated on Mikra → STOP, then:
+>   - decide the balanced Ori/Adi split of stage 2;
+>   - build and test Adi's M5-style workflow;
+>   - write `docs/ADI_SECTION_5.md`;
+>   - update CLAUDE.md for her `start`;
+>   - tell Ori it is ready for Adi.
+>
+> Nothing proceeds past a checkpoint without Ori's explicit approval.
 
-## ★ Next session: plan §5 and §6 (fresh session, Plan Mode)
+## ★ CHECKPOINT 1 — done 2026-11-19
+
+**What was approved.**
+- Ori approved the shared methodology **`S56-v1`** (plan v3, after two review rounds), recorded as D-053–D-056.
+- The methodology is written in full in **[EFRAT_SECTION_6.md](EFRAT_SECTION_6.md)** §5. It is normative for Ori,
+  Adi and Efrat.
+- The same document is Efrat's self-contained §6 handoff.
+
+**Key decisions.**
+- **Local-first, no paid API (D-054).**
+  - Roles (Locatum vs Location) come from a local resolver: the paper's structural rules, noun types (human-reviewed;
+    Claude Code may propose them) and complementary inference.
+  - Variants R0, R1, R2 are chosen on the **validation** gold; the **test** gold is reported once.
+  - The instance's own preposition is never used.
+  - An external LLM would need Ori's separate approval.
+- **Find all (D-053).** Every occurrence is found by Dicta lemma OR word form, never sampled. Identification is
+  measured against BHSA on Mikra only.
+- **No forced classifications (D-053).**
+  - Instance outcomes: A / B / NON_LOCATIVE / AMBIGUOUS / UNDETERMINED.
+  - Verb classes: A/B, A, B, NON_LOCATIVE, AMBIGUOUS, INSUFFICIENT_EVIDENCE.
+  - k = 1 is the paper's criterion, with sensitivity at k = 2 and 3.
+- **Identity = the paper's exact claim (D-053).** Each A/B verb gets IDENTITY_ATTESTED, COUNTEREXAMPLE or
+  NOT_TESTABLE. Distributions are descriptive only.
+- **§6 (D-055).**
+  - Corpus: Modern, all 27 slices; every verb lemma classified, with no cut-off.
+  - Data: the D-051 package.
+  - No BHSA in §6.
+- **Interfaces and logistics (D-056).**
+  - Interfaces I1–I5 (tables, manifests, gold format).
+  - Releases: **R1** (lexicon, guideline, sampler, noun lists) early in stage 3; **R2 = tag `s56-v1`** at
+    CHECKPOINT 2.
+  - Transfers: outboxes, never git.
+  - Stage 2: split by corpus, balanced, in parallel, decided at CHECKPOINT 2.
+- **Efrat's Claude Code feedback** (six points) is answered in EFRAT_SECTION_6.md §11.
+
+**Measured this session (read-only; plan context).**
+- **Verb-lemma blanks:** Mikra 14.7%, Modern 5.3%.
+- **The paper's own lists:** fn 33 Simple-A lists 46 names against "45" in its text, so A totals 96 against 95.
+- **Paper-verb instances with an object:** Mikra 4.9k, Hazal 40k, Medieval 17k, Haskala 36k, Modern 659k.
+- **Pronoun-only objects:** 15–22%.
+- **Modern:** 18,626 verb lemma types.
+
+The details are in EFRAT_SECTION_6.md §13.
+
+**Ori's actions pending.**
+1. Send Efrat the repo instruction (she runs `git pull`).
+2. Send her the D-051 package Drive link + `.sha256`, if not done yet.
+
+## ★ Next session: plan stage 3 = §5 on Mikra (fresh session, Plan Mode, on Ori's computer)
+
+**Read first:** this file, EFRAT_SECTION_6.md (§3–§7), `project.pdf` §5 and the paper.
+
+**Plan, for Ori's approval:**
+1. **R1:**
+   - transcribe the lexicon (`config/locative_verbs.yaml`; document the 95/96 issue; table-only and §8 MH entries
+     flagged);
+   - annotation guideline;
+   - deterministic gold sampler (repo and package sources);
+   - frequent-argument-noun lists per corpus;
+   - `hebloc loc lexicon check`.
+
+   Then push and tell Efrat that R1 is available.
+2. **Shared code:**
+   - extractor (lexicon and all-verbs modes, `--source repo|package`, identical rows);
+   - noun types (Ori labels the historical corpora, with Claude Code proposing and Ori deciding; Efrat labels
+     Modern);
+   - resolver variants R0, R1, R2;
+   - classes; identity; statistics; manifests; tests.
+3. **Mikra validation:**
+   - identification vs BHSA;
+   - Ori annotates the human gold (400 + the paper's examples; dev / validation / test);
+   - variant selection on validation;
+   - test scored once;
+   - paper-example replication;
+   - determinism and trace checks.
+4. **CHECKPOINT 2 report → STOP.**
+
+**Reuse:**
+- the `stats/metrics.py` parent-array code;
+- `store.runs.canonical_runs`;
+- `pilot/bhsa.py` (`verse_words_index`, `align`);
+- for Adi later: `team/identity.py` and `team/work.py` (lock, detach, outbox, `DELIVERY.json`).
+
+BHSA phrase functions are not stored locally; fetching them needs Ori's approval.
+
+## Superseded: the planning instructions of 2026-11-19 (kept for history)
 
 **Ori's instruction (2026-11-19).**
 - **Scope:** Ori has lifted the M0–M7 restriction for **planning §5 and §6** (CLAUDE.md "CURRENT SCOPE").
@@ -20,9 +112,9 @@
 
 | Who | What | Status |
 |---|---|---|
-| **Ori** | **Leads §5.** Stage 1 = Mikra, implemented and validated by Ori first; stage 2 = the other four corpora (find the locative verbs, classify them automatically by syntactic structure into the paper's categories, find the preposition in each structure and test identity, statistics, comparison with the paper). | Planning next session |
-| **Adi** | **Assists §5 stage 2**: the remaining corpora are divided between Ori and Adi. She runs her assigned part on her computer with a workflow prepared exactly like M5 (see below). | After Ori validates Mikra |
-| **Efrat** | **Responsible for all of §6**, on her computer: in one corpus, classify all verbs by the paper's categories; find verbs that, like locative verbs, appear in both structures; characterise them. She reuses the shared methodology and code; she does not invent her own frame definitions or extractor. | **Waiting** for the shared methodology |
+| **Ori** | **Leads §5.** Stage 1 = Mikra, implemented and validated by Ori first; stage 2 = the other four corpora (find the locative verbs, classify them automatically by syntactic structure into the paper's categories, find the preposition in each structure and test identity, statistics, comparison with the paper). | Methodology approved (CHECKPOINT 1); next = plan stage 3 (Mikra) |
+| **Adi** | **Assists §5 stage 2**: the remaining corpora are divided between Ori and Adi. She runs her assigned part on her computer with a workflow prepared exactly like M5 (see below). | After Ori validates Mikra; balanced split by corpus, decided at CHECKPOINT 2 (D-056) |
+| **Efrat** | **Responsible for all of §6**, on her computer: in one corpus, classify all verbs by the paper's categories; find verbs that, like locative verbs, appear in both structures; characterise them. She reuses the shared methodology and code; she does not invent her own frame definitions or extractor. | **Handoff ready** (`docs/EFRAT_SECTION_6.md`, corpus = Modern, D-055); preparation now, runs after R2 |
 | — | §7 (classifiers) | **Out of scope** |
 
 **Shared methodology → `docs/EFRAT_SECTION_6.md`.** §5 and §6 use **one** consistent research methodology. It is
@@ -60,7 +152,9 @@ to her Claude Code, which plans and executes §6 consistently with our approach.
 
 **Stage sequence (each stage = its own session, ending at Ori's approval).**
 1. **Plan** §5 + §6 (Plan Mode): one shared methodology, plus Adi's stage-2 workflow and Efrat's §6 handoff.
-2. **CHECKPOINT 1 — methodology approved → STOP:** complete `docs/EFRAT_SECTION_6.md`, tell Ori it is ready for Efrat.
+   **DONE 2026-11-19.**
+2. **CHECKPOINT 1 — methodology approved → STOP:** complete `docs/EFRAT_SECTION_6.md`, tell Ori it is ready for
+   Efrat. **DONE 2026-11-19** (D-053–D-056).
 3. **Ori implements and validates §5 on Mikra** (methodology understood, correctness verified).
 4. **CHECKPOINT 2 — Mikra validated → STOP:** split the remaining corpora between Ori and Adi; build and test Adi's distributed
    workflow; write `docs/ADI_SECTION_5.md`; update CLAUDE.md for her `start`. Tell Ori it is ready for Adi.
@@ -82,7 +176,15 @@ lexicon entry or an extraction bug).
 - If Adi runs corpora, she starts only after Mikra is validated, uses the same git commit, and her output is
   verified on return. The official statistics are computed centrally, once (the D-040 principle).
 
-**Open items for the planning session (not decided).**
+**Open items for the planning session — RESOLVED at CHECKPOINT 1 (D-053–D-056):**
+- **Adi's corpora:** decided at CHECKPOINT 2. Split by corpus, balanced, in parallel. Adi's data: Haskala + 9 Modern
+  slices; missing slices arrive as bundles.
+- **Partner code:** goes in the outbox; Ori reviews and commits it.
+- **Efrat's data:** the D-051 package; Ori sends the link.
+- **Shared code:** `--source repo|package`.
+- **§6 corpus:** Modern.
+
+The original list follows.
 - Which corpora/slices go to Adi vs Ori in stage 2, and how Adi receives the token data for them (she has only
   her own Modern slices: bundles, a package subset, or the D-051 package).
 - How partner code (if any) enters the repo, since partners cannot push: fork + pull request, or a return folder.

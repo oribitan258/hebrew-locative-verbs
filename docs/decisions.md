@@ -931,3 +931,102 @@ Design: [m6_design.md](m6_design.md).
   - `data/share/hebloc-analysis-pack/` + zip until Efrat is done (`hebloc pack refresh` needs the folder; a
     rebuild takes about an hour);
   - `data/units_v1` (1 GB, superseded since M2.1) until a final cleanup at the end of the project.
+
+### D-053 · Shared §5–§6 research methodology `S56-v1` approved (2026-11-19) · accepted (Ori, CHECKPOINT 1)
+- *What.* One methodology for §5 (all corpora) and §6 (Modern), written in full in
+  [EFRAT_SECTION_6.md](EFRAT_SECTION_6.md) §5. That document is normative for Ori, Adi and Efrat.
+- *Lexicon.* A closed lexicon of the paper's class lists (§4.1, §5, §6.1, fn 33): one entry per (root, template).
+  - Table-only verbs and the §8 MH supplement are separate, flagged entries.
+  - Only Ori edits it.
+  - The paper's own discrepancy is documented: fn 33 lists 46 Simple-A verbs against the stated 45, so the A
+    lists total 96 against 95.
+- *Identification.* Every occurrence in every corpus, never sampled: Dicta lemma OR word form (the fallback for
+  blank or wrong lemmas). Measured against BHSA on Mikra only.
+- *Extraction.* Automatic, from Dicta's trees.
+  - The direct object: obj, object suffix, or the passive subject.
+  - Every PP, with `p_exact` and `p_family` (the מ+X compounds count as the מן family, paper fn 22).
+  - Bare second NP (fn 13).
+  - The paper's pitfalls (fn 7, 13, 15, 22, 24) are flags, never filters.
+  - Rows are identical in lexicon and all-verbs modes.
+- *Instance outcomes.* A / B / NON_LOCATIVE (positive evidence only) / AMBIGUOUS / UNDETERMINED, always with a
+  reason code; never forced.
+- *Verb classes.* A/B, A, B, NON_LOCATIVE, AMBIGUOUS, INSUFFICIENT_EVIDENCE, in a fixed order of precedence.
+  - Primary k = 1 (the paper's attestation criterion), with sensitivity runs at k = 2 and 3.
+  - Thresholds are labels, never exclusions.
+- *Identity test = the paper's exact claim.* For each A/B verb: IDENTITY_ATTESTED, COUNTEREXAMPLE or NOT_TESTABLE.
+  - The paper's own allowances are not counted as counterexamples: fn 13, 15, 22.
+  - Distributions of preposition by frame are descriptive only.
+- *Validation.* Human-only gold with a dev / validation / test split.
+  - Mikra: 400 + the paper's examples (Ori). Modern: 400 (Efrat). 60 + 60 annotated by both, for κ. Hazal,
+    Medieval and Haskala: 150 test instances each.
+  - Choices are made on validation; the test set is scored once.
+- *Why.* `project.pdf` §5–§6 and the paper, reviewed by Ori in three rounds (plans v1–v3, 2026-11-19).
+
+### D-054 · Role resolution is local; no paid external API (2026-11-19) · accepted (Ori)
+- *Decision.* Locatum/Location roles are decided by a **local** resolver, using the existing Dicta annotations and
+  local code:
+  - the paper's structural rules;
+  - noun types (`config/noun_types.yaml`, frozen at R2);
+  - complementary inference.
+- *Fixed variants:* R0, R1 (+ location-likeness induced from the corpus, using intransitive non-lexicon verbs
+  only), R2 (+ a pronoun antecedent heuristic).
+- *Selection on the validation gold:* macro-F1 over Frame A/B. Non-A/B outputs count as misses. Within 1 point,
+  or not significant by McNemar's test, the simpler variant wins. The test gold is reported once.
+- *Rule zero:* the instance's own preposition is never used to decide its roles.
+- *AI tools.*
+  - No paid external API (no LLM API). An external LLM could only be added later, as an extra resolver, after
+    Ori's **separate** approval.
+  - Each person's existing Claude Code may be used only for human-reviewed steps: proposing noun types (a human
+    accepts or corrects every row), code and docs, and helping a human read deciding instances.
+  - Never for gold labels or run-time labelling. These uses are disclosed in the report.
+- *Supersedes* the v1/v2 drafts of this session, which proposed a paid LLM API resolver. Ori did not approve paid
+  API use.
+
+### D-055 · §6 corpus = Modern; all verbs; data = D-051 package; no BHSA in §6 (2026-11-19) · accepted (Ori)
+- *Corpus.* §6 runs on all of Modern: all 27 slices and all genres. Full view primary, curated view secondary,
+  per-genre tables.
+- *Every verb lemma is classified*, with no frequency cut-off (about 18,600 types). Blank-lemma tokens go through
+  the form fallback, and the rest form an UNLEMMATIZED bucket. A sensitivity view covers verbs with ≥ 20 tokens.
+- *Non-paper verbs* count as locative when at least one full locative frame is attested (the paper's fn 5
+  criterion).
+- *Verbs in both structures:* a role-free swap test, plus local roles, plus Efrat's manual review. They are
+  characterized by the paper's own criteria.
+- *Data.* Efrat's own share (Medieval + 8 Modern slices) is not enough. She uses the D-051 analysis package (all
+  corpora, lossless-verified), sent privately by Ori and checked with `hebpack.verify`. It is a data source only;
+  §6 work happens in her repo clone.
+- *BHSA is not used in §6.* It covers only the Bible, and Modern lemmas are reliable enough (5.3% blank; spelling
+  usually shows the binyan). BHSA remains Ori's Mikra validation tool.
+- *Answers.* This answers points 2 and 3 of Efrat's Claude Code (EFRAT_SECTION_6.md §11).
+
+### D-056 · Interfaces, releases, transfers and the stage-2 rule (2026-11-19) · accepted (Ori)
+- *Interfaces.* I1–I5, fixed now (EFRAT_SECTION_6.md §7):
+  - the configuration files;
+  - the `hebloc loc` commands (names provisional until R1/R2), with `--source repo|package` giving identical
+    output;
+  - the tables `instances`, `arguments`, `roles`, `verb_profiles`, `verb_classes`, `swap_candidates`;
+  - the gold format;
+  - `manifest.json` with methodology, tag, hashes, resolver and source.
+- *Releases.* Only Ori pushes.
+  - **R1** (early stage 3): lexicon, annotation guideline, deterministic gold sampler, frequent-argument-noun lists.
+  - **R2 = tag `s56-v1`** at CHECKPOINT 2: the frozen, Mikra-validated code plus the noun types.
+  - Adi and Efrat run only R2.
+- *Transfers.*
+  - Code and docs by git.
+  - Data never by git: outboxes `data/outbox/efrat-s6/` and `data/outbox/adi-s5/` by Drive, OneDrive or USB.
+  - Gold delivered as ids + labels only (D-042).
+  - Partner code is reviewed and committed by Ori.
+- *Cross-checks:* repo input = package input; Efrat's Modern paper-verb rows are byte-identical to stage 2's; Ori
+  recomputes at least one delivered unit.
+- *Stage 2 (§5).* After Mikra is validated, Ori and Adi divide the remaining corpora **by corpus**, with a
+  reasonably **balanced workload**, and work **in parallel**.
+  - Workload is compute + 150 test annotations + audits per corpus.
+  - **The split is decided at CHECKPOINT 2**, from the time Mikra actually took.
+  - Options recorded: (a) Adi = Haskala + Modern, Ori = Hazal + Medieval; (b) Adi = Medieval + Modern, Ori =
+    Hazal + Haskala.
+  - Adi works in her existing repo clone with an M5-style workflow: detached, resumable `start`, outbox, verified
+    merge.
+  - Her inventory is Haskala + 9 Modern slices (knesset, medical, literary, haaretz b02, b03, b14, b16, b17, b19).
+    Missing slices reach her as verified bundles.
+  - Ori merges and computes the official §5 statistics once, centrally (D-040).
+- *Efrat's CLAUDE.md branch.* §6 is authorized as staged in EFRAT_SECTION_6.md §9, and her `start` points there.
+  Adi's `start` is unchanged until CHECKPOINT 2.
