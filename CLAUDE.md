@@ -16,7 +16,12 @@ Ori explicitly opens them.
   **Next session: PLAN §5 and §6 in Plan Mode**, strictly following `project.pdf` and the paper.
   Read HANDOFF "★ Next session" and "★ Agreed §5–§6 workflow" first. `project.pdf` is the source of truth.
 - **Agreed §5–§6 workflow (Ori, 2026-11-19; details in HANDOFF):**
-  - **Ori leads §5**: Mikra first. **Adi assists later** on the remaining corpora (stage 2).
+  - **Ori leads §5**: Ori implements and validates Mikra first. Then the remaining corpora are divided between Ori
+    and **Adi** (stage 2). Adi's workflow is prepared exactly like M5: assignments, data, automated detached
+    execution, validation, outbox packaging, verified merge on Ori's computer, and central statistics. She uses her
+    EXISTING folder and repo clone (no separate project, no duplicate code). Her Claude Code handoff is
+    `docs/ADI_SECTION_5.md` (proposed name), and CLAUDE.md will be updated so that she types `start`. This is
+    written only after Mikra is validated (**CHECKPOINT 2**: STOP, tell Ori it is ready for Adi).
   - **Efrat is responsible for §6**, on her computer. She is WAITING for the shared research methodology and
     reuses it (no own frame definitions or extractor).
   - §7 is out of scope.
@@ -24,8 +29,10 @@ Ori explicitly opens them.
     Claude Code): exact §5/§6 requirements; division of work and dependencies; approved methodology, frame
     definitions, classification rules, extraction logic and decisions; how to reuse it and the shared code;
     required data, expected outputs and integration with the main project.
-  - **MANDATORY CHECKPOINT:** once Ori approves the shared methodology, STOP, complete `docs/EFRAT_SECTION_6.md`
+  - **MANDATORY CHECKPOINT 1:** once Ori approves the shared methodology, STOP, complete `docs/EFRAT_SECTION_6.md`
     and tell Ori explicitly that it is ready to transfer to Efrat. No implementation until Ori approves the next stage.
+  - **Compatibility:** Ori, Adi and Efrat use the same methodology, the same pinned code version and the same
+    output schemas and manifests.
   - **Session management:** separate sessions, one stage at a time, each ending at an explicit approval
     checkpoint. At the end of each stage, update the docs (CLAUDE.md, HANDOFF, roadmap, decisions) and memory:
     what is complete, what was decided, what comes next.
@@ -275,7 +282,8 @@ notebooks/     exploration only — never pipeline logic
       additional statistics (§4 R7) come back as `analyses/` + REPORT.md for Ori's review.
 - [ ] M7 review checkpoint (STOP): Ori + partners review the §4 results and `docs/stats_analysis.md` (wording
       not yet approved). D-052 (2026-11-17): disk cleanup of duplicates only. 2026-11-19: §5–§6 workflow agreed (Ori leads §5,
-      Adi assists stage 2; Efrat: §6 via `docs/EFRAT_SECTION_6.md`; §7 out of scope); next = plan §5 + §6 (HANDOFF "★ Next session"). Assignment status per project.pdf section: `docs/roadmap.md` (table at the top).
+      Adi runs part of stage 2 via `docs/ADI_SECTION_5.md`; Efrat: §6 via `docs/EFRAT_SECTION_6.md`; §7 out of scope;
+      checkpoint 1 = methodology approved → Efrat's doc; checkpoint 2 = Mikra validated → Adi's workflow); next = plan §5 + §6 (HANDOFF "★ Next session"). Assignment status per project.pdf section: `docs/roadmap.md` (table at the top).
       Remaining after M7, only when Ori opens it: §5 (Mikra first: verb lexicon from the paper → frames →
       preposition identity; roadmap Part 2 R1–R3), §6, §7, §8, §1 background summaries, §9 report, §10 submission;
       §4 R7 extras deferred (Part B).

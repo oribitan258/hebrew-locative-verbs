@@ -1,11 +1,17 @@
 # Session Handoff: §2–§4 CLOSED → §5–§6 workflow AGREED → next session PLANS §5 + §6 (Plan Mode)
 
+> **Two mandatory checkpoints (Ori, 2026-11-19):** **CHECKPOINT 1** = shared methodology approved → STOP, complete
+> `docs/EFRAT_SECTION_6.md`, tell Ori it is ready for Efrat. **CHECKPOINT 2** = §5 validated on Mikra → STOP, split
+> stage 2 Ori/Adi, build + test Adi's M5-style workflow, write `docs/ADI_SECTION_5.md`, update CLAUDE.md for her
+> `start`, tell Ori it is ready for Adi. Nothing proceeds past a checkpoint without Ori's explicit approval.
+
 ## ★ Next session: plan §5 and §6 (fresh session, Plan Mode)
 
 **Ori's instruction (2026-11-19).**
 - **Scope:** Ori has lifted the M0–M7 restriction for **planning §5 and §6** (CLAUDE.md "CURRENT SCOPE").
   Implementation of anything still needs Ori's explicit approval.
-- Plan §5 (Mikra first) and §6 **strictly following `project.pdf` and the paper** (`DoronDubnov_revised.pdf`).
+- Plan §5 (Mikra first, then stage 2 including **Adi's distributed workflow**) and §6 (**Efrat's handoff**)
+  **strictly following `project.pdf` and the paper** (`DoronDubnov_revised.pdf`).
   Where `docs/roadmap.md` Part 2 differs, the PDF and the paper win.
 - **Plan Mode.** The goal of this stage is **one shared research methodology** for §5 and §6, approved by Ori.
 - The division of work below is agreed. Do not reopen it. Record any new question as an open item.
@@ -14,8 +20,8 @@
 
 | Who | What | Status |
 |---|---|---|
-| **Ori** | **Leads §5.** Stage 1 = Mikra; stage 2 = the other four corpora (find the locative verbs, classify them automatically by syntactic structure into the paper's categories, find the preposition in each structure and test identity, statistics, comparison with the paper). | Planning next session |
-| **Adi** | **Assists §5 later**, on the remaining corpora (stage 2). Ori prepares her work, as in the M5 Dicta workflow. | After stage 1 |
+| **Ori** | **Leads §5.** Stage 1 = Mikra, implemented and validated by Ori first; stage 2 = the other four corpora (find the locative verbs, classify them automatically by syntactic structure into the paper's categories, find the preposition in each structure and test identity, statistics, comparison with the paper). | Planning next session |
+| **Adi** | **Assists §5 stage 2**: the remaining corpora are divided between Ori and Adi. She runs her assigned part on her computer with a workflow prepared exactly like M5 (see below). | After Ori validates Mikra |
 | **Efrat** | **Responsible for all of §6**, on her computer: in one corpus, classify all verbs by the paper's categories; find verbs that, like locative verbs, appear in both structures; characterise them. She reuses the shared methodology and code; she does not invent her own frame definitions or extractor. | **Waiting** for the shared methodology |
 | — | §7 (classifiers) | **Out of scope** |
 
@@ -30,10 +36,35 @@ to her Claude Code, which plans and executes §6 consistently with our approach.
 5. the required data (repo or D-051 package; how to verify it), the expected outputs, and how they integrate
    with the main project (what she returns to Ori, and how: never git for data).
 
-**MANDATORY CHECKPOINT (STOP).** As soon as Ori approves the shared research methodology:
+**MANDATORY CHECKPOINT 1 (STOP).** As soon as Ori approves the shared research methodology:
 - STOP. Complete `docs/EFRAT_SECTION_6.md`.
 - Tell Ori explicitly that it is **ready to transfer to Efrat**.
 - Do **not** continue to implementation until Ori approves the next stage.
+
+**Adi's part of §5 (stage 2) → `docs/ADI_SECTION_5.md` (proposed name; not created yet).** Added by Ori 2026-11-19.
+- Adi's workflow is prepared **exactly like the M5 distributed Dicta workflow**:
+  - clear slice assignments;
+  - the required data and how she gets and verifies it;
+  - automated, detached, resumable execution;
+  - validation checks;
+  - result packaging into an outbox folder sent by Drive/OneDrive/USB, never git;
+  - integration on Ori's computer: a verified merge, then the official statistics computed centrally once
+    (the D-040 principle).
+- Adi uses her **existing project folder and repository clone** (`git pull`, `uv sync`). No separate project and
+  no duplicate implementation: she runs the same `hebloc` code as Ori, at the same pinned git commit.
+- A dedicated, self-contained Markdown handoff for her Claude Code (`docs/ADI_SECTION_5.md`). **CLAUDE.md is
+  updated so that Adi types `start`** and her Claude Code runs her assigned part of §5 (today, `start` on a
+  partner's computer still means the M5 share, which is complete; this changes when her §5 workflow is ready).
+- **Compatibility for everyone (Ori, Adi, Efrat):** same methodology, same code version (pinned commit), same
+  output schemas and manifests, so that results merge and compare without conversion.
+
+**Stage sequence (each stage = its own session, ending at Ori's approval).**
+1. **Plan** §5 + §6 (Plan Mode): one shared methodology, plus Adi's stage-2 workflow and Efrat's §6 handoff.
+2. **CHECKPOINT 1 — methodology approved → STOP:** complete `docs/EFRAT_SECTION_6.md`, tell Ori it is ready for Efrat.
+3. **Ori implements and validates §5 on Mikra** (methodology understood, correctness verified).
+4. **CHECKPOINT 2 — Mikra validated → STOP:** split the remaining corpora between Ori and Adi; build and test Adi's distributed
+   workflow; write `docs/ADI_SECTION_5.md`; update CLAUDE.md for her `start`. Tell Ori it is ready for Adi.
+5. **Stage 2 runs** (Ori + Adi) → verified merge → central §5 statistics and comparison with the paper.
 
 **Session management.** Work proceeds in **separate sessions, one stage at a time**, each ending at an explicit
 approval checkpoint. At the end of every stage, update the relevant docs (CLAUDE.md, this HANDOFF, roadmap,
@@ -52,6 +83,8 @@ lexicon entry or an extraction bug).
   verified on return. The official statistics are computed centrally, once (the D-040 principle).
 
 **Open items for the planning session (not decided).**
+- Which corpora/slices go to Adi vs Ori in stage 2, and how Adi receives the token data for them (she has only
+  her own Modern slices: bundles, a package subset, or the D-051 package).
 - How partner code (if any) enters the repo, since partners cannot push: fork + pull request, or a return folder.
 - Data access: Adi has no D-051 package (only her own Modern slices). Whether Efrat has downloaded hers is
   unknown: ask Ori.
