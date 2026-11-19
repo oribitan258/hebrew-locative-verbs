@@ -1,8 +1,8 @@
 # Project Roadmap — Hebrew Locative Verbs Across Periods
 
 Status: **living document.** Part 1 (M0–M6) is done; M7 review is pending. **Since 2026-11-19 Ori has opened
-the PLANNING of §5 on Mikra only** (Plan Mode, strictly per `project.pdf` and the paper). Implementation needs
-Ori's explicit approval of that plan. The rest of Part 2 stays closed until Ori explicitly opens it.
+the PLANNING of §5 and §6** (Plan Mode, strictly per `project.pdf` and the paper; goal: one shared research
+methodology). Implementation needs Ori's explicit approval. §7, §8 and §4 R7 stay closed until Ori opens them.
 
 Authoritative spec: `project.pdf` (Hebrew; local copy, not in git). Paper: Doron & Dubnov (2017), *The locative alternation
 in Biblical (and Modern) Hebrew*, `DoronDubnov_revised.pdf`.
@@ -40,8 +40,8 @@ Assignment stages (`project.pdf`):
 | §3 | Dicta parsing of every verse/sentence | **Done** (M5: all units of all five corpora, all of Modern, 31/31, D-049). Dicta has no construct state or binyan (§3.2 lists construct) |
 | §4 | Statistics R1–R6 | **Done, final** (2026-11-16); analysis draft awaits Ori's approval |
 | §4 | "Any additional statistic" (R7) | **In progress, exploratory (Efrat):** analysis package D-051; findings reviewed by Ori before the report. Part B of the main design stays deferred (D-046). Parser accuracy vs BHSA was done as an extra |
-| §5 | Test the claim (Mikra first, then the other corpora) | Not started (Part 2, R1–R3). **Owners: Ori + Adi** (agreed 2026-11-19). Next: plan stage 1 (Mikra) in Plan Mode |
-| §6 | Extend to all verbs in one corpus | Not started (R4). **Owner: Efrat**, on her computer, reusing the shared §5 components; starts after the §5 Mikra gate |
+| §5 | Test the claim (Mikra first, then the other corpora) | Not started (Part 2, R1–R3). **Ori leads; Adi assists stage 2** (agreed 2026-11-19). Next: plan in Plan Mode (shared methodology) |
+| §6 | Extend to all verbs in one corpus | Not started (R4). **Owner: Efrat**, on her computer; waiting for the shared methodology (`docs/EFRAT_SECTION_6.md`, after Ori approves it) |
 | §7 | Classifiers (lexical, morphological, syntactic and word2vec features; 10-fold CV; Acc/P/R/F1) | Not started (R5–R6). **Out of scope for now** (2026-11-19) |
 | §8 | LLM integration | Not started (R7) |
 | §9 | Report | Partial: only the §4 part exists (`stats_report.md` + draft `stats_analysis.md`) |
@@ -69,15 +69,16 @@ Detailed milestone definitions are kept in the approved plan and summarized here
 
 ## Part 2 — Long-term roadmap (only §5 stage-1 PLANNING is open; nothing here is approved for implementation)
 
-> **Agreed division of work for §5–§6 (Ori, 2026-11-19).** `project.pdf` and the paper win over R1–R4 below,
+> **Agreed workflow for §5–§6 (Ori, 2026-11-19).** `project.pdf` and the paper win over R1–R4 below,
 > which are an earlier, unapproved draft. Details: `docs/HANDOFF.md` "★ Agreed §5–§6 workflow".
-> - **§5 (R1–R3): Ori + Adi** develop the shared methodology and extraction code. Stage 1 is Mikra; stage 2 is
->   the other corpora.
-> - **§6 (R4): Efrat**, alone, on her computer. She reuses the shared §5 frame definitions and code, and starts
->   only after they are validated on Mikra.
-> - **Gate:** after the Mikra validation, STOP and notify Ori. Then write a standalone handoff document for Efrat
->   and Adi: methodology, frame definitions, shared code, data requirements, consistent reuse.
-> - **§7 (R5–R6):** out of scope for now.
+> - **§5 (R1–R3): Ori leads.** Stage 1 is Mikra. **Adi assists later** on the remaining corpora (stage 2).
+> - **§6 (R4): Efrat**, on her computer. She is waiting for the shared research methodology and reuses it.
+> - **One shared methodology** for both sections, written in `docs/EFRAT_SECTION_6.md` (self-contained, for
+>   Efrat's Claude Code).
+> - **Mandatory checkpoint:** once Ori approves the methodology, STOP, complete `docs/EFRAT_SECTION_6.md` and
+>   tell Ori it is ready to transfer. No implementation until Ori approves the next stage.
+> - **Sessions:** one stage per session, each ending at an approval checkpoint, with docs and memory updated.
+> - **§7 (R5–R6):** out of scope.
 
 ### R1 — Locative-verb lexicon (§5 prerequisite)
 - Transcribe the paper's verb classes into `config/locative_verbs.yaml`. For each verb: root/lemma, binyan, class (A, A/B, B), putting/removal, paper section and page, and example references with the expected frame.
