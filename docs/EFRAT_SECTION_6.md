@@ -1,6 +1,8 @@
 # EFRAT_SECTION_6.md — Efrat's §6 handoff and the shared §5–§6 methodology `S56-v1`
 
 **Status:** approved by Ori on 2026-11-19 (CHECKPOINT 1; decisions D-053 to D-056 in `docs/decisions.md`).
+**Release R1 (tag `s56-r1`) is out since 2026-11-20 (D-057): the §9.2 steps are now allowed.** R2 (`s56-v1`) is
+not out yet: nothing of §9.3.
 
 **Who reads this:** Efrat and her Claude Code, on Efrat's computer, in her clone of the public repo.
 
@@ -11,9 +13,9 @@ methodology that §5 and §6 share** (`S56-v1`). Ori, Adi and Efrat all follow i
 > 1. This document is **normative**. Do not invent your own frame definitions, extraction rules, role rules, verb
 >    classes or output formats. If something here seems wrong or missing, write it down as feedback for Ori
 >    (§12) and continue only with what is allowed.
-> 2. **What is allowed depends on the release present in the repo** (§9). Today only the "after CHECKPOINT 1"
->    steps are allowed. Never write or run frame extraction or classification code before release R2
->    (`s56-v1`) exists.
+> 2. **What is allowed depends on the release present in the repo** (§9). Since 2026-11-20 the "after R1" steps
+>    (§9.2) are allowed: `git tag -l s56-r1` must list the tag. Never write or run frame extraction or
+>    classification code before release R2 (`s56-v1`) exists.
 > 3. Work in **Plan Mode** for any non-trivial step. Present the plan to Efrat; she approves before you execute.
 > 4. **No paid external API** (no LLM API) may be used, for any purpose.
 > 5. Talk to Efrat in clear, simple English. Each step ends with a short summary: what was done, why, and how we
@@ -541,6 +543,45 @@ uv run python -m hebloc loc verify   <output folder>                # R2: re-has
 - The commands refuse to run unless the code is at tag `s56-v1` (clean tree) for R2 steps, and the
   lexicon and noun-type hashes match.
 
+### R1 release notes (tag `s56-r1`, 2026-11-20, D-057)
+
+**What R1 contains:**
+- the lexicon `config/locative_verbs.yaml` (210 entries) and its generated forms
+  `config/locative_verb_forms.yaml`;
+- the guideline `annotation/S56_GUIDELINE.md` (`S56-v1-g1`);
+- the gold sampler and gold check;
+- the noun lists.
+
+The full explanation is in [S56_R1.md](S56_R1.md).
+
+**R1 is a provisional infrastructure milestone.** Its verb identification has known limits (S56_R1.md §0.1). They
+are improved and validated on the dev gold before R2. For Efrat this changes nothing: she annotates what the sampler
+gives her, by hand, and judges each item from the sentence.
+
+**The exact R1 commands** (on Efrat's computer, `<package>` = the extracted D-051 package, e.g.
+`C:\hebloc\hebloc-analysis-pack`):
+```
+uv run python -m hebloc loc lexicon check
+uv run python -m hebloc loc gold sample --corpus modern --source package --package <package>
+uv run python -m hebloc loc gold sample --corpus mikra  --source package --package <package>
+uv run python -m hebloc loc nouns list  --corpus modern --source package --package <package>
+uv run python -m hebloc loc verify <output folder>
+uv run python -m hebloc loc gold check <sheet.csv> --sample <sample folder> --annotator efrat --out data/outbox/efrat-s6/gold
+```
+
+**Expected results** (anything else is a STOP, S1):
+
+| Command | Must give |
+|---|---|
+| `loc lexicon check` | OK |
+| Modern sample | `modern-r1b-5fbb5e22e7`, 400 items (dev 101 / validation 101 / test 198), manifest `frozen_check.items_match = true`. It takes about 10 minutes and 3.5 GB of memory |
+| Mikra sample | `mikra-r1b-1cd4ee9802`, 387 items, 60 of them agreement items, `items_match = true` |
+| Modern nouns | `modern-nouns-r1-826929982d`, 1,763 nouns to type |
+| `loc verify` | OK on each output folder |
+
+**The samples are frozen.** The sampler refuses to produce any other sample, so Ori and Efrat get the same ids.
+The outputs go to `data/loc/gold/<corpus>/<sample_id>/` and `data/loc/nouns/modern/<list_id>/`.
+
 ### I3 — Output tables (Parquet + CSV copies with a UTF-8 BOM)
 
 These are written under `data/loc/<corpus>/<output_id>/`.
@@ -699,22 +740,49 @@ Claude Code does these steps in order and shows Efrat each result:
 - annotating gold, until the R1 sampler exists;
 - any paid API.
 
-### 9.2 After R1 (Ori announces it; `git pull` brings it)
+### 9.2 After R1 (tag `s56-r1`; released 2026-11-20)
 
-1. Run `loc lexicon check`. Expect OK.
-2. **Modern gold.**
-   - Draw the Modern gold sample locally (`loc gold sample`). It is deterministic, so Ori can recreate the same
-     ids.
-   - Efrat annotates it by hand, following the guideline: **dev first, then validation, then test**.
-   - Deliver the dev and validation parts as early as possible: they help choose the resolver before CHECKPOINT 2.
-   - Also annotate the 60 Mikra agreement instances, drawn by the same sampler. Ori annotates 60 of the Modern
-     instances.
-3. **Modern noun types.**
-   - Run `loc nouns list` for Modern, which lists the frequent argument-head nouns.
-   - Claude Code proposes a type per noun in batches. Efrat accepts or corrects every row, so the reviewer is
-     Efrat.
-   - Deliver the result. Ori merges it into `config/noun_types.yaml` before the freeze at R2.
-4. Deliver both through `data/outbox/efrat-s6/` (§10).
+The exact commands and expected results are in §7, "R1 release notes". Claude Code does the steps in order and
+shows Efrat each result.
+
+1. **Update and check** (as in §9.1 step 1–2):
+   - `git status`: STOP if tracked files are modified (S9);
+   - `git pull`, `uv sync`, `uv run python -m pytest` (all pass), `whoami` = efrat;
+   - `git tag -l s56-r1` lists the tag;
+   - `loc lexicon check` = OK.
+2. **Verify the package** (`hebpack.verify` in the package folder, §8). If Efrat doesn't have it yet, STOP here and
+   ask Ori for the Drive link.
+3. **Draw the two samples from the package** (Modern, then Mikra), and run `loc verify` on both folders. The ids and
+   `items_match` must be as in §7.
+4. **Read the guideline** `annotation/S56_GUIDELINE.md` together with Efrat. Note §4.15: Modern **ישב.I** (יישב) is
+   kept for her sense judgement. "Populate / settle people in a place" is locative; "resolve a dispute" is
+   `NON_LOCATIVE`; when unsure, `locative = ?`. Never skip such items.
+5. **Modern gold: Efrat annotates by hand.**
+   - The sheets are `data/loc/gold/modern/modern-r1b-5fbb5e22e7/sheets/dev.csv`, then `validation.csv`, then
+     `test.csv`. Do them in that order.
+   - Open the sheets in Excel or VS Code. **Claude Code never fills, suggests or checks labels** (S8). It may
+     explain the guideline, run the check, and report the check's messages.
+   - After each sheet, run `loc gold check` (§7). Fix every `PROBLEM` and rerun until the sheet is clean. The
+     text-free file lands in `data/outbox/efrat-s6/gold/`.
+   - Time the first 20 items and tell Ori.
+   - **Deliver dev and validation early:** they are what Ori develops and chooses with before CHECKPOINT 2.
+6. **Mikra agreement items: Efrat annotates by hand.**
+   - The sheet is `data/loc/gold/mikra/mikra-r1b-1cd4ee9802/sheets/agreement.csv` (60 items).
+   - Same rules and the same check. Do not look at Ori's labels; Ori labels 60 of the Modern items blind.
+7. **Modern noun types.**
+   - The sheet is `data/loc/nouns/modern/modern-nouns-r1-826929982d/nouns_to_label.csv` (1,763 rows; the types
+     are defined in §5.4).
+   - Claude Code may fill `proposed_type` and `proposed_by = claude_code`, in batches of about 100 rows.
+   - **Efrat decides every row**: she writes `type` (LOCATION, LOCATUM, ANIMATE or UNCLEAR) and
+     `reviewed_by = efrat`, and adds `note` where useful.
+   - Save the finished file as `data/outbox/efrat-s6/noun_types_modern.csv`.
+8. **Deliver** (§10):
+   - `data/outbox/efrat-s6/` holds `gold/` and `noun_types_modern.csv`, plus a `DELIVERY.json` (who, when,
+     `git describe --tags --always`, every file with its sha256).
+   - Send the folder to Ori by Google Drive, OneDrive or USB. The sheets themselves stay local: they quote corpus
+     text.
+   - Partial deliveries are welcome: dev + validation + nouns first.
+9. **STOP** after delivering, and wait for R2. Nothing of §9.3 before Ori announces `s56-v1`.
 
 ### 9.3 After R2 = tag `s56-v1` (CHECKPOINT 2; Ori announces it)
 
@@ -794,7 +862,7 @@ these happens:
 
 | # | Situation |
 |---|---|
-| S1 | A failed check: tests, `hebpack.verify`, `loc lexicon check`, `loc verify`, a hash or tag mismatch, or a schema error. **Never work around a check.** |
+| S1 | A failed check: tests, `hebpack.verify`, `loc lexicon check`, `loc verify`, a hash or tag mismatch, a schema error, or a gold sample whose id or `items_match` differs from §7. **Never work around a check.** |
 | S2 | The code is not at the required release (R1 steps need R1; R2 steps need tag `s56-v1` with a clean tree) |
 | S3 | A step would edit `config/`, the lexicon, the noun types, `config/annotations.yaml` or anything in `corpora/`. Propose changes in the outbox instead. |
 | S4 | A step would create own frame definitions, extraction rules, role rules or classes. Write it down as feedback instead. |

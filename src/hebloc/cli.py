@@ -552,6 +552,137 @@ def _cmd_stats(args: argparse.Namespace) -> int:
     raise SystemExit(f"unknown stats action {args.action!r}")
 
 
+def _cmd_loc(args: argparse.Namespace) -> int:
+    """§5–§6 (S56-v1, docs/EFRAT_SECTION_6.md): release R1 commands."""
+    from pathlib import Path
+
+    import pyarrow as pa
+
+    from hebloc.loc import gold as G
+    from hebloc.loc import inventory as INV
+    from hebloc.loc import lexicon as L
+    from hebloc.loc import manifest as M
+    from hebloc.loc import nouns as N
+    from hebloc.loc.source import Source, SourceError
+    from hebloc.paths import CORPORA
+
+    group, action = args.loc_group, args.loc_action
+    try:
+        if group == "verify":
+            probs = M.verify(Path(args.target))
+            print("OK" if not probs else "\n".join(probs))
+            return 0 if not probs else 1
+        if group == "nouns" and action == "merge":
+            r = N.merge(Path(args.target), replace=args.replace)
+            _json(r)
+            return 0 if r["ok"] else 1
+        if group == "gold" and action == "check":
+            if not args.sample or not args.annotator:
+                print("REFUSED: gold check needs --sample <sample folder> and --annotator <name>")
+                return 2
+            out = Path(args.out) if args.out else Path("annotation") / "gold"
+            r = G.check_sheet(Path(args.target), Path(args.sample), args.annotator, out)
+            for p in r["problems"][:60]:
+                print("PROBLEM", p)
+            print(f"{'OK' if r['ok'] else 'NOT OK'}: {r['annotated']} annotated, {r['pending']} pending"
+                  + (f" -> {', '.join(r.get('written', []))}" if r.get("written") else ""))
+            return 0 if r["ok"] else 1
+        lex = L.load()
+        source = Source.make(args.source, args.package)
+        if group == "lexicon" and action == "inventory":
+            corpora = list(CORPORA) if args.corpus in (None, "all") else [args.corpus]
+            for c in corpora:
+                print(f"{c}: {INV.build(c, source)}")
+            return 0
+        if group == "lexicon" and action == "bhsa-eval":
+            from hebloc.loc import bhsa_eval as BE
+            if args.propose:
+                BE.write_mapping(BE.propose_mapping(lex))
+                print(f"wrote {BE.MAP_PATH} (review it before measuring)")
+                return 0
+            r = BE.run([x.strip() for x in args.configs.split(",") if x.strip()])
+            for k in ("V1", "V2-L", "V2", "R1"):
+                if k in r:
+                    x = r[k]
+                    print(f"{k}: precision {x['precision']}, recall {x['recall']}, F1 {x['f1']} "
+                          f"(truth {x['counts'].get('truth')}, verses {x['counts'].get('verses')})")
+            if "decision" in r:
+                print("decision:")
+                _json(r["decision"])
+            print(f"details: {BE.OUT_DIR}")
+            return 0
+        if group == "lexicon" and action == "forms":
+            st = M.require_clean(args.dev)
+            inv = INV.load()
+            missing = sorted(set(CORPORA) - set(inv["corpus"].to_pylist()))
+            if missing:
+                print(f"REFUSED: inventories missing for {missing} (run: hebloc loc lexicon inventory)")
+                return 2
+            r = L.write_forms(lex, inv, inventory_info={"corpora": list(CORPORA), "source": source.kind,
+                                                        "git_commit": st["git_commit"]})
+            print(f"wrote {L.FORMS_PATH} ({sum(s['kept'] for s in r['stats'].values())} forms, {len(r['stats'])} entries)")
+            return 0
+        if group == "lexicon" and action == "check":
+            probs = L.problems(lex) + L.count_problems(lex)
+            if L.forms_stale(lex):
+                probs.append("config/locative_verb_forms.yaml was generated from another version of the lexicon "
+                             "(Ori: hebloc loc lexicon forms)")
+            c = L.counts(lex)
+            print(f"lexicon_sha256 {lex.sha256}\n{c['n_entries']} entries; core totals {c['totals']} "
+                  f"(paper states {c['stated_totals']}); supplements {c['supplements']}")
+            for r in c["by_template"]:
+                note = "" if r["listed_in_paper"] == r["stated_in_paper"] else f"   (paper text says {r['stated_in_paper']})"
+                print(f"  {r['template']:10} {r['class']:4} {r['in_lexicon']:3} = listed {r['listed_in_paper']}{note}")
+            for d in lex.meta.get("discrepancies") or []:
+                print(f"  documented: {d['id']}")
+            if args.data or args.review:
+                inv = INV.load()
+                missing = sorted(set(CORPORA) - set(inv["corpus"].to_pylist()))
+                for m in missing:
+                    print(f"  building the verb inventory of {m} from {source.kind} ...")
+                    INV.build(m, source, progress=False)
+                inv = INV.load()
+                rep = L.data_report(lex, inv)
+                print(f"  lemma variants with zero frequency: {rep['zero_frequency_variants'] or 'none'}")
+                print(f"  near-miss lemmas to review: {len(rep['near_misses'])}")
+                from hebloc.loc import identify as ID
+
+                idx = ID.build_index(lex)
+                ex = L.paper_example_check(lex, source, lambda lm, h, u: ID.identify(idx, lm, h, u))
+                print(f"  paper references whose Mikra verse contains the entry: {sum(r['found'] for r in ex)}/{len(ex)} (information)")
+                if args.review:
+                    blockers = L.build_forms(lex, inv)["blockers"]
+                    M.write_csv(pa.Table.from_pylist(L.review_rows(lex, inv, ex, blockers)), Path(args.review))
+                    M.write_csv(pa.Table.from_pylist(rep["near_misses"]), Path(args.review).with_name(Path(args.review).stem + "_near_misses.csv"))
+                    M.write_csv(pa.Table.from_pylist(ex), Path(args.review).with_name(Path(args.review).stem + "_paper_refs.csv"))
+                    print(f"  review sheets -> {args.review} (+ _near_misses, _paper_refs)")
+            print("OK" if not probs else "PROBLEMS:\n  " + "\n  ".join(probs))
+            return 0 if not probs else 1
+        if not args.corpus or args.corpus not in CORPORA:
+            print(f"REFUSED: --corpus must be one of {', '.join(CORPORA)}")
+            return 2
+        if L.forms_stale(lex):
+            print("REFUSED: config/locative_verb_forms.yaml does not match the lexicon (Ori: hebloc loc lexicon forms)")
+            return 2
+        st = M.require_clean(args.dev)
+        if group == "gold" and action == "sample":
+            m = G.draw(args.corpus, source, lex, git=st, dev=args.dev, **({"out_root": Path(args.out)} if args.out else {}))
+            print(f"sample {m['sample_id']}: {m['n_items']} items {m['by_split']}; allocation {m['allocation']}; "
+                  f"shortfall {m['shortfall'] or 'none'}; agreement items {m['agreement_items']}")
+            print(f"-> {Path(args.out or G.GOLD_DIR) / args.corpus / m['sample_id']}  (sheets/ are LOCAL ONLY: never git)")
+            return 0
+        if group == "nouns" and action == "list":
+            m = N.list_nouns(args.corpus, source, lex, git=st, exclude_typed=args.exclude_typed,
+                             **({"out_root": Path(args.out)} if args.out else {}))
+            print(f"list {m['list_id']}: {m['n_to_label']} nouns to label ({m['n_included']} included of {m['n_lemmas']}; "
+                  f"coverage {m['coverage_of_included']:.1%} of {m['argument_tokens']:,} argument tokens)")
+            return 0
+    except (SourceError, L.LexiconError, G.GoldError, N.NounsError, M.ReleaseRefusal) as e:
+        print(f"REFUSED: {e}")
+        return 2
+    raise SystemExit(f"unknown loc command {group} {action}")
+
+
 def _cmd_merge(args: argparse.Namespace) -> int:
     from pathlib import Path
 
@@ -736,6 +867,32 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--raw-sample-shards", type=int, default=3,
                    help="analysis: random shards per corpus (besides all of Mikra) re-derived from Dicta's raw JSON")
     p.set_defaults(func=_cmd_pack)
+
+    p = sub.add_parser("loc", help="§5–§6 (S56-v1): lexicon | gold | nouns | verify (release R1; docs/EFRAT_SECTION_6.md).")
+    lsub = p.add_subparsers(dest="loc_group", required=True)
+    for name, actions, hlp in (("lexicon", ["check", "inventory", "forms", "bhsa-eval"], "the verb lexicon (forms, bhsa-eval: Ori only)"),
+                               ("gold", ["sample", "check"], "gold sampler / text-free check of a filled sheet"),
+                               ("nouns", ["list", "merge"], "frequent-argument-noun list / merge reviewed types (Ori only)")):
+        q = lsub.add_parser(name, help=hlp)
+        q.add_argument("loc_action", choices=actions)
+        q.add_argument("target", nargs="?", help="gold check: the filled sheet; nouns merge: the reviewed CSV")
+        q.add_argument("--corpus", default=None)
+        q.add_argument("--source", default="repo", choices=["repo", "package"])
+        q.add_argument("--package", default=None, help="--source package: the extracted D-051 package folder")
+        q.add_argument("--out", default=None, help="output root (default under data/loc/)")
+        q.add_argument("--dev", action="store_true", help="(Ori) allow a dirty tree for a development run (recorded)")
+        q.add_argument("--data", action="store_true", help="lexicon check: also check against Dicta's verb inventory")
+        q.add_argument("--review", default=None, help="lexicon check: write Ori's review sheet (CSV) here")
+        q.add_argument("--sample", default=None, help="gold check: the sample folder (data/loc/gold/<corpus>/<sample_id>)")
+        q.add_argument("--annotator", default=None, help="gold check: who annotated (e.g. ori, efrat)")
+        q.add_argument("--exclude-typed", action="store_true", help="nouns list: skip nouns already in config/noun_types.yaml")
+        q.add_argument("--replace", action="store_true", help="nouns merge: deliberately replace existing types")
+        q.add_argument("--propose", action="store_true", help="bhsa-eval: (re)write the proposed entry -> BHSA lexeme mapping")
+        q.add_argument("--configs", default="V1,V2-L,V2", help="bhsa-eval: configurations to measure (V1, V2-L, V2)")
+        q.set_defaults(func=_cmd_loc, loc_group=name)
+    q = lsub.add_parser("verify", help="re-hash an output folder against its manifest.json")
+    q.add_argument("target")
+    q.set_defaults(func=_cmd_loc, loc_group="verify", loc_action="verify")
 
     p = sub.add_parser("merge", help="Team (Ori): verify, restore and check partners' result folders/bundles.")
     p.add_argument("paths", nargs="*", help="folders (e.g. a partner's outbox folder) and/or bundle .zip files; "

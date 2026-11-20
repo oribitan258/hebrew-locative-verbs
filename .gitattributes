@@ -4,3 +4,5 @@
 *.parquet binary
 # Vendored model code is checksum-pinned (config/models.yaml): never let git rewrite its bytes
 src/hebloc/parse/dicta_code/Bert*.py -text
+# The lexicon's exact bytes are hashed (lexicon_sha256 -> gold sample_id, frozen at s56-r1, D-057): never rewrite them
+config/locative_verbs.yaml -text

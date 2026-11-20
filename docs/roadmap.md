@@ -6,7 +6,9 @@ Status: **living document.** Part 1 (M0–M6) is done; M7 review is pending.
 - **Approved:** the shared methodology **`S56-v1`** (D-053–D-056).
 - **Where it is written:** in full in [EFRAT_SECTION_6.md](EFRAT_SECTION_6.md) §5, which is normative and is also
   Efrat's §6 handoff.
-- **Next:** stage 3 = §5 on Mikra (plan first, in Plan Mode; implementation needs Ori's approval).
+- **Stage 3 = §5 on Mikra.** Its plan is approved. **Release R1 = tag `s56-r1` (2026-11-20, D-057)** is a
+  provisional infrastructure milestone: the lexicon, the guideline, the frozen gold samples and the noun lists.
+  Identification is improved and validated on the dev gold before R2. **Next: Phase B, only with Ori's approval.**
 - **No paid external API** (D-054).
 - **Still closed** until Ori opens them: §7, the rest of §8, and §4 R7.
 
@@ -46,7 +48,7 @@ Assignment stages (`project.pdf`):
 | §3 | Dicta parsing of every verse/sentence | **Done** (M5: all units of all five corpora, all of Modern, 31/31, D-049). Dicta has no construct state or binyan (§3.2 lists construct) |
 | §4 | Statistics R1–R6 | **Done, final** (2026-11-16); analysis draft awaits Ori's approval |
 | §4 | "Any additional statistic" (R7) | **In progress, exploratory (Efrat):** analysis package D-051; findings reviewed by Ori before the report. Part B of the main design stays deferred (D-046). Parser accuracy vs BHSA was done as an extra |
-| §5 | Test the claim (Mikra first, then the other corpora) | **Methodology approved** (`S56-v1`, CHECKPOINT 1, 2026-11-19). Ori leads; stage 3 = Mikra (R1 → code → validation → CHECKPOINT 2 = tag `s56-v1`); stage 2 = Ori ∥ Adi, split by corpus with a balanced workload, decided at CHECKPOINT 2, M5-style workflow. Next: plan stage 3 in Plan Mode |
+| §5 | Test the claim (Mikra first, then the other corpora) | **Methodology approved** (`S56-v1`, CHECKPOINT 1, 2026-11-19). Ori leads; stage 3 = Mikra (R1 → code → validation → CHECKPOINT 2 = tag `s56-v1`); stage 2 = Ori ∥ Adi, split by corpus with a balanced workload, decided at CHECKPOINT 2, M5-style workflow. **R1 released 2026-11-20 (`s56-r1`, provisional, D-057).** Next: Phase B (needs Ori's approval) |
 | §6 | Extend to all verbs in one corpus | **Handoff ready:** [EFRAT_SECTION_6.md](EFRAT_SECTION_6.md). Owner: Efrat; corpus = **Modern** (D-055). Preparation now; Modern gold and noun types after R1; runs after R2 |
 | §7 | Classifiers (lexical, morphological, syntactic and word2vec features; 10-fold CV; Acc/P/R/F1) | Not started (R5–R6). **Out of scope for now** (2026-11-19) |
 | §8 | LLM integration | Not started (R7). Policy (D-054): no paid external API without Ori's separate approval. Claude Code assists only human-reviewed steps of §5–§6, disclosed in the report |

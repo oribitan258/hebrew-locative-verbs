@@ -1,0 +1,722 @@
+# Locative-verb lexicon of S56-v1 (docs/EFRAT_SECTION_6.md §5.1; decisions D-053, D-057).
+# ONLY ORI EDITS THIS FILE. Partners propose changes through their outbox.
+#
+# Source: Doron, E. & Dubnov, K. (2017). The locative alternation in Biblical (and Modern) Hebrew.
+#   In A. Moshavi & T. Notarius (eds.), Advances in Biblical Hebrew Linguistics, 321-360.
+#   Class lists: §4.1 (Causative), §6.1 (Intensive), footnote 33 (Simple). Other paper verbs: Tables 1, 2, 4,
+#   ex. (18); Modern Hebrew supplement: §8.
+#
+# One entry per (root, template [, homograph]). Fields:
+#   id                <root>.<S|I|C>[.<homograph gloss>]   (S = Simple, I = Intensive, C = Causative)
+#   root, template, citation (the paper's citation form), gloss (the paper's translation)
+#   class             A | A/B | B  (null for supplements the paper does not classify)
+#   status            core (the class lists) | paper_other (Tables 1, 2, 4, ex. 18) | mh_supplement (§8)
+#   list              where the paper lists it
+#   putting_removal   PUTTING | REMOVAL | BOTH | UNKNOWN  (only what the paper says; else UNKNOWN)
+#   paper_refs        examples/table rows: {where, frame|use, printed (as printed), he (Hebrew numbering, Mikra
+#                     `ref` format), note}. Numbered examples: the paper's Hebrew parenthetical wins (its English
+#                     references are sometimes wrong); table rows are English only and mapped by verse check.
+#   dicta_lemmas      lemma strings Dicta outputs for THIS verb ({lemma, voice: active|passive|middle}); checked
+#                     against Dicta's verb inventory of the five corpora (hebloc loc lexicon check --data).
+#                     NEVER built from BHSA (BHSA is only the Mikra validation key, Phase C).
+#   shared_lemmas     lemma strings Dicta uses for this verb AND for a non-lexicon verb ({lemma, other}): a token
+#                     with such a lemma becomes a combined key with a "~" member (never counted as this verb alone)
+#   excluded_lemmas   variants deliberately NOT used, with the reason (transparency)
+#   flags             template_ambiguous | homograph | homograph_nonlexicon | paper_conflict | mh_meaning_shift |
+#                     no_own_lemma | odd_lemma_string | template_mismatch_variant | change_of_state_use
+#   nonlocative_idioms  object nouns that make the use idiomatic (positive NON_LOCATIVE evidence); clear
+#                     dictionary knowledge only; reviewed by Ori
+#   mh                §8 prediction: preserved_alternation | lost_frame_A_survives | mh_alternates |
+#                     mh_new_alternator | mh_manner_locative ; bh_counterpart for MH lemmas of another template
+#
+# Forms for the fallback are NOT here: they are generated deterministically into config/locative_verb_forms.yaml
+# (hebloc loc lexicon forms). lexicon_sha256 covers both files.
+
+meta:
+  methodology: S56-v1
+  lexicon_version: r1
+  transcription: {by: claude_code, date: "2026-11-20", reviewed_by: null, reviewed_on: null}
+  stated_counts: {A: 95, A/B: 45, B: 37}
+  stated_by_template:
+    Causative: {A: 38, A/B: 7, B: 3}
+    Intensive: {A: 12, A/B: 7, B: 15}
+    Simple: {A: 45, A/B: 31, B: 19}
+  discrepancies:
+  - id: simple_A_46_vs_45
+    what: "fn 33 lists 46 Simple-template A verbs but its text says 45 (\"45 Simple template verbs out of the 95 A verbs\"); the A lists therefore total 96, not 95."
+    handling: "All 46 listed verbs are entries. lexicon check expects Simple A = 46 and A = 96 and reports the stated numbers next to them."
+  - id: asar_list_A_vs_example_AB
+    what: "אסר 'bind, harness' is in the fn 33 Simple A list, but example (33a/b) presents it as an A/B verb of putting."
+    handling: "class A (the explicit list; Ori 2026-11-19), flag paper_conflict; the comparison with the paper is reported under both readings. Moving it to A/B would give A = 95 but A/B = 46."
+  - id: template_collisions
+    what: "Same root in two templates with different classes or entries: שלח (S, A) / שִׁלַּח (I, A/B); קבץ (S, A) / קִבֵּץ (I, A); חלץ (S, A) / חִלֵּץ (I, A); זרה (S, A) / זֵרָה (I, A); החסיר (C, A) / חִסֵּר (I, B); כרת (S, A) / הכרית (C, A)."
+    handling: "Separate entries; tokens that cannot be told apart get a combined key (ambiguity rule, D-057)."
+  - id: homographs
+    what: "שחט 'squeeze' (fn 33 B) vs שחט 'slay' (Table 2); סך 'anoint' (root סוך, B) vs סכך 'thatch' (A/B) vs שך 'hedge' (root שוך, B)."
+    handling: "Separate entries; shared lemmas/forms give combined keys."
+  - id: fn5_excluded
+    what: "fn 5: עקר 'uproot' is explicitly NOT included (found with a single complement only); its synonyms נסח and שׁרשׁ are."
+    handling: "No entry for עקר."
+  - id: english_references
+    what: "Some English references in the paper differ from the Hebrew text it quotes (e.g. ex. 10b 'Ezra 9:10' vs (עזרא ט, יא); ex. 11b and 42a print a verse that does not contain the quoted words); tables use KJV numbering (e.g. Joel 3:2 = Hebrew Joel 4:2)."
+    handling: "`he` holds the Hebrew-numbered verse that contains the quoted verb; `printed` keeps the paper's text; every difference has a note."
+  ambiguity_rule: "One token = one instance. A token matching several entries (shared lemma or form) gets ONE combined verb_key (sorted ids joined by '|'); a token whose lemma is shared with a non-lexicon verb gets a '~' member. It is never assigned to one entry by default and never counted twice (D-057)."
+  identification: "upos == VERB, and (lemma in dicta_lemmas | shared_lemmas) or (host in the generated forms file)."
+  mh_general_prediction: "§8.2: BH A/(B) verbs (classes A and A/B) never become B verbs in MH."
+  table3_simple_motion_verbs:   # intransitive Simple verbs of Table 3 (+ fn 17); used later by resolver variant R1
+  - {verb: נגש, gloss: approach, ref: "Genesis 27:23"}
+  - {verb: עלה, gloss: go up, ref: "I Kings 18:42"}
+  - {verb: ירד, gloss: descend, ref: "Isaiah 55:10"}
+  - {verb: טבע, gloss: sink, ref: "Jeremiah 38:6"}
+  - {verb: עבר, gloss: cross over, ref: "II Samuel 15:24"}
+  - {verb: פוץ, gloss: scatter, ref: "I Samuel 14:34"}
+  - {verb: דבק, gloss: cling, ref: "Genesis 2:24"}
+  - {verb: נצב, gloss: stand, ref: "Judges 18:17"}
+  - {verb: נטה, gloss: be inclined, ref: "Judges 9:3"}
+  - {verb: נוח, gloss: rest/stay, ref: "Joshua 10:4"}
+  - {verb: נשאר, gloss: remain, ref: "Joshua 10:19"}
+  - {verb: עמד, gloss: stand, ref: "II Chronicles 21:16"}
+  - {verb: נזל, gloss: drip, ref: "Numbers 24:7"}
+  - {verb: נפל, gloss: fall, ref: "Genesis 24:64"}
+  - {verb: עתק, gloss: move, ref: "Job 14:18"}
+  - {verb: נבדל, gloss: separate, ref: "Numbers 16:21"}
+  - {verb: יצא, gloss: come out, ref: "Numbers 22:5"}
+  - {verb: גלה, gloss: depart, ref: "I Samuel 4:21"}
+  - {verb: נדח, gloss: be expelled, ref: "II Samuel 14:14"}
+  - {verb: חסר, gloss: lack, ref: "Proverbs 31:11"}
+  - {verb: אבד, gloss: become extinct, ref: "Deuteronomy 22:3"}
+  - {verb: מוש, gloss: move away, ref: "Numbers 14:44"}
+  - {verb: נסע, gloss: go away, ref: "Numbers 12:16"}
+  - {verb: ישב, gloss: sit (fn 17), ref: null}
+  - {verb: שכב, gloss: lie (fn 17), ref: null}
+
+entries:
+# ============================================================ §4.1 Causative A (38)
+- {id: רום.C, root: רום, template: Causative, citation: הרים, gloss: raise, class: A, status: core, list: "§4.1 Causative A", putting_removal: UNKNOWN,
+   dicta_lemmas: [{lemma: הרים, voice: active}, {lemma: הורם, voice: passive}, {lemma: מרים, voice: active}],
+   nonlocative_idioms: [{noun: קול, note: "raise the voice"}, {noun: ראש, note: "raise the head (pride)"}]}
+- {id: עלה.C, root: עלה, template: Causative, citation: העלה, gloss: bring up, class: A, status: core, list: "§4.1 Causative A; Table 1; Table 3", putting_removal: BOTH,
+   paper_refs: [{where: "Table 1", use: putting, printed: "1Kings 17, 19", he: "I Kings 17:19"}, {where: "Table 1", use: removal, printed: "Leviticus 11: 45", he: "Leviticus 11:45"},
+                {where: "Table 3", use: causative, printed: "1Kings 17:19", he: "I Kings 17:19"}],
+   dicta_lemmas: [{lemma: העלה, voice: active}, {lemma: הועלה, voice: passive}, {lemma: מעלה, voice: active}, {lemma: מועלה, voice: passive}]}
+- {id: ירד.C, root: ירד, template: Causative, citation: הוריד, gloss: bring down, class: A, status: core, list: "§4.1 Causative A; Table 1; Table 3", putting_removal: BOTH,
+   paper_refs: [{where: "Table 1", use: putting, printed: "Joel 3:2", he: "Joel 4:2", note: "KJV 3:2 = Hebrew 4:2"}, {where: "Table 1", use: removal, printed: "Obadiah 1:4", he: "Obadiah 1:4"},
+                {where: "Table 3", use: causative, printed: "Amos 3:11", he: "Amos 3:11"}],
+   dicta_lemmas: [{lemma: הוריד, voice: active}, {lemma: הורד, voice: passive}, {lemma: מוריד, voice: active}]}
+- {id: בוא.C, root: בוא, template: Causative, citation: הביא, gloss: bring in, class: A, status: core, list: "§4.1 Causative A; Table 1; ex. (20)", putting_removal: BOTH,
+   paper_refs: [{where: "Table 1", use: putting, printed: "Genesis 46:7", he: "Genesis 46:7"}, {where: "Table 1", use: removal, printed: "Genesis 43:2", he: "Genesis 43:2"},
+                {where: "ex. (20)", frame: A, printed: "Jeremiah 27:11", he: "Jeremiah 27:11"}],
+   dicta_lemmas: [{lemma: הביא, voice: active}, {lemma: הובא, voice: passive}, {lemma: מביא, voice: active}]}
+- {id: נגש.C, root: נגש, template: Causative, citation: הגיש, gloss: bring, class: A, status: core, list: "§4.1 Causative A; Table 3", putting_removal: UNKNOWN,
+   paper_refs: [{where: "Table 3", use: causative, printed: "1Samuel 14:34", he: "I Samuel 14:34"}],
+   dicta_lemmas: [{lemma: הגיש, voice: active}, {lemma: הוגש, voice: passive}, {lemma: מגיש, voice: active}]}
+- {id: טול.C, root: טול, template: Causative, citation: הטיל, gloss: cast, class: A, status: core, list: "§4.1 Causative A; Table 1", putting_removal: BOTH,
+   paper_refs: [{where: "Table 1", use: putting, printed: "Jeremiah 16:11", he: "Jeremiah 16:13", note: "printed 16:11 for both uses; the verse with הטלתי ... מעל הארץ ... על הארץ is 16:13 (to confirm at review)"},
+                {where: "Table 1", use: removal, printed: "Jeremiah 16:11", he: "Jeremiah 16:13"}],
+   dicta_lemmas: [{lemma: הטיל, voice: active}, {lemma: הוטל, voice: passive}, {lemma: מטיל, voice: active}]}
+- {id: קום.C, root: קום, template: Causative, citation: הקים, gloss: raise, class: A, status: core, list: "§4.1 Causative A", putting_removal: UNKNOWN,
+   dicta_lemmas: [{lemma: הקים, voice: active}, {lemma: הוקם, voice: passive}, {lemma: מקים, voice: active}, {lemma: מוקם, voice: passive}],
+   nonlocative_idioms: [{noun: ברית, note: "establish a covenant"}]}
+- {id: נוח.C, root: נוח, template: Causative, citation: הניח, gloss: let rest/let stay; put, class: A, status: core, list: "§4.1 Causative A; Table 3", putting_removal: UNKNOWN,
+   paper_refs: [{where: "Table 3", use: causative, printed: "Genesis 2:15", he: "Genesis 2:15"}],
+   dicta_lemmas: [{lemma: הניח, voice: active}, {lemma: הונח, voice: passive}, {lemma: מניח, voice: active}, {lemma: מונח, voice: passive}]}
+- {id: שאר.C, root: שאר, template: Causative, citation: השאיר, gloss: let remain, class: A, status: core, list: "§4.1 Causative A; Table 3", putting_removal: UNKNOWN,
+   paper_refs: [{where: "Table 3", use: causative, printed: "Joshua 10:30", he: "Joshua 10:30"}],
+   dicta_lemmas: [{lemma: השאיר, voice: active}, {lemma: הושאר, voice: passive}, {lemma: משאיר, voice: active}]}
+- {id: פוץ.C, root: פוץ, template: Causative, citation: הפיץ, gloss: scatter, class: A, status: core, list: "§4.1 Causative A; Table 1; Table 3", putting_removal: BOTH,
+   paper_refs: [{where: "Table 1", use: putting, printed: "Genesis 11:8", he: "Genesis 11:8"}, {where: "Table 1", use: removal, printed: "Genesis 11:8", he: "Genesis 11:8"},
+                {where: "Table 3", use: causative, printed: "Deuteronomy 4:27", he: "Deuteronomy 4:27"}, {where: "ex. (1)", frame: A, printed: "Ezekiel 29:12", he: "Ezekiel 29:12", note: "והפצתי את מצרים בגוים (alongside the A verb זֵרָה)"}],
+   dicta_lemmas: [{lemma: הפיץ, voice: active}, {lemma: הופץ, voice: passive}, {lemma: מפיץ, voice: active}, {lemma: מופץ, voice: passive}]}
+- {id: עמד.C, root: עמד, template: Causative, citation: העמיד, gloss: station, class: A, status: core, list: "§4.1 Causative A; Table 3", putting_removal: UNKNOWN,
+   paper_refs: [{where: "Table 3", use: causative, printed: "Judges 16:25", he: "Judges 16:25"}],
+   dicta_lemmas: [{lemma: העמיד, voice: active}, {lemma: הועמד, voice: passive}, {lemma: מעמיד, voice: active}, {lemma: מועמד, voice: passive}]}
+- {id: נצב.C, root: נצב, template: Causative, citation: הציב, gloss: position, class: A, status: core, list: "§4.1 Causative A; Table 3", putting_removal: UNKNOWN,
+   paper_refs: [{where: "Table 3", use: causative, printed: "1Chronicles 18:3", he: "I Chronicles 18:3"}],
+   dicta_lemmas: [{lemma: הציב, voice: active}, {lemma: הוצב, voice: passive}, {lemma: מציב, voice: active}, {lemma: מוצב, voice: passive}]}
+- {id: יצג.C, root: יצג, template: Causative, citation: הציג, gloss: set, class: A, status: core, list: "§4.1 Causative A", putting_removal: UNKNOWN,
+   dicta_lemmas: [{lemma: הציג, voice: active}, {lemma: הוצג, voice: passive}, {lemma: מציג, voice: active}], flags: [mh_meaning_shift]}
+- {id: טבע.C, root: טבע, template: Causative, citation: הטביע, gloss: sink, class: A, status: core, list: "§4.1 Causative A; Table 3", putting_removal: UNKNOWN,
+   paper_refs: [{where: "Table 3", use: causative, printed: "Jeremiah 38:22", he: "Jeremiah 38:22"}],
+   dicta_lemmas: [{lemma: הטביע, voice: active}, {lemma: הוטבע, voice: passive}, {lemma: מטביע, voice: active}, {lemma: מוטבע, voice: passive}]}
+- {id: ישב.C, root: ישב, template: Causative, citation: הושיב, gloss: seat, class: A, status: core, list: "§4.1 Causative A; fn 17", putting_removal: UNKNOWN,
+   dicta_lemmas: [{lemma: הושיב, voice: active}, {lemma: הושב, voice: passive}],
+   flags: [homograph], note: "הושב is also the passive of השיב (שוב.C, Table 1): shared lemma -> combined key"}
+- {id: שכב.C, root: שכב, template: Causative, citation: השכיב, gloss: lay, class: A, status: core, list: "§4.1 Causative A; fn 17", putting_removal: UNKNOWN,
+   dicta_lemmas: [], flags: [no_own_lemma]}
+- {id: דבק.C, root: דבק, template: Causative, citation: הדביק, gloss: cling (join), class: A, status: core, list: "§4.1 Causative A; Table 3", putting_removal: UNKNOWN,
+   paper_refs: [{where: "Table 3", use: causative, printed: "Deuteronomy 28:21", he: "Deuteronomy 28:21"}],
+   dicta_lemmas: [{lemma: הדביק, voice: active}, {lemma: הודבק, voice: passive}, {lemma: מדביק, voice: active}, {lemma: מודבק, voice: passive}]}
+- {id: חבא.C, root: חבא, template: Causative, citation: החביא, gloss: hide, class: A, status: core, list: "§4.1 Causative A", putting_removal: UNKNOWN,
+   dicta_lemmas: [{lemma: החביא, voice: active}, {lemma: מחביא, voice: active}]}
+- {id: סתר.C, root: סתר, template: Causative, citation: הסתיר, gloss: hide, class: A, status: core, list: "§4.1 Causative A", putting_removal: UNKNOWN,
+   dicta_lemmas: [{lemma: הסתיר, voice: active}, {lemma: הוסתר, voice: passive}, {lemma: מסתיר, voice: active}, {lemma: מוסתר, voice: passive}]}
+- {id: לוט.C, root: לוט, template: Causative, citation: הליט, gloss: cover, class: A, status: core, list: "§4.1 Causative A", putting_removal: UNKNOWN,
+   dicta_lemmas: [{lemma: הליט, voice: active}]}
+- {id: נוס.C, root: נוס, template: Causative, citation: הניס, gloss: chase, class: A, status: core, list: "§4.1 Causative A", putting_removal: UNKNOWN,
+   dicta_lemmas: [{lemma: הניס, voice: active}]}
+- {id: אבד.C, root: אבד, template: Causative, citation: האביד, gloss: make extinct, class: A, status: core, list: "§4.1 Causative A; Table 3", putting_removal: UNKNOWN,
+   paper_refs: [{where: "Table 3", use: causative, printed: "Ezekiel 25:7", he: "Ezekiel 25:7"}],
+   dicta_lemmas: [], flags: [no_own_lemma], excluded_lemmas: [{lemma: איבד, why: "the Intensive 'lose/destroy' (not this entry)"}]}
+- {id: בדל.C, root: בדל, template: Causative, citation: הבדיל, gloss: separate, class: A, status: core, list: "§4.1 Causative A; Table 3", putting_removal: UNKNOWN,
+   paper_refs: [{where: "Table 3", use: causative, printed: "Leviticus 20:24", he: "Leviticus 20:24"}],
+   dicta_lemmas: [{lemma: הבדיל, voice: active}, {lemma: מבדיל, voice: active}]}
+- {id: חסר.C, root: חסר, template: Causative, citation: החסיר, gloss: omit, class: A, status: core, list: "§4.1 Causative A; Table 3", putting_removal: UNKNOWN,
+   paper_refs: [{where: "Table 3", use: causative, printed: "Isaiah 32:6", he: "Isaiah 32:6"}],
+   dicta_lemmas: [{lemma: החסיר, voice: active}, {lemma: מחסיר, voice: active}], flags: [template_ambiguous]}
+- {id: עבר.C, root: עבר, template: Causative, citation: העביר, gloss: pass; take out, class: A, status: core, list: "§4.1 Causative A; Table 1; Table 3", putting_removal: BOTH,
+   paper_refs: [{where: "Table 1", use: putting, printed: "Numbers 27:8", he: "Numbers 27:8"}, {where: "Table 1", use: removal, printed: "2Chronicles 35:24", he: "II Chronicles 35:24"},
+                {where: "Table 3", use: causative, printed: "2Chronicles 35:24", he: "II Chronicles 35:24"}],
+   dicta_lemmas: [{lemma: העביר, voice: active}, {lemma: הועבר, voice: passive}, {lemma: מעביר, voice: active}, {lemma: מועבר, voice: passive}]}
+- {id: מוש.C, root: מוש, template: Causative, citation: המיש, gloss: move away, class: A, status: core, list: "§4.1 Causative A; Table 3", putting_removal: UNKNOWN,
+   paper_refs: [{where: "Table 3", use: causative, printed: "Micah 2:3", he: "Micah 2:3"}],
+   dicta_lemmas: [{lemma: המיש, voice: active}]}
+- {id: עתק.C, root: עתק, template: Causative, citation: העתיק, gloss: move away, class: A, status: core, list: "§4.1 Causative A; Table 3", putting_removal: UNKNOWN,
+   paper_refs: [{where: "Table 3", use: causative, printed: "Job 32:15", he: "Job 32:15"}],
+   dicta_lemmas: [{lemma: העתיק, voice: active}, {lemma: הועתק, voice: passive}, {lemma: מעתיק, voice: active}, {lemma: מועתק, voice: passive}], flags: [mh_meaning_shift]}
+- {id: גלה.C, root: גלה, template: Causative, citation: הגלה, gloss: deport, class: A, status: core, list: "§4.1 Causative A; Table 1; Table 3; ex. (6)", putting_removal: BOTH,
+   paper_refs: [{where: "ex. (6)", frame: A, printed: "Esther 2:6", he: "Esther 2:6", note: "passive הָגְלָה and active הֶגְלָה; Hebrew ref (אסתר ב, ה-ו)"},
+                {where: "Table 1", use: putting, printed: "Jeremiah 29:4", he: "Jeremiah 29:4"}, {where: "Table 1", use: removal, printed: "Jeremiah 29:4", he: "Jeremiah 29:4"},
+                {where: "Table 3", use: causative, printed: "2Kings 17:33", he: "II Kings 17:33"}],
+   dicta_lemmas: [{lemma: הוגלה, voice: passive}, {lemma: והגל, voice: active}], excluded_lemmas: [{lemma: גילה, why: "the Intensive 'reveal' (not this entry)"}]}
+- {id: שלך.C, root: שלך, template: Causative, citation: השליך, gloss: throw away, class: A, status: core, list: "§4.1 Causative A; Table 1", putting_removal: BOTH,
+   paper_refs: [{where: "Table 1", use: putting, printed: "Genesis 21: 15", he: "Genesis 21:15"}, {where: "Table 1", use: removal, printed: "2Kings 13:23", he: "II Kings 13:23"}],
+   dicta_lemmas: [{lemma: השליך, voice: active}, {lemma: הושלך, voice: passive}, {lemma: משליך, voice: active}, {lemma: מושלך, voice: passive}]}
+- {id: נדח.C, root: נדח, template: Causative, citation: הדיח, gloss: expel; drive away, class: A, status: core, list: "§4.1 Causative A; Table 1; Table 3", putting_removal: BOTH,
+   paper_refs: [{where: "Table 1", use: putting, printed: "Deuteronomy 30:1", he: "Deuteronomy 30:1"}, {where: "Table 1", use: removal, printed: "Deuteronomy 13:5", he: "Deuteronomy 13:6", note: "KJV 13:5 = Hebrew 13:6"},
+                {where: "Table 3", use: causative, printed: "Deuteronomy 13:5", he: "Deuteronomy 13:6", note: "KJV 13:5 = Hebrew 13:6"}],
+   dicta_lemmas: [{lemma: הדיח, voice: active}, {lemma: הודח, voice: passive}, {lemma: מדיח, voice: active}, {lemma: מודח, voice: passive}]}
+- {id: יצא.C, root: יצא, template: Causative, citation: הוציא, gloss: bring out, class: A, status: core, list: "§4.1 Causative A; Table 1; Table 3", putting_removal: BOTH,
+   paper_refs: [{where: "Table 1", use: putting, printed: "Deuteronomy 22:15", he: "Deuteronomy 22:15"}, {where: "Table 1", use: removal, printed: "Genesis 48:12", he: "Genesis 48:12"},
+                {where: "Table 3", use: causative, printed: "1Kings 9:9", he: "I Kings 9:9"}],
+   dicta_lemmas: [{lemma: הוציא, voice: active}, {lemma: הוצא, voice: passive}]}
+- {id: כרת.C, root: כרת, template: Causative, citation: הכרית, gloss: cut off, class: A, status: core, list: "§4.1 Causative A", putting_removal: UNKNOWN,
+   dicta_lemmas: [{lemma: הכרית, voice: active}], flags: [template_ambiguous]}
+- {id: רחק.C, root: רחק, template: Causative, citation: הרחיק, gloss: remove, class: A, status: core, list: "§4.1 Causative A", putting_removal: REMOVAL,
+   dicta_lemmas: [{lemma: הרחיק, voice: active}, {lemma: הורחק, voice: passive}, {lemma: מרחיק, voice: active}]}
+- {id: נזל.C, root: נזל, template: Causative, citation: הזיל, gloss: drip, class: A, status: core, list: "§4.1 Causative A; Table 3", putting_removal: UNKNOWN,
+   paper_refs: [{where: "Table 3", use: causative, printed: "Isaiah 48:21", he: "Isaiah 48:21"}],
+   dicta_lemmas: [], flags: [no_own_lemma]}
+- {id: נפל.C, root: נפל, template: Causative, citation: הפיל, gloss: make fall, class: A, status: core, list: "§4.1 Causative A; Table 3", putting_removal: UNKNOWN,
+   paper_refs: [{where: "Table 3", use: causative, printed: "Ezekiel 30:22", he: "Ezekiel 30:22"}],
+   dicta_lemmas: [{lemma: הפיל, voice: active}, {lemma: הופל, voice: passive}, {lemma: מפיל, voice: active}]}
+- {id: נטה.C, root: נטה, template: Causative, citation: הטה, gloss: divert, class: A, status: core, list: "§4.1 Causative A; Table 1; Table 3", putting_removal: BOTH,
+   paper_refs: [{where: "Table 1", use: putting, printed: "2Samuel 3:27", he: "II Samuel 3:27"}, {where: "Table 1", use: removal, printed: "Job 24:4", he: "Job 24:4"},
+                {where: "Table 3", use: causative, printed: "1Kings 11:2", he: "I Kings 11:2"}],
+   dicta_lemmas: [{lemma: הטה, voice: active}, {lemma: מוטה, voice: passive}]}
+- {id: סבב.C, root: סבב, template: Causative, citation: הסב, gloss: turn, class: A, status: core, list: "§4.1 Causative A; Table 1", putting_removal: BOTH,
+   paper_refs: [{where: "Table 1", use: putting, printed: "2Kings 20:2", he: "II Kings 20:2"}, {where: "Table 1", use: removal, printed: "Ezekiel 7:22", he: "Ezekiel 7:22"}],
+   dicta_lemmas: [{lemma: הסב, voice: active}, {lemma: הוסב, voice: passive}, {lemma: הסיב, voice: active}, {lemma: מסב, voice: active}, {lemma: מוסב, voice: passive}]}
+- {id: נסע.C, root: נסע, template: Causative, citation: הסיע, gloss: bring (away), class: A, status: core, list: "§4.1 Causative A; Table 3", putting_removal: UNKNOWN,
+   paper_refs: [{where: "Table 3", use: causative, printed: "Exodus 15:22", he: "Exodus 15:22"}],
+   dicta_lemmas: [{lemma: הסיע, voice: active}, {lemma: מסיע, voice: active}]}
+# ============================================================ §4.1 Causative A/B (7)
+- {id: לבש.C, root: לבש, template: Causative, citation: הלביש, gloss: clothe, class: A/B, status: core, list: "§4.1 Causative A/B; ex. (29)", putting_removal: PUTTING,
+   paper_refs: [{where: "ex. (29a)", frame: A, printed: "Genesis 27:16", he: "Genesis 27:16"},
+                {where: "ex. (29b)", frame: B, printed: "Chronicles 18:9", he: "II Chronicles 18:9", note: "passive participle מלבשים (Intensive passive form); Hebrew ref (דברי הימים ב יח, ט)"}],
+   dicta_lemmas: [{lemma: הלביש, voice: active}, {lemma: מלביש, voice: active}], excluded_lemmas: [{lemma: לבש, why: "Simple 'wear' = the mereological base verb, not this entry"}]}
+- {id: נזה.C, root: נזה, template: Causative, citation: הזה, gloss: sprinkle, class: A/B, status: core, list: "§4.1 Causative A/B; ex. (30)", putting_removal: PUTTING,
+   paper_refs: [{where: "ex. (30a)", frame: A, printed: "Leviticus 16:14", he: "Leviticus 16:14", note: "מִדַּם is partitive (fn 24): the blood is the direct object"},
+                {where: "ex. (30b)", frame: B, printed: "Isaiah 52:15", he: "Isaiah 52:15"}],
+   dicta_lemmas: [{lemma: והזה, voice: active}, {lemma: יזה, voice: active}], flags: [odd_lemma_string],
+   note: "Dicta outputs inflected strings as lemmas for this verb (והזה, יזה); no citation lemma הזה/היזה exists in any corpus",
+   mh: {prediction: lost_frame_A_survives, ref: "§8.2 (היזה)"}}
+- {id: מטר.C, root: מטר, template: Causative, citation: המטיר, gloss: rain upon, class: A/B, status: core, list: "§4.1 Causative A/B; ex. (32)", putting_removal: PUTTING,
+   paper_refs: [{where: "ex. (32a)", frame: A, printed: "Genesis 19:24", he: "Genesis 19:24"}, {where: "ex. (32b)", frame: B, printed: "Amos 4:7", he: "Amos 4:7", note: "passive תִּמָּטֵר"}],
+   dicta_lemmas: [], flags: [no_own_lemma]}
+- {id: סור.C, root: סור, template: Causative, citation: הסיר, gloss: remove, class: A/B, status: core, list: "§4.1 Causative A/B; ex. (4), (5), (35)", putting_removal: REMOVAL,
+   paper_refs: [{where: "ex. (4)", frame: A, printed: "Isaiah 25:8", he: "Isaiah 25:8"}, {where: "ex. (5)", frame: A, printed: "Deuteronomy 7:15", he: "Deuteronomy 7:15"},
+                {where: "ex. (35a)", frame: A, printed: "Exodus 23:25", he: "Exodus 23:25"},
+                {where: "ex. (35b)", frame: B, printed: "Psalms 81:6", he: "Psalms 81:7", note: "Hebrew ref (תהלים פא, ז); fn 25: the paper itself calls this Frame B reading not uncontroversial"}],
+   dicta_lemmas: [{lemma: הסיר, voice: active}, {lemma: הוסר, voice: passive}],
+   mh: {prediction: lost_frame_A_survives, ref: "§8.2"}}
+- {id: פשט.C, root: פשט, template: Causative, citation: הפשיט, gloss: strip, class: A/B, status: core, list: "§4.1 Causative A/B; ex. (52)", putting_removal: REMOVAL,
+   paper_refs: [{where: "ex. (52a)", frame: A, printed: "Job 19: 9", he: "Job 19:9"}, {where: "ex. (52b)", frame: B, printed: "Ezekiel 16:39", he: "Ezekiel 16:39", note: "bare Locatum בְּגָדַיִךְ (fn 21)"}],
+   dicta_lemmas: [{lemma: הפשי, voice: active}], flags: [odd_lemma_string], note: "Dicta outputs the truncated string הפשי; no lemma הפשיט exists in any corpus",
+   mh: {prediction: preserved_alternation, ref: "§8.2"}}
+- {id: ריק.C, root: ריק, template: Causative, citation: הריק, gloss: empty, class: A/B, status: core, list: "§4.1 Causative A/B; ex. (51)", putting_removal: REMOVAL,
+   paper_refs: [{where: "ex. (51a)", frame: A, printed: "Exodus 15:9", he: "Exodus 15:9"}, {where: "ex. (51b)", frame: B, printed: "Jeremiah 48:12", he: "Jeremiah 48:12"}],
+   dicta_lemmas: [{lemma: הריק, voice: active}, {lemma: הורק, voice: passive}],
+   mh: {prediction: preserved_alternation, ref: "§8.2 (רוקן / הריק)"}}
+- {id: קצה.C, root: קצה, template: Causative, citation: הקצה, gloss: scrape off, class: A/B, status: core, list: "§4.1 Causative A/B; ex. (47)", putting_removal: REMOVAL,
+   paper_refs: [{where: "ex. (47a)", frame: A, printed: "Leviticus 14:41", he: "Leviticus 14:41"}, {where: "ex. (47b)", frame: B, printed: "Leviticus 14:43", he: "Leviticus 14:43"}],
+   dicta_lemmas: [{lemma: הקצה, voice: active}, {lemma: הוקצה, voice: passive}, {lemma: מקצה, voice: active}, {lemma: מוקצה, voice: passive}, {lemma: הקצתה, voice: active}], flags: [mh_meaning_shift], note: "MH הקצה = allocate"}
+# ============================================================ §4.1 Causative B (3)
+- {id: אכל.C, root: אכל, template: Causative, citation: האכיל, gloss: feed, class: B, status: core, list: "§4.1 Causative B; Table 4", putting_removal: PUTTING,
+   paper_refs: [{where: "Table 4", use: mereological, printed: "Exodus 16:35", he: "Exodus 16:35", note: "the base verb אכל"}, {where: "Table 4", use: B, printed: "Deuteronomy 8:3", he: "Deuteronomy 8:3"}],
+   dicta_lemmas: [{lemma: האכיל, voice: active}, {lemma: מאכיל, voice: active}]}
+- {id: שקה.C, root: שקה, template: Causative, citation: השקה, gloss: water, class: B, status: core, list: "§4.1 Causative B; Table 4", putting_removal: PUTTING,
+   paper_refs: [{where: "Table 4", use: mereological, printed: "Genesis 2:6", he: "Genesis 2:6"}, {where: "Table 4", use: B, printed: "Psalms 80:5", he: "Psalms 80:6", note: "KJV 80:5 = Hebrew 80:6"}],
+   dicta_lemmas: [{lemma: השקה, voice: active}, {lemma: הושקה, voice: passive}]}
+- {id: נעל.C, root: נעל, template: Causative, citation: הנעיל, gloss: put footwear on someone, class: B, status: core, list: "§4.1 Causative B", putting_removal: PUTTING,
+   dicta_lemmas: [], flags: [no_own_lemma]}
+# ============================================================ §6.1 Intensive A (12)
+- {id: ידה.I, root: ידה, template: Intensive, citation: יִדָּה, gloss: cast/shoot, class: A, status: core, list: "§6.1 Intensive A", putting_removal: UNKNOWN,
+   dicta_lemmas: [], flags: [no_own_lemma]}
+- {id: שכן.I, root: שכן, template: Intensive, citation: שִׁכֵּן, gloss: make dwell, class: A, status: core, list: "§6.1 Intensive A; fn 16", putting_removal: UNKNOWN,
+   paper_refs: [{where: "fn 16", use: intransitive, printed: "Jeremiah 25:24", he: "Jeremiah 25:24"}, {where: "fn 16", use: transitive, printed: "Jeremiah 7:7", he: "Jeremiah 7:7"}],
+   dicta_lemmas: [], flags: [no_own_lemma], excluded_lemmas: [{lemma: שכן, why: "Simple 'dwell' (intransitive, not this entry)"}, {lemma: שוכן, why: "Simple participle 'dwelling'"}]}
+- {id: קבץ.I, root: קבץ, template: Intensive, citation: קִבֵּץ, gloss: collect, class: A, status: core, list: "§6.1 Intensive A", putting_removal: UNKNOWN,
+   dicta_lemmas: [{lemma: קיבץ, voice: active}, {lemma: קובץ, voice: passive}, {lemma: מקבץ, voice: active}], flags: [template_ambiguous],
+   note: "Dicta uses קיבץ for Simple and Intensive forms alike: shared with קבץ.S -> combined key (both class A)"}
+- {id: פזר.I, root: פזר, template: Intensive, citation: פִּזֵּר, gloss: scatter, class: A, status: core, list: "§6.1 Intensive A", putting_removal: UNKNOWN,
+   dicta_lemmas: [{lemma: פיזר, voice: active}, {lemma: פוזר, voice: passive}, {lemma: התפזר, voice: middle}, {lemma: מפזר, voice: active}, {lemma: מפוזר, voice: passive}, {lemma: מתפזר, voice: middle}]}
+- {id: זרה.I, root: זרה, template: Intensive, citation: זֵרָה, gloss: disperse, class: A, status: core, list: "§6.1 Intensive A; ex. (1)", putting_removal: PUTTING,
+   paper_refs: [{where: "ex. (1)", frame: A, printed: "Ezekiel 29:12", he: "Ezekiel 29:12", note: "וְזֵרִיתִים בָּאֲרָצוֹת; §3.2.1: only with b-, a verb of putting"}],
+   dicta_lemmas: [], flags: [no_own_lemma, template_ambiguous]}
+- {id: נתק.I, root: נתק, template: Intensive, citation: נִתֵּק, gloss: tear, class: A, status: core, list: "§6.1 Intensive A", putting_removal: UNKNOWN,
+   dicta_lemmas: [{lemma: ניתק, voice: active}, {lemma: נותק, voice: passive}, {lemma: התנתק, voice: middle}, {lemma: מנותק, voice: passive}]}
+- {id: בלע.I, root: בלע, template: Intensive, citation: בִּלַּע, gloss: swallow/destroy, class: A, status: core, list: "§6.1 Intensive A", putting_removal: UNKNOWN,
+   dicta_lemmas: [], flags: [no_own_lemma], excluded_lemmas: [{lemma: בלע, why: "Simple 'swallow'"}, {lemma: בולע, why: "Simple participle"}]}
+- {id: מלט.I, root: מלט, template: Intensive, citation: מִלֵּט, gloss: rescue, class: A, status: core, list: "§6.1 Intensive A", putting_removal: UNKNOWN,
+   dicta_lemmas: [], flags: [no_own_lemma], excluded_lemmas: [{lemma: נמלט, why: "Simple-template middle 'escape' (not this entry)"}]}
+- {id: פלט.I, root: פלט, template: Intensive, citation: פִּלֵּט, gloss: save, class: A, status: core, list: "§6.1 Intensive A", putting_removal: UNKNOWN,
+   dicta_lemmas: [], shared_lemmas: [{lemma: פלט, other: "פלט 'emit/eject' (MH Simple)"}], flags: [no_own_lemma, mh_meaning_shift]}
+- {id: גרש.I, root: גרש, template: Intensive, citation: גֵּרֵשׁ, gloss: drive out, class: A, status: core, list: "§6.1 Intensive A; ex. (2)", putting_removal: REMOVAL,
+   paper_refs: [{where: "ex. (2)", frame: A, printed: "Numbers 22:6", he: "Numbers 22:6"}],
+   dicta_lemmas: [{lemma: גירש, voice: active}, {lemma: גורש, voice: passive}, {lemma: מגרש, voice: active}],
+   excluded_lemmas: [{lemma: התגרש, why: "MH 'get divorced' (idiomatic middle)"}]}
+- {id: חלץ.I, root: חלץ, template: Intensive, citation: חִלֵּץ, gloss: rescue, class: A, status: core, list: "§6.1 Intensive A", putting_removal: UNKNOWN,
+   dicta_lemmas: [{lemma: חילץ, voice: active}, {lemma: מחלץ, voice: active}], flags: [template_ambiguous],
+   excluded_lemmas: [{lemma: חולץ, why: "also the Simple participle 'take off (shoes)'"}]}
+- {id: נשל.I, root: נשל, template: Intensive, citation: נִשֵּׁל, gloss: dislodge, class: A, status: core, list: "§6.1 Intensive A; fn 16; fn 34; fn 39", putting_removal: UNKNOWN,
+   paper_refs: [{where: "fn 16", use: intransitive, printed: "Deuteronomy 19:5", he: "Deuteronomy 19:5"}, {where: "fn 16", use: transitive, printed: "2Kings 16:6", he: "II Kings 16:6"}],
+   dicta_lemmas: [], flags: [no_own_lemma], excluded_lemmas: [{lemma: נשל, why: "Simple intransitive 'slip off'"}],
+   mh: {prediction: mh_alternates, ref: "fn 39"}}
+# ============================================================ §6.1 Intensive A/B (7)
+- {id: מלא.I, root: מלא, template: Intensive, citation: מִלֵּא, gloss: fill, class: A/B, status: core, list: "§6.1 Intensive A/B; ex. (10)", putting_removal: PUTTING,
+   paper_refs: [{where: "ex. (10a)", frame: A, printed: "Exodus 28:17", he: "Exodus 28:17"}, {where: "ex. (10b)", frame: B, printed: "Ezra 9:10", he: "Ezra 9:11", note: "Hebrew ref (עזרא ט, יא)"},
+                {where: "fn 10 (i)", frame: B, printed: "Song of Solomon 5:14", he: "Song of Songs 5:14", note: "passive (Intensive passive participle)"},
+                {where: "fn 13 (i)", frame: B, printed: "Haggai 2:7", he: "Haggai 2:7", note: "bare indefinite Locatum כבוד (elided b-)"}],
+   dicta_lemmas: [{lemma: מילא, voice: active}, {lemma: ממלא, voice: active}, {lemma: מולא, voice: passive}, {lemma: התמלא, voice: middle}, {lemma: ממולא, voice: passive}, {lemma: מתמלא, voice: middle}],
+   excluded_lemmas: [{lemma: מלא, why: "Simple monotransitive/stative 'be full' (fn 34), not this ditransitive entry"}, {lemma: נמלא, why: "Simple-template middle of מלא"}],
+   mh: {prediction: preserved_alternation, ref: "§8.2"}}
+- {id: גלח.I, root: גלח, template: Intensive, citation: גִּלַּח, gloss: shave, class: A/B, status: core, list: "§6.1 Intensive A/B; ex. (39)", putting_removal: REMOVAL,
+   paper_refs: [{where: "ex. (39a)", frame: A, printed: "Leviticus 14:8", he: "Leviticus 14:8"}, {where: "ex. (39b)", frame: B, printed: "Deuteronomy 21:12", he: "Deuteronomy 21:12"}],
+   dicta_lemmas: [{lemma: לגלח, voice: active}, {lemma: להתגלח, voice: middle}], flags: []}
+- {id: חטא.I, root: חטא, template: Intensive, citation: חִטֵּא, gloss: purify, class: A/B, status: core, list: "§6.1 Intensive A/B", putting_removal: UNKNOWN,
+   dicta_lemmas: [], flags: [no_own_lemma],
+   excluded_lemmas: [{lemma: חטא, why: "Simple 'sin'"}, {lemma: חוטא, why: "Simple participle 'sinner'"}, {lemma: החטיא, why: "Causative 'cause to sin'"}]}
+- {id: נקה.I, root: נקה, template: Intensive, citation: נִקָּה, gloss: acquit; clean, class: A/B, status: core, list: "§6.1 Intensive A/B; ex. (46)", putting_removal: REMOVAL,
+   paper_refs: [{where: "ex. (46a)", frame: A, printed: "Joel 4:21", he: "Joel 4:21"}, {where: "ex. (46b)", frame: B, printed: "Job 10:14", he: "Job 10:14"}],
+   dicta_lemmas: [{lemma: ניקה, voice: active}, {lemma: נוקה, voice: passive}],
+   mh: {prediction: preserved_alternation, ref: "§8.2"}}
+- {id: כבס.I, root: כבס, template: Intensive, citation: כִּבֵּס, gloss: wash, class: A/B, status: core, list: "§6.1 Intensive A/B; ex. (45)", putting_removal: REMOVAL,
+   paper_refs: [{where: "ex. (45a)", frame: A, printed: "Leviticus 13:55", he: "Leviticus 13:55", note: "passive הֻכַּבֵּס (fn 29)"},
+                {where: "ex. (45b)", frame: B, printed: "Psalms 51: 2", he: "Psalms 51:4", note: "Hebrew ref (תהילים נא, ד)"}],
+   dicta_lemmas: [], flags: [no_own_lemma]}
+- {id: פנה.I, root: פנה, template: Intensive, citation: פִּנָּה, gloss: clear, class: A/B, status: core, list: "§6.1 Intensive A/B; ex. (34)", putting_removal: REMOVAL,
+   paper_refs: [{where: "ex. (34a)", frame: A, printed: "Zephaniah 3:14-15", he: "Zephaniah 3:15"}, {where: "ex. (34b)", frame: B, printed: "Genesis 24:31", he: "Genesis 24:31"}],
+   dicta_lemmas: [{lemma: פינה, voice: active}, {lemma: התפנה, voice: middle}],
+   excluded_lemmas: [{lemma: פונה, why: "also the Simple participle 'turning'"}],
+   mh: {prediction: preserved_alternation, ref: "§8.2"}}
+- {id: שלח.I, root: שלח, template: Intensive, citation: שִׁלַּח, gloss: send, class: A/B, status: core, list: "§6.1 Intensive A/B; ex. (17), (31)", putting_removal: BOTH,
+   paper_refs: [{where: "ex. (17)", use: putting, printed: "Deuteronomy 32:24", he: "Deuteronomy 32:24"}, {where: "ex. (17)", use: removal, printed: "Exodus 12:33", he: "Exodus 12:33"},
+                {where: "ex. (31a)", frame: A, printed: "Hosea 8:14", he: "Hosea 8:14"}, {where: "ex. (31b)", frame: B, printed: "Judges 1:8", he: "Judges 1:8"}],
+   dicta_lemmas: [{lemma: שלח, voice: active}, {lemma: משלח, voice: active}], flags: [template_ambiguous],
+   note: "Dicta never outputs שילח in Mikra: every שלח token is shared with שלח.S (class A) -> combined key, class not comparable"}
+# ============================================================ §6.1 Intensive B (15)
+- {id: חפה.I, root: חפה, template: Intensive, citation: חִפָּה, gloss: panel; overlay, class: B, status: core, list: "§6.1 Intensive B", putting_removal: PUTTING,
+   dicta_lemmas: [{lemma: חיפה, voice: active}], excluded_lemmas: [{lemma: חופה, why: "noun 'canopy'"}]}
+- {id: צפה.I, root: צפה, template: Intensive, citation: צִפָּה, gloss: overlay, class: B, status: core, list: "§6.1 Intensive B; ex. (7)", putting_removal: PUTTING,
+   paper_refs: [{where: "ex. (7)", frame: B, printed: "1Kings 6:15", he: "I Kings 6:15"}],
+   dicta_lemmas: [], shared_lemmas: [{lemma: ציפה, other: "ציפה 'expect / look out' (same spelling and template)"}], flags: [homograph_nonlexicon]}
+- {id: קרה.I, root: קרה, template: Intensive, citation: קֵרָה, gloss: roof with beams, class: B, status: core, list: "§6.1 Intensive B", putting_removal: PUTTING,
+   dicta_lemmas: [], flags: [no_own_lemma], excluded_lemmas: [{lemma: קרה, why: "Simple 'happen'"}, {lemma: קורה, why: "Simple participle 'happens' / noun 'beam'"}]}
+- {id: כסה.I, root: כסה, template: Intensive, citation: כִּסָּה, gloss: cover, class: B, status: core, list: "§6.1 Intensive B; ex. (59)", putting_removal: PUTTING,
+   paper_refs: [{where: "ex. (59)", use: mereological, printed: "Leviticus 16:13", he: "Leviticus 16:13", note: "Locatum-subject use, not a B instance"},
+                {where: "ex. (59)", frame: B, printed: "Numbers 4:11", he: "Numbers 4:11"}],
+   dicta_lemmas: [{lemma: כיסה, voice: active}, {lemma: כוסה, voice: passive}, {lemma: מכסה, voice: active}, {lemma: מכוסה, voice: passive}, {lemma: מתכסה, voice: middle}]}
+- {id: עטר.I, root: עטר, template: Intensive, citation: עִטֵּר, gloss: crown, class: B, status: core, list: "§6.1 Intensive B; ex. (64)", putting_removal: PUTTING,
+   paper_refs: [{where: "ex. (64)", frame: B, printed: "Psalms 8:4-5", he: "Psalms 8:6", note: "Hebrew ref (תהילים ח, ה-ו); the verb is in 8:6"},
+                {where: "fn 36 (ii)", use: cognate_object, printed: "Canticles 3:11", he: "Song of Songs 3:11", note: "possible Frame A with a cognate object; the paper does not count it"}],
+   dicta_lemmas: [{lemma: עוטר, voice: passive}, {lemma: עיטרו, voice: active}, {lemma: מעטר, voice: active}, {lemma: מעוטר, voice: passive}], flags: [odd_lemma_string]}
+- {id: רפד.I, root: רפד, template: Intensive, citation: רִפֵּד, gloss: lay (a bed), class: B, status: core, list: "§6.1 Intensive B", putting_removal: PUTTING,
+   dicta_lemmas: [{lemma: רפד, voice: active}, {lemma: מרופד, voice: passive}, {lemma: לרפד, voice: active}]}
+- {id: גשם.I, root: גשם, template: Intensive, citation: גִּשֵּׁם, gloss: rain, class: B, status: core, list: "§6.1 Intensive B; ex. (63)", putting_removal: PUTTING,
+   paper_refs: [{where: "ex. (63)", frame: B, printed: "Ezekiel 22:24", he: "Ezekiel 22:24", note: "passive גֻשְׁמָה"}],
+   dicta_lemmas: [], flags: [no_own_lemma], excluded_lemmas: [{lemma: הגשים, why: "MH Causative 'realize'"}, {lemma: התגשם, why: "MH 'materialize'"}]}
+- {id: ישב.I, root: ישב, template: Intensive, citation: יִשֵּׁב, gloss: populate, class: B, status: core, list: "§6.1 Intensive B", putting_removal: PUTTING,
+   dicta_lemmas: [{lemma: יישב, voice: active}],
+   excluded_lemmas: [{lemma: יושב, why: "Simple participle 'sitting'"}, {lemma: התיישב, why: "mostly 'sat down / settled' (intransitive)"}]}
+- {id: דשן.I, root: דשן, template: Intensive, citation: דִּשֵּׁן, gloss: oil; take away fatty ashes, class: B, status: core, list: "§6.1 Intensive B; ex. (67)", putting_removal: BOTH,
+   paper_refs: [{where: "ex. (67)", use: putting, printed: "Psalms 23:5", he: "Psalms 23:5"}, {where: "ex. (67)", use: removal, printed: "Numbers 4:13", he: "Numbers 4:13"}],
+   dicta_lemmas: [{lemma: דשן, voice: active}]}
+- {id: סקל.I, root: סקל, template: Intensive, citation: סִקֵּל, gloss: hurl stones; clear of stones, class: B, status: core, list: "§6.1 Intensive B; ex. (66)", putting_removal: BOTH,
+   paper_refs: [{where: "ex. (66)", use: putting, printed: "1Kings 21:14", he: "I Kings 21:14", note: "passive סֻקַּל"}, {where: "ex. (66)", use: removal, printed: "Isaiah 62:10", he: "Isaiah 62:10"}],
+   dicta_lemmas: [], shared_lemmas: [{lemma: סקל, other: "Simple סקל 'stone' (not in the lexicon)"}]}
+- {id: שרש.I, root: שרש, template: Intensive, citation: שֵׁרֵשׁ, gloss: uproot; make take/lose root, class: B, status: core, list: "§6.1 Intensive B; ex. (68); fn 5", putting_removal: BOTH,
+   paper_refs: [{where: "ex. (68)", use: putting, printed: "Jeremiah 12:2", he: "Jeremiah 12:2"}, {where: "ex. (68)", use: removal, printed: "Job 31:8", he: "Job 31:8"},
+                {where: "fn 5", use: two_arguments, printed: "Psalms 52:5", he: "Psalms 52:7", note: "Hebrew numbering; with נסח"}],
+   dicta_lemmas: [{lemma: שירש, voice: active}, {lemma: השתרש, voice: middle}], excluded_lemmas: [{lemma: שורש, why: "noun 'root'"}]}
+- {id: טמא.I, root: טמא, template: Intensive, citation: טִמֵּא, gloss: defile, class: B, status: core, list: "§6.1 Intensive B; ex. (60)", putting_removal: PUTTING,
+   paper_refs: [{where: "ex. (60)", use: mereological, printed: "Ezekiel 22:4", he: "Ezekiel 22:4", note: "Location-subject Simple טָמֵאת, not a B instance"},
+                {where: "ex. (60)", frame: B, printed: "Ezekiel 36:18", he: "Ezekiel 36:18"}],
+   dicta_lemmas: [{lemma: מטמא, voice: active}], flags: [], excluded_lemmas: [{lemma: טמא, why: "Simple 'become impure' (the mereological base)"}, {lemma: נטמא, why: "Simple-template middle"}]}
+- {id: טהר.I, root: טהר, template: Intensive, citation: טִהַר, gloss: cleanse; purify, class: B, status: core, list: "§6.1 Intensive B; ex. (57); fn 32", putting_removal: REMOVAL,
+   paper_refs: [{where: "ex. (57)", frame: B, printed: "Leviticus 16:18-19", he: "Leviticus 16:19"},
+                {where: "fn 32 (i)", use: pronounce_pure, printed: "Leviticus 13:17", he: "Leviticus 13:17", note: "Frame A form but 'pronounce pure'; the paper does not count it as alternation"}],
+   dicta_lemmas: [{lemma: מטהר, voice: active}], flags: [], excluded_lemmas: [{lemma: טהר, why: "Simple 'become pure'"}, {lemma: טוהר, why: "noun 'purity'"}]}
+- {id: קדש.I, root: קדש, template: Intensive, citation: קִדֵּשׁ, gloss: sanctify; cleanse, class: B, status: core, list: "§6.1 Intensive B; ex. (56), (57)", putting_removal: REMOVAL,
+   paper_refs: [{where: "ex. (56)", frame: B, printed: "2 Samuel 11, 4", he: "II Samuel 11:4", note: "middle מִתְקַדֶּשֶׁת"}, {where: "ex. (57)", frame: B, printed: "Leviticus 16:18-19", he: "Leviticus 16:19"}],
+   dicta_lemmas: [{lemma: קידש, voice: active}, {lemma: מקדש, voice: active}, {lemma: מקודש, voice: passive}, {lemma: מקדשת, voice: active}], excluded_lemmas: [{lemma: קודש, why: "noun 'holiness'"}, {lemma: הקדיש, why: "Causative 'dedicate'"}]}
+- {id: חסר.I, root: חסר, template: Intensive, citation: חִסֵּר, gloss: deprive, class: B, status: core, list: "§6.1 Intensive B; ex. (8)/(55)", putting_removal: REMOVAL,
+   paper_refs: [{where: "ex. (8)/(55)", frame: B, printed: "Ecclasiastes 4:8", he: "Ecclesiastes 4:8"}],
+   dicta_lemmas: [{lemma: מחסר, voice: active}], flags: [template_ambiguous], excluded_lemmas: [{lemma: חסר, why: "Simple 'lack'"}, {lemma: חוסר, why: "noun 'lack'"}]}
+# ============================================================ fn 33 Simple A/B (31)
+- {id: אסף.S, root: אסף, template: Simple, citation: אסף, gloss: gather, class: A/B, status: core, list: "fn 33 Simple A/B; ex. (36); Table 1", putting_removal: BOTH,
+   paper_refs: [{where: "ex. (36a)", frame: A, printed: "Isaiah 16:10", he: "Isaiah 16:10", note: "passive"}, {where: "ex. (36b)", frame: B, printed: "2Kings 5:6", he: "II Kings 5:6"},
+                {where: "Table 1", use: putting, printed: "1Samuel 5:8", he: "I Samuel 5:8"}, {where: "Table 1", use: removal, printed: "Ezekiel 11:17", he: "Ezekiel 11:17"}],
+   dicta_lemmas: [{lemma: אסף, voice: active}, {lemma: נאסף, voice: passive}],
+   mh: {prediction: lost_frame_A_survives, ref: "§8.2"}}
+- {id: זרע.S, root: זרע, template: Simple, citation: זרע, gloss: sow, class: A/B, status: core, list: "fn 33 Simple A/B; ex. (23)", putting_removal: PUTTING,
+   paper_refs: [{where: "ex. (23a)", frame: A, printed: "Jeremiah 12:13", he: "Jeremiah 12:13"}, {where: "ex. (23b)", frame: B, printed: "Judges 9:45", he: "Judges 9:45", note: "bare Locatum מלח (fn 21)"}],
+   dicta_lemmas: [{lemma: זרע, voice: active}, {lemma: זורע, voice: active}],
+   mh: {prediction: preserved_alternation, ref: "§8.2"}}
+- {id: חבש.S, root: חבש, template: Simple, citation: חבש, gloss: wrap, class: A/B, status: core, list: "fn 33 Simple A/B", putting_removal: UNKNOWN,
+   dicta_lemmas: [{lemma: חבש, voice: active}], excluded_lemmas: [{lemma: חובש, why: "MH noun 'medic'"}]}
+- {id: טוח.S, root: טוח, template: Simple, citation: טח, gloss: plaster, class: A/B, status: core, list: "fn 33 Simple A/B; ex. (24)", putting_removal: PUTTING,
+   paper_refs: [{where: "ex. (24a)", frame: A, printed: "Ezekiel 13:12", he: "Ezekiel 13:12"}, {where: "ex. (24b)", frame: B, printed: "Ezekiel 13:14", he: "Ezekiel 13:14", note: "bare Locatum תפל (fn 23)"}],
+   dicta_lemmas: [{lemma: טח, voice: active}]}
+- {id: ירה.S, root: ירה, template: Simple, citation: ירה, gloss: shoot, class: A/B, status: core, list: "fn 33 Simple A/B; ex. (26)", putting_removal: PUTTING,
+   paper_refs: [{where: "ex. (26a)", frame: A, printed: "1Samuel 20:36", he: "I Samuel 20:36"}, {where: "ex. (26b)", frame: B, printed: "Psalms 64:5", he: "Psalms 64:5"}],
+   dicta_lemmas: [{lemma: ירה, voice: active}, {lemma: נורה, voice: passive}, {lemma: יורה, voice: active}],
+   mh: {prediction: lost_frame_A_survives, ref: "§8.2"}}
+- {id: משח.S, root: משח, template: Simple, citation: משח, gloss: anoint, class: A/B, status: core, list: "fn 33 Simple A/B; ex. (25)", putting_removal: PUTTING,
+   paper_refs: [{where: "ex. (25a)", frame: A, printed: "Amos 6:6", he: "Amos 6:6"}, {where: "ex. (25b)", frame: B, printed: "Psalms 89:21", he: "Psalms 89:21"}],
+   dicta_lemmas: [{lemma: משח, voice: active}, {lemma: למשוח, voice: active}],
+   mh: {prediction: preserved_alternation, ref: "§8.2"}}
+- {id: סכך.S, root: סכך, template: Simple, citation: סכך, gloss: thatch, class: A/B, status: core, list: "fn 33 Simple A/B; ex. (28)", putting_removal: PUTTING,
+   paper_refs: [{where: "ex. (28a)", frame: A, printed: "Exodus 33:22", he: "Exodus 33:22", note: "spelled with ש: וְשַׂכֹּתִי"}, {where: "ex. (28b)", frame: B, printed: "Psalms 139:13", he: "Psalms 139:13"}],
+   dicta_lemmas: [{lemma: סכך, voice: active}], flags: [homograph],
+   excluded_lemmas: [{lemma: שכך, why: "MH 'abate' (שָׁכַךְ)"}]}
+- {id: עמס.S, root: עמס, template: Simple, citation: עמס, gloss: load, class: A/B, status: core, list: "fn 33 Simple A/B; ex. (27)", putting_removal: PUTTING,
+   paper_refs: [{where: "ex. (27a)", frame: A, printed: "Nehemiah 13:15", he: "Nehemiah 13:15"}, {where: "ex. (27b)", frame: B, printed: "Isaiah 46:1", he: "Isaiah 46:1", note: "passive participle עֲמוּסוֹת"}],
+   dicta_lemmas: [{lemma: העמיס, voice: active}], flags: [template_mismatch_variant],
+   note: "Dicta outputs the MH Causative lemma העמיס for these forms; the BH verb is Simple"}
+- {id: רגם.S, root: רגם, template: Simple, citation: רגם, gloss: stone, class: A/B, status: core, list: "fn 33 Simple A/B; ex. (11)", putting_removal: PUTTING,
+   paper_refs: [{where: "ex. (11a)", frame: A, printed: "1Kings 12:18", he: "I Kings 12:18"},
+                {where: "ex. (11b)", frame: B, printed: "Leviticus 20:24", he: "Leviticus 20:27", note: "printed (ויקרא כ, כד) in Hebrew and English; the quoted verse (… באבן ירגמו אתם) is 20:27"}],
+   dicta_lemmas: [], flags: [no_own_lemma], excluded_lemmas: [{lemma: תרגם, why: "'translate' (unrelated)"}]}
+- {id: שים.S, root: שים, template: Simple, citation: שם, gloss: put, class: A/B, status: core, list: "fn 33 Simple A/B; ex. (5), (21), (22)", putting_removal: PUTTING,
+   paper_refs: [{where: "ex. (5)", frame: A, printed: "Deuteronomy 7:15", he: "Deuteronomy 7:15"}, {where: "ex. (21a)", frame: A, printed: "Judges 6:19", he: "Judges 6:19", note: "two instances"},
+                {where: "ex. (21b)", frame: B, printed: "2Kings 9:30", he: "II Kings 9:30"}, {where: "ex. (22)", frame: A, printed: "Ezekiel 5:5", he: "Ezekiel 5:5"}],
+   dicta_lemmas: [{lemma: שם, voice: active}, {lemma: הושם, voice: passive}],
+   nonlocative_idioms: [{noun: לב, note: "שם לב 'pay attention'"}],
+   mh: {prediction: lost_frame_A_survives, ref: "§8.2"}}
+- {id: שית.S, root: שית, template: Simple, citation: שת, gloss: set, class: A/B, status: core, list: "fn 33 Simple A/B; fn 9", putting_removal: PUTTING,
+   paper_refs: [{where: "fn 9 (i)", frame: A, printed: "Psalms 12:5", he: "Psalms 12:6", note: "object elided (antecedent in a previous clause); Hebrew ref (תהילים יב, ו)"}],
+   dicta_lemmas: [{lemma: שת, voice: active}]}
+- {id: ארה.S, root: ארה, template: Simple, citation: ארה, gloss: gather/pluck, class: A/B, status: core, list: "fn 33 Simple A/B", putting_removal: UNKNOWN,
+   dicta_lemmas: [{lemma: ארה, voice: active}]}
+- {id: בזז.S, root: בזז, template: Simple, citation: בזז, gloss: plunder, class: A/B, status: core, list: "fn 33 Simple A/B; ex. (48)", putting_removal: REMOVAL,
+   paper_refs: [{where: "ex. (48a)", frame: A, printed: "Genesis 34:29", he: "Genesis 34:29"}, {where: "ex. (48b)", frame: B, printed: "2 Kings 7:16", he: "II Kings 7:16"}],
+   dicta_lemmas: [{lemma: בזזו, voice: active}], shared_lemmas: [{lemma: בז, other: "בז 'despise' (root בוז)"}],
+   mh: {prediction: preserved_alternation, ref: "§8.2"}}
+- {id: בצר.S, root: בצר, template: Simple, citation: בצר, gloss: gather grapes, class: A/B, status: core, list: "fn 33 Simple A/B; ex. (37)", putting_removal: REMOVAL,
+   paper_refs: [{where: "ex. (37a)", frame: A, printed: "Levituicus 25:5", he: "Leviticus 25:5"}, {where: "ex. (37b)", frame: B, printed: "Judges 9:27", he: "Judges 9:27"}],
+   dicta_lemmas: [{lemma: בצר, voice: active}], excluded_lemmas: [{lemma: נבצר, why: "MH 'be impossible for'"}]}
+- {id: גזז.S, root: גזז, template: Simple, citation: גזז, gloss: shear, class: A/B, status: core, list: "fn 33 Simple A/B; ex. (38)", putting_removal: REMOVAL,
+   paper_refs: [{where: "ex. (38a)", frame: A, printed: "Jeremiah 7:29", he: "Jeremiah 7:29"}, {where: "ex. (38b)", frame: B, printed: "Genesis 31:19", he: "Genesis 31:19"}],
+   dicta_lemmas: [], shared_lemmas: [{lemma: גז, other: "גז 'pass away' (root גוז)"}]}
+- {id: גזל.S, root: גזל, template: Simple, citation: גזל, gloss: rob, class: A/B, status: core, list: "fn 33 Simple A/B; ex. (49)", putting_removal: REMOVAL,
+   paper_refs: [{where: "ex. (49a)", frame: A, printed: "2 Samuel 23:21", he: "II Samuel 23:21"}, {where: "ex. (49b)", frame: B, printed: "Proverbs 28:24", he: "Proverbs 28:24"}],
+   dicta_lemmas: [{lemma: גזל, voice: active}, {lemma: נגזל, voice: passive}, {lemma: גוזל, voice: active}, {lemma: שגזל, voice: active}, {lemma: גזלה, voice: active}],
+   mh: {prediction: lost_frame_A_survives, ref: "§8.2"}}
+- {id: חשך.S, root: חשך, template: Simple, citation: חשך, gloss: spare; withhold, class: A/B, status: core, list: "fn 33 Simple A/B; ex. (54)", putting_removal: REMOVAL,
+   paper_refs: [{where: "ex. (54a)", frame: A, printed: "Genesis 22:12", he: "Genesis 22:12"}, {where: "ex. (54b)", frame: B, printed: "Psalms 19:13", he: "Psalms 19:14", note: "Hebrew ref (תהילים יט, יד)"}],
+   dicta_lemmas: [{lemma: חשך, voice: active}], flags: [homograph_nonlexicon], note: "חשך is also 'grow dark'",
+   mh: {prediction: lost_frame_A_survives, ref: "§8.2 (MH spelling חסך: see חסך.S)"}}
+- {id: חשף.S, root: חשף, template: Simple, citation: חשף, gloss: bare, class: A/B, status: core, list: "fn 33 Simple A/B", putting_removal: UNKNOWN,
+   dicta_lemmas: [{lemma: חשף, voice: active}, {lemma: נחשף, voice: passive}], flags: [mh_meaning_shift], note: "MH 'expose/reveal'"}
+- {id: ינק.S, root: ינק, template: Simple, citation: ינק, gloss: suck, class: A/B, status: core, list: "fn 33 Simple A/B", putting_removal: UNKNOWN,
+   dicta_lemmas: [{lemma: ינק, voice: active}]}
+- {id: ירש.S, root: ירש, template: Simple, citation: ירש, gloss: get/inherit, class: A/B, status: core, list: "fn 33 Simple A/B", putting_removal: UNKNOWN,
+   dicta_lemmas: [{lemma: ירש, voice: active}]}
+- {id: מחה.S, root: מחה, template: Simple, citation: מחה, gloss: wipe, class: A/B, status: core, list: "fn 33 Simple A/B; ex. (43)", putting_removal: REMOVAL,
+   paper_refs: [{where: "ex. (43a)", frame: A, printed: "Isaiah 25:8", he: "Isaiah 25:8"}, {where: "ex. (43b)", frame: B, printed: "2 Kings 21:13", he: "II Kings 21:13"}],
+   dicta_lemmas: [{lemma: מחה, voice: active}], flags: [homograph_nonlexicon], note: "MH מחה is mostly 'protest' (same spelling)",
+   mh: {prediction: lost_frame_A_survives, ref: "§8.2"}}
+- {id: מנע.S, root: מנע, template: Simple, citation: מנע, gloss: withhold, class: A/B, status: core, list: "fn 33 Simple A/B; ex. (13)", putting_removal: REMOVAL,
+   paper_refs: [{where: "ex. (13a)", frame: A, printed: "Genesis 30:2", he: "Genesis 30:2"}, {where: "ex. (13b)", frame: B, printed: "Ecclasiastes 2:10", he: "Ecclesiastes 2:10"}],
+   dicta_lemmas: [{lemma: מנע, voice: active}, {lemma: נמנע, voice: middle}, {lemma: מונע, voice: active}, {lemma: ימנע, voice: active}],
+   mh: {prediction: preserved_alternation, ref: "§8.2"}}
+- {id: מרט.S, root: מרט, template: Simple, citation: מרט, gloss: pluck, class: A/B, status: core, list: "fn 33 Simple A/B; ex. (40)", putting_removal: REMOVAL,
+   paper_refs: [{where: "ex. (40a)", frame: A, printed: "Ezra 9, 3", he: "Ezra 9:3", note: "mi- is partitive (fn 27): hair is the direct object"}, {where: "ex. (40b)", frame: B, printed: "Nehemiah 13:25", he: "Nehemiah 13:25"}],
+   dicta_lemmas: [{lemma: מרט, voice: active}, {lemma: מורט, voice: active}]}
+- {id: עצר.S, root: עצר, template: Simple, citation: עצר, gloss: stop, class: A/B, status: core, list: "fn 33 Simple A/B; ex. (53)", putting_removal: REMOVAL,
+   paper_refs: [{where: "ex. (53a)", frame: A, printed: "Numbers 25:8", he: "Numbers 25:8", note: "passive"}, {where: "ex. (53b)", frame: B, printed: "Genesis 16:2", he: "Genesis 16:2", note: "fn 31 on the reading"}],
+   dicta_lemmas: [{lemma: עצר, voice: active}, {lemma: נעצר, voice: passive}, {lemma: עוצר, voice: active}, {lemma: יעצור, voice: active}, {lemma: עצרו, voice: active}], flags: [mh_meaning_shift], note: "MH also 'arrest'"}
+- {id: עשק.S, root: עשק, template: Simple, citation: עשק, gloss: exploit, class: A/B, status: core, list: "fn 33 Simple A/B; ex. (50)", putting_removal: REMOVAL,
+   paper_refs: [{where: "ex. (50a)", frame: A, printed: "Malachi 3:5", he: "Malachi 3:5"}, {where: "ex. (50b)", frame: B, printed: "1Samuel 12:3", he: "I Samuel 12:3"}],
+   dicta_lemmas: [{lemma: עושק, voice: active}, {lemma: העושק, voice: active}], flags: [odd_lemma_string], note: "Dicta's lemma string is the participle עושק"}
+- {id: פרק.S, root: פרק, template: Simple, citation: פרק, gloss: remove yoke/rescue, class: A/B, status: core, list: "fn 33 Simple A/B; ex. (12)", putting_removal: REMOVAL,
+   paper_refs: [{where: "ex. (12a)", frame: A, printed: "Genesis 27:40", he: "Genesis 27:40"}, {where: "ex. (12b)", frame: B, printed: "Psalms 136: 23-24", he: "Psalms 136:24"}],
+   dicta_lemmas: [{lemma: פרק, voice: active}],
+   mh: {prediction: preserved_alternation, ref: "§8.2 (MH פירק 'unload': see פרק.I)"}}
+- {id: קצר.S, root: קצר, template: Simple, citation: קצר, gloss: harvest, class: A/B, status: core, list: "fn 33 Simple A/B", putting_removal: UNKNOWN,
+   dicta_lemmas: [{lemma: קצר, voice: active}, {lemma: קוצר, voice: active}], flags: [homograph_nonlexicon], note: "קצר is also 'be short'"}
+- {id: רחץ.S, root: רחץ, template: Simple, citation: רחץ, gloss: wash, class: A/B, status: core, list: "fn 33 Simple A/B; ex. (41)", putting_removal: REMOVAL,
+   paper_refs: [{where: "ex. (41a)", frame: A, printed: "Isaiah 4:4", he: "Isaiah 4:4"}, {where: "ex. (41b)", frame: B, printed: "Leviticus 14:9", he: "Leviticus 14:9"}],
+   dicta_lemmas: [{lemma: רוחץ, voice: active}], flags: [odd_lemma_string], note: "Dicta's lemma string is the participle רוחץ",
+   excluded_lemmas: [{lemma: התרחץ, why: "Intensive-template middle 'bathe' (not this entry)"}],
+   mh: {prediction: preserved_alternation, ref: "§8.2"}}
+- {id: רפא.S, root: רפא, template: Simple, citation: רפא, gloss: heal, class: A/B, status: core, list: "fn 33 Simple A/B; ex. (44); fn 28", putting_removal: REMOVAL,
+   paper_refs: [{where: "ex. (44a)", frame: A, printed: "Leviticus 14:3", he: "Leviticus 14:3", note: "passive"}, {where: "ex. (44b)", frame: B, printed: "Jeremiah 30:17", he: "Jeremiah 30:17"}],
+   dicta_lemmas: [{lemma: רפא, voice: active}, {lemma: נרפא, voice: passive}], flags: [template_ambiguous],
+   note: "fn 28: most BH occurrences of this root are Intensive (ריפא, see רפא.I)",
+   mh: {prediction: preserved_alternation, ref: "§8.2 (MH ריפא: see רפא.I)"}}
+- {id: שטף.S, root: שטף, template: Simple, citation: שטף, gloss: flow over; rinse, class: A/B, status: core, list: "fn 33 Simple A/B; ex. (42); §8.1", putting_removal: BOTH,
+   paper_refs: [{where: "ex. (42a)", frame: A, printed: "Ezekiel 16:9", he: "Ezekiel 16:9", note: "Hebrew ref printed (יחזקאל טז, ז); the quoted words are 16:9"},
+                {where: "ex. (42b)", frame: B, printed: "Leviticus 15:11", he: "Leviticus 15:11"}],
+   dicta_lemmas: [{lemma: שטף, voice: active}, {lemma: נשטף, voice: passive}, {lemma: שוטף, voice: active}, {lemma: שטפו, voice: active}],
+   mh: {prediction: preserved_alternation, ref: "§8.2; §8.1 also lists it as an MH manner alternator usable as putting"}}
+- {id: שדד.S, root: שדד, template: Simple, citation: שדד, gloss: rob/devastate, class: A/B, status: core, list: "fn 33 Simple A/B", putting_removal: UNKNOWN,
+   dicta_lemmas: [{lemma: שדד, voice: active}, {lemma: נשדד, voice: passive}, {lemma: שודד, voice: active}]}
+# ============================================================ fn 33 Simple A (46)
+- {id: אסר.S, root: אסר, template: Simple, citation: אסר, gloss: bind; harness, class: A, status: core, list: "fn 33 Simple A; ex. (33)", putting_removal: PUTTING,
+   paper_refs: [{where: "ex. (33a)", frame: A, printed: "1 Samuel 6:7", he: "I Samuel 6:7"}, {where: "ex. (33b)", frame: B, printed: "Genesis 46:29", he: "Genesis 46:29"}],
+   dicta_lemmas: [{lemma: אסר, voice: active}, {lemma: נאסר, voice: passive}, {lemma: אוסר, voice: active}, {lemma: יאסר, voice: active}], flags: [paper_conflict, mh_meaning_shift],
+   note: "Listed as A (fn 33) but shown as A/B in ex. (33); class A per Ori (2026-11-19); compared under both readings. MH אסר = forbid/arrest."}
+- {id: אצר.S, root: אצר, template: Simple, citation: אצר, gloss: gather/store up, class: A, status: core, list: "fn 33 Simple A", putting_removal: UNKNOWN,
+   dicta_lemmas: [{lemma: אצר, voice: active}]}
+- {id: גלל.S, root: גלל, template: Simple, citation: גלל, gloss: roll, class: A, status: core, list: "fn 33 Simple A; fn 37", putting_removal: UNKNOWN,
+   paper_refs: [{where: "fn 37 (i)", frame: A, printed: "Joshua 10:18", he: "Joshua 10:18"}, {where: "fn 37 (ii)", frame: A, printed: "Genesis 29:10", he: "Genesis 29:10"}],
+   dicta_lemmas: [], flags: [no_own_lemma]}
+- {id: זרה.S, root: זרה, template: Simple, citation: זרה, gloss: blow off; winnow, class: A, status: core, list: "fn 33 Simple A; fn 7", putting_removal: UNKNOWN,
+   paper_refs: [{where: "fn 7 (i)", frame: A, printed: "Jeremiah 15:7", he: "Jeremiah 15:7", note: "instrument b- (במזרה) with a Location b- (בשערי הארץ)"}],
+   dicta_lemmas: [], flags: [no_own_lemma, template_ambiguous]}
+- {id: זרק.S, root: זרק, template: Simple, citation: זרק, gloss: toss/sprinkle, class: A, status: core, list: "fn 33 Simple A; Table 1", putting_removal: BOTH,
+   paper_refs: [{where: "Table 1", use: putting, printed: "Leviticus 1:5", he: "Leviticus 1:5"}, {where: "Table 1", use: removal, printed: "2Chronicles 35, 11", he: "II Chronicles 35:11"}],
+   dicta_lemmas: [{lemma: זרק, voice: active}, {lemma: נזרק, voice: passive}, {lemma: זורק, voice: active}, {lemma: וזרק, voice: active}, {lemma: זרקו, voice: active}]}
+- {id: טבל.S, root: טבל, template: Simple, citation: טבל, gloss: dip, class: A, status: core, list: "fn 33 Simple A; fn 16", putting_removal: UNKNOWN,
+   paper_refs: [{where: "fn 16", use: intransitive, printed: "2Kings 5:14", he: "II Kings 5:14"}, {where: "fn 16", use: transitive, printed: "Ruth 2:14", he: "Ruth 2:14"}],
+   dicta_lemmas: [{lemma: טבל, voice: active}, {lemma: טובל, voice: active}, {lemma: טבלו, voice: active}]}
+- {id: טמן.S, root: טמן, template: Simple, citation: טמן, gloss: hide, class: A, status: core, list: "fn 33 Simple A", putting_removal: UNKNOWN,
+   dicta_lemmas: [{lemma: טמן, voice: active}, {lemma: נטמן, voice: passive}, {lemma: טומן, voice: active}]}
+- {id: יצק.S, root: יצק, template: Simple, citation: יצק, gloss: pour, class: A, status: core, list: "fn 33 Simple A", putting_removal: UNKNOWN,
+   dicta_lemmas: [{lemma: יצק, voice: active}, {lemma: יוצק, voice: active}]}
+- {id: לחץ.S, root: לחץ, template: Simple, citation: לחץ, gloss: push, class: A, status: core, list: "fn 33 Simple A", putting_removal: UNKNOWN,
+   dicta_lemmas: [{lemma: לחץ, voice: active}, {lemma: נלחץ, voice: passive}, {lemma: לוחץ, voice: active}, {lemma: לחצה, voice: active}, {lemma: לחצו, voice: active}, {lemma: ולחץ, voice: active}]}
+- {id: מרח.S, root: מרח, template: Simple, citation: מרח, gloss: spread, class: A, status: core, list: "fn 33 Simple A", putting_removal: UNKNOWN,
+   dicta_lemmas: [{lemma: מרח, voice: active}, {lemma: נמרח, voice: passive}, {lemma: מורח, voice: active}, {lemma: ומרח, voice: active}]}
+- {id: נטע.S, root: נטע, template: Simple, citation: נטע, gloss: plant, class: A, status: core, list: "fn 33 Simple A", putting_removal: UNKNOWN,
+   dicta_lemmas: [{lemma: נטע, voice: active}, {lemma: ניטע, voice: passive}]}
+- {id: נטש.S, root: נטש, template: Simple, citation: נטש, gloss: abandon, class: A, status: core, list: "fn 33 Simple A", putting_removal: UNKNOWN,
+   dicta_lemmas: [{lemma: נטש, voice: active}, {lemma: ניטש, voice: passive}, {lemma: נוטש, voice: active}, {lemma: ננטש, voice: passive}]}
+- {id: נפח.S, root: נפח, template: Simple, citation: נפח, gloss: blow, class: A, status: core, list: "fn 33 Simple A; ex. (3)", putting_removal: PUTTING,
+   paper_refs: [{where: "ex. (3)", frame: A, printed: "Genesis 2:7", he: "Genesis 2:7"}],
+   dicta_lemmas: [{lemma: נפח, voice: active}], excluded_lemmas: [{lemma: ניפח, why: "MH Intensive 'inflate'"}]}
+- {id: נסך.S, root: נסך, template: Simple, citation: נסך, gloss: pour, class: A, status: core, list: "fn 33 Simple A", putting_removal: UNKNOWN,
+   dicta_lemmas: [{lemma: נסך, voice: active}]}
+- {id: נתן.S, root: נתן, template: Simple, citation: נתן, gloss: put/give, class: A, status: core, list: "fn 33 Simple A; ex. (5)", putting_removal: PUTTING,
+   paper_refs: [{where: "ex. (5)", frame: A, printed: "Deuteronomy 7:15", he: "Deuteronomy 7:15"}],
+   dicta_lemmas: [{lemma: נתן, voice: active}, {lemma: נותן, voice: active}, {lemma: ניתן, voice: passive}]}
+- {id: סחב.S, root: סחב, template: Simple, citation: סחב, gloss: drag, class: A, status: core, list: "fn 33 Simple A; fn 37; §8.1", putting_removal: UNKNOWN,
+   paper_refs: [{where: "fn 37 (iii)", frame: A, printed: "2Samuel 17:13", he: "II Samuel 17:13"}],
+   dicta_lemmas: [{lemma: סחב, voice: active}, {lemma: סוחב, voice: active}]}
+- {id: עזב.S, root: עזב, template: Simple, citation: עזב, gloss: leave, class: A, status: core, list: "fn 33 Simple A", putting_removal: UNKNOWN,
+   dicta_lemmas: [{lemma: עזב, voice: active}, {lemma: עוזב, voice: active}, {lemma: כשעזב, voice: active}]}
+- {id: פרש.S, root: פרש, template: Simple, citation: פרש, gloss: stretch out, class: A, status: core, list: "fn 33 Simple A", putting_removal: UNKNOWN,
+   dicta_lemmas: [{lemma: פרש, voice: active}, {lemma: נפרש, voice: passive}, {lemma: פורש, voice: active}], flags: [homograph_nonlexicon], note: "MH פרש is also 'retire / withdraw'"}
+- {id: צפן.S, root: צפן, template: Simple, citation: צפן, gloss: hide, class: A, status: core, list: "fn 33 Simple A", putting_removal: UNKNOWN,
+   dicta_lemmas: [], flags: [no_own_lemma]}
+- {id: צרר.S, root: צרר, template: Simple, citation: צרר, gloss: wrap, class: A, status: core, list: "fn 33 Simple A", putting_removal: UNKNOWN,
+   dicta_lemmas: [], flags: [no_own_lemma]}
+- {id: קבר.S, root: קבר, template: Simple, citation: קבר, gloss: bury, class: A, status: core, list: "fn 33 Simple A", putting_removal: UNKNOWN,
+   dicta_lemmas: [{lemma: קבר, voice: active}, {lemma: נקבר, voice: passive}, {lemma: קובר, voice: active}, {lemma: קברה, voice: active}]}
+- {id: קרם.S, root: קרם, template: Simple, citation: קרם, gloss: cover with skin, class: A, status: core, list: "fn 33 Simple A; fn 16", putting_removal: UNKNOWN,
+   paper_refs: [{where: "fn 16", use: intransitive, printed: "Ezekiel 37:8", he: "Ezekiel 37:8"}, {where: "fn 16", use: transitive, printed: "Ezekiel 37:6", he: "Ezekiel 37:6"}],
+   dicta_lemmas: [{lemma: קרם, voice: active}]}
+- {id: קשר.S, root: קשר, template: Simple, citation: קשר, gloss: tie, class: A, status: core, list: "fn 33 Simple A", putting_removal: UNKNOWN,
+   dicta_lemmas: [{lemma: קשר, voice: active}, {lemma: נקשר, voice: passive}, {lemma: קושר, voice: active}],
+   nonlocative_idioms: [{noun: קשר, note: "קשר קשר 'conspire' (cognate object)"}]}
+- {id: שלח.S, root: שלח, template: Simple, citation: שלח, gloss: send, class: A, status: core, list: "fn 33 Simple A", putting_removal: UNKNOWN,
+   dicta_lemmas: [{lemma: שלח, voice: active}, {lemma: שולח, voice: active}, {lemma: נשלח, voice: passive}], flags: [template_ambiguous],
+   nonlocative_idioms: [{noun: יד, note: "שלח יד (ב) 'attack / lay a hand on'"}]}
+- {id: תלה.S, root: תלה, template: Simple, citation: תלה, gloss: hang, class: A, status: core, list: "fn 33 Simple A", putting_removal: UNKNOWN,
+   dicta_lemmas: [{lemma: תלה, voice: active}, {lemma: נתלה, voice: passive}, {lemma: תולה, voice: active}]}
+- {id: תקע.S, root: תקע, template: Simple, citation: תקע, gloss: drive in, class: A, status: core, list: "fn 33 Simple A", putting_removal: UNKNOWN,
+   dicta_lemmas: [{lemma: תקע, voice: active}, {lemma: נתקע, voice: passive}, {lemma: תוקע, voice: active}, {lemma: יתקע, voice: active}, {lemma: תקעו, voice: active}],
+   nonlocative_idioms: [{noun: שופר, note: "blow the horn"}, {noun: תרועה, note: "sound a blast"}, {noun: כף, note: "strike hands (pledge)"}]}
+- {id: גנב.S, root: גנב, template: Simple, citation: גנב, gloss: steal, class: A, status: core, list: "fn 33 Simple A", putting_removal: UNKNOWN,
+   dicta_lemmas: [{lemma: גנב, voice: active}, {lemma: נגנב, voice: passive}, {lemma: גונב, voice: active}, {lemma: גנבה, voice: active}, {lemma: גנבו, voice: active}, {lemma: שגנב, voice: active}]}
+- {id: גרע.S, root: גרע, template: Simple, citation: גרע, gloss: take/lessen, class: A, status: core, list: "fn 33 Simple A", putting_removal: UNKNOWN,
+   dicta_lemmas: [{lemma: גרע, voice: active}, {lemma: נגרע, voice: passive}, {lemma: גורע, voice: active}, {lemma: יגרע, voice: active}]}
+- {id: דלה.S, root: דלה, template: Simple, citation: דלה, gloss: draw water, class: A, status: core, list: "fn 33 Simple A", putting_removal: UNKNOWN,
+   dicta_lemmas: [{lemma: דלה, voice: active}]}
+- {id: הדף.S, root: הדף, template: Simple, citation: הדף, gloss: push, class: A, status: core, list: "fn 33 Simple A", putting_removal: UNKNOWN,
+   dicta_lemmas: [{lemma: הדף, voice: active}, {lemma: נהדף, voice: passive}, {lemma: הדפו, voice: active}]}
+- {id: חבל.S, root: חבל, template: Simple, citation: חבל, gloss: seize a pledge, class: A, status: core, list: "fn 33 Simple A", putting_removal: UNKNOWN,
+   dicta_lemmas: [{lemma: חבל, voice: active}], flags: [homograph_nonlexicon], note: "חבל is also 'damage' and the noun 'rope'"}
+- {id: חלץ.S, root: חלץ, template: Simple, citation: חלץ, gloss: withdraw/bare, class: A, status: core, list: "fn 33 Simple A", putting_removal: UNKNOWN,
+   dicta_lemmas: [{lemma: חלץ, voice: active}], flags: [template_ambiguous]}
+- {id: כרת.S, root: כרת, template: Simple, citation: כרת, gloss: cut off, class: A, status: core, list: "fn 33 Simple A", putting_removal: UNKNOWN,
+   dicta_lemmas: [{lemma: כרת, voice: active}, {lemma: נכרת, voice: passive}], flags: [template_ambiguous],
+   nonlocative_idioms: [{noun: ברית, note: "כרת ברית 'make a covenant'"}]}
+- {id: לקח.S, root: לקח, template: Simple, citation: לקח, gloss: take, class: A, status: core, list: "fn 33 Simple A; fn 7 (vi)", putting_removal: UNKNOWN,
+   paper_refs: [{where: "fn 7 (vi)", frame: A, printed: "Judges 11:13", he: "Judges 11:13", note: "depictive Locatum b- elsewhere in the verse"}],
+   dicta_lemmas: [{lemma: לקח, voice: active}, {lemma: לוקח, voice: active}, {lemma: נלקח, voice: passive}, {lemma: לקחתי, voice: active}, {lemma: לקחה, voice: active}, {lemma: לקחנו, voice: active}],
+   nonlocative_idioms: [{noun: אשה, note: "לקח אשה 'marry'"}]}
+- {id: לקט.S, root: לקט, template: Simple, citation: לקט, gloss: gather, class: A, status: core, list: "fn 33 Simple A", putting_removal: UNKNOWN,
+   dicta_lemmas: [{lemma: לקט, voice: active}], excluded_lemmas: [{lemma: ליקט, why: "Intensive (MH 'collect'); not this entry"}]}
+- {id: מלק.S, root: מלק, template: Simple, citation: מלק, gloss: pinch off, class: A, status: core, list: "fn 33 Simple A", putting_removal: UNKNOWN,
+   dicta_lemmas: [{lemma: מלק, voice: active}]}
+- {id: מצה.S, root: מצה, template: Simple, citation: מצה, gloss: wring/drain, class: A, status: core, list: "fn 33 Simple A; Table 1", putting_removal: BOTH,
+   paper_refs: [{where: "Table 1", use: putting, printed: "Leviticus 1:15", he: "Leviticus 1:15"}, {where: "Table 1", use: removal, printed: "Judges 6:38", he: "Judges 6:38"}],
+   dicta_lemmas: [{lemma: מצה, voice: active}]}
+- {id: משה.S, root: משה, template: Simple, citation: משה, gloss: draw out, class: A, status: core, list: "fn 33 Simple A", putting_removal: UNKNOWN,
+   dicta_lemmas: [{lemma: משה, voice: active}], flags: [homograph_nonlexicon], note: "also the name Moses (not a VERB)"}
+- {id: נסח.S, root: נסח, template: Simple, citation: נסח, gloss: uproot, class: A, status: core, list: "fn 33 Simple A; fn 5", putting_removal: UNKNOWN,
+   paper_refs: [{where: "fn 5", use: two_arguments, printed: "Psalms 52:5", he: "Psalms 52:7", note: "Hebrew numbering"}],
+   dicta_lemmas: [{lemma: נסח, voice: active}], excluded_lemmas: [{lemma: ניסח, why: "MH Intensive 'formulate'"}]}
+- {id: נשא.S, root: נשא, template: Simple, citation: נשא, gloss: bring; carry, class: A, status: core, list: "fn 33 Simple A; ex. (69)", putting_removal: UNKNOWN,
+   paper_refs: [{where: "ex. (69)", frame: A, printed: "Exodus 10: 13-14", he: "Exodus 10:13", note: "§7: carry has no direction; path expressed by conjoined verbs"}],
+   dicta_lemmas: [{lemma: נשא, voice: active}, {lemma: נושא, voice: active}, {lemma: נישא, voice: passive}, {lemma: יישא, voice: active}, {lemma: ישא, voice: active}, {lemma: שאו, voice: active}],
+   nonlocative_idioms: [{noun: עין, note: "raise the eyes"}, {noun: פנים, note: "show favour"}, {noun: אשה, note: "marry"}, {noun: קול, note: "raise the voice"},
+                        {noun: חן, note: "find favour"}, {noun: עון, note: "bear / forgive iniquity"}]}
+- {id: פדה.S, root: פדה, template: Simple, citation: פדה, gloss: buy out/redeem, class: A, status: core, list: "fn 33 Simple A", putting_removal: UNKNOWN,
+   dicta_lemmas: [{lemma: פדה, voice: active}, {lemma: פודה, voice: active}]}
+- {id: קבץ.S, root: קבץ, template: Simple, citation: קבץ, gloss: collect, class: A, status: core, list: "fn 33 Simple A; Table 1", putting_removal: BOTH,
+   paper_refs: [{where: "Table 1", use: putting, printed: "Ezekiel 22:19", he: "Ezekiel 22:19", note: "printed unvocalized (the paper vocalizes only Intensive verbs), so assigned to the Simple entry"},
+                {where: "Table 1", use: removal, printed: "2Chronicles 24:5", he: "II Chronicles 24:5"}],
+   dicta_lemmas: [{lemma: קיבץ, voice: active}], flags: [template_ambiguous], note: "Dicta has no Simple lemma קבץ; קיבץ is shared with קבץ.I"}
+- {id: קטף.S, root: קטף, template: Simple, citation: קטף, gloss: collect, class: A, status: core, list: "fn 33 Simple A", putting_removal: UNKNOWN,
+   dicta_lemmas: [{lemma: קטף, voice: active}, {lemma: קוטף, voice: active}, {lemma: קטפה, voice: active}, {lemma: קוטפים, voice: active}]}
+- {id: שאב.S, root: שאב, template: Simple, citation: שאב, gloss: draw water, class: A, status: core, list: "fn 33 Simple A", putting_removal: UNKNOWN,
+   dicta_lemmas: [{lemma: שאב, voice: active}, {lemma: נשאב, voice: passive}, {lemma: שואב, voice: active}, {lemma: שואבת, voice: active}, {lemma: שאבה, voice: active}]}
+- {id: שלף.S, root: שלף, template: Simple, citation: שלף, gloss: pull off, class: A, status: core, list: "fn 33 Simple A", putting_removal: UNKNOWN,
+   dicta_lemmas: [{lemma: שלף, voice: active}, {lemma: נשלף, voice: passive}, {lemma: שולף, voice: active}]}
+- {id: שפך.S, root: שפך, template: Simple, citation: שפך, gloss: spill, class: A, status: core, list: "fn 33 Simple A", putting_removal: UNKNOWN,
+   dicta_lemmas: [{lemma: שפך, voice: active}, {lemma: נשפך, voice: passive}, {lemma: שופך, voice: active}]}
+# ============================================================ fn 33 Simple B (19)
+- {id: אזר.S, root: אזר, template: Simple, citation: אזר, gloss: gird, class: B, status: core, list: "fn 33 Simple B; Table 4", putting_removal: PUTTING,
+   paper_refs: [{where: "Table 4", use: mereological, printed: "1Samuel 2:4", he: "I Samuel 2:4"}, {where: "Table 4", use: B, printed: "Psalms 18:32", he: "Psalms 18:33", note: "KJV 18:32 = Hebrew 18:33"}],
+   dicta_lemmas: [{lemma: אזר, voice: active}]}
+- {id: גדר.S, root: גדר, template: Simple, citation: גדר, gloss: fence up, class: B, status: core, list: "fn 33 Simple B; ex. (65); fn 36", putting_removal: PUTTING,
+   paper_refs: [{where: "ex. (65)", frame: B, printed: "Job 19:8", he: "Job 19:8"},
+                {where: "fn 36 (i)", use: cognate_object, printed: "Hosea 2:6", he: "Hosea 2:8", note: "possible Frame A with a cognate object; KJV 2:6 = Hebrew 2:8"}],
+   dicta_lemmas: [{lemma: גדר, voice: active}, {lemma: גודר, voice: active}], flags: [mh_meaning_shift], note: "MH גדר also 'define'"}
+- {id: חגר.S, root: חגר, template: Simple, citation: חגר, gloss: gird, class: B, status: core, list: "fn 33 Simple B; Table 4; fn 38", putting_removal: PUTTING,
+   paper_refs: [{where: "Table 4", use: mereological, printed: "1Kings 20:32", he: "I Kings 20:32"}, {where: "Table 4", use: B, printed: "Exodus 29:9", he: "Exodus 29:9"}],
+   dicta_lemmas: [{lemma: חגור, voice: active}], flags: [odd_lemma_string], note: "Dicta's lemma string is חגור",
+   mh: {prediction: mh_alternates, ref: "fn 38"}}
+- {id: טען.S, root: טען, template: Simple, citation: טען, gloss: load, class: B, status: core, list: "fn 33 Simple B", putting_removal: PUTTING,
+   dicta_lemmas: [], shared_lemmas: [{lemma: טען, other: "MH טען 'claim'"}, {lemma: נטען, other: "MH נטען 'was claimed'"}, {lemma: טוען, other: "MH טוען 'claims'"}],
+   form_partners: [טען], flags: [mh_meaning_shift, homograph_nonlexicon], note: "MH טען is mostly 'claim'; quality review 2026-11-20: Modern 30/30 'claim'"}
+- {id: כחל.S, root: כחל, template: Simple, citation: כחל, gloss: put on makeup, class: B, status: core, list: "fn 33 Simple B; ex. (61)", putting_removal: PUTTING,
+   paper_refs: [{where: "ex. (61)", frame: B, printed: "Ezekiel 23:40", he: "Ezekiel 23:40", note: "Locatum incorporation (§6.2)"}],
+   dicta_lemmas: [{lemma: כחל, voice: active}]}
+- {id: כפר.S, root: כפר, template: Simple, citation: כפר, gloss: tar, class: B, status: core, list: "fn 33 Simple B; ex. (61')", putting_removal: PUTTING,
+   paper_refs: [{where: "ex. (62) [printed (61)]", frame: B, printed: "Genesis 6:14", he: "Genesis 6:14", note: "the paper numbers this example (61) twice"}],
+   dicta_lemmas: [], shared_lemmas: [{lemma: כפר, other: "כִּפֶּר 'atone' (Dicta lemma כפר for the Intensive) / MH 'deny'"}],
+   form_partners: [כיפר], flags: [homograph_nonlexicon], note: "also כפר 'deny' and the Intensive כיפר 'atone'; sense screen 2026-11-20 (data/loc/review/quality/sense_screen_*.csv): Mikra 0/15 'tar'"}
+- {id: נעל.S, root: נעל, template: Simple, citation: נעל, gloss: put on footwear, class: B, status: core, list: "fn 33 Simple B", putting_removal: PUTTING,
+   dicta_lemmas: [{lemma: נעל, voice: active}, {lemma: ננעל, voice: passive}], flags: [homograph_nonlexicon], note: "MH נעל mostly 'lock'"}
+- {id: סוך.S, root: סוך, template: Simple, citation: סך, gloss: anoint, class: B, status: core, list: "fn 33 Simple B", putting_removal: PUTTING,
+   dicta_lemmas: [{lemma: סך, voice: active}], flags: [homograph]}
+- {id: סבב.S, root: סבב, template: Simple, citation: סבב, gloss: surround, class: B, status: core, list: "fn 33 Simple B; Table 4", putting_removal: PUTTING,
+   paper_refs: [{where: "Table 4", use: mereological, printed: "Genesis 2:11", he: "Genesis 2:11"}, {where: "Table 4", use: B, printed: "Exodus 28:11", he: "Exodus 28:11"}],
+   dicta_lemmas: [{lemma: סבב, voice: active}, {lemma: סב, voice: active}]}
+- {id: ספן.S, root: ספן, template: Simple, citation: ספן, gloss: cover, class: B, status: core, list: "fn 33 Simple B", putting_removal: PUTTING,
+   dicta_lemmas: [], flags: [no_own_lemma]}
+- {id: סתם.S, root: סתם, template: Simple, citation: סתם, gloss: shut/obstruct, class: B, status: core, list: "fn 33 Simple B", putting_removal: PUTTING,
+   dicta_lemmas: [{lemma: סתם, voice: active}, {lemma: נסתם, voice: passive}, {lemma: סותם, voice: active}, {lemma: סתמו, voice: active}]}
+- {id: עדה.S, root: עדה, template: Simple, citation: עדה, gloss: adorn, class: B, status: core, list: "fn 33 Simple B; Table 4", putting_removal: PUTTING,
+   paper_refs: [{where: "Table 4", use: mereological, printed: "Ezekiel 23:40", he: "Ezekiel 23:40"}, {where: "Table 4", use: B, printed: "Ezekiel 16:11", he: "Ezekiel 16:11"}],
+   dicta_lemmas: [{lemma: עדה, voice: active}]}
+- {id: עטה.S, root: עטה, template: Simple, citation: עטה, gloss: mantle, class: B, status: core, list: "fn 33 Simple B", putting_removal: PUTTING,
+   dicta_lemmas: [{lemma: עטה, voice: active}, {lemma: עוטה, voice: active}]}
+- {id: רבד.S, root: רבד, template: Simple, citation: רבד, gloss: prepare a couch, class: B, status: core, list: "fn 33 Simple B", putting_removal: PUTTING,
+   dicta_lemmas: [{lemma: רבד, voice: active}]}
+- {id: שוך.S, root: שוך, template: Simple, citation: שך, gloss: hedge, class: B, status: core, list: "fn 33 Simple B", putting_removal: PUTTING,
+   dicta_lemmas: [{lemma: שך, voice: active}], form_partners: [השכים], flags: [homograph], note: "sense screen 2026-11-20 (data/loc/review/quality/sense_screen_*.csv): Mikra 1/15 'hedge' (the forms are mostly השכים 'rise early')"}
+- {id: גמל.S, root: גמל, template: Simple, citation: גמל, gloss: wean, class: B, status: core, list: "fn 33 Simple B; ex. (58)", putting_removal: REMOVAL,
+   paper_refs: [{where: "ex. (58)", frame: B, printed: "Isaiah 28:9", he: "Isaiah 28:9", note: "passive participle גְּמוּלֵי"}],
+   dicta_lemmas: [{lemma: נגמל, voice: passive}], shared_lemmas: [{lemma: גמל, other: "גמל 'repay / deal with' (and Dicta gives חמל forms this lemma)"}],
+   form_partners: [גמל], flags: [homograph_nonlexicon], note: "also 'reward / recompense' and the noun 'camel'; sense screen 2026-11-20 (data/loc/review/quality/sense_screen_*.csv): Mikra 0/15 'wean'"}
+- {id: זמר.S, root: זמר, template: Simple, citation: זמר, gloss: prune, class: B, status: core, list: "fn 33 Simple B", putting_removal: REMOVAL,
+   dicta_lemmas: [], shared_lemmas: [{lemma: זמר, other: "זִמֵּר 'sing' (Dicta lemma זמר)"}],
+   form_partners: [זימר], flags: [homograph_nonlexicon], note: "also 'sing' (Intensive זימר) and the noun 'singer'; quality review 2026-11-20: Mikra 15/15 'sing'"}
+- {id: זור.S, root: זור, template: Simple, citation: זר, gloss: squeeze, class: B, status: core, list: "fn 33 Simple B", putting_removal: UNKNOWN,
+   dicta_lemmas: [{lemma: זר, voice: active}], flags: [homograph_nonlexicon], note: "also the adjective/noun 'foreign, stranger' (not a VERB)"}
+- {id: שחט.S.squeeze, root: שחט, template: Simple, homograph: squeeze, citation: שחט, gloss: squeeze, class: B, status: core, list: "fn 33 Simple B", putting_removal: UNKNOWN,
+   dicta_lemmas: [{lemma: שחט, voice: active}, {lemma: שוחט, voice: active}, {lemma: שוחטים, voice: active}], flags: [homograph], note: "same spelling as שחט 'slay' (Table 2): every token is the combined key"}
+# ============================================================ paper_other: Tables 1, 2, 4 and ex. (18)
+- {id: שוב.C, root: שוב, template: Causative, citation: השיב, gloss: bring back, class: null, status: paper_other, list: "Table 1 (path verbs: A or A/B)", putting_removal: BOTH,
+   paper_refs: [{where: "Table 1", use: putting, printed: "Numbers 35:25", he: "Numbers 35:25"}, {where: "Table 1", use: removal, printed: "1Kings 13:26", he: "I Kings 13:26"}],
+   dicta_lemmas: [{lemma: השיב, voice: active}, {lemma: הושב, voice: passive}], flags: [homograph], note: "הושב is shared with ישב.C (seat)"}
+- {id: סער.I, root: סער, template: Intensive, citation: סִעֵר, gloss: scatter, class: null, status: paper_other, list: "Table 1 (path verbs: A or A/B)", putting_removal: BOTH,
+   paper_refs: [{where: "Table 1", use: putting, printed: "Zechariah 7:14", he: "Zechariah 7:14"}, {where: "Table 1", use: removal, printed: "Hosea 13:3", he: "Hosea 13:3"}],
+   dicta_lemmas: [], flags: [no_own_lemma]}
+- {id: שבר.S, root: שבר, template: Simple, citation: שבר, gloss: break, class: A, status: paper_other, list: "Table 2 (change of state used as A)", putting_removal: REMOVAL,
+   paper_refs: [{where: "Table 2", use: change_of_state, printed: "Jeremiah 48:17", he: "Jeremiah 48:17"}, {where: "Table 2", use: locative_A, printed: "Jeremiah 30:8", he: "Jeremiah 30:8"}],
+   dicta_lemmas: [{lemma: שבר, voice: active}, {lemma: נשבר, voice: passive}, {lemma: שובר, voice: active}, {lemma: שברו, voice: active}, {lemma: ששבר, voice: active}, {lemma: שברה, voice: active}], flags: [change_of_state_use]}
+- {id: כלה.I, root: כלה, template: Intensive, citation: כִּלָּה, gloss: consume, class: A, status: paper_other, list: "Table 2 (change of state used as A)", putting_removal: UNKNOWN,
+   paper_refs: [{where: "Table 2", use: change_of_state, printed: "Exodus 32:10", he: "Exodus 32:10"}, {where: "Table 2", use: locative_A, printed: "Exodus 32:12", he: "Exodus 32:12"}],
+   dicta_lemmas: [{lemma: כילה, voice: active}], flags: [change_of_state_use]}
+- {id: בער.I, root: בער, template: Intensive, citation: בִּעֵר, gloss: burn/remove by burning, class: A, status: paper_other, list: "Table 2 (change of state used as A)", putting_removal: REMOVAL,
+   paper_refs: [{where: "Table 2", use: change_of_state, printed: "Exodus 3:3", he: "Exodus 3:3", note: "Simple בער"}, {where: "Table 2", use: locative_A, printed: "2Chronicles 19:3", he: "II Chronicles 19:3"}],
+   dicta_lemmas: [{lemma: ביער, voice: active}, {lemma: לבער, voice: active}], flags: [change_of_state_use], excluded_lemmas: [{lemma: בער, why: "Simple 'burn' (the change-of-state use)"}]}
+- {id: שחט.S.slay, root: שחט, template: Simple, homograph: slay, citation: שחט, gloss: slay, class: A, status: paper_other, list: "Table 2 (change of state used as A)", putting_removal: UNKNOWN,
+   paper_refs: [{where: "Table 2", use: change_of_state, printed: "Genesis 22:10", he: "Genesis 22:10"}, {where: "Table 2", use: locative_A, printed: "Jeremiah 41:7", he: "Jeremiah 41:7"}],
+   dicta_lemmas: [{lemma: שחט, voice: active}, {lemma: שוחט, voice: active}, {lemma: שוחטים, voice: active}], flags: [homograph, change_of_state_use]}
+- {id: יבש.C, root: יבש, template: Causative, citation: הוביש, gloss: dry, class: A, status: paper_other, list: "Table 2 (change of state used as A)", putting_removal: UNKNOWN,
+   paper_refs: [{where: "Table 2", use: change_of_state, printed: "Joel 1:12", he: "Joel 1:12"}, {where: "Table 2", use: locative_A, printed: "Joel 1:12", he: "Joel 1:12"}],
+   dicta_lemmas: [], flags: [no_own_lemma, change_of_state_use]}
+- {id: עור.C, root: עור, template: Causative, citation: העיר, gloss: wake, class: A, status: paper_other, list: "Table 2 (change of state used as A)", putting_removal: UNKNOWN,
+   paper_refs: [{where: "Table 2", use: change_of_state, printed: "Psalms 44:23", he: "Psalms 44:24", note: "KJV 44:23 = Hebrew 44:24"},
+                {where: "Table 2", use: locative_A, printed: "Joel 3:7", he: "Joel 4:7", note: "KJV 3:7 = Hebrew 4:7"}],
+   dicta_lemmas: [], flags: [no_own_lemma, change_of_state_use], excluded_lemmas: [{lemma: העיר, why: "MH 'remark' dominates this spelling"}]}
+- {id: קרע.S, root: קרע, template: Simple, citation: קרע, gloss: tear, class: A, status: paper_other, list: "ex. (18) (§3.2.2 change of state used as A)", putting_removal: REMOVAL,
+   paper_refs: [{where: "ex. (18)", use: change_of_state, printed: "1Samuel 15:27", he: "I Samuel 15:27"}, {where: "ex. (18)", frame: A, printed: "1Samuel 15:28", he: "I Samuel 15:28"}],
+   dicta_lemmas: [{lemma: קרע, voice: active}, {lemma: נקרע, voice: passive}, {lemma: קורע, voice: active}], flags: [change_of_state_use]}
+- {id: שבע.C, root: שבע, template: Causative, citation: השביע, gloss: fill/satisfy (food), class: B, status: paper_other, list: "Table 4 (B verbs from mereological relations)", putting_removal: PUTTING,
+   paper_refs: [{where: "Table 4", use: mereological, printed: "Proverbs 12:11", he: "Proverbs 12:11"}, {where: "Table 4", use: B, printed: "Lamentations 3:15", he: "Lamentations 3:15"}],
+   dicta_lemmas: [], shared_lemmas: [{lemma: השביע, other: "השביע 'make swear' (root שבע 'oath')"}], flags: [homograph_nonlexicon]}
+- {id: רוה.C, root: רוה, template: Causative, citation: הרוה, gloss: fill/satisfy (drink), class: B, status: paper_other, list: "Table 4 (B verbs from mereological relations)", putting_removal: PUTTING,
+   paper_refs: [{where: "Table 4", use: mereological, printed: "Proverbs 7:18", he: "Proverbs 7:18"}, {where: "Table 4", use: B, printed: "Lamentations 3:15", he: "Lamentations 3:15"}],
+   dicta_lemmas: [], flags: [no_own_lemma]}
+# ============================================================ mh_supplement (§8)
+- {id: רפא.I, root: רפא, template: Intensive, citation: ריפא, gloss: cure, class: null, status: mh_supplement, list: "§8.2 preserved alternation (MH spelling of the Intensive)", putting_removal: REMOVAL,
+   bh_counterpart: רפא.S, dicta_lemmas: [{lemma: ריפא, voice: active}], flags: [template_ambiguous], mh: {prediction: preserved_alternation, ref: "§8.2"}}
+- {id: פרק.I, root: פרק, template: Intensive, citation: פירק, gloss: unload, class: null, status: mh_supplement, list: "§8.2 preserved alternation", putting_removal: REMOVAL,
+   bh_counterpart: פרק.S, dicta_lemmas: [{lemma: פירק, voice: active}, {lemma: פורק, voice: passive}, {lemma: התפרק, voice: middle}, {lemma: מפרק, voice: active}, {lemma: מפורק, voice: passive}, {lemma: מתפרק, voice: middle}], mh: {prediction: preserved_alternation, ref: "§8.2"}}
+- {id: רקן.I, root: רקן, template: Intensive, citation: רוקן, gloss: empty, class: null, status: mh_supplement, list: "§8.2 preserved alternation (MH רוקן for BH הריק)", putting_removal: REMOVAL,
+   bh_counterpart: ריק.C, dicta_lemmas: [{lemma: רוקן, voice: active}, {lemma: התרוקן, voice: middle}, {lemma: מרוקן, voice: passive}], mh: {prediction: preserved_alternation, ref: "§8.2"}}
+- {id: חסך.S, root: חסך, template: Simple, citation: חסך, gloss: spare; save, class: null, status: mh_supplement, list: "§8.2 lost alternation (MH spelling of BH חשך)", putting_removal: REMOVAL,
+   bh_counterpart: חשך.S, dicta_lemmas: [{lemma: חסך, voice: active}, {lemma: נחסך, voice: passive}, {lemma: חוסך, voice: active}, {lemma: יחסוך, voice: active}, {lemma: החוסך, voice: active}, {lemma: חסכתי, voice: active}, {lemma: חסכנו, voice: active}], mh: {prediction: lost_frame_A_survives, ref: "§8.2"}}
+- {id: שפשף.I, root: שפשף, template: Intensive, citation: שפשף, gloss: rub, class: null, status: mh_supplement, list: "§8.1 MH manner alternator (also putting)", putting_removal: BOTH,
+   dicta_lemmas: [{lemma: משפשף, voice: active}], flags: [], mh: {prediction: mh_new_alternator, ref: "§8.1"}}
+- {id: נער.I, root: נער, template: Intensive, citation: ניער, gloss: shake, class: null, status: mh_supplement, list: "§8.1 MH manner alternator", putting_removal: REMOVAL,
+   dicta_lemmas: [{lemma: ניער, voice: active}, {lemma: התנער, voice: middle}, {lemma: מתנער, voice: middle}], mh: {prediction: mh_new_alternator, ref: "§8.1"}}
+- {id: נגב.I, root: נגב, template: Intensive, citation: ניגב, gloss: wipe, class: null, status: mh_supplement, list: "§8.1 MH manner alternator", putting_removal: REMOVAL,
+   dicta_lemmas: [], flags: [no_own_lemma], mh: {prediction: mh_new_alternator, ref: "§8.1"}}
+- {id: קרצף.I, root: קרצף, template: Intensive, citation: קרצף, gloss: scrub, class: null, status: mh_supplement, list: "§8.1 MH manner alternator", putting_removal: REMOVAL,
+   dicta_lemmas: [], flags: [no_own_lemma], mh: {prediction: mh_new_alternator, ref: "§8.1"}}
+- {id: צחצח.I, root: צחצח, template: Intensive, citation: צחצח, gloss: shine, class: null, status: mh_supplement, list: "§8.1 MH manner alternator", putting_removal: REMOVAL,
+   dicta_lemmas: [], flags: [no_own_lemma], mh: {prediction: mh_new_alternator, ref: "§8.1"}}
+- {id: ברש.C, root: ברש, template: Causative, citation: הבריש, gloss: brush, class: null, status: mh_supplement, list: "§8.1 MH manner alternator", putting_removal: REMOVAL,
+   dicta_lemmas: [], flags: [no_own_lemma], mh: {prediction: mh_new_alternator, ref: "§8.1"}}
+- {id: טאטא.I, root: טאטא, template: Intensive, citation: טאטא, gloss: sweep, class: null, status: mh_supplement, list: "§8.1 MH manner alternator", putting_removal: REMOVAL,
+   dicta_lemmas: [{lemma: טאטא, voice: active}, {lemma: מטאטא, voice: active}], mh: {prediction: mh_new_alternator, ref: "§8.1"}}
+- {id: מרק.I, root: מרק, template: Intensive, citation: מירק, gloss: polish, class: null, status: mh_supplement, list: "§8.1 MH manner alternator; fn 38", putting_removal: REMOVAL,
+   dicta_lemmas: [{lemma: מורק, voice: passive}, {lemma: למרק, voice: active}], flags: [no_own_lemma], mh: {prediction: mh_alternates, ref: "§8.1; fn 38"}}
+- {id: גרף.I, root: גרף, template: Intensive, citation: גירף, gloss: rake, class: null, status: mh_supplement, list: "§8.1 MH manner alternator", putting_removal: REMOVAL,
+   dicta_lemmas: [], flags: [no_own_lemma], excluded_lemmas: [{lemma: גרף, why: "MH Simple 'sweep away / rake in (profits)'"}], mh: {prediction: mh_new_alternator, ref: "§8.1"}}
+- {id: זקק.I, root: זקק, template: Intensive, citation: זיקק, gloss: distill; purify, class: null, status: mh_supplement, list: "§8.1 MH manner alternator; fn 38", putting_removal: REMOVAL,
+   dicta_lemmas: [{lemma: לזקק, voice: active}], flags: [], excluded_lemmas: [{lemma: נזקק, why: "'need' (unrelated sense)"}], mh: {prediction: mh_alternates, ref: "§8.1; fn 38"}}
+- {id: עסה.I, root: עסה, template: Intensive, citation: עיסה, gloss: massage, class: null, status: mh_supplement, list: "§8.1 MH alternator usable as putting", putting_removal: PUTTING,
+   dicta_lemmas: [], flags: [no_own_lemma], mh: {prediction: mh_new_alternator, ref: "§8.1"}}
+- {id: רסס.I, root: רסס, template: Intensive, citation: ריסס, gloss: spray, class: null, status: mh_supplement, list: "fn 38 (alternates in MH)", putting_removal: PUTTING,
+   dicta_lemmas: [{lemma: רוססו, voice: passive}, {lemma: מרסס, voice: active}], flags: [odd_lemma_string], mh: {prediction: mh_alternates, ref: "fn 38"}}
+- {id: סחף.S, root: סחף, template: Simple, citation: סחף, gloss: carry away, class: null, status: mh_supplement, list: "§8.1 MH manner locative verb", putting_removal: UNKNOWN,
+   dicta_lemmas: [{lemma: סחף, voice: active}, {lemma: סוחף, voice: active}, {lemma: נסחף, voice: passive}, {lemma: סחפה, voice: active}, {lemma: וסחף, voice: active}, {lemma: שסחף, voice: active}], mh: {prediction: mh_manner_locative, ref: "§8.1"}}
+- {id: גרר.S, root: גרר, template: Simple, citation: גרר, gloss: drag, class: null, status: mh_supplement, list: "§8.1 MH manner locative verb", putting_removal: UNKNOWN,
+   dicta_lemmas: [{lemma: גרר, voice: active}, {lemma: גורר, voice: active}, {lemma: נגרר, voice: passive}], mh: {prediction: mh_manner_locative, ref: "§8.1"}}
+- {id: משך.S, root: משך, template: Simple, citation: משך, gloss: pull, class: null, status: mh_supplement, list: "§8.1 MH manner locative verb", putting_removal: UNKNOWN,
+   dicta_lemmas: [{lemma: משך, voice: active}, {lemma: מושך, voice: active}, {lemma: נמשך, voice: passive}, {lemma: משכה, voice: active}, {lemma: משכו, voice: active}], excluded_lemmas: [{lemma: המשיך, why: "Causative 'continue'"}],
+   mh: {prediction: mh_manner_locative, ref: "§8.1"}}
+- {id: גלגל.I, root: גלגל, template: Intensive, citation: גלגל, gloss: roll, class: null, status: mh_supplement, list: "§8.1 MH manner locative verb", putting_removal: UNKNOWN,
+   dicta_lemmas: [{lemma: גלגל, voice: active}, {lemma: התגלגל, voice: middle}, {lemma: מגלגל, voice: active}, {lemma: מתגלגל, voice: middle}, {lemma: מגולגל, voice: passive}], mh: {prediction: mh_manner_locative, ref: "§8.1"}}
+- {id: דחף.S, root: דחף, template: Simple, citation: דחף, gloss: push, class: null, status: mh_supplement, list: "§8.1 MH manner locative verb", putting_removal: UNKNOWN,
+   dicta_lemmas: [{lemma: דחף, voice: active}, {lemma: דוחף, voice: active}, {lemma: נדחף, voice: passive}, {lemma: שדחף, voice: active}, {lemma: דחפה, voice: active}, {lemma: דחפו, voice: active}], mh: {prediction: mh_manner_locative, ref: "§8.1"}}

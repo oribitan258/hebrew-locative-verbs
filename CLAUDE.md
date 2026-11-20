@@ -5,7 +5,14 @@ Test Doron & Dubnov (2017) "Locative Alternation Preposition Identity" (verbs th
 Frame A [Locatum = direct object] and Frame B [Location = direct object] keep the same preposition:
 ב- for putting, מן/מ- for removal) on 5 Hebrew corpora, using Dicta's parser.
 
-**CURRENT SCOPE (2026-11-19): CHECKPOINT 1 REACHED.**
+**CURRENT SCOPE (2026-11-20): stage 3, release R1 = tag `s56-r1` DONE (provisional, D-057); STOP before Phase B.**
+- **R1** (`docs/S56_R1.md`): the lexicon, the guideline, the gold sampler with **frozen** samples, and the noun lists.
+  - Released as a provisional infrastructure milestone. Its identification limits are in §0.1.
+  - Identification must be improved and validated on the **dev** gold before R2 is frozen. No retuning against BHSA;
+    test is read once, at the end.
+  - Recovered instances enter the gold only by the supplemental sampling procedure (§3).
+  - **Phase B (the R2 code) starts only with Ori's explicit approval** (Plan Mode).
+- **Earlier: CHECKPOINT 1 reached (2026-11-19).**
 - **What was approved.** The shared §5–§6 methodology **`S56-v1`** (D-053–D-056).
   - It is written in full in **`docs/EFRAT_SECTION_6.md`** §5, which is normative for Ori, Adi and Efrat.
   - That document is also Efrat's self-contained §6 handoff.
@@ -244,6 +251,8 @@ uv run hebloc stats run --registered     # M6 FINAL (after merge 31/31 + plan re
 uv run hebloc stats accuracy             # M6: Mikra vs BHSA on all of Mikra → results/stats/accuracy/ (final)
 uv run hebloc stats report|verify <dir>  # M6: re-render / re-hash a data/stats/<id> folder
 uv run hebloc pack analysis|verify       # D-051: standalone analysis package (data/share/, private, never git)
+uv run python -m hebloc loc lexicon check|forms|inventory|bhsa-eval   # §5 R1: lexicon (forms/bhsa-eval: Ori only)
+uv run python -m hebloc loc gold sample|check · loc nouns list|merge · loc verify   # §5 R1 (docs/S56_R1.md §7)
 ```
 
 ## Repo map
@@ -336,7 +345,15 @@ notebooks/     exploration only — never pipeline logic
     stage-2 split decided at CHECKPOINT 2).
   - `docs/EFRAT_SECTION_6.md` (the self-contained handoff, answering Efrat's Claude Code's six points) committed
     and pushed.
-- [ ] **Stage 3 (next; Plan Mode first; needs Ori's approval):**
+- [x] **Stage 3, Phase A = release R1 (`s56-r1`, 2026-11-20, D-057; provisional).** It contains:
+  - the lexicon (210 entries; forms-v2 with the pre-registered fallback);
+  - `annotation/S56_GUIDELINE.md`;
+  - the sampler `gold-r1b`, with the frozen samples `mikra-r1b-1cd4ee9802` and `modern-r1b-5fbb5e22e7`;
+  - the noun lists (option A);
+  - the BHSA identification baseline (Mikra), with its limits in `docs/S56_R1.md` §0.1.
+
+  Efrat's R1 steps: `docs/EFRAT_SECTION_6.md` §9.2.
+- [ ] **Stage 3, rest (Phase B needs Ori's approval):**
   - §5 on Mikra: R1 (lexicon, guideline, gold sampler, noun lists), then the shared extractor, local resolver,
     classes, identity and statistics, then Mikra validation (BHSA identification + human gold);
   - then **CHECKPOINT 2**: tag `s56-v1`, decide the balanced Ori/Adi split, build and test Adi's M5-style workflow,

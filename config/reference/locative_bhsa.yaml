@@ -1,0 +1,2681 @@
+# Entry -> BHSA verb lexeme(s), for MEASURING identification on Mikra only (R1 correction, D-057).
+# Proposed by consonant match of the root (hebloc loc lexicon bhsa-eval --propose); reviewed by Ori.
+# Never used to choose Dicta lemmas, forms or flags. Truth = BHSA verb, lexeme in `lex`, stem in `stems`.
+entries:
+  רום.C:
+    lex:
+    - רום
+    template: Causative
+    stems:
+    - hif
+    - hof
+    - hsht
+    - tif
+    tokens_in_template: 91
+    tokens_all_stems: 188
+    note: ''
+  עלה.C:
+    lex:
+    - עלה
+    template: Causative
+    stems:
+    - hif
+    - hof
+    - hsht
+    - tif
+    tokens_in_template: 265
+    tokens_all_stems: 890
+    note: ''
+  ירד.C:
+    lex:
+    - ירד
+    template: Causative
+    stems:
+    - hif
+    - hof
+    - hsht
+    - tif
+    tokens_in_template: 73
+    tokens_all_stems: 377
+    note: ''
+  בוא.C:
+    lex:
+    - בוא
+    template: Causative
+    stems:
+    - hif
+    - hof
+    - hsht
+    - tif
+    tokens_in_template: 573
+    tokens_all_stems: 2570
+    note: ''
+  נגש.C:
+    lex:
+    - נגשׁ
+    - נגשׂ
+    template: Causative
+    stems:
+    - hif
+    - hof
+    - hsht
+    - tif
+    tokens_in_template: 39
+    tokens_all_stems: 148
+    note: ''
+  טול.C:
+    lex:
+    - טול
+    template: Causative
+    stems:
+    - hif
+    - hof
+    - hsht
+    - tif
+    tokens_in_template: 13
+    tokens_all_stems: 14
+    note: ''
+  קום.C:
+    lex:
+    - קום
+    template: Causative
+    stems:
+    - hif
+    - hof
+    - hsht
+    - tif
+    tokens_in_template: 149
+    tokens_all_stems: 629
+    note: ''
+  נוח.C:
+    lex:
+    - נוח
+    template: Causative
+    stems:
+    - hif
+    - hof
+    - hsht
+    - tif
+    tokens_in_template: 109
+    tokens_all_stems: 142
+    note: ''
+  שאר.C:
+    lex:
+    - שׁאר
+    template: Causative
+    stems:
+    - hif
+    - hof
+    - hsht
+    - tif
+    tokens_in_template: 38
+    tokens_all_stems: 133
+    note: ''
+  פוץ.C:
+    lex:
+    - פוץ
+    template: Causative
+    stems:
+    - hif
+    - hof
+    - hsht
+    - tif
+    tokens_in_template: 37
+    tokens_all_stems: 65
+    note: ''
+  עמד.C:
+    lex:
+    - עמד
+    template: Causative
+    stems:
+    - hif
+    - hof
+    - hsht
+    - tif
+    tokens_in_template: 87
+    tokens_all_stems: 521
+    note: ''
+  נצב.C:
+    lex:
+    - נצב
+    template: Causative
+    stems:
+    - hif
+    - hof
+    - hsht
+    - tif
+    tokens_in_template: 23
+    tokens_all_stems: 74
+    note: ''
+  יצג.C:
+    lex:
+    - יצג
+    template: Causative
+    stems:
+    - hif
+    - hof
+    - hsht
+    - tif
+    tokens_in_template: 16
+    tokens_all_stems: 16
+    note: ''
+  טבע.C:
+    lex:
+    - טבע
+    template: Causative
+    stems:
+    - hif
+    - hof
+    - hsht
+    - tif
+    tokens_in_template: 3
+    tokens_all_stems: 10
+    note: ''
+  ישב.C:
+    lex:
+    - ישׁב
+    template: Causative
+    stems:
+    - hif
+    - hof
+    - hsht
+    - tif
+    tokens_in_template: 40
+    tokens_all_stems: 1082
+    note: ''
+  שכב.C:
+    lex:
+    - שׁכב
+    template: Causative
+    stems:
+    - hif
+    - hof
+    - hsht
+    - tif
+    tokens_in_template: 11
+    tokens_all_stems: 212
+    note: ''
+  דבק.C:
+    lex:
+    - דבק
+    template: Causative
+    stems:
+    - hif
+    - hof
+    - hsht
+    - tif
+    tokens_in_template: 13
+    tokens_all_stems: 54
+    note: ''
+  חבא.C:
+    lex:
+    - חבא
+    template: Causative
+    stems:
+    - hif
+    - hof
+    - hsht
+    - tif
+    tokens_in_template: 7
+    tokens_all_stems: 34
+    note: ''
+  סתר.C:
+    lex:
+    - סתר
+    template: Causative
+    stems:
+    - hif
+    - hof
+    - hsht
+    - tif
+    tokens_in_template: 44
+    tokens_all_stems: 81
+    note: ''
+  לוט.C:
+    lex:
+    - לוט
+    template: Causative
+    stems:
+    - hif
+    - hof
+    - hsht
+    - tif
+    tokens_in_template: 1
+    tokens_all_stems: 5
+    note: ''
+  נוס.C:
+    lex:
+    - נוס
+    template: Causative
+    stems:
+    - hif
+    - hof
+    - hsht
+    - tif
+    tokens_in_template: 3
+    tokens_all_stems: 159
+    note: ''
+  אבד.C:
+    lex:
+    - אבד
+    template: Causative
+    stems:
+    - hif
+    - hof
+    - hsht
+    - tif
+    tokens_in_template: 26
+    tokens_all_stems: 186
+    note: ''
+  בדל.C:
+    lex:
+    - בדל
+    template: Causative
+    stems:
+    - hif
+    - hof
+    - hsht
+    - tif
+    tokens_in_template: 32
+    tokens_all_stems: 42
+    note: ''
+  חסר.C:
+    lex:
+    - חסר
+    template: Causative
+    stems:
+    - hif
+    - hof
+    - hsht
+    - tif
+    tokens_in_template: 2
+    tokens_all_stems: 24
+    note: ''
+  עבר.C:
+    lex:
+    - עבר
+    template: Causative
+    stems:
+    - hif
+    - hof
+    - hsht
+    - tif
+    tokens_in_template: 80
+    tokens_all_stems: 556
+    note: ''
+  מוש.C:
+    lex:
+    - מושׁ
+    template: Causative
+    stems:
+    - hif
+    - hof
+    - hsht
+    - tif
+    tokens_in_template: 4
+    tokens_all_stems: 22
+    note: ''
+  עתק.C:
+    lex:
+    - עתק
+    template: Causative
+    stems:
+    - hif
+    - hof
+    - hsht
+    - tif
+    tokens_in_template: 5
+    tokens_all_stems: 9
+    note: ''
+  גלה.C:
+    lex:
+    - גלה
+    template: Causative
+    stems:
+    - hif
+    - hof
+    - hsht
+    - tif
+    tokens_in_template: 45
+    tokens_all_stems: 188
+    note: ''
+  שלך.C:
+    lex:
+    - שׁלך
+    template: Causative
+    stems:
+    - hif
+    - hof
+    - hsht
+    - tif
+    tokens_in_template: 125
+    tokens_all_stems: 125
+    note: ''
+  נדח.C:
+    lex:
+    - נדח
+    template: Causative
+    stems:
+    - hif
+    - hof
+    - hsht
+    - tif
+    tokens_in_template: 28
+    tokens_all_stems: 54
+    note: ''
+  יצא.C:
+    lex:
+    - יצא
+    template: Causative
+    stems:
+    - hif
+    - hof
+    - hsht
+    - tif
+    tokens_in_template: 284
+    tokens_all_stems: 1068
+    note: ''
+  כרת.C:
+    lex:
+    - כרת
+    template: Causative
+    stems:
+    - hif
+    - hof
+    - hsht
+    - tif
+    tokens_in_template: 79
+    tokens_all_stems: 288
+    note: ''
+  רחק.C:
+    lex:
+    - רחק
+    template: Causative
+    stems:
+    - hif
+    - hof
+    - hsht
+    - tif
+    tokens_in_template: 24
+    tokens_all_stems: 57
+    note: ''
+  נזל.C:
+    lex:
+    - נזל
+    template: Causative
+    stems:
+    - hif
+    - hof
+    - hsht
+    - tif
+    tokens_in_template: 1
+    tokens_all_stems: 15
+    note: ''
+  נפל.C:
+    lex:
+    - נפל
+    template: Causative
+    stems:
+    - hif
+    - hof
+    - hsht
+    - tif
+    tokens_in_template: 61
+    tokens_all_stems: 434
+    note: ''
+  נטה.C:
+    lex:
+    - נטה
+    template: Causative
+    stems:
+    - hif
+    - hof
+    - hsht
+    - tif
+    tokens_in_template: 75
+    tokens_all_stems: 214
+    note: ''
+  סבב.C:
+    lex:
+    - סבב
+    template: Causative
+    stems:
+    - hif
+    - hof
+    - hsht
+    - tif
+    tokens_in_template: 38
+    tokens_all_stems: 161
+    note: ''
+  נסע.C:
+    lex:
+    - נסע
+    template: Causative
+    stems:
+    - hif
+    - hof
+    - hsht
+    - tif
+    tokens_in_template: 8
+    tokens_all_stems: 146
+    note: ''
+  לבש.C:
+    lex:
+    - לבשׁ
+    template: Causative
+    stems:
+    - hif
+    - hof
+    - hsht
+    - tif
+    tokens_in_template: 32
+    tokens_all_stems: 97
+    note: ''
+  נזה.C:
+    lex:
+    - נזה
+    template: Causative
+    stems:
+    - hif
+    - hof
+    - hsht
+    - tif
+    tokens_in_template: 20
+    tokens_all_stems: 24
+    note: ''
+  מטר.C:
+    lex:
+    - מטר
+    template: Causative
+    stems:
+    - hif
+    - hof
+    - hsht
+    - tif
+    tokens_in_template: 16
+    tokens_all_stems: 17
+    note: ''
+  סור.C:
+    lex:
+    - סור
+    template: Causative
+    stems:
+    - hif
+    - hof
+    - hsht
+    - tif
+    tokens_in_template: 138
+    tokens_all_stems: 297
+    note: ''
+  פשט.C:
+    lex:
+    - פשׁט
+    template: Causative
+    stems:
+    - hif
+    - hof
+    - hsht
+    - tif
+    tokens_in_template: 15
+    tokens_all_stems: 43
+    note: ''
+  ריק.C:
+    lex:
+    - ריק
+    template: Causative
+    stems:
+    - hif
+    - hof
+    - hsht
+    - tif
+    tokens_in_template: 19
+    tokens_all_stems: 19
+    note: ''
+  קצה.C:
+    lex:
+    - קצה
+    template: Causative
+    stems:
+    - hif
+    - hof
+    - hsht
+    - tif
+    tokens_in_template: 2
+    tokens_all_stems: 5
+    note: ''
+  אכל.C:
+    lex:
+    - אכל
+    template: Causative
+    stems:
+    - hif
+    - hof
+    - hsht
+    - tif
+    tokens_in_template: 20
+    tokens_all_stems: 810
+    note: ''
+  שקה.C:
+    lex:
+    - שׁקה
+    template: Causative
+    stems:
+    - hif
+    - hof
+    - hsht
+    - tif
+    tokens_in_template: 67
+    tokens_all_stems: 68
+    note: ''
+  נעל.C:
+    lex:
+    - נעל
+    template: Causative
+    stems:
+    - hif
+    - hof
+    - hsht
+    - tif
+    tokens_in_template: 1
+    tokens_all_stems: 8
+    note: ''
+  ידה.I:
+    lex:
+    - ידה
+    template: Intensive
+    stems:
+    - etpa
+    - hit
+    - hotp
+    - htpo
+    - nit
+    - piel
+    - poal
+    - poel
+    - pual
+    tokens_in_template: 13
+    tokens_all_stems: 114
+    note: ''
+  שכן.I:
+    lex:
+    - שׁכן
+    template: Intensive
+    stems:
+    - etpa
+    - hit
+    - hotp
+    - htpo
+    - nit
+    - piel
+    - poal
+    - poel
+    - pual
+    tokens_in_template: 12
+    tokens_all_stems: 129
+    note: ''
+  קבץ.I:
+    lex:
+    - קבץ
+    template: Intensive
+    stems:
+    - etpa
+    - hit
+    - hotp
+    - htpo
+    - nit
+    - piel
+    - poal
+    - poel
+    - pual
+    tokens_in_template: 58
+    tokens_all_stems: 127
+    note: ''
+  פזר.I:
+    lex:
+    - פזר
+    template: Intensive
+    stems:
+    - etpa
+    - hit
+    - hotp
+    - htpo
+    - nit
+    - piel
+    - poal
+    - poel
+    - pual
+    tokens_in_template: 8
+    tokens_all_stems: 10
+    note: ''
+  זרה.I:
+    lex:
+    - זרה
+    template: Intensive
+    stems:
+    - etpa
+    - hit
+    - hotp
+    - htpo
+    - nit
+    - piel
+    - poal
+    - poel
+    - pual
+    tokens_in_template: 30
+    tokens_all_stems: 41
+    note: ''
+  נתק.I:
+    lex:
+    - נתק
+    template: Intensive
+    stems:
+    - etpa
+    - hit
+    - hotp
+    - htpo
+    - nit
+    - piel
+    - poal
+    - poel
+    - pual
+    tokens_in_template: 11
+    tokens_all_stems: 27
+    note: ''
+  בלע.I:
+    lex:
+    - בלע
+    template: Intensive
+    stems:
+    - etpa
+    - hit
+    - hotp
+    - htpo
+    - nit
+    - piel
+    - poal
+    - poel
+    - pual
+    tokens_in_template: 27
+    tokens_all_stems: 49
+    note: ''
+  מלט.I:
+    lex:
+    - מלט
+    template: Intensive
+    stems:
+    - etpa
+    - hit
+    - hotp
+    - htpo
+    - nit
+    - piel
+    - poal
+    - poel
+    - pual
+    tokens_in_template: 30
+    tokens_all_stems: 95
+    note: ''
+  פלט.I:
+    lex:
+    - פלט
+    template: Intensive
+    stems:
+    - etpa
+    - hit
+    - hotp
+    - htpo
+    - nit
+    - piel
+    - poal
+    - poel
+    - pual
+    tokens_in_template: 24
+    tokens_all_stems: 27
+    note: ''
+  גרש.I:
+    lex:
+    - גרשׁ
+    template: Intensive
+    stems:
+    - etpa
+    - hit
+    - hotp
+    - htpo
+    - nit
+    - piel
+    - poal
+    - poel
+    - pual
+    tokens_in_template: 37
+    tokens_all_stems: 47
+    note: ''
+  חלץ.I:
+    lex:
+    - חלץ
+    template: Intensive
+    stems:
+    - etpa
+    - hit
+    - hotp
+    - htpo
+    - nit
+    - piel
+    - poal
+    - poel
+    - pual
+    tokens_in_template: 14
+    tokens_all_stems: 44
+    note: ''
+  נשל.I:
+    lex:
+    - נשׁל
+    template: Intensive
+    stems:
+    - etpa
+    - hit
+    - hotp
+    - htpo
+    - nit
+    - piel
+    - poal
+    - poel
+    - pual
+    tokens_in_template: 1
+    tokens_all_stems: 7
+    note: ''
+  מלא.I:
+    lex:
+    - מלא
+    template: Intensive
+    stems:
+    - etpa
+    - hit
+    - hotp
+    - htpo
+    - nit
+    - piel
+    - poal
+    - poel
+    - pual
+    tokens_in_template: 113
+    tokens_all_stems: 292
+    note: ''
+  גלח.I:
+    lex:
+    - גלח
+    template: Intensive
+    stems:
+    - etpa
+    - hit
+    - hotp
+    - htpo
+    - nit
+    - piel
+    - poal
+    - poel
+    - pual
+    tokens_in_template: 23
+    tokens_all_stems: 23
+    note: ''
+  חטא.I:
+    lex:
+    - חטא
+    template: Intensive
+    stems:
+    - etpa
+    - hit
+    - hotp
+    - htpo
+    - nit
+    - piel
+    - poal
+    - poel
+    - pual
+    tokens_in_template: 24
+    tokens_all_stems: 237
+    note: ''
+  נקה.I:
+    lex:
+    - נקה
+    template: Intensive
+    stems:
+    - etpa
+    - hit
+    - hotp
+    - htpo
+    - nit
+    - piel
+    - poal
+    - poel
+    - pual
+    tokens_in_template: 19
+    tokens_all_stems: 44
+    note: ''
+  כבס.I:
+    lex:
+    - כבס
+    template: Intensive
+    stems:
+    - etpa
+    - hit
+    - hotp
+    - htpo
+    - nit
+    - piel
+    - poal
+    - poel
+    - pual
+    tokens_in_template: 48
+    tokens_all_stems: 51
+    note: ''
+  פנה.I:
+    lex:
+    - פנה
+    template: Intensive
+    stems:
+    - etpa
+    - hit
+    - hotp
+    - htpo
+    - nit
+    - piel
+    - poal
+    - poel
+    - pual
+    tokens_in_template: 8
+    tokens_all_stems: 135
+    note: ''
+  שלח.I:
+    lex:
+    - שׁלח
+    template: Intensive
+    stems:
+    - etpa
+    - hit
+    - hotp
+    - htpo
+    - nit
+    - piel
+    - poal
+    - poel
+    - pual
+    tokens_in_template: 278
+    tokens_all_stems: 847
+    note: ''
+  חפה.I:
+    lex:
+    - חפה
+    template: Intensive
+    stems:
+    - etpa
+    - hit
+    - hotp
+    - htpo
+    - nit
+    - piel
+    - poal
+    - poel
+    - pual
+    tokens_in_template: 5
+    tokens_all_stems: 12
+    note: ''
+  צפה.I:
+    lex:
+    - צפה
+    template: Intensive
+    stems:
+    - etpa
+    - hit
+    - hotp
+    - htpo
+    - nit
+    - piel
+    - poal
+    - poel
+    - pual
+    tokens_in_template: 55
+    tokens_all_stems: 84
+    note: ''
+  קרה.I:
+    lex:
+    - קרה
+    template: Intensive
+    stems:
+    - etpa
+    - hit
+    - hotp
+    - htpo
+    - nit
+    - piel
+    - poal
+    - poel
+    - pual
+    tokens_in_template: 5
+    tokens_all_stems: 27
+    note: ''
+  כסה.I:
+    lex:
+    - כסה
+    template: Intensive
+    stems:
+    - etpa
+    - hit
+    - hotp
+    - htpo
+    - nit
+    - piel
+    - poal
+    - poel
+    - pual
+    tokens_in_template: 146
+    tokens_all_stems: 152
+    note: ''
+  עטר.I:
+    lex:
+    - עטר
+    template: Intensive
+    stems:
+    - etpa
+    - hit
+    - hotp
+    - htpo
+    - nit
+    - piel
+    - poal
+    - poel
+    - pual
+    tokens_in_template: 4
+    tokens_all_stems: 7
+    note: ''
+  רפד.I:
+    lex:
+    - רפד
+    template: Intensive
+    stems:
+    - etpa
+    - hit
+    - hotp
+    - htpo
+    - nit
+    - piel
+    - poal
+    - poel
+    - pual
+    tokens_in_template: 2
+    tokens_all_stems: 3
+    note: ''
+  גשם.I:
+    lex:
+    - גשׁם
+    template: Intensive
+    stems:
+    - etpa
+    - hit
+    - hotp
+    - htpo
+    - nit
+    - piel
+    - poal
+    - poel
+    - pual
+    tokens_in_template: 0
+    tokens_all_stems: 1
+    note: lexeme exists but has no Intensive stem tokens
+  ישב.I:
+    lex:
+    - ישׁב
+    template: Intensive
+    stems:
+    - etpa
+    - hit
+    - hotp
+    - htpo
+    - nit
+    - piel
+    - poal
+    - poel
+    - pual
+    tokens_in_template: 1
+    tokens_all_stems: 1082
+    note: ''
+  דשן.I:
+    lex:
+    - דשׁן
+    template: Intensive
+    stems:
+    - etpa
+    - hit
+    - hotp
+    - htpo
+    - nit
+    - piel
+    - poal
+    - poel
+    - pual
+    tokens_in_template: 10
+    tokens_all_stems: 11
+    note: ''
+  סקל.I:
+    lex:
+    - סקל
+    template: Intensive
+    stems:
+    - etpa
+    - hit
+    - hotp
+    - htpo
+    - nit
+    - piel
+    - poal
+    - poel
+    - pual
+    tokens_in_template: 6
+    tokens_all_stems: 22
+    note: ''
+  שרש.I:
+    lex:
+    - שׁרשׁ
+    template: Intensive
+    stems:
+    - etpa
+    - hit
+    - hotp
+    - htpo
+    - nit
+    - piel
+    - poal
+    - poel
+    - pual
+    tokens_in_template: 5
+    tokens_all_stems: 8
+    note: ''
+  טמא.I:
+    lex:
+    - טמא
+    template: Intensive
+    stems:
+    - etpa
+    - hit
+    - hotp
+    - htpo
+    - nit
+    - piel
+    - poal
+    - poel
+    - pual
+    tokens_in_template: 67
+    tokens_all_stems: 162
+    note: ''
+  טהר.I:
+    lex:
+    - טהר
+    template: Intensive
+    stems:
+    - etpa
+    - hit
+    - hotp
+    - htpo
+    - nit
+    - piel
+    - poal
+    - poel
+    - pual
+    tokens_in_template: 60
+    tokens_all_stems: 94
+    note: ''
+  קדש.I:
+    lex:
+    - קדשׁ
+    template: Intensive
+    stems:
+    - etpa
+    - hit
+    - hotp
+    - htpo
+    - nit
+    - piel
+    - poal
+    - poel
+    - pual
+    tokens_in_template: 104
+    tokens_all_stems: 171
+    note: ''
+  חסר.I:
+    lex:
+    - חסר
+    template: Intensive
+    stems:
+    - etpa
+    - hit
+    - hotp
+    - htpo
+    - nit
+    - piel
+    - poal
+    - poel
+    - pual
+    tokens_in_template: 2
+    tokens_all_stems: 24
+    note: ''
+  אסף.S:
+    lex:
+    - אסף
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 190
+    tokens_all_stems: 204
+    note: ''
+  זרע.S:
+    lex:
+    - זרע
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 52
+    tokens_all_stems: 56
+    note: ''
+  חבש.S:
+    lex:
+    - חבשׁ
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 29
+    tokens_all_stems: 33
+    note: ''
+  טוח.S:
+    lex:
+    - טוח
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 11
+    tokens_all_stems: 11
+    note: ''
+  ירה.S:
+    lex:
+    - ירה
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 17
+    tokens_all_stems: 81
+    note: ''
+  משח.S:
+    lex:
+    - משׁח
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 69
+    tokens_all_stems: 69
+    note: ''
+  סכך.S:
+    lex:
+    - סכך
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 12
+    tokens_all_stems: 20
+    note: ''
+  עמס.S:
+    lex:
+    - עמס
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 7
+    tokens_all_stems: 9
+    note: ''
+  רגם.S:
+    lex:
+    - רגם
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 16
+    tokens_all_stems: 16
+    note: ''
+  שים.S:
+    lex:
+    - שׂים
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 579
+    tokens_all_stems: 583
+    note: ''
+  שית.S:
+    lex:
+    - שׁית
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 83
+    tokens_all_stems: 85
+    note: ''
+  ארה.S:
+    lex:
+    - ארה
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 2
+    tokens_all_stems: 2
+    note: ''
+  בזז.S:
+    lex:
+    - בזז
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 42
+    tokens_all_stems: 43
+    note: ''
+  בצר.S:
+    lex:
+    - בצר
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 10
+    tokens_all_stems: 12
+    note: ''
+  גזז.S:
+    lex:
+    - גזז
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 15
+    tokens_all_stems: 15
+    note: ''
+  גזל.S:
+    lex:
+    - גזל
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 30
+    tokens_all_stems: 30
+    note: ''
+  חשך.S:
+    lex:
+    - חשׁך
+    - חשׂך
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 39
+    tokens_all_stems: 45
+    note: ''
+  חשף.S:
+    lex:
+    - חשׂף
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 10
+    tokens_all_stems: 10
+    note: ''
+  ינק.S:
+    lex:
+    - ינק
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 18
+    tokens_all_stems: 27
+    note: ''
+  ירש.S:
+    lex:
+    - ירשׁ
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 163
+    tokens_all_stems: 231
+    note: ''
+  מחה.S:
+    lex:
+    - מחה
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 32
+    tokens_all_stems: 36
+    note: ''
+  מנע.S:
+    lex:
+    - מנע
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 29
+    tokens_all_stems: 29
+    note: ''
+  מרט.S:
+    lex:
+    - מרט
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 11
+    tokens_all_stems: 14
+    note: ''
+  עצר.S:
+    lex:
+    - עצר
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 46
+    tokens_all_stems: 46
+    note: ''
+  עשק.S:
+    lex:
+    - עשׁק
+    - עשׂק
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 36
+    tokens_all_stems: 38
+    note: ''
+  פרק.S:
+    lex:
+    - פרק
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 4
+    tokens_all_stems: 10
+    note: ''
+  קצר.S:
+    lex:
+    - קצר
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 46
+    tokens_all_stems: 48
+    note: ''
+  רחץ.S:
+    lex:
+    - רחץ
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 69
+    tokens_all_stems: 72
+    note: ''
+  רפא.S:
+    lex:
+    - רפא
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 54
+    tokens_all_stems: 65
+    note: ''
+  שטף.S:
+    lex:
+    - שׁטף
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 30
+    tokens_all_stems: 31
+    note: ''
+  שדד.S:
+    lex:
+    - שׁדד
+    - שׂדד
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 33
+    tokens_all_stems: 61
+    note: ''
+  אסר.S:
+    lex:
+    - אסר
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 68
+    tokens_all_stems: 70
+    note: ''
+  אצר.S:
+    lex:
+    - אצר
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 4
+    tokens_all_stems: 5
+    note: ''
+  גלל.S:
+    lex:
+    - גלל
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 12
+    tokens_all_stems: 17
+    note: ''
+  זרה.S:
+    lex:
+    - זרה
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 11
+    tokens_all_stems: 41
+    note: ''
+  זרק.S:
+    lex:
+    - זרק
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 33
+    tokens_all_stems: 35
+    note: ''
+  טבל.S:
+    lex:
+    - טבל
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 16
+    tokens_all_stems: 16
+    note: ''
+  טמן.S:
+    lex:
+    - טמן
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 29
+    tokens_all_stems: 31
+    note: ''
+  יצק.S:
+    lex:
+    - יצק
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 42
+    tokens_all_stems: 54
+    note: ''
+  לחץ.S:
+    lex:
+    - לחץ
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 19
+    tokens_all_stems: 19
+    note: ''
+  מרח.S:
+    lex:
+    - מרח
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 1
+    tokens_all_stems: 1
+    note: ''
+  נטע.S:
+    lex:
+    - נטע
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 58
+    tokens_all_stems: 58
+    note: ''
+  נטש.S:
+    lex:
+    - נטשׁ
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 39
+    tokens_all_stems: 40
+    note: ''
+  נפח.S:
+    lex:
+    - נפח
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 9
+    tokens_all_stems: 12
+    note: ''
+  נסך.S:
+    lex:
+    - נסך
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 9
+    tokens_all_stems: 26
+    note: ''
+  נתן.S:
+    lex:
+    - נתן
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 2002
+    tokens_all_stems: 2010
+    note: ''
+  סחב.S:
+    lex:
+    - סחב
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 5
+    tokens_all_stems: 5
+    note: ''
+  עזב.S:
+    lex:
+    - עזב
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 214
+    tokens_all_stems: 216
+    note: ''
+  פרש.S:
+    lex:
+    - פרשׁ
+    - פרשׂ
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 60
+    tokens_all_stems: 72
+    note: ''
+  צפן.S:
+    lex:
+    - צפן
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 30
+    tokens_all_stems: 32
+    note: ''
+  צרר.S:
+    lex:
+    - צרר
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 58
+    tokens_all_stems: 71
+    note: ''
+  קבר.S:
+    lex:
+    - קבר
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 126
+    tokens_all_stems: 133
+    note: ''
+  קרם.S:
+    lex:
+    - קרם
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 2
+    tokens_all_stems: 2
+    note: ''
+  קשר.S:
+    lex:
+    - קשׁר
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 38
+    tokens_all_stems: 44
+    note: ''
+  שלח.S:
+    lex:
+    - שׁלח
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 564
+    tokens_all_stems: 847
+    note: ''
+  תלה.S:
+    lex:
+    - תלה
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 25
+    tokens_all_stems: 27
+    note: ''
+  תקע.S:
+    lex:
+    - תקע
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 67
+    tokens_all_stems: 67
+    note: ''
+  גנב.S:
+    lex:
+    - גנב
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 32
+    tokens_all_stems: 40
+    note: ''
+  גרע.S:
+    lex:
+    - גרע
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 21
+    tokens_all_stems: 22
+    note: ''
+  דלה.S:
+    lex:
+    - דלה
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 5
+    tokens_all_stems: 6
+    note: ''
+  הדף.S:
+    lex:
+    - הדף
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 11
+    tokens_all_stems: 11
+    note: ''
+  חבל.S:
+    lex:
+    - חבל
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 16
+    tokens_all_stems: 27
+    note: ''
+  חלץ.S:
+    lex:
+    - חלץ
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 29
+    tokens_all_stems: 44
+    note: ''
+  כרת.S:
+    lex:
+    - כרת
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 207
+    tokens_all_stems: 288
+    note: ''
+  לקח.S:
+    lex:
+    - לקח
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 949
+    tokens_all_stems: 965
+    note: ''
+  לקט.S:
+    lex:
+    - לקט
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 14
+    tokens_all_stems: 37
+    note: ''
+  מלק.S:
+    lex:
+    - מלק
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 2
+    tokens_all_stems: 2
+    note: ''
+  מצה.S:
+    lex:
+    - מצה
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 7
+    tokens_all_stems: 7
+    note: ''
+  משה.S:
+    lex:
+    - משׁה
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 1
+    tokens_all_stems: 3
+    note: ''
+  נסח.S:
+    lex:
+    - נסח
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 4
+    tokens_all_stems: 4
+    note: ''
+  נשא.S:
+    lex:
+    - נשׁא
+    - נשׂא
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 648
+    tokens_all_stems: 688
+    note: ''
+  פדה.S:
+    lex:
+    - פדה
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 56
+    tokens_all_stems: 58
+    note: ''
+  קבץ.S:
+    lex:
+    - קבץ
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 69
+    tokens_all_stems: 127
+    note: ''
+  קטף.S:
+    lex:
+    - קטף
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 5
+    tokens_all_stems: 5
+    note: ''
+  שאב.S:
+    lex:
+    - שׁאב
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 19
+    tokens_all_stems: 19
+    note: ''
+  שלף.S:
+    lex:
+    - שׁלף
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 25
+    tokens_all_stems: 25
+    note: ''
+  שפך.S:
+    lex:
+    - שׁפך
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 109
+    tokens_all_stems: 115
+    note: ''
+  אזר.S:
+    lex:
+    - אזר
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 7
+    tokens_all_stems: 16
+    note: ''
+  גדר.S:
+    lex:
+    - גדר
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 10
+    tokens_all_stems: 10
+    note: ''
+  חגר.S:
+    lex:
+    - חגר
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 44
+    tokens_all_stems: 44
+    note: ''
+  טען.S:
+    lex:
+    - טען
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 1
+    tokens_all_stems: 2
+    note: ''
+  כחל.S:
+    lex:
+    - כחל
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 1
+    tokens_all_stems: 1
+    note: ''
+  כפר.S:
+    lex:
+    - כפר
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 1
+    tokens_all_stems: 102
+    note: ''
+  נעל.S:
+    lex:
+    - נעל
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 7
+    tokens_all_stems: 8
+    note: ''
+  סוך.S:
+    lex:
+    - סוך
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 8
+    tokens_all_stems: 11
+    note: ''
+  סבב.S:
+    lex:
+    - סבב
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 110
+    tokens_all_stems: 161
+    note: ''
+  ספן.S:
+    lex:
+    - ספן
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 6
+    tokens_all_stems: 6
+    note: ''
+  סתם.S:
+    lex:
+    - סתם
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 11
+    tokens_all_stems: 13
+    note: ''
+  עדה.S:
+    lex:
+    - עדה
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 9
+    tokens_all_stems: 10
+    note: ''
+  עטה.S:
+    lex:
+    - עטה
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 15
+    tokens_all_stems: 17
+    note: ''
+  רבד.S:
+    lex:
+    - רבד
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 1
+    tokens_all_stems: 1
+    note: ''
+  שוך.S:
+    lex:
+    - שׂוך
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 2
+    tokens_all_stems: 2
+    note: ''
+  גמל.S:
+    lex:
+    - גמל
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 37
+    tokens_all_stems: 37
+    note: ''
+  זמר.S:
+    lex:
+    - זמר
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 3
+    tokens_all_stems: 48
+    note: ''
+  זור.S:
+    lex:
+    - זור
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 8
+    tokens_all_stems: 9
+    note: ''
+  שחט.S.squeeze:
+    lex:
+    - שׁחט
+    - שׂחט
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 86
+    tokens_all_stems: 86
+    note: ''
+  שוב.C:
+    lex:
+    - שׁוב
+    template: Causative
+    stems:
+    - hif
+    - hof
+    - hsht
+    - tif
+    tokens_in_template: 362
+    tokens_all_stems: 1056
+    note: ''
+  סער.I:
+    lex:
+    - סער
+    template: Intensive
+    stems:
+    - etpa
+    - hit
+    - hotp
+    - htpo
+    - nit
+    - piel
+    - poal
+    - poel
+    - pual
+    tokens_in_template: 3
+    tokens_all_stems: 7
+    note: ''
+  שבר.S:
+    lex:
+    - שׁבר
+    - שׂבר
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 127
+    tokens_all_stems: 176
+    note: ''
+  כלה.I:
+    lex:
+    - כלה
+    template: Intensive
+    stems:
+    - etpa
+    - hit
+    - hotp
+    - htpo
+    - nit
+    - piel
+    - poal
+    - poel
+    - pual
+    tokens_in_template: 142
+    tokens_all_stems: 206
+    note: ''
+  בער.I:
+    lex:
+    - בער
+    template: Intensive
+    stems:
+    - etpa
+    - hit
+    - hotp
+    - htpo
+    - nit
+    - piel
+    - poal
+    - poel
+    - pual
+    tokens_in_template: 41
+    tokens_all_stems: 94
+    note: ''
+  שחט.S.slay:
+    lex:
+    - שׁחט
+    - שׂחט
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 86
+    tokens_all_stems: 86
+    note: ''
+  יבש.C:
+    lex:
+    - יבשׁ
+    template: Causative
+    stems:
+    - hif
+    - hof
+    - hsht
+    - tif
+    tokens_in_template: 34
+    tokens_all_stems: 77
+    note: ''
+  עור.C:
+    lex:
+    - עור
+    template: Causative
+    stems:
+    - hif
+    - hof
+    - hsht
+    - tif
+    tokens_in_template: 33
+    tokens_all_stems: 86
+    note: ''
+  קרע.S:
+    lex:
+    - קרע
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 63
+    tokens_all_stems: 63
+    note: ''
+  שבע.C:
+    lex:
+    - שׁבע
+    - שׂבע
+    template: Causative
+    stems:
+    - hif
+    - hof
+    - hsht
+    - tif
+    tokens_in_template: 47
+    tokens_all_stems: 282
+    note: ''
+  רוה.C:
+    lex:
+    - רוה
+    template: Causative
+    stems:
+    - hif
+    - hof
+    - hsht
+    - tif
+    tokens_in_template: 5
+    tokens_all_stems: 14
+    note: ''
+  רפא.I:
+    lex:
+    - רפא
+    template: Intensive
+    stems:
+    - etpa
+    - hit
+    - hotp
+    - htpo
+    - nit
+    - piel
+    - poal
+    - poel
+    - pual
+    tokens_in_template: 11
+    tokens_all_stems: 65
+    note: ''
+  פרק.I:
+    lex:
+    - פרק
+    template: Intensive
+    stems:
+    - etpa
+    - hit
+    - hotp
+    - htpo
+    - nit
+    - piel
+    - poal
+    - poel
+    - pual
+    tokens_in_template: 6
+    tokens_all_stems: 10
+    note: ''
+  רקן.I:
+    lex: []
+    template: Intensive
+    stems:
+    - etpa
+    - hit
+    - hotp
+    - htpo
+    - nit
+    - piel
+    - poal
+    - poel
+    - pual
+    tokens_in_template: 0
+    tokens_all_stems: 0
+    note: no BHSA verb lexeme with these consonants
+  חסך.S:
+    lex: []
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 0
+    tokens_all_stems: 0
+    note: no BHSA verb lexeme with these consonants
+  שפשף.I:
+    lex: []
+    template: Intensive
+    stems:
+    - etpa
+    - hit
+    - hotp
+    - htpo
+    - nit
+    - piel
+    - poal
+    - poel
+    - pual
+    tokens_in_template: 0
+    tokens_all_stems: 0
+    note: no BHSA verb lexeme with these consonants
+  נער.I:
+    lex:
+    - נער
+    template: Intensive
+    stems:
+    - etpa
+    - hit
+    - hotp
+    - htpo
+    - nit
+    - piel
+    - poal
+    - poel
+    - pual
+    tokens_in_template: 4
+    tokens_all_stems: 12
+    note: ''
+  נגב.I:
+    lex: []
+    template: Intensive
+    stems:
+    - etpa
+    - hit
+    - hotp
+    - htpo
+    - nit
+    - piel
+    - poal
+    - poel
+    - pual
+    tokens_in_template: 0
+    tokens_all_stems: 0
+    note: no BHSA verb lexeme with these consonants
+  קרצף.I:
+    lex: []
+    template: Intensive
+    stems:
+    - etpa
+    - hit
+    - hotp
+    - htpo
+    - nit
+    - piel
+    - poal
+    - poel
+    - pual
+    tokens_in_template: 0
+    tokens_all_stems: 0
+    note: no BHSA verb lexeme with these consonants
+  צחצח.I:
+    lex: []
+    template: Intensive
+    stems:
+    - etpa
+    - hit
+    - hotp
+    - htpo
+    - nit
+    - piel
+    - poal
+    - poel
+    - pual
+    tokens_in_template: 0
+    tokens_all_stems: 0
+    note: no BHSA verb lexeme with these consonants
+  ברש.C:
+    lex: []
+    template: Causative
+    stems:
+    - hif
+    - hof
+    - hsht
+    - tif
+    tokens_in_template: 0
+    tokens_all_stems: 0
+    note: no BHSA verb lexeme with these consonants
+  טאטא.I:
+    lex:
+    - טאטא
+    template: Intensive
+    stems:
+    - etpa
+    - hit
+    - hotp
+    - htpo
+    - nit
+    - piel
+    - poal
+    - poel
+    - pual
+    tokens_in_template: 1
+    tokens_all_stems: 1
+    note: ''
+  מרק.I:
+    lex:
+    - מרק
+    template: Intensive
+    stems:
+    - etpa
+    - hit
+    - hotp
+    - htpo
+    - nit
+    - piel
+    - poal
+    - poel
+    - pual
+    tokens_in_template: 1
+    tokens_all_stems: 3
+    note: ''
+  גרף.I:
+    lex:
+    - גרף
+    template: Intensive
+    stems:
+    - etpa
+    - hit
+    - hotp
+    - htpo
+    - nit
+    - piel
+    - poal
+    - poel
+    - pual
+    tokens_in_template: 0
+    tokens_all_stems: 1
+    note: lexeme exists but has no Intensive stem tokens
+  זקק.I:
+    lex:
+    - זקק
+    template: Intensive
+    stems:
+    - etpa
+    - hit
+    - hotp
+    - htpo
+    - nit
+    - piel
+    - poal
+    - poel
+    - pual
+    tokens_in_template: 5
+    tokens_all_stems: 7
+    note: ''
+  עסה.I:
+    lex: []
+    template: Intensive
+    stems:
+    - etpa
+    - hit
+    - hotp
+    - htpo
+    - nit
+    - piel
+    - poal
+    - poel
+    - pual
+    tokens_in_template: 0
+    tokens_all_stems: 0
+    note: no BHSA verb lexeme with these consonants
+  רסס.I:
+    lex:
+    - רסס
+    template: Intensive
+    stems:
+    - etpa
+    - hit
+    - hotp
+    - htpo
+    - nit
+    - piel
+    - poal
+    - poel
+    - pual
+    tokens_in_template: 0
+    tokens_all_stems: 1
+    note: lexeme exists but has no Intensive stem tokens
+  סחף.S:
+    lex:
+    - סחף
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 2
+    tokens_all_stems: 2
+    note: ''
+  גרר.S:
+    lex:
+    - גרר
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 3
+    tokens_all_stems: 4
+    note: ''
+  משך.S:
+    lex:
+    - משׁך
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 33
+    tokens_all_stems: 36
+    note: ''
+  גלגל.I:
+    lex: []
+    template: Intensive
+    stems:
+    - etpa
+    - hit
+    - hotp
+    - htpo
+    - nit
+    - piel
+    - poal
+    - poel
+    - pual
+    tokens_in_template: 0
+    tokens_all_stems: 0
+    note: no BHSA verb lexeme with these consonants
+  דחף.S:
+    lex:
+    - דחף
+    template: Simple
+    stems:
+    - nif
+    - pasq
+    - qal
+    tokens_in_template: 4
+    tokens_all_stems: 4
+    note: ''

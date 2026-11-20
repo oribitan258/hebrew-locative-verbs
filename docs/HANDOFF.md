@@ -1,4 +1,4 @@
-# Session Handoff: §5–§6 CHECKPOINT 1 REACHED → next session PLANS stage 3 (§5 on Mikra, Plan Mode)
+# Session Handoff: stage 3 — R1 RELEASED (`s56-r1`, provisional) → STOP; Phase B only after Ori's approval
 
 > **Two mandatory checkpoints (Ori, 2026-11-19):**
 > - **CHECKPOINT 1** = shared methodology approved → STOP, complete `docs/EFRAT_SECTION_6.md`, tell Ori it is ready
@@ -11,6 +11,58 @@
 >   - tell Ori it is ready for Adi.
 >
 > Nothing proceeds past a checkpoint without Ori's explicit approval.
+
+## ★ STAGE 3, Phase A: R1 RELEASED 2026-11-20 (tag `s56-r1`) → STOP. Phase B needs Ori's approval
+
+**Status.**
+- R1 is released as a **provisional infrastructure milestone** (Ori). It is **not** a validated final identification
+  system (D-057).
+- Committed, tagged `s56-r1` and pushed.
+- **Do NOT start Phase B** (the shared extractor, resolver and classes of R2) without Ori's explicit approval. Plan it
+  in Plan Mode first.
+- Plan file: `~/.claude/plans/start-planning-stage-3-breezy-widget.md`.
+- **Read first:** [S56_R1.md](S56_R1.md): §0 (the correction), §0.1 (the release conditions and the known
+  identification limits), §3 (the frozen samples and the supplemental sampling procedure), §8 (D-057).
+
+**What R1 is.**
+- **Lexicon:** `config/locative_verbs.yaml` (210 entries) and `config/locative_verb_forms.yaml` (forms-v2 /
+  morph-v2, with the pre-registered fallback that Ori kept).
+- **Guideline:** `annotation/S56_GUIDELINE.md` (§4.15: ישב.I sense review).
+- **Code:** `src/hebloc/loc/` and the CLI `hebloc loc`.
+- **Tests:** `tests/test_loc.py` (57).
+- **BHSA mapping** for measurement only: `config/reference/locative_bhsa.yaml`.
+- **Frozen samples** (`FROZEN_SAMPLES`, item fingerprints): Mikra `mikra-r1b-1cd4ee9802` (387 items, B shortfall 13)
+  and Modern `modern-r1b-5fbb5e22e7` (400 items).
+- **Official copies on Ori's computer:** `data/loc/gold/<corpus>/<sample_id>/` and the Mikra noun list
+  `data/loc/nouns/mikra/` (991 rows).
+
+**Release conditions (Ori, 2026-11-20).**
+- Identification must be improved and validated **before R2 is frozen**, on the **dev** gold (plus the paper's
+  examples). Validation is read only for pre-registered choices; test is read once, at the end. **No retuning against
+  BHSA:** its single pre-registered use is done.
+- **Known limits to address in Phase C:**
+  - recall 0.657 (clean 0.624);
+  - lemma-only matches have precision 0.46 (probably template confusion; not yet measured);
+  - blank-lemma real verbs are no longer found;
+  - two wrong template assignments: Genesis 27:40 and Jeremiah 30:17;
+  - V2's generated forms are a candidate (0.836 on clean keys).
+- The frozen samples never change. Recovered instances enter the gold only by the **supplemental sampling procedure**
+  (S56_R1.md §3), each supplement with Ori's approval and a decision.
+- Modern ישב.I is kept for human sense annotation. Nothing is excluded automatically.
+
+**Who does what now.**
+- **Ori:**
+  - lexicon review (`data/loc/review/lexicon_review.csv`);
+  - Mikra gold, dev first: `data/loc/gold/mikra/mikra-r1b-1cd4ee9802/sheets/`;
+  - Mikra noun types (991 rows);
+  - later, 60 Modern agreement items (blind).
+- **Efrat** (EFRAT_SECTION_6.md §9.2):
+  - draws the same two samples from the package;
+  - annotates the Modern gold and the 60 Mikra agreement items;
+  - types the 1,763 Modern nouns;
+  - delivers through `data/outbox/efrat-s6/`.
+- **Noun plan (option A):** the historical lists are made only after Efrat's Modern types are merged
+  (`--exclude-typed`).
 
 ## ★ CHECKPOINT 1 — done 2026-11-19
 

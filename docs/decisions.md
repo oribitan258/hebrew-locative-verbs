@@ -1030,3 +1030,33 @@ Design: [m6_design.md](m6_design.md).
   - Ori merges and computes the official §5 statistics once, centrally (D-040).
 - *Efrat's CLAUDE.md branch.* §6 is authorized as staged in EFRAT_SECTION_6.md §9, and her `start` points there.
   Adi's `start` is unchanged until CHECKPOINT 2.
+
+### D-057 · Release R1 (`s56-r1`): implementation clarifications, provisional status (2026-11-20) · accepted (Ori)
+- *Status.* R1 is released as a **provisional infrastructure milestone**: the lexicon, the guideline, the gold sampler
+  and the noun lists. It is **not** a validated final identification system. The full list of implementation choices
+  (items 1–20) is in [S56_R1.md](S56_R1.md) §8. None of them changes the methodology `S56-v1`.
+- *Correction before release* (Ori's quality review, same day):
+  - `morph-v2` and `forms-v2`: a form is clean, ambiguous with `~` partners, or dropped;
+  - a pre-registered sense screen: כפר.S, גמל.S, שוך.S, זמר.S and טען.S become `~` keys, never deletions;
+  - sampler `gold-r1b`: a HOMOGRAPH stratum (capped at 10%, 4 per key) and calibrated design weights;
+  - **one authorized redraw** before any annotation: `mikra-r1b-1cd4ee9802` (387 items, B shortfall 13) and
+    `modern-r1b-5fbb5e22e7` (400). Both supersede the never-annotated r1 rehearsal samples.
+- *Generated forms.* They were measured once on Mikra against BHSA, with a decision rule fixed in advance. The rule
+  chose the fallback (F1 0.684 < 0.695), and **Ori kept it**: generated forms only for entries with no Dicta lemma of
+  their own, always `~form`.
+- *Known identification limits* (S56_R1.md §0.1; BHSA, Mikra):
+  - recall 0.657, clean 0.624 (V1: 0.734 / 0.730);
+  - clean precision 0.777 (V1: 0.757);
+  - lemma-only matches have precision 0.46;
+  - two wrong template assignments in paper examples, Genesis 27:40 and Jeremiah 30:17 (Simple counted as
+    Intensive);
+  - paper references 125 of 219: 23 genuine ones lost, 6 `~` ones gained.
+- *Freeze.* `FROZEN_SAMPLES` holds the ids, the item fingerprints and the file hashes. `gold sample` refuses any
+  other sample. Recovered instances enter the gold only by the **supplemental sampling procedure** (S56_R1.md §3:
+  separate population and sample, own id, two-stratum estimate, Ori's approval).
+- *Sense review.* Modern ישב.I stays in its stratum for human sense annotation (guideline §4.15). Nothing is
+  excluded automatically.
+- *Before R2.* Identification must be improved and validated on the **dev** split of the human gold. Validation is
+  read only for the pre-registered choice of variant; test is read once, at the end. No retuning against BHSA.
+- *Nouns (option A).* Mikra at ≥ 2 (991 rows); Modern 1,763 (Efrat); the historical lists only after Efrat's Modern
+  types are merged.
