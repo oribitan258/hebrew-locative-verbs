@@ -1060,3 +1060,19 @@ Design: [m6_design.md](m6_design.md).
   read only for the pre-registered choice of variant; test is read once, at the end. No retuning against BHSA.
 - *Nouns (option A).* Mikra at ≥ 2 (991 rows); Modern 1,763 (Efrat); the historical lists only after Efrat's Modern
   types are merged.
+
+### D-058 · After R1: Phase B not started; Efrat's Dicta findings are open issues (2026-11-20) · accepted (Ori)
+- *State.* R1 is released as tag `s56-r1` (D-057). **Phase B has not started.** It is planned in a fresh Plan Mode
+  session and needs Ori's explicit approval.
+- *Open issues for Phase B planning* (found by Efrat; details in HANDOFF, stage-3 section):
+  - **OI-1:** present-tense (participle) and passive forms may have their own Dicta lemmas, which could split one
+    verb in §6;
+  - **OI-2:** frequent VERB-tagged items such as יש, אין, אפשר and היי may not be ordinary lexical verbs.
+- *How they are handled.*
+  - The next session investigates both read-only, on Mikra and Modern.
+  - It proposes one consistent, versioned policy shared by §5 and §6, for Ori's decision.
+  - Nothing changes silently in S56-v1, R1 or the frozen gold samples. An approved policy enters R2 with its own
+    decision. New tokens would go through the supplemental sampling procedure.
+- *Efrat.* She is authorized to do her R1 tasks now (EFRAT_SECTION_6.md §9.2), in her existing project,
+  independently of these open issues.
+

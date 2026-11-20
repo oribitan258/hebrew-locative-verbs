@@ -11,7 +11,16 @@ Frame A [Locatum = direct object] and Frame B [Location = direct object] keep th
   - Identification must be improved and validated on the **dev** gold before R2 is frozen. No retuning against BHSA;
     test is read once, at the end.
   - Recovered instances enter the gold only by the supplemental sampling procedure (§3).
-  - **Phase B (the R2 code) starts only with Ori's explicit approval** (Plan Mode).
+  - **Phase B has NOT started.** It (the R2 code) starts only with Ori's explicit approval (Plan Mode).
+  - **The next session (Plan Mode) starts with the open issues OI-1 and OI-2** (D-058; `docs/HANDOFF.md`, stage-3
+    section). These are Efrat's Dicta findings:
+    - present-tense and passive forms may have separate lemmas;
+    - VERB-tagged יש, אין, אפשר, היי may not be ordinary verbs.
+
+    Investigate them read-only and propose one shared policy without silently changing S56-v1, R1 or the frozen
+    samples. Only then plan Phase B.
+  - **Efrat is authorized to do her R1 tasks** (`docs/EFRAT_SECTION_6.md` §9.2) in her existing project,
+    independently of OI-1 and OI-2.
 - **Earlier: CHECKPOINT 1 reached (2026-11-19).**
 - **What was approved.** The shared §5–§6 methodology **`S56-v1`** (D-053–D-056).
   - It is written in full in **`docs/EFRAT_SECTION_6.md`** §5, which is normative for Ori, Adi and Efrat.

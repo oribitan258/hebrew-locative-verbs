@@ -742,6 +742,13 @@ Claude Code does these steps in order and shows Efrat each result:
 
 ### 9.2 After R1 (tag `s56-r1`; released 2026-11-20)
 
+> **Your two Dicta findings are recorded as open issues for R2** (D-058):
+> - OI-1: present-tense and passive forms with their own lemmas;
+> - OI-2: VERB-tagged יש, אין, אפשר, היי.
+>
+> They do **not** block these steps. Do your R1 tasks now, and annotate every item from the sentence exactly as
+> the guideline says. These issues change no label rule. The policy, if any, comes with R2.
+
 The exact commands and expected results are in §7, "R1 release notes". Claude Code does the steps in order and
 shows Efrat each result.
 

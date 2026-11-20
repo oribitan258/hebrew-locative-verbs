@@ -8,7 +8,12 @@ Status: **living document.** Part 1 (M0–M6) is done; M7 review is pending.
   Efrat's §6 handoff.
 - **Stage 3 = §5 on Mikra.** Its plan is approved. **Release R1 = tag `s56-r1` (2026-11-20, D-057)** is a
   provisional infrastructure milestone: the lexicon, the guideline, the frozen gold samples and the noun lists.
-  Identification is improved and validated on the dev gold before R2. **Next: Phase B, only with Ori's approval.**
+  Identification is improved and validated on the dev gold before R2. **Phase B has not started.**
+- **Next session (Plan Mode):**
+  - first, investigate the open issues OI-1 and OI-2 (Efrat's Dicta findings: separate lemmas for present-tense and
+    passive forms; VERB-tagged יש, אין, אפשר, היי; D-058) and propose one shared policy;
+  - then plan Phase B (needs Ori's approval).
+- Efrat does her R1 tasks meanwhile.
 - **No paid external API** (D-054).
 - **Still closed** until Ori opens them: §7, the rest of §8, and §4 R7.
 

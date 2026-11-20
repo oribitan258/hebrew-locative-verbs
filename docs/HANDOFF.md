@@ -1,4 +1,4 @@
-# Session Handoff: stage 3 — R1 RELEASED (`s56-r1`, provisional) → STOP; Phase B only after Ori's approval
+# Session Handoff: stage 3 — R1 RELEASED (`s56-r1`, provisional); Phase B NOT started → next: OI-1/OI-2, then plan Phase B (Plan Mode)
 
 > **Two mandatory checkpoints (Ori, 2026-11-19):**
 > - **CHECKPOINT 1** = shared methodology approved → STOP, complete `docs/EFRAT_SECTION_6.md`, tell Ori it is ready
@@ -17,9 +17,52 @@
 **Status.**
 - R1 is released as a **provisional infrastructure milestone** (Ori). It is **not** a validated final identification
   system (D-057).
-- Committed, tagged `s56-r1` and pushed.
+- Committed, tagged `s56-r1` (commit 12b21ec) and pushed. **Phase B has NOT started** (not planned, not implemented).
 - **Do NOT start Phase B** (the shared extractor, resolver and classes of R2) without Ori's explicit approval. Plan it
   in Plan Mode first.
+
+**What the next session starts with (Plan Mode, on Ori's computer).**
+1. **Read:**
+   - CLAUDE.md;
+   - this section;
+   - S56_R1.md §0.1, §3 and §8;
+   - decisions D-053 to D-058;
+   - EFRAT_SECTION_6.md §5.
+2. **Investigate OI-1 and OI-2 read-only** on the Mikra and Modern parse data: counts, examples and the effect on
+   §5 and §6. Write no code into the pipeline and change no config.
+3. **Propose one shared, versioned policy** for each issue. Ori decides.
+4. **Only then plan Phase B** (the R2 code: extractor, resolver, classes), including:
+   - the approved policy;
+   - the identification work required before R2: validated on the dev gold, no BHSA retuning, test read once
+     (D-057).
+5. **Execute nothing before Ori approves the plan.**
+
+**Open issues for Phase B planning (Efrat's Dicta findings, recorded 2026-11-20, D-058).** Not decided. The next
+session investigates them read-only and proposes **one shared policy** for §5 and §6.
+- **OI-1: present-tense and passive forms may have their own Dicta lemmas.**
+  - Participles (present tense) and passive forms (nif'al, pu'al, hof'al) may get a Dicta lemma of their own,
+    separate from the active verb's lemma.
+  - §6 classifies every verb by its lemma, so one verb could be split into several "verbs".
+  - R1 lists such spellings per entry for the paper's verbs (`dicta_lemmas`, D-057 item 2). There is no rule yet for
+    the other verbs of §6.
+  - **To measure:** how often one root and template appears under several lemmas, by tense and voice, in Modern and
+    Mikra.
+- **OI-2: frequent VERB-tagged items that may not be ordinary lexical verbs.** Examples: יש, אין, אפשר, היי.
+  - They can inflate the all-verbs counts, the verb inventory, §6's candidate lists and the statistics.
+  - **To measure:** their frequency, their frames, and how Dicta tags them.
+  - The frozen Modern sample has no item with the lemma יש, אין, אפשר or היי.
+  - 4 HOMOGRAPH items have the Dicta lemma צריך (MO0243, MO0245, MO0252, MO0261). Look at them during the
+    investigation.
+- **Constraints.**
+  - Nothing changes **silently** in S56-v1, in R1 (lexicon, forms, guideline) or in the frozen gold samples.
+  - A policy is a proposal → Ori's decision → applied in R2, with a decision entry.
+  - Filtering is by tags or a versioned map, never by deletion.
+  - The frozen samples stay as they are. If a policy changes which tokens are identified, the new tokens go through
+    the supplemental sampling procedure (S56_R1.md §3).
+- **Efrat is not blocked by them.** She is authorized to do her R1 tasks (EFRAT_SECTION_6.md §9.2) now, in her
+  existing project. She annotates every item from the sentence exactly as the guideline says. These
+  issues change no label rule.
+
 - Plan file: `~/.claude/plans/start-planning-stage-3-breezy-widget.md`.
 - **Read first:** [S56_R1.md](S56_R1.md): §0 (the correction), §0.1 (the release conditions and the known
   identification limits), §3 (the frozen samples and the supplemental sampling procedure), §8 (D-057).
