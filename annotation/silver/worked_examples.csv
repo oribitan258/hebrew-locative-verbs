@@ -1,0 +1,16 @@
+﻿item_id,ref,verb_key,verb_entries,target,sentence,expected_frame
+W01,Exodus 28:17,,"(worked example of the guideline, §5: the target word is the verb)",ומלאת,[[ומלאת]] בו מלאת אבן,A
+W02,Ezra 9:11,,"(worked example of the guideline, §5: the target word is the verb)",מלאוה,… אשר [[מלאוה]] … בטמאתם,B
+W03,Judges 9:45,,"(worked example of the guideline, §5: the target word is the verb)",ויזרעה,[[ויזרעה]] מלח,B
+W04,Genesis 27:40,,"(worked example of the guideline, §5: the target word is the verb)",ופרקת,[[ופרקת]] עלו מעל צוארך,A
+W05,Psalms 136:24,,"(worked example of the guideline, §5: the target word is the verb)",ויפרקנו,[[ויפרקנו]] מצרינו,B
+W06,Leviticus 16:14,,"(worked example of the guideline, §5: the target word is the verb)",והזה,ולקח מדם הפר [[והזה]] באצבעו על פני הכפרת,A
+W07,,,"(worked example of the guideline, §5: the target word is the verb)",מילא,דני [[מילא]] את המיכל במים,B
+W08,,,"(worked example of the guideline, §5: the target word is the verb)",מילא,דני [[מילא]] מים במיכל,A
+W09,,,"(worked example of the guideline, §5: the target word is the verb)",הפיץ,הוא [[הפיץ]] את הידיעה בערוצים,A
+W10,,,"(worked example of the guideline, §5: the target word is the verb)",ציפה,הוא [[ציפה]] את הקירות בטפטים,B
+W11,,,"(worked example of the guideline, §5: the target word is the verb)",פינה,הצוות [[פינה]] את הפצועים מהשטח,A
+W12,,,"(worked example of the guideline, §5: the target word is the verb)",פינה,הצוות [[פינה]] את השטח מפצועים,B
+W13,,,"(worked example of the guideline, §5: the target word is the verb)",שמה,היא [[שמה]] לב לבעיה,NON_LOCATIVE
+W14,,,"(worked example of the guideline, §5: the target word is the verb)",שלח,הוא [[שלח]] לה מכתב,A
+W15,,,"(worked example of the guideline, §5: the target word is the verb)",ניקינו,[[ניקינו]] את הדירה,B

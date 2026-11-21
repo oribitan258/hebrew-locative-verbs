@@ -134,35 +134,67 @@ def list_nouns(corpus: str, source: Source, lex: Lexicon, *, out_root: Path = NO
                                  "exclude_typed": exclude_typed})
 
 
-def merge(reviewed: Path, path: Path = NOUN_TYPES_PATH, *, replace: bool = False) -> dict:
+def merge(reviewed: Path, path: Path = NOUN_TYPES_PATH, *, replace: bool = False, automated: Path | None = None) -> dict:
     """Merge a reviewed list (CSV with lemma, type, proposed_by, reviewed_by, note, corpus_source) into
-    ``config/noun_types.yaml``. Every row must have a type and a HUMAN reviewer. Ori only."""
+    ``config/noun_types.yaml``. Ori only.
+
+    Human mode: every row must have a type and a HUMAN reviewer (``claude_code`` is refused as a reviewer).
+    Automated mode (D-061, ``automated`` = the frozen SILVER noun job folder): the CSV must be that job's frozen final
+    file and every row carries ``reviewed_by = auto-qc:<qc_id>``, ``review_mode = automated``; Ori approves the
+    FILE, not the rows."""
     import csv
 
     with open(reviewed, encoding="utf-8-sig", newline="") as f:
         rows = [r for r in csv.DictReader(f) if (r.get("type") or "").strip()]
     probs = []
+    if automated is not None:
+        from hebloc.loc.silver import check_automated
+
+        _, probs = check_automated(Path(reviewed), Path(automated))
     for i, r in enumerate(rows, 2):
         if r["type"].strip() not in NOUN_TYPES:
             probs.append(f"line {i} {r.get('lemma')}: type {r['type']!r} not in {NOUN_TYPES}")
-        if not (r.get("reviewed_by") or "").strip() or r["reviewed_by"].strip().lower() in ("claude_code", "claude"):
-            probs.append(f"line {i} {r.get('lemma')}: reviewed_by must name the human reviewer")
+        rb = (r.get("reviewed_by") or "").strip()
+        if automated is None and (not rb or rb.lower() in ("claude_code", "claude") or rb.startswith("auto-qc:")):
+            probs.append(f"line {i} {r.get('lemma')}: reviewed_by must name the human reviewer "
+                         "(automated SILVER types need --automated <frozen job folder>)")
         if (r.get("proposed_by") or "human").strip() not in ("human", "claude_code"):
             probs.append(f"line {i} {r.get('lemma')}: proposed_by must be human or claude_code")
     current = load_types(path)
     conflicts = [f"{r['lemma']}: {current[r['lemma']]['type']} -> {r['type']}" for r in rows
                  if r["lemma"] in current and current[r["lemma"]]["type"] != r["type"].strip()]
-    if conflicts and not replace:
+    if conflicts and not replace and automated is None:
         probs += [f"conflict (use --replace deliberately): {c}" for c in conflicts]
     if probs:
         return {"ok": False, "problems": probs}
     for r in rows:
-        current[r["lemma"]] = {"lemma": r["lemma"], "type": r["type"].strip(), "corpus_source": (r.get("corpus_source") or "").strip(),
-                               "proposed_by": (r.get("proposed_by") or "human").strip(), "reviewed_by": r["reviewed_by"].strip(),
-                               "note": (r.get("note") or "").strip()}
+        lem, typ = r["lemma"], r["type"].strip()
+        row = {"lemma": lem, "type": typ, "corpus_source": (r.get("corpus_source") or "").strip(),
+               "proposed_by": (r.get("proposed_by") or "human").strip(), "reviewed_by": r["reviewed_by"].strip(),
+               **({"review_mode": "automated", "label_source": "ai",
+                   "silver_status": (r.get("silver_status") or "").strip()} if automated is not None else {}),
+               "note": (r.get("note") or "").strip()}
+        old = current.get(lem)
+        if automated is not None and old is not None and old.get("silver_status") == "cross_corpus_conflict":
+            row.update({"type": "UNCLEAR", "silver_status": "cross_corpus_conflict",
+                        "corpus_source": f"{old.get('corpus_source')}; {row['corpus_source']}",
+                        "note": f"{old.get('note')}; {row['corpus_source'] or '?'}={typ}"})
+        elif automated is not None and old is not None and old["type"] != typ:
+            # D-061 (Ori, G1): a lemma typed differently in two corpora is UNCLEAR, both types recorded (never resolved
+            # by merge order; uncertainty is preserved)
+            row.update({"type": "UNCLEAR", "silver_status": "cross_corpus_conflict",
+                        "corpus_source": "; ".join(filter(None, [old.get("corpus_source"), row["corpus_source"]])),
+                        "note": f"cross-corpus conflict: {old.get('corpus_source') or '?'}={old['type']}; "
+                                f"{row['corpus_source'] or '?'}={typ}"})
+        current[lem] = row
     doc = {"meta": {"methodology": "S56-v1", "types": list(NOUN_TYPES),
-                    "rule": "every row reviewed by a human; Claude Code may only propose (D-054)"},
+                    "rule": "human rows: reviewed by a human (D-054); automated rows: SILVER noun types by two "
+                            "independent AI passes, approved by Ori per file (D-061). Pass disagreement or low "
+                            "confidence -> UNCLEAR (silver_status abstained); a cross-corpus type conflict -> UNCLEAR "
+                            "(silver_status cross_corpus_conflict)"},
            "nouns": [current[k] for k in sorted(current)]}
     atomic_write_text("# Noun types of S56-v1 (I1). Written by `hebloc loc nouns merge` (Ori only).\n"
                       + yaml.safe_dump(doc, allow_unicode=True, sort_keys=False, width=200), path)
-    return {"ok": True, "merged": len(rows), "total": len(current), "replaced": len(conflicts)}
+    return {"ok": True, "merged": len(rows), "total": len(current),
+            ("cross_corpus_conflicts_unclear" if automated is not None else "replaced"): len(conflicts),
+            **({"conflicts": conflicts} if automated is not None else {})}

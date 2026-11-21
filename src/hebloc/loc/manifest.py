@@ -108,8 +108,37 @@ def write_manifest(folder: Path, *, what: str, git: dict, source: dict | None, e
     return m
 
 
+#: I3 column names are binding (EFRAT_SECTION_6.md §7): every R2 table must carry at least these columns
+REQUIRED_COLUMNS = {
+    "instances": ("instance_id", "corpus", "subcorpus", "run_id", "shard", "doc_id", "sent_id", "piece_idx", "word_idx",
+                  "sent_word_idx", "ref", "in_full_view", "in_curated_view", "form", "lemma", "upos", "verb_key", "in_lexicon",
+                  "paper_class", "match_method", "voice", "template_proxy", "signature", "has_do", "do_kind", "n_pp",
+                  "has_bare_np", "flags"),
+    "arguments": ("instance_id", "arg_idx", "slot", "head_word_idx", "head_form", "head_lemma", "head_upos", "is_pronoun",
+                  "pron_feats", "deprel", "p_exact", "p_family", "flags"),
+    "roles": ("instance_id", "resolver_id", "outcome", "reason", "locatum_arg_idx", "location_arg_idx", "decided_by"),
+    "verb_profiles": ("verb_key", "n_tokens"),
+    "verb_preps": ("verb_key", "frame", "p_family", "p_exact", "count", "example_ids"),
+    "verb_classes": ("verb_key", "class", "class_basis", "k", "nonlocative_share", "paper_class", "agrees_with_paper",
+                     "identity_verdict", "identity_family", "putting_removal", "deciding_ids"),
+    "swap_candidates": ("verb_key", "p_family", "n_swap_nouns", "swap_nouns", "n_as_do", "n_as_pobj", "example_ids"),
+}
+
+
+def table_of(rel: str) -> str | None:
+    """The I3 table a parquet file belongs to (``instances/<run>.parquet`` or ``verb_classes.parquet``)."""
+    parts = Path(rel).parts
+    for name in (Path(rel).stem, *(parts[:-1][-1:] if len(parts) > 1 else ())):
+        if name in REQUIRED_COLUMNS:
+            return name
+    return None
+
+
 def verify(folder: Path) -> list[str]:
-    """Re-hash every file listed in ``folder/manifest.json``; return problems (empty = OK)."""
+    """Re-hash every file listed in ``folder/manifest.json``, and check that every I3 table has its binding columns;
+    return problems (empty = OK)."""
+    import pyarrow.parquet as pq
+
     folder = Path(folder)
     mp = folder / "manifest.json"
     if not mp.exists():
@@ -122,4 +151,9 @@ def verify(folder: Path) -> list[str]:
             probs.append(f"missing {rel}")
         elif file_sha256(p) != e["sha256"]:
             probs.append(f"changed {rel}")
+        elif p.suffix == ".parquet" and table_of(rel):
+            cols = set(pq.read_schema(p).names)
+            miss = [c for c in REQUIRED_COLUMNS[table_of(rel)] if c not in cols]
+            if miss and pq.read_metadata(p).num_rows:
+                probs.append(f"schema {rel}: missing I3 columns {miss}")
     return probs

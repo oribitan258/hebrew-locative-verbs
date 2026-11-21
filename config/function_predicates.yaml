@@ -1,0 +1,29 @@
+# Function predicates of S56-v1 (policy vunit-v1, D-059 P6; open issue OI-2, D-058). Only Ori edits this file.
+#
+# A closed list of Dicta lemmas that are existential, copular or modal/impersonal predicates. The list only TAGS:
+#   - every token, unit and lemma of these predicates stays in §5 and in §6's MAIN analysis (all VERB-tagged verbs);
+#   - `function_class` (lemma level) and `function_use` (token level, structural: a clausal or infinitival
+#     complement and no nominal object, or EXISTENTIAL / COPULA with no object) are descriptive columns;
+#   - one labelled sensitivity view drops only `function_use` tokens, never whole lemmas, so lexical uses
+#     (צריך כסף, חייב אותו בתשלום, ניתן לו ספר) stay in every view.
+# AUX-tagged tokens stay outside the scope (S56-v1 / D-055: VERB-tagged verbs); they are counted per lemma.
+#
+# Status: APPROVED by Ori at STOP-B (2026-11-21, D-060): חייב and ניתן listed; נראה not listed (kept under `not_listed`
+# so that it is still never an automatic unit-link base).
+meta:
+  methodology: S56-v1
+  version: fpred-v1
+  decision: D-059
+  status: approved
+  approved: "Ori, 2026-11-21 (STOP-B, D-060)"
+  evidence: "OI-2 measurement 2026-11-20 (Modern VERB tokens: יש 418,088; אין 239,099; היי 154,334 + 880,509 AUX; אפשר 129,205; צריך 42,271)"
+classes:
+  EXISTENTIAL: [יש, אין]
+  COPULA: [היי, היה]          # היי is Dicta's lemma for היה 'be'; the string היה is a second lemma
+  MODAL_IMPERSONAL: [אפשר, צריך, יכול, אמור, עשוי, עלול, אסור, מותר, כדאי, מוכרח, חייב, ניתן]
+pending: []                   # none: every candidate was decided at STOP-B
+not_listed:                   # decided NOT to tag (Ori, STOP-B); still never an automatic unit-link base
+  - {lemma: נראה, note: "'seem' is close to a lexical verb, and it is also the passive of ראה 'be seen'"}
+notes:
+  - {lemma: חייב, note: "modal 'must'; also a transitive verb 'charge / obligate' (22.9k object children in Modern): those uses stay untagged by the token rule"}
+  - {lemma: ניתן, note: "modal 'it is possible'; also the passive of the paper verb נתן (R1 lists it in נתן.S): §5 keeps the rows, flag function_lemma"}

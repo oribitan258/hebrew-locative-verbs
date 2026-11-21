@@ -58,3 +58,35 @@ def test_no_secrets_tracked():
 def test_gitignore_protects_data():
     lines = {ln.strip() for ln in (ROOT / ".gitignore").read_text(encoding="utf-8").splitlines()}
     assert {"/corpora/", "/data/", "/annotation/pilot_audit.csv", "/annotation/pilot_audit_words.csv"} <= lines
+
+
+def _ignored(paths: list[str]) -> set[str]:
+    try:
+        r = subprocess.run(["git", "check-ignore", "--no-index", "--stdin", "-z"], cwd=ROOT, capture_output=True,
+                           input="\0".join(paths).encode("utf-8"))
+    except OSError:
+        pytest.skip("git not available")
+    if r.returncode not in (0, 1):
+        pytest.skip("git check-ignore failed")
+    return {p for p in r.stdout.decode("utf-8").split("\0") if p}
+
+
+def test_silver_private_material_is_ignored_and_approved_files_are_not():
+    """D-061 §8: private SILVER material (labels, corpus text, workspaces, transcripts) can never be committed; only
+    the approved protocol files and metadata can."""
+    private = ["annotation/silver/modern_dev_silver.csv", "annotation/silver/jobs/x/items.json",
+               "annotation/silver/test/mikra_test_silver.csv", "annotation/gold/mikra_test_silver.csv",
+               "data/loc/silver/final/test/mikra_test_silver.csv", "silver-ws/a/input.csv",
+               "hebloc-silver-ws/a/out/labels.csv", "notes/session.jsonl", "annotation/gold/mikra_paper_examples.csv",
+               "docs/drafts/EFRAT_R2_REVIEW_TASKS_DRAFT.md", "QC_STOP.md"]
+    approved = ["annotation/S56_SILVER_PROTOCOL.md", "annotation/silver/prompts/sentence_pass.md",
+                "annotation/silver/worked_examples.csv", "annotation/silver/anchor_ids.csv",
+                "annotation/silver/FROZEN_SILVER.json", "annotation/gold/EXPOSURE.csv", "src/hebloc/loc/silver.py"]
+    ign = _ignored(private + approved)
+    assert set(private) <= ign, f"not ignored: {sorted(set(private) - ign)}"
+    assert not (set(approved) & ign), f"wrongly ignored: {sorted(set(approved) & ign)}"
+
+
+def test_no_silver_labels_or_transcripts_tracked():
+    bad = [p for p in _tracked() if p.endswith(("_silver.csv", ".jsonl")) or "/silver/jobs/" in p or "silver-ws/" in p]
+    assert not bad, f"private SILVER material tracked: {bad[:10]}"

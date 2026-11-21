@@ -1,0 +1,27 @@
+# The local role resolver and the class thresholds of S56-v1 (§5.4, §5.5; D-054, D-059 P7). Only Ori edits this file.
+#
+# PRE-REGISTERED: fixed before any dev label (gold or SILVER) exists. APPROVED by Ori at STOP-B (2026-11-21, D-060).
+# Rule zero (D-059 P7): the resolver never reads a preposition (p_exact, p_family, signature, flags). Its only
+# preposition-derived input is the boolean `lone_min_complement` of the extractor (no DO and a single MIN-family
+# phrase), used by the partitive rule (fn 24, 27), whose instances have no PP and never enter the identity test.
+meta:
+  methodology: S56-v1
+  version: resolver-r2.0
+  decision: D-059 (P7) / D-060 (Phase B implementation)
+  status: approved
+  approved: "Ori, 2026-11-21 (STOP-B, D-060)"
+variants: [R0, R1, R2]        # R0 = rules + noun-type file + complementary inference; R1 = + induced scores; R2 = + antecedents
+induced_location:              # R1: location-likeness of nouns NOT in config/noun_types.yaml (S56-v1 §5.4)
+  # intransitive motion and position verbs; every lexicon lemma is excluded at run time (none of these is one today)
+  verbs: [ישב, עמד, הלך, בא, יצא, נכנס, עלה, ירד, שכב, גר, חנה, נסע, רץ, ברח, עבר, שב, חזר, נפל, קם, טייל, התגורר,
+          התיישב, שהה, נשאר, הגיע, ישן, לן, צעד, נדד, עף, טס, שט, זחל, קפץ, נח, התהלך, הסתובב, התאכסן]
+  # n_loc = the noun heads a PP (any preposition) of these verbs; n_obj = it heads the noun DO of a non-lexicon verb
+  min_count: 3                 # n_loc >= min_count
+  min_share: 0.5               # n_loc / (n_loc + n_obj) >= min_share  -> LOCATION; otherwise the noun stays untyped
+partitive:
+  # the partitive rule needs a transitive use: a lexicon verb, or a unit with a DO in >= this share of its instances
+  transitive_min_do_share: 0.2
+classes:                        # §5.5
+  k: [1, 2, 3]                 # k = 1 is primary (the paper's attestation criterion); 2 and 3 are sensitivity runs
+  primary_k: 1
+  nonlocative_min_examined: 20 # the rule of three: >= 20 instances with an object, none A, B or AMBIGUOUS

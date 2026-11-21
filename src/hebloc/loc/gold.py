@@ -344,8 +344,43 @@ def _idx(v: str) -> bool:
     return v.isdigit()
 
 
+#: annotator names that denote an AI tool: never accepted as HUMAN gold (D-061). AI labels are SILVER and go only
+#: through ``hebloc loc silver`` (hebloc.loc.silver), which marks every row ``label_source = ai``.
+AI_ANNOTATOR_NAMES = ("claude_code", "claude", "ai", "llm", "silver")
+
+
+def row_problems(v: dict, members: list, n_words: int, w: str = "") -> list[str]:
+    """The format checks of one annotated row (guideline §2), shared by the human gold check and the SILVER QC."""
+    probs = []
+    if v["is_target_verb"] not in ("Y", "N"):
+        probs.append(f"{w} is_target_verb must be Y or N")
+    if v["member"] and v["member"] not in members:
+        probs.append(f"{w} member must be one of {members} (or empty)")
+    if v["is_target_verb"] == "Y":
+        if v["locative"] not in ("Y", "N", "?"):
+            probs.append(f"{w} locative must be Y, N or ?")
+        if v["frame"] not in FRAMES:
+            probs.append(f"{w} frame must be one of {FRAMES}")
+        if v["locative"] == "N" and v["frame"] not in ("NON_LOCATIVE", ""):
+            probs.append(f"{w} locative N needs frame NON_LOCATIVE")
+    for c in ("do", "bare_np", "locatum", "location"):
+        x = v[c]
+        if x and not (_idx(x) and int(x) < n_words) and x not in ("suffix", "subject", "elided", "none"):
+            probs.append(f"{w} {c} must be a word index (< {n_words}), suffix, subject, elided or none")
+    for pp in filter(None, v["pps"].split(";")):
+        ix, _, prep = pp.strip().partition(":")
+        if not (_idx(ix.strip()) and int(ix.strip()) < n_words and prep.strip()):
+            probs.append(f"{w} pps entry {pp!r} must be <word index>:<preposition>")
+    return probs
+
+
 def check_sheet(sheet: Path, sample_dir: Path, annotator: str, out_dir: Path) -> dict:
-    """Validate a filled sheet against its sample and write the TEXT-FREE gold file (I4) for its split(s)."""
+    """Validate a filled sheet against its sample and write the TEXT-FREE gold file (I4) for its split(s).
+
+    HUMAN gold only: an AI annotator name is refused (D-061; AI labels are SILVER, ``hebloc loc silver``)."""
+    if (annotator or "").strip().lower() in AI_ANNOTATOR_NAMES:
+        raise GoldError(f"annotator {annotator!r} is an AI tool: AI labels are SILVER, never gold "
+                        "(D-061; use `hebloc loc silver`)")
     sample = {r["item_id"]: r for r in __import__("pyarrow.parquet", fromlist=["x"]).read_table(
         Path(sample_dir) / "sample.parquet").to_pylist()}
     man = read_json(Path(sample_dir) / "manifest.json")
@@ -364,29 +399,10 @@ def check_sheet(sheet: Path, sample_dir: Path, annotator: str, out_dir: Path) ->
         v = {c: (r.get(c) or "").strip() for c in ANNOTATION_COLUMNS}
         if not any(v[c] for c in ANNOTATION_COLUMNS if c != "notes"):
             continue    # not annotated yet: skipped, reported as pending
-        if v["is_target_verb"] not in ("Y", "N"):
-            probs.append(f"{w} is_target_verb must be Y or N")
-        members = list(s["members"] or [])
-        if v["member"] and v["member"] not in members:
-            probs.append(f"{w} member must be one of {members} (or empty)")
-        if v["is_target_verb"] == "Y":
-            if v["locative"] not in ("Y", "N", "?"):
-                probs.append(f"{w} locative must be Y, N or ?")
-            if v["frame"] not in FRAMES:
-                probs.append(f"{w} frame must be one of {FRAMES}")
-            if v["locative"] == "N" and v["frame"] not in ("NON_LOCATIVE", ""):
-                probs.append(f"{w} locative N needs frame NON_LOCATIVE")
-        for c in ("do", "bare_np", "locatum", "location"):
-            x = v[c]
-            if x and not (_idx(x) and int(x) < n_words) and x not in ("suffix", "subject", "elided", "none"):
-                probs.append(f"{w} {c} must be a word index (< {n_words}), suffix, subject, elided or none")
-        for pp in filter(None, v["pps"].split(";")):
-            ix, _, prep = pp.strip().partition(":")
-            if not (_idx(ix) and int(ix) < n_words and prep):
-                probs.append(f"{w} pps entry {pp!r} must be <word index>:<preposition>")
+        probs += row_problems(v, list(s["members"] or []), n_words, w)
         out_rows.append({"sample_id": s["sample_id"], "item_id": s["item_id"], "instance_key": s["instance_key"],
                          "split": s["split"], "stratum": s["stratum"], "agreement": s["agreement"],
-                         "annotator": annotator, "guideline_version": GUIDELINE_VERSION,
+                         "annotator": annotator, "label_source": "human", "guideline_version": GUIDELINE_VERSION,
                          **{c: v[c] for c in ANNOTATION_COLUMNS if c != "notes"}, "has_notes": bool(v["notes"])})
     pending = sum(1 for r in rows if not any((r.get(c) or "").strip() for c in ANNOTATION_COLUMNS if c != "notes"))
     if probs:

@@ -552,6 +552,282 @@ def _cmd_stats(args: argparse.Namespace) -> int:
     raise SystemExit(f"unknown stats action {args.action!r}")
 
 
+LOC_R2_GROUPS = ("units", "extract", "resolve", "classify", "swap", "stats", "score")
+
+
+def _loc_r2_options(q: argparse.ArgumentParser) -> None:
+    """Options of the R2 commands (Phase B), shared by every `hebloc loc` sub-parser."""
+    q.add_argument("--mode", default="lexicon", choices=["lexicon", "all-verbs"], help="extract: lexicon (§5) or all-verbs (§6)")
+    q.add_argument("--runs", default=None, help="extract: only these run ids (comma-separated; a partial, recorded scope)")
+    q.add_argument("--provisional-units", action="store_true",
+                   help="extract: apply the automatic unit links before their audit has passed (development only; recorded)")
+    q.add_argument("--input", action="append", default=None, help="an extractor output folder (score --choose: one per corpus)")
+    q.add_argument("--variant", default=None, choices=["R0", "R1", "R2"], help="resolver variant")
+    q.add_argument("--induce-from", default=None, help="resolve R1/R2: the all-verbs extraction for the induced scores")
+    q.add_argument("--split", default=None, choices=["dev", "validation", "test"], help="score: the gold split (dev by default)")
+    q.add_argument("--final-test", action="store_true", help="score: read the TEST split, once per corpus (ledger)")
+    q.add_argument("--choose", action="store_true", help="score: the pre-registered variant choice on validation (once)")
+    q.add_argument("--approval", default=None, help="gold supplement: Ori's decision id (required)")
+    q.add_argument("--size", type=int, default=None, help="gold supplement: number of items (default 120)")
+    q.add_argument("--new-lexicon", default=None, help="gold supplement: the candidate lexicon (YAML)")
+    q.add_argument("--new-forms", default=None, help="gold supplement: the candidate forms file (YAML)")
+    q.add_argument("--examples", action="store_true", help="units review: also write the LOCAL example sentences sheet")
+    q.add_argument("--min-tokens", type=int, default=None, help="units review: frequency cut of the review sheet (Ori)")
+    q.add_argument("--automated", default=None,
+                   help="nouns merge / units merge|audit: the frozen SILVER job folder (D-061; Ori approves the file)")
+    q.add_argument("--label-source", default="silver", choices=["silver", "human"],
+                   help="score: SILVER labels (default, D-061) or human gold; never mixed")
+
+
+def _loc_folder(args: argparse.Namespace) -> "Path":
+    from pathlib import Path
+
+    if not args.input or len(args.input) != 1:
+        raise SystemExit("REFUSED: give exactly one --input <extractor output folder>")
+    return Path(args.input[0])
+
+
+def _cmd_loc_r2(args: argparse.Namespace) -> int:
+    """§5–§6 (S56-v1): the R2 commands built in Phase B (units, extract, resolve, classify, swap, stats, score, and
+    gold exposure / paper / supplement). Provisional until R2 (tag s56-v1); outputs record the code state."""
+    from pathlib import Path
+
+    import pyarrow as pa
+
+    from hebloc.loc import classify as C
+    from hebloc.loc import exposure as EX
+    from hebloc.loc import extract as X
+    from hebloc.loc import lexicon as L
+    from hebloc.loc import manifest as M
+    from hebloc.loc import report as RP
+    from hebloc.loc import resolve as R
+    from hebloc.loc import score as S
+    from hebloc.loc import units as U
+    from hebloc.loc.source import Source, SourceError
+    from hebloc.paths import CORPORA
+
+    group, action = args.loc_group, args.loc_action
+    errors = (SourceError, L.LexiconError, U.UnitsError, X.ExtractError, R.ResolveError, C.ClassifyError,
+              RP.ReportError, S.ScoreError, M.ReleaseRefusal, FileNotFoundError)
+    try:
+        lex = L.load()
+        if group == "units" and action == "merge":
+            r = U.merge_review(Path(args.target), automated=Path(args.automated) if args.automated else None)
+            _json(r)
+            return 0 if r["ok"] else 1
+        if group == "units" and action == "audit":
+            r = U.record_audit(Path(args.target), automated=Path(args.automated) if args.automated else None)
+            _json(r)
+            return 0 if r["ok"] else 1
+        if group == "score":
+            if args.choose:
+                folders = {}
+                for f in args.input or []:
+                    folders[M.read_json(Path(f) / "manifest.json")["corpus"]] = Path(f)
+                _json(S.choose(folders, label_source=args.label_source))
+                return 0
+            folder = _loc_folder(args)
+            corpus = M.read_json(folder / "manifest.json")["corpus"]
+            r = S.score(corpus, args.split or "dev", folder, final_test=args.final_test, label_source=args.label_source)
+            _json({k: ({n: {kk: vv for kk, vv in e.items() if not kk.startswith("_")} for n, e in v.items()} if k == "sets" else v)
+                   for k, v in r.items()})
+            return 0
+        if group in ("resolve", "classify", "swap", "stats"):
+            folder = _loc_folder(args)
+            st = M.require_clean(args.dev)
+            cfg = R.load_config()
+            variant = args.variant or "R0"
+            if group == "resolve":
+                ind = None
+                if variant in ("R1", "R2"):
+                    src = Path(args.induce_from) if args.induce_from else folder
+                    if not (src / "induced" / "manifest.json").exists():
+                        m = R.induce(src, lex, cfg, git=st)
+                        print(f"induced scores: {m['n_location']} LOCATION nouns of {m['n_nouns_scored']} scored -> {src / 'induced'}")
+                    ind = src / "induced"
+                m = R.resolve(folder, variant, lex, cfg, git=st, induced_folder=ind)
+                print(f"{m['resolver_id']}: {m['outcomes']} -> {folder / ('roles-' + variant)}")
+                return 0
+            if group == "classify":
+                m = C.classify(folder, variant, lex, cfg, git=st)
+                print(f"classes ({m['resolver_id']}, unit level, full view, k = 1): {m['classes_unit_full_all_k1']} -> {folder / ('classes-' + variant)}")
+                return 0
+            if group == "swap":
+                import duckdb
+
+                f = folder / f"classes-{variant}" / "swap_candidates.parquet"
+                if not f.exists():
+                    print(f"REFUSED: no swap candidates for {variant} (run: hebloc loc classify)")
+                    return 2
+                rows = duckdb.sql(f"SELECT verb_key, p_family, n_swap_nouns, swap_nouns FROM read_parquet('{f.as_posix()}') "
+                                  "WHERE level = 'unit' AND view = 'full' ORDER BY n_swap_nouns DESC LIMIT 25").fetchall()
+                for r in rows:
+                    print(f"  {r[0]:24} {r[1]:6} {r[2]:5}  {', '.join(r[3][:8])}")
+                print(f"(all rows: {f})")
+                return 0
+            m = RP.report(folder, variant, lex, git=st)
+            print(f"§5.7 tables (PROVISIONAL): {m['tables']} -> {folder / ('report-' + variant)}")
+            return 0
+        source = Source.make(args.source, args.package)
+        if group == "gold" and action == "exposure":
+            rows = EX.compute(lex, source)
+            s = EX.write(rows)
+            print(f"exposure register: {len(rows)} (item, source) rows -> {EX.EXPOSURE_PATH}")
+            _json(s)
+            return 0
+        if group == "gold" and action == "paper":
+            _json(S.paper_examples(_loc_folder(args), lex))
+            return 0
+        if group == "gold" and action == "supplement":
+            if not (args.corpus and args.new_lexicon):
+                print("REFUSED: gold supplement needs --corpus, --new-lexicon <yaml> [--new-forms <yaml>] and --approval")
+                return 2
+            st = M.require_clean(args.dev)
+            new = L.load(Path(args.new_lexicon), Path(args.new_forms) if args.new_forms else L.FORMS_PATH)
+            m = S.supplement(args.corpus, source, lex, new, approval=args.approval, size=args.size or 120, git=st)
+            print(f"supplement {m['sample_id']}: {m['n_items']} items {m['by_split']} -> data/loc/gold/{args.corpus}/{m['sample_id']}")
+            return 0
+        if group == "units":
+            if action == "inventory":
+                corpora = list(CORPORA) if args.corpus in (None, "all") else [args.corpus]
+                ok = True
+                for c in corpora:
+                    r = U.build_inventory_t(c, source)
+                    same = U.inventory_matches_r1(c)
+                    ok &= same
+                    print(f"{c}: {r['verb_tokens']:,} VERB tokens, {r['aux_tokens']:,} AUX tokens; equals R1 inventory: {same}")
+                return 0 if ok else 1
+            if action == "build":
+                st = M.require_clean(args.dev)
+                inv = U.load_inventory_t()
+                missing = sorted(set(CORPORA) - set(inv["corpus"].to_pylist()))
+                if missing:
+                    print(f"REFUSED: tense-aware inventories missing for {missing} (run: hebloc loc units inventory)")
+                    return 2
+                from hebloc.store.io import file_sha256
+
+                built = U.build_links(lex, inv, U.FunctionList.load().all_lemmas())
+                info = {c: file_sha256(U.INVENTORY_T_DIR / f"{c}.parquet") for c in CORPORA}
+                meta = U.write_map(built, lex, {"inventory_t_sha256": info, "git_commit": st["git_commit"]})
+                print(f"wrote {U.UNITS_PATH}: {meta['counts']} (of {meta['n_established_lemmas']} lemmas with >= {U.LINK_MIN_TOKENS} tokens)")
+                return 0
+            if action == "review":
+                ex = None
+                if args.examples:
+                    raw = U.load_raw()
+                    links = raw.get("links") or {}
+                    want = {v for v, x in links.items() if x["status"] != "auto"} | set(U.audit_sample(links))
+                    ex, sents = U.review_examples(want, source, list(CORPORA))
+                    if sents:
+                        M.write_csv(pa.Table.from_pylist(sents), U.REVIEW_DIR / "unit_review_examples.csv")
+                r = U.write_review(examples=ex, min_tokens=args.min_tokens or U.LINK_MIN_TOKENS)
+                _json(r)
+                print("LOCAL ONLY: unit_review_examples.csv quotes corpus text (D-042); the other sheets hold lemmas and ids")
+                return 0
+        if group == "extract":
+            if not args.corpus or args.corpus not in CORPORA:
+                print(f"REFUSED: --corpus must be one of {', '.join(CORPORA)}")
+                return 2
+            if L.forms_stale(lex):
+                print("REFUSED: config/locative_verb_forms.yaml does not match the lexicon (Ori: hebloc loc lexicon forms)")
+                return 2
+            st = M.require_clean(args.dev)
+            umap = U.UnitMap.load(allow_unaudited=args.provisional_units)
+            m = X.extract(args.corpus, source, lex, umap, U.FunctionList.load(), mode=args.mode, git=st,
+                          runs=[x for x in (args.runs or "").split(",") if x] or None,
+                          **({"out_root": Path(args.out)} if args.out else {}))
+            print(f"{m['output_id']}: {m['counts']['instances']:,} instances, {m['counts']['arguments']:,} arguments; "
+                  f"units: audit {m['units']['audit']}, auto links in force {m['units']['auto_links_in_force']}")
+            print(f"-> {Path(args.out or X.OUT_DIR) / args.corpus / m['output_id']}")
+            return 0
+    except errors as e:
+        print(f"REFUSED: {e}")
+        return 2
+    raise SystemExit(f"unknown loc command {group} {action}")
+
+
+SILVER_ACTIONS = ("isolation-test", "create", "import-pass", "step", "status", "finalize", "deliver", "receive",
+                  "anchor-ids", "anchor-agreement")
+
+
+def _cmd_loc_silver(args: argparse.Namespace) -> int:
+    """D-061: AI-only SILVER annotation (annotation/S56_SILVER_PROTOCOL.md). Every output is SILVER (label_source = ai).
+    Prints counts and statuses only, never labels or corpus text."""
+    from pathlib import Path
+
+    from hebloc.loc import lexicon as L
+    from hebloc.loc import silver as SV
+    from hebloc.loc.source import Source, SourceError
+
+    action = args.loc_action
+    model = args.model or SV.DEFAULT_MODEL
+    root = Path(args.ws_root) if args.ws_root else None
+    try:
+        if action == "isolation-test":
+            r = SV.isolation_test(root=root, model=args.model or "haiku")
+            _json(r)
+            return 0 if r["ok"] else 1
+        if action == "create":
+            if not args.task:
+                print("REFUSED: create needs --task")
+                return 2
+            lex = L.load()
+            source = Source.make(args.source, args.package) if args.task == "anchor" else None
+            r = SV.create_job(args.task, args.corpus, args.split, lex=lex, source=source,
+                              sample_dir=Path(args.sample) if args.sample else None,
+                              list_csv=Path(args.list) if args.list else None, sheet=Path(args.sheet) if args.sheet else None,
+                              examples_csv=Path(args.examples_csv) if args.examples_csv else None)
+            _json(r)
+            return 0
+        if action == "import-pass":
+            if len(args.target) != 1 or not args.pass_label or not args.from_csv:
+                print("REFUSED: import-pass <job> --pass A --from <csv>")
+                return 2
+            _json(SV.import_pass(args.target[0], args.pass_label, Path(args.from_csv), type_column=args.type_column,
+                                 confidence_column=args.confidence_column, evidence_column=args.evidence_column))
+            return 0
+        if action in ("step", "status", "finalize"):
+            if len(args.target) != 1:
+                print(f"REFUSED: {action} <job id>")
+                return 2
+            jid = args.target[0]
+            if action == "status":
+                _json(SV.status(jid))
+                return 0
+            if action == "finalize":
+                r = SV.finalize(jid, accept_stop=args.accept_stop)
+            else:
+                source = Source.make(args.source, args.package)
+                r = SV.step(jid, source=source, run=not args.no_run, model=model, root=root)
+            _json({k: v for k, v in r.items() if k not in ("state",)})
+            return 1 if r.get("action") == "STOP" else 0
+        if action == "deliver":
+            if not args.target or not args.out or not args.who:
+                print("REFUSED: deliver <job> [<job> ...] --out <outbox folder> --who <name>")
+                return 2
+            _json(SV.deliver(list(args.target), Path(args.out), who=args.who))
+            return 0
+        if action == "receive":
+            if len(args.target) != 1:
+                print("REFUSED: receive <delivery folder>")
+                return 2
+            _json(SV.receive(Path(args.target[0])))
+            return 0
+        if action == "anchor-ids":
+            _json(SV.write_anchor_ids(Path(args.paper or "annotation/gold/mikra_paper_examples.csv")))
+            return 0
+        if action == "anchor-agreement":
+            if not args.anchor_silver:
+                print("REFUSED: anchor-agreement --anchor-silver <received anchor silver file> [--paper <key>]")
+                return 2
+            _json(SV.anchor_agreement(Path(args.anchor_silver), Path(args.paper or "annotation/gold/mikra_paper_examples.csv")))
+            return 0
+    except (SV.SilverError, SourceError, L.LexiconError, FileNotFoundError) as e:
+        print(f"REFUSED: {e}")
+        return 2
+    raise SystemExit(f"unknown loc silver action {action}")
+
+
 def _cmd_loc(args: argparse.Namespace) -> int:
     """§5–§6 (S56-v1, docs/EFRAT_SECTION_6.md): release R1 commands."""
     from pathlib import Path
@@ -567,13 +843,17 @@ def _cmd_loc(args: argparse.Namespace) -> int:
     from hebloc.paths import CORPORA
 
     group, action = args.loc_group, args.loc_action
+    if group == "silver":
+        return _cmd_loc_silver(args)
+    if group in LOC_R2_GROUPS or (group == "gold" and action in ("exposure", "paper", "supplement")):
+        return _cmd_loc_r2(args)
     try:
         if group == "verify":
             probs = M.verify(Path(args.target))
             print("OK" if not probs else "\n".join(probs))
             return 0 if not probs else 1
         if group == "nouns" and action == "merge":
-            r = N.merge(Path(args.target), replace=args.replace)
+            r = N.merge(Path(args.target), replace=args.replace, automated=Path(args.automated) if args.automated else None)
             _json(r)
             return 0 if r["ok"] else 1
         if group == "gold" and action == "check":
@@ -871,8 +1151,11 @@ def main(argv: list[str] | None = None) -> int:
     p = sub.add_parser("loc", help="§5–§6 (S56-v1): lexicon | gold | nouns | verify (release R1; docs/EFRAT_SECTION_6.md).")
     lsub = p.add_subparsers(dest="loc_group", required=True)
     for name, actions, hlp in (("lexicon", ["check", "inventory", "forms", "bhsa-eval"], "the verb lexicon (forms, bhsa-eval: Ori only)"),
-                               ("gold", ["sample", "check"], "gold sampler / text-free check of a filled sheet"),
-                               ("nouns", ["list", "merge"], "frequent-argument-noun list / merge reviewed types (Ori only)")):
+                               ("gold", ["sample", "check", "exposure", "paper", "supplement"],
+                                "gold sampler / text-free check / R2: exposure register, paper examples, supplement (Ori)"),
+                               ("nouns", ["list", "merge"], "frequent-argument-noun list / merge reviewed types (Ori only)"),
+                               ("units", ["inventory", "build", "review", "merge", "audit"],
+                                "R2 (D-059): tense-aware inventory, verb-unit map, review sheets, merge / audit (Ori only)")):
         q = lsub.add_parser(name, help=hlp)
         q.add_argument("loc_action", choices=actions)
         q.add_argument("target", nargs="?", help="gold check: the filled sheet; nouns merge: the reviewed CSV")
@@ -889,7 +1172,48 @@ def main(argv: list[str] | None = None) -> int:
         q.add_argument("--replace", action="store_true", help="nouns merge: deliberately replace existing types")
         q.add_argument("--propose", action="store_true", help="bhsa-eval: (re)write the proposed entry -> BHSA lexeme mapping")
         q.add_argument("--configs", default="V1,V2-L,V2", help="bhsa-eval: configurations to measure (V1, V2-L, V2)")
+        _loc_r2_options(q)
         q.set_defaults(func=_cmd_loc, loc_group=name)
+    for name, hlp in (("extract", "R2: instances + arguments (--mode lexicon|all-verbs)"),
+                      ("resolve", "R2: roles by the local resolver (--input <extract folder> --variant R0|R1|R2)"),
+                      ("classify", "R2: verb classes, identity, swap test (--input <extract folder> --variant)"),
+                      ("swap", "R2: show the role-free swap candidates of a classify output"),
+                      ("stats", "R2: the §5.7 tables of one corpus x variant (PROVISIONAL until R2)"),
+                      ("score", "R2: score the gold (dev; --choose reads validation once; --final-test reads test once)")):
+        q = lsub.add_parser(name, help=hlp)
+        q.add_argument("--corpus", default=None)
+        q.add_argument("--source", default="repo", choices=["repo", "package"])
+        q.add_argument("--package", default=None, help="--source package: the extracted D-051 package folder")
+        q.add_argument("--out", default=None, help="output root (default under data/loc/)")
+        q.add_argument("--dev", action="store_true", help="(Ori) allow a dirty tree for a development run (recorded)")
+        _loc_r2_options(q)
+        q.set_defaults(func=_cmd_loc, loc_group=name, loc_action=name, target=None)
+    q = lsub.add_parser("silver", help="D-061: AI-only SILVER annotation (isolated workspaces, two passes, QC, freeze)")
+    q.add_argument("loc_action", choices=list(SILVER_ACTIONS))
+    q.add_argument("target", nargs="*", help="job id(s) (step, status, finalize, deliver) or a delivery folder (receive)")
+    q.add_argument("--task", default=None, choices=["sentence", "anchor", "worked", "noun", "unit", "variant", "audit"])
+    q.add_argument("--corpus", default=None)
+    q.add_argument("--split", default=None, choices=["dev", "validation", "test"])
+    q.add_argument("--sample", default=None, help="create sentence: the frozen sample folder (with its local sheets/)")
+    q.add_argument("--list", default=None, help="create noun: nouns_to_label.csv")
+    q.add_argument("--sheet", default=None, help="create unit|variant|audit: unit_review.csv / paper_variants.csv / audit.csv")
+    q.add_argument("--examples-csv", default=None, help="create unit|variant|audit: the local unit_review_examples.csv")
+    q.add_argument("--pass", dest="pass_label", default=None, help="import-pass: the pass label (A)")
+    q.add_argument("--from", dest="from_csv", default=None, help="import-pass: the earlier proposals CSV")
+    q.add_argument("--type-column", default="proposed_type")
+    q.add_argument("--confidence-column", default="confidence")
+    q.add_argument("--evidence-column", default="note")
+    q.add_argument("--model", default=None, help="the Claude model of every pass (default: opus, D-061 D-i)")
+    q.add_argument("--no-run", action="store_true", help="step: build the workspaces and print the launch commands only")
+    q.add_argument("--ws-root", default=None, help="workspace root OUTSIDE the repo (default ~/hebloc-silver-ws)")
+    q.add_argument("--out", default=None, help="deliver: the outbox folder (e.g. data/outbox/efrat-s6)")
+    q.add_argument("--who", default=None, help="deliver: who delivers")
+    q.add_argument("--accept-stop", default=None, help="finalize: Ori's decision id accepting a QC STOP (project level)")
+    q.add_argument("--paper", default=None, help="anchor-ids / anchor-agreement: annotation/gold/mikra_paper_examples.csv")
+    q.add_argument("--anchor-silver", default=None, help="anchor-agreement: the received anchor silver file")
+    q.add_argument("--source", default="repo", choices=["repo", "package"])
+    q.add_argument("--package", default=None, help="--source package: the extracted D-051 package folder")
+    q.set_defaults(func=_cmd_loc, loc_group="silver")
     q = lsub.add_parser("verify", help="re-hash an output folder against its manifest.json")
     q.add_argument("target")
     q.set_defaults(func=_cmd_loc, loc_group="verify", loc_action="verify")

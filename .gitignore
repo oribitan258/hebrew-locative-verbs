@@ -45,3 +45,22 @@ desktop.ini
 
 # Interrupted `hebloc corpora install` staging (removed automatically on the next run)
 /.corpora-staging/
+
+# SILVER annotation (D-061; annotation/S56_SILVER_PROTOCOL.md §8). Private: everything that quotes corpus text or
+# holds labels (job inputs, workspaces, transcripts, pass files, final silver files) lives under /data/ or OUTSIDE the
+# repo (~/hebloc-silver-ws). In git only: the protocol, the prompts, the worked examples (texts already in the
+# guideline), the anchor ids (no frames) and FROZEN_SILVER.json (ids + hashes).
+/annotation/silver/*
+!/annotation/silver/prompts/
+!/annotation/silver/worked_examples.csv
+!/annotation/silver/anchor_ids.csv
+!/annotation/silver/FROZEN_SILVER.json
+*_silver.csv
+silver-ws/
+hebloc-silver-ws/
+*.jsonl
+QC_STOP.md
+# The paper-example frame key stays out of git until the anchor silver is delivered (D-061, a physical guard).
+/annotation/gold/mikra_paper_examples.csv
+# Withdrawn / unsent drafts (the A7 draft for Efrat was withdrawn by D-061)
+/docs/drafts/
