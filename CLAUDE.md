@@ -5,22 +5,45 @@ Test Doron & Dubnov (2017) "Locative Alternation Preposition Identity" (verbs th
 Frame A [Locatum = direct object] and Frame B [Location = direct object] keep the same preposition:
 ב- for putting, מן/מ- for removal) on 5 Hebrew corpora, using Dicta's parser.
 
-**CURRENT SCOPE (2026-11-20): stage 3, release R1 = tag `s56-r1` DONE (provisional, D-057); STOP before Phase B.**
-- **R1** (`docs/S56_R1.md`): the lexicon, the guideline, the gold sampler with **frozen** samples, and the noun lists.
-  - Released as a provisional infrastructure milestone. Its identification limits are in §0.1.
-  - Identification must be improved and validated on the **dev** gold before R2 is frozen. No retuning against BHSA;
-    test is read once, at the end.
+**CURRENT SCOPE (2026-11-21): stage 3, Phase B + the AI-only SILVER workflow (D-061) BUILT, uncommitted → STOP-S (G1):
+Ori approves the commits, tag `s56-r1.1` and the push. Phase C NOT started.**
+- **D-061 (accepted 2026-11-21): zero manual data work.**
+  - Claude Code does all annotation, noun typing, verb linking, checks and audits, as **SILVER** (`label_source = ai`):
+    never human gold, never reported as validated accuracy.
+  - Protocol: `annotation/S56_SILVER_PROTOCOL.md`; code `hebloc.loc.silver`, `loc silver …`.
+  - Safeguards: SG1 isolated workspaces outside the repo (restricted headless sessions, canary, access log); SG2 freeze
+    + hashes in `annotation/silver/FROZEN_SILVER.json` before any read; SG3 pre-registered recovery → STOP with
+    project-level options only.
+  - **Efrat's Claude Code annotates all sentences** (both samples, dev first; pinned to `s56-r1.1`).
+  - **Ori's Claude Code (the developer) never annotates sentences.** It makes the Mikra and historical noun types, the
+    unit links, the P5 evidence and the AI audit.
+- **STOP-B decided (D-060 accepted):** OTHER compared by exact preposition; חייב and ניתן listed, נראה not; the
+  resolver config approved; the review cut obsolete; the A7 draft withdrawn.
+- **D-059 (accepted):** OI-1/OI-2 investigated; the shared policy `vunit-v1` and adjustments A1–A7 approved by Ori.
+  - Verb unit = root + template.
+  - Automatic links only for unambiguous same-binyan participles, after a 100-link audit; every other link is
+    reviewed.
+  - Function predicates are tagged, never excluded.
+  - Rule zero is stated precisely.
+  - The exposure register; clean validation/test sets as primary.
+- **Phase B (B1–B9):** `docs/S56_R2.md`; implementation choices **D-060 (PROPOSED)**.
+  - Code: `hebloc.loc.{units,extract,resolve,classify,report,score,exposure}`.
+  - Tests: `tests/test_loc_r2.py`.
+  - Config: `config/function_predicates.yaml` and `config/locative_resolver.yaml` (both PROPOSED);
+    `config/verb_units.yaml` (generated; audit pending).
+- **At STOP-S (G1; `docs/HANDOFF.md`, top section), Ori decides:** the two commits, tag `s56-r1.1`, the push, and
+  the message to Efrat.
+- **Do NOT, without Ori's next approval:**
+  - begin Phase C;
+  - modify the frozen samples;
+  - read validation or test labels (gold or silver);
+  - annotate sentences on Ori's computer;
+  - draw a supplement;
+  - commit, tag, push or release.
+- **R1** (`docs/S56_R1.md`, tag `s56-r1`) is unchanged: the lexicon, the guideline, the **frozen** samples
+  (`mikra-r1b-1cd4ee9802`, `modern-r1b-5fbb5e22e7`), the noun lists.
   - Recovered instances enter the gold only by the supplemental sampling procedure (§3).
-  - **Phase B has NOT started.** It (the R2 code) starts only with Ori's explicit approval (Plan Mode).
-  - **The next session (Plan Mode) starts with the open issues OI-1 and OI-2** (D-058; `docs/HANDOFF.md`, stage-3
-    section). These are Efrat's Dicta findings:
-    - present-tense and passive forms may have separate lemmas;
-    - VERB-tagged יש, אין, אפשר, היי may not be ordinary verbs.
-
-    Investigate them read-only and propose one shared policy without silently changing S56-v1, R1 or the frozen
-    samples. Only then plan Phase B.
-  - **Efrat is authorized to do her R1 tasks** (`docs/EFRAT_SECTION_6.md` §9.2) in her existing project,
-    independently of OI-1 and OI-2.
+  - **Efrat is authorized to do her R1 tasks** (`docs/EFRAT_SECTION_6.md` §9.2), independently of Phase B.
 - **Earlier: CHECKPOINT 1 reached (2026-11-19).**
 - **What was approved.** The shared §5–§6 methodology **`S56-v1`** (D-053–D-056).
   - It is written in full in **`docs/EFRAT_SECTION_6.md`** §5, which is normative for Ori, Adi and Efrat.
@@ -30,8 +53,9 @@ Frame A [Locatum = direct object] and Frame B [Location = direct object] keep th
   - Plan it in a **fresh session in Plan Mode**.
   - **Nothing is implemented without Ori's explicit approval of that plan.**
 - **Never use a paid external API** (no LLM API), D-054. External API use would need Ori's separate approval.
-  Claude Code may assist only with human-reviewed steps (noun-type proposals, code and docs, reading audits); never
-  gold labels or run-time labelling.
+  **Since D-061** Claude Code makes all data labels as SILVER, under the protocol, in isolated workspaces, with the
+  user's own Claude Code login. It never makes human gold, never labels at run time, and never changes a frozen
+  silver job.
 - **Still roadmap-only** (`docs/roadmap.md`) until Ori explicitly opens them: §7 classifiers, the rest of §8, and §4
   R7/Part B.
 
@@ -130,13 +154,14 @@ Frame A [Locatum = direct object] and Frame B [Location = direct object] keep th
     - Then report which stage is unlocked (after CHECKPOINT 1 / after R1 / after R2 = tag `s56-v1`) and do only the
       steps of that stage.
   - Plan Mode for non-trivial steps.
-  - Obey the STOP rules in §12:
+  - Obey the STOP rules in §12 (S1–S10, T1–T7):
     - no own extractor or frame rules;
     - no BHSA;
     - no paid API;
     - no `config/` edits;
-    - no AI pre-labelling of gold;
+    - **no AI label presented as human gold, and no change to a frozen silver job (D-061)**;
     - no git commits.
+  - **Her silver steps (D-061)** are EFRAT_SECTION_6 §9.2 steps 4–9, after `s56-r1.1`.
   - Results go in `data/outbox/efrat-s6/`.
 - **If the person's whole message is "start"** (or "go", "continue", "status") **on ADI's computer** (or on a fresh
   partner setup): until CHECKPOINT 2 it still means *run or check this computer's share of M5*.
@@ -262,6 +287,10 @@ uv run hebloc stats report|verify <dir>  # M6: re-render / re-hash a data/stats/
 uv run hebloc pack analysis|verify       # D-051: standalone analysis package (data/share/, private, never git)
 uv run python -m hebloc loc lexicon check|forms|inventory|bhsa-eval   # §5 R1: lexicon (forms/bhsa-eval: Ori only)
 uv run python -m hebloc loc gold sample|check · loc nouns list|merge · loc verify   # §5 R1 (docs/S56_R1.md §7)
+uv run python -m hebloc loc units inventory|build|review|merge|audit · loc extract · loc resolve · loc classify ·
+    loc swap · loc stats · loc score · loc gold exposure|paper|supplement   # R2 code, Phase B (docs/S56_R2.md §1)
+uv run python -m hebloc loc silver isolation-test|create|import-pass|step|status|finalize|deliver|receive|anchor-ids|anchor-agreement
+                                         # D-061 SILVER workflow (annotation/S56_SILVER_PROTOCOL.md §9)
 ```
 
 ## Repo map
@@ -362,7 +391,11 @@ notebooks/     exploration only — never pipeline logic
   - the BHSA identification baseline (Mikra), with its limits in `docs/S56_R1.md` §0.1.
 
   Efrat's R1 steps: `docs/EFRAT_SECTION_6.md` §9.2.
-- [ ] **Stage 3, rest (Phase B needs Ori's approval):**
+- [x] **Stage 3, Phase B = the R2 code BUILT (2026-11-20, D-059 accepted; D-060 accepted 2026-11-21; uncommitted).**
+  See `docs/S56_R2.md`. Mikra runs end to end; repo = package.
+- [x] **STOP-B decided + the AI-only SILVER workflow (D-061) BUILT (2026-11-21; uncommitted)** → STOP-S (G1).
+  See `annotation/S56_SILVER_PROTOCOL.md`, `docs/S56_R2.md` §6 and HANDOFF.
+- [ ] **Stage 3, rest (Phase C needs Ori's approval):**
   - §5 on Mikra: R1 (lexicon, guideline, gold sampler, noun lists), then the shared extractor, local resolver,
     classes, identity and statistics, then Mikra validation (BHSA identification + human gold);
   - then **CHECKPOINT 2**: tag `s56-v1`, decide the balanced Ori/Adi split, build and test Adi's M5-style workflow,

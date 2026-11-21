@@ -1076,3 +1076,187 @@ Design: [m6_design.md](m6_design.md).
 - *Efrat.* She is authorized to do her R1 tasks now (EFRAT_SECTION_6.md §9.2), in her existing project,
   independently of these open issues.
 
+
+### D-059 · Shared policy `vunit-v1` for OI-1 and OI-2, and the Phase B plan with adjustments A1–A7 (2026-11-20) · accepted (Ori)
+- *Investigation (read-only, Mikra and Modern).*
+  - **OI-1.** In Modern, Dicta lemmatizes the present tense with the participle string: 51% of present-tense
+    tokens (1,997,546 of 3,911,073; ראה 102 vs רואה 30,510), against 12% in Mikra. Passives often get a lemma of their
+    own, but some nif'als are separate lexemes (נכנס, נשבע, נראה), so shape alone is unsafe.
+  - **OI-1, §5 effect.** R1 lists some paper-verb participles (נותן, ממלא) and misses others (מוציא, חושף, מסיר,
+    מפנה, מנקה…): at least 96 strings, 81,155 Modern tokens, of which R1 catches 18,273 by form.
+  - **OI-2.** יש 418k, אין 239k, היי (Dicta's lemma for היה) 154k + 880k AUX, אפשר 129k, צריך 42k, חייב 27k: about 5–6%
+    of Modern VERB tokens. ניתן is R1's passive lemma of נתן.S. The צריך HOMOGRAPH items come from the forms-v2
+    self-copy rule (`צרר.S|~form`, 39,625 tokens).
+  - AUX tokens: 2.19M in Modern, only 415 with an object + a ב/מ phrase.
+- *Policy (P1–P8; full text: Ori's approved plan, summarized in [S56_R2.md](S56_R2.md)).*
+  - **P1 unit.** A verb = root + template (the lexicon's unit); never across roots or templates; the raw-lemma
+    level is always kept.
+  - **P2 automatic links.** Only a same-binyan present participle that is unambiguous, pooled thresholds 20 / 20% /
+    50% / 20%. In force only after an audit of 100 links by a fixed hash (≥ 95 correct).
+  - **P3 reviewed links.** Passive, middle, ambiguous and inflected links stay separate until a human accepts them.
+  - **P4 voice and template.** A function of the lemma (lexicon → map → shape), identical in both modes.
+  - **P5 paper-verb variants.** Ori reviews them, and they enter `lexicon-v2` in Phase C (I-1).
+  - **P6 function predicates.** Tagged, never excluded from §6's main analysis (all VERB-tagged verbs). One
+    sensitivity view drops only structural `function_use` tokens.
+  - **P7 rule zero.** Stated precisely (no preposition decides a role, a frame with a PP argument, or which PP is the
+    argument). The partitive rule (fn 24, 27) gets a noun-type guard, and its instances never enter the identity test.
+  - **P8 test independence.** An exposure register, clean validation and test sets as primary, paper examples and
+    screens kept off frozen items, and a once-only final test.
+- *Adjustments approved.*
+  - **A1–A5** = P1–P8.
+  - **A3** adds unit-link proposals to D-054's human-reviewed uses of Claude Code.
+  - **A6** = the identification candidates I-1–I-5, each supplement approved separately.
+  - **A7.** Efrat reviews the Modern unit links and the 100-link audit, and later annotates the Modern supplement
+    (prepared for a coordinated handoff after STOP-B); Ori reviews the historical rows and P5.
+- *Exposure found* (documented in `annotation/gold/EXPOSURE.csv`; ids only).
+  - 22 Mikra gold items (11 test) are paper examples or were read in R1's reviews before the redraw; 15 more share a
+    read verse.
+  - 5 Modern items had their metadata viewed in the planning session.
+  - Clean sets: Mikra test 174 of 191, validation 86 of 98; Modern test 196 of 198, validation 99 of 101.
+- *Unchanged.* S56-v1, R1 (`s56-r1`), the frozen samples, Efrat's R1 tasks, Adi's `start`, every checkpoint.
+
+### D-060 · Phase B (the R2 code): implementation choices (2026-11-20) · accepted (Ori, 2026-11-21, with the STOP-B decisions below)
+1. **Modules.** `hebloc.loc.units` (B1), `extract` (B2), `resolve` (B3), `classify` (B4), `report` (B5),
+   `score` + `exposure` (B6), schema checks in `manifest.verify` (B7). CLI: `loc units|extract|resolve|classify|swap|stats|score`,
+   `loc gold exposure|paper|supplement`.
+2. **Extractor.** One row per VERB token, lexicon mode = a pyarrow filter of the all-verbs rows (same rows, same order).
+   - `verb_key` keeps the I3 meaning (lexicon key / `lemma:` / `form:`); the D-059 unit is a separate column,
+     `unit_id`.
+   - Extra columns: `link_status`, `has_clausal_comp`, `has_clausal_subj`, `lone_min_complement`,
+     `function_class`, `function_use`, and the argument's head gender / number / definiteness and the R2 antecedent.
+3. **Flags.** `partitive_candidate` = `lone_min_complement` on a lexicon verb; the resolver applies the same rule to a
+   non-lexicon unit only when that unit has a DO in ≥ 20% of its instances (pre-registered, config). `al_for_b` =
+   an על-PP and no ב-PP. `instrument_candidate` = two ב-family PPs.
+4. **Voice by shape.** Only an unambiguous hof'al (הושלך, מושלך) is passive by shape. Nif'al, pu'al and hitpa'el
+   shapes stay `unknown` until a reviewed link says otherwise.
+5. **Resolver.** Every PP is a candidate: two or more typed PPs → AMBIGUOUS (`several_typed_pps`, per P7); no typed
+   PP and several untyped ones → the DO-only rule (`do_only_*_multi_pp`).
+   - A pronoun is UNCLEAR unless R2 types it by its antecedent (third person only).
+   - R1's induced scores come from an all-verbs extraction of the same corpus (min_count 3, min_share 0.5;
+     `config/locative_resolver.yaml`, PROPOSED).
+6. **Classes.**
+   - A k = 2/3 verb with frames of both kinds below k is INSUFFICIENT_EVIDENCE (basis `frames_below_k`, the literal
+     §5.5 precedence).
+   - The rule of three requires no A, B or AMBIGUOUS instance.
+   - `nonlocative_share` = NON_LOCATIVE / (A + B + NON_LOCATIVE).
+7. **Identity.** The residual family OTHER is compared by its exact preposition (`OTHER:עם` ≠ `OTHER:תחת`): sharing
+   "OTHER" is not "the same preposition".
+8. **CSV copies.** Written only up to 1,000,000 rows per file (Modern instances and arguments are Parquet only).
+9. **Config files (PROPOSED, for Ori's approval at STOP-B).** `config/function_predicates.yaml` (pending: חייב,
+   ניתן, נראה), `config/locative_resolver.yaml`. `config/verb_units.yaml` is generated (`loc units build`, Ori).
+10. **Unit-link safeguards** (added after the plan, before any review).
+    - Only Hebrew-letter lemmas are linked (Dicta's `##` strings stay their own units).
+    - A link needs an attested candidate base (a po'el/polel with none stays its own unit).
+    - A function-predicate lemma (listed or pending) is never an AUTOMATIC base: אפשר is both "possible" and the
+      pi'el "enable", so מאפשר → אפשר goes to review.
+11. **Paper-example dev set.** A verse with several tokens of the entry is `ambiguous_token_in_verse` (the paper
+    labels one token), not dev. Result on Mikra: 115 frame-stated references → 50 dev items, 52 not identified by R1,
+    8 ambiguous, 5 left out as frozen validation/test tokens.
+12. **Unit review size.** It is above the planned ~1,000 rows: 1,893 Efrat rows and 172 Ori rows at n ≥ 20 (951 / 4
+    at n ≥ 500). Ori sets the frequency cut at STOP-B, as the plan foresees; rows below it stay separate units.
+    *Superseded by D-061:* every proposed row with ≥ 20 tokens is decided automatically (two SILVER passes; a
+    disagreement gives no link), so no cut is needed.
+
+*STOP-B decisions (Ori, 2026-11-21).*
+1. **Identity:** OTHER is compared by its exact preposition (item 7): accepted.
+2. **Function list:** חייב and ניתן are listed (MODAL_IMPERSONAL); נראה is not. Lexical uses stay in every main view
+   (P6).
+3. **Resolver settings** (`config/locative_resolver.yaml`, now approved and fixed before any silver label exists):
+   - variants R0 / R1 / R2;
+   - the 38 motion and position verbs; `min_count 3`, `min_share 0.5`;
+   - `transitive_min_do_share 0.2`;
+   - k = 1 primary, with 2 and 3 as sensitivity runs;
+   - `nonlocative_min_examined 20`;
+   - the fixed cascade of `resolve.py`.
+4. **The unit-review cut** is obsolete (D-061).
+5. **Efrat's A7 tasks** are withdrawn and replaced by the D-061 silver steps.
+6. **D-060** is accepted.
+
+### D-061 · AI-only SILVER annotation, integrated into S56-v1 (2026-11-21) · accepted (Ori)
+- *Why.* Ori: zero manual data work. Claude Code performs all annotation, noun typing, verb linking, linguistic
+  checks and audits. Ori and Efrat manage the project and approve project-level decisions only.
+  - The basis is Efrat's proposal v2 (`docs/proposals/PROPOSAL_automation_v2.md`, kept verbatim), adapted to the
+    actual state: Phase B was already built; the decision is D-061, not D-059; and there are no unit-link tasks for
+    Efrat.
+- *The principle.* Every AI label is **SILVER** (`label_source = ai`), never human gold.
+  - **Reported as:** reliability (κ between two independent first-run passes), agreement with the independent
+    references that exist (the paper's frames for Mikra, an upper bound; BHSA identity as a description), and
+    abstention.
+  - **Never** called accuracy or validated.
+  - Protocol: `annotation/S56_SILVER_PROTOCOL.md` (`S56-silver-p1`). Code: `hebloc.loc.silver`, `loc silver …`.
+- *Safeguards (Ori, 2026-11-21).*
+  - **SG1, isolated workspaces.** Every pass is a headless Claude Code session in a folder outside the repo, holding
+    only the blind input of its chunk, the guideline, the protocol and the prompt. The launch uses `--restricted`,
+    `--strict-mcp-config`, deny settings and `--permission-prompts none`. A canary preflight must be denied, and the
+    session transcript is reduced to an access log (paths only) and checked; a breach discards the chunk.
+  - **SG2, freeze and never revise.** A finalized job is frozen (hashes in `FROZEN.json`). Delivered hashes are
+    recorded in `annotation/silver/FROZEN_SILVER.json` before any read, and the scorer refuses anything else. The
+    protocol is pinned at `s56-r1.1`.
+  - **SG3, pre-registered recovery.**
+    - Reruns cover only technical failures and format errors, once each.
+    - Disagreements go to context expansion, then adjudication; abstention above 30% gets context expansion.
+    - Frame κ < 0.6, T5 above 5%, abstention above 30% after recovery, or a second breach → STOP (`QC_STOP.md`), with
+      project-level options only.
+    - Never human row work, and never rerunning to raise agreement.
+- *Who does what.*
+  - **Efrat's Claude Code** annotates all sentence silver (Modern and Mikra, every split, dev first), the paper anchor
+    and the 15 worked examples (compliance only), and the Modern noun types. Her pass A proposals are reused (D-f).
+  - **Ori's Claude Code** (the developer) never annotates sentences. It makes the Mikra and historical noun types, the
+    unit links (all P3 rows), the P5 variant evidence and the 100-link AI audit, each by the same isolated two-pass
+    protocol. Noun types and the unit map are frozen before any dev silver is read.
+- *Decisions D-a … D-m (Ori, G0).*
+  - D-a: D-061.
+  - D-b: Efrat's Claude annotates the sentences.
+  - D-c: SG1 isolation.
+  - D-d: Ori's Claude types Mikra and historical nouns.
+  - D-e: the four noun conventions (collectives ANIMATE; institutions with a seat LOCATION; time / event / quantity /
+    partitive heads UNCLEAR; transferable abstract content LOCATUM).
+  - D-f: reuse Efrat's pass A.
+  - D-g: abstained items are left out of the primary metrics, with an `agreed_only` sensitivity set.
+  - D-h: STOP thresholds κ 0.6, abstention 30%, worked examples 15/15.
+  - D-i: the same model (`opus`) for every pass.
+  - D-j: a unit-link disagreement gives no link.
+  - D-k: the 100-link audit is an AI audit, ≥ 95 / 100.
+  - D-l: the anchor = the single-token paper examples outside the frozen validation/test sets and the guideline
+    examples (an upper bound).
+  - D-m: report wording "agreement with silver".
+- *What it amends (and nothing else).*
+  - **D-054:** Claude Code may make SILVER labels, noun types, unit links and audits under the protocol. The bans on
+    run-time labelling, paid APIs and calling AI labels gold stay.
+  - **D-055:** §6 candidate review by Efrat's Claude Code (silver, with evidence).
+  - **D-056 / EFRAT_SECTION_6 §5.8:** the annotator is Efrat's Claude Code; the 60 agreement items become the fixed κ
+    subset.
+  - **D-057:**
+    - #7: κ = pass A vs pass B;
+    - #8: "never opens test labels" applies to the developer;
+    - #10: automated review mode with a QC record;
+    - #18: identification is developed on dev silver;
+    - #20: ישב.I is labelled by the silver annotator.
+  - **D-059:** P2's audit becomes an AI audit; P3 and P5 are automated; A3 and A7 are withdrawn.
+- *Unchanged.*
+  - S56-v1's objectives and methodology;
+  - R1 and the frozen samples (byte-identical);
+  - the Phase B code;
+  - the stage order;
+  - the roles (Ori leads §5, Efrat §6 on Modern, Adi stage 2);
+  - every STOP rule and checkpoint;
+  - corpus immutability;
+  - no paid API;
+  - only Ori edits `config/` and pushes.
+- *Privacy.* Everything that quotes corpus text or holds labels stays under `data/` or outside the repo (gitignored,
+  tested). In git: the protocol, the prompts, the worked examples, the anchor ids (no frames) and
+  `FROZEN_SILVER.json`. The paper-example frame key stays out of git until the anchor silver is delivered.
+- *G1 noun rules (Ori, 2026-11-21: "resolve conservatively, ensuring uncertainty is preserved").*
+  1. **Passes disagree, or a confidence is low:** the noun is merged as **UNCLEAR** with
+     `silver_status = abstained`. Both answers are kept in `note`.
+     - Merging it (instead of leaving it untyped) keeps the uncertainty explicit, so R1's induced score never
+       overrides it.
+  2. **A lemma typed differently in two corpora** (one type per lemma in `config/noun_types.yaml`): it becomes
+     **UNCLEAR** with `silver_status = cross_corpus_conflict`, and every corpus's type is recorded in `note`.
+     - Merge order never decides.
+     - `loc nouns merge --automated` lists these conflicts.
+- *Known limits (for the report, §8–§9).*
+  - There is no independent human gold, so §5/§6 scores are agreement with silver.
+  - The annotator and the developer are both Claude models, so shared blind spots are likely and cannot be measured.
+  - The anchor is Mikra-only and prototypical, an upper bound; Modern has no external anchor.
+  - Agreement between passes is reliability, not validity.

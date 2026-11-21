@@ -1,18 +1,22 @@
 # Annotation guideline for the S56-v1 gold standard (`S56-v1-g1`)
 
-**For:** every human annotator of the §5–§6 gold samples. That is Ori for Mikra, Efrat for Modern, both for the
-agreement items, and whoever runs Hazal, Medieval or Haskala in stage 2.
+**For:** the annotator of the §5–§6 samples. Since D-061 (2026-11-21) that is the **SILVER annotator**: Efrat's
+Claude Code, under `annotation/S56_SILVER_PROTOCOL.md`, for Mikra and Modern. This guideline is its annotation
+standard, unchanged.
 
 **Methodology:** `docs/EFRAT_SECTION_6.md` §5.8 (normative). The paper is Doron & Dubnov (2017), chapters 1–3.
 
 **Release:** R1.
 
-> **Human only.** You decide every label yourself, from the sentence. No AI tool may pre-fill, suggest or check
-> labels: not Claude Code, not an LLM, not Dicta's analysis. The gold is the independent yardstick for the
-> automatic method; if a machine shaped it, it would no longer measure anything (D-054).
+> **SILVER, from the sentence alone (D-061; amends the R1 "human only" rule of D-054).**
+> - You decide every label yourself, from the sentence (and the context you are given), by this guideline.
+> - Never from Dicta's analysis, the extractor or the resolver: you never see them.
+> - Your labels are **SILVER** (`label_source = ai`), never human gold.
+> - The protocol (`S56_SILVER_PROTOCOL.md`) fixes the isolation, the two independent passes, the abstention rule
+>   and the freeze.
 >
-> **Work in order: dev, then validation, then test.** Finish and check one split before you open the next. Never
-> change a test label after you have seen any automatic result.
+> **Work in order: dev, then validation, then test.** One split is finished and frozen before the next is opened.
+> A frozen label is never changed.
 
 ---
 

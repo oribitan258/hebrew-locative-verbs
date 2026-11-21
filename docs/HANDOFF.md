@@ -1,4 +1,4 @@
-# Session Handoff: stage 3 — R1 RELEASED (`s56-r1`, provisional); Phase B NOT started → next: OI-1/OI-2, then plan Phase B (Plan Mode)
+# Session Handoff: stage 3 — Phase B + the SILVER workflow (D-061) BUILT, uncommitted → STOP-S (G1): Ori's review; Phase C NOT started
 
 > **Two mandatory checkpoints (Ori, 2026-11-19):**
 > - **CHECKPOINT 1** = shared methodology approved → STOP, complete `docs/EFRAT_SECTION_6.md`, tell Ori it is ready
@@ -11,6 +11,123 @@
 >   - tell Ori it is ready for Adi.
 >
 > Nothing proceeds past a checkpoint without Ori's explicit approval.
+
+## ★ STAGE 3, S1–S2: AI-only SILVER workflow BUILT 2026-11-21 → STOP-S (G1, Ori's review). Phase C NOT started
+
+**What Ori approved on 2026-11-21 (G0).**
+- The unified continuation plan, with safeguards SG1–SG3. Plan file:
+  `~/.claude/plans/pasted-content-id-87be-read-claude-md-cheerful-valiant.md`.
+- **D-060** (accepted), including the STOP-B decisions:
+  - OTHER compared by exact preposition;
+  - חייב and ניתן listed; נראה not listed;
+  - the resolver settings approved;
+  - the review cut made obsolete;
+  - the A7 draft withdrawn.
+- **D-061**: AI-only SILVER annotation, zero manual data work.
+
+**What was built (S1; uncommitted).**
+- **Code:**
+  - `src/hebloc/loc/silver.py`: jobs, blind inputs, isolated workspaces + canary, headless restricted launch,
+    transcript access log, compare / context / adjudication, QC + STOP thresholds, freeze, deliver / receive,
+    anchor agreement, isolation self-test;
+  - `gold.row_problems` + the AI-annotator refusal;
+  - `nouns.merge`, `units.merge_review` and `units.record_audit` with `--automated <frozen job folder>`;
+  - `score.py`: silver read only from received frozen files whose hashes are recorded; never mixed with human gold;
+    "agreement with silver"; abstentions out of the primary metrics (D-g); an `agreed_only` set;
+  - CLI `loc silver …`.
+- **Protocol and prompts:**
+  - `annotation/S56_SILVER_PROTOCOL.md`;
+  - `annotation/silver/prompts/*.md` (6 files);
+  - `annotation/silver/worked_examples.csv` (15);
+  - `annotation/silver/anchor_ids.csv` (48 anchor items, no frames).
+- **Config:** `config/function_predicates.yaml` and `config/locative_resolver.yaml` are APPROVED.
+- **Docs:**
+  - D-060 accepted, D-061 written;
+  - EFRAT_SECTION_6 amended (header, §3, §5.8, §5.9(2), §6, §7 I1/I4, §9.2 steps 4–9, §9.3, §10, §12 S8 + T1–T7);
+  - the guideline header;
+  - the S56_R1 note;
+  - S56_R2 §6;
+  - CLAUDE.md, roadmap, memory.
+- **Other files:**
+  - the proposal is kept verbatim as `docs/proposals/PROPOSAL_automation_v2.md`;
+  - the A7 draft is marked WITHDRAWN (gitignored, never committed);
+  - `.gitignore` gets the D-061 private-material rules, proved by `tests/test_repo_hygiene.py`.
+- **Tests:** `tests/test_loc_silver.py` (20), plus a silver scoring test in `test_loc_r2.py`.
+
+**Ori decides at G1 (STOP-S).**
+- Approve the two commits, tag `s56-r1.1` and push.
+- Then Ori sends Efrat: "pull s56-r1.1 and follow EFRAT_SECTION_6 §9.2".
+
+**After the push (Part 2 of the plan).**
+- **Efrat's computer, E1–E5** (pinned to `s56-r1.1` until her last delivery):
+  - the isolation test;
+  - the worked examples;
+  - Modern nouns (pass A reused);
+  - sentence silver, dev → validation → test, Modern then Mikra, plus the anchor;
+  - a delivery after each group.
+- **Ori's computer, O1–O3** (each pass in an isolated workspace):
+  - Mikra and historical noun types;
+  - unit links (all P3 rows) and the 100-link AI audit;
+  - the P5 variant evidence;
+  - `loc silver receive` for every delivery: hashes go into `annotation/silver/FROZEN_SILVER.json` before any read;
+  - freeze `noun_types.yaml` v1 and the unit map before any dev silver is read.
+- **G2:** Phase C may start (dev silver of both corpora QC-passed, noun types and unit map frozen).
+- **Then:** G3 supplements → G4 identification freeze → G5 validation choice (once) → G6 final test (once) → G7
+  CHECKPOINT 2.
+
+## ★ STAGE 3, Phase B: the R2 code BUILT 2026-11-20 → STOP-B (decided 2026-11-21: see above). Phase C NOT started
+
+**Status.**
+- **Approved:** OI-1/OI-2 were investigated, and Ori approved the shared policy `vunit-v1` with adjustments A1–A7
+  (**D-059**).
+- **Built:** Phase B (B1–B9), documented in [S56_R2.md](S56_R2.md); its implementation choices are **D-060
+  (PROPOSED)**.
+- **Not done yet:**
+  - nothing is committed, tagged or pushed;
+  - R1, the frozen samples and Efrat's R1 work are unchanged;
+  - **Phase C has NOT started.**
+- **Plan file:** `~/.claude/plans/pasted-content-id-87be-read-claude-md-cheerful-valiant.md`.
+
+**What exists now (local, uncommitted).**
+- **Code:** `src/hebloc/loc/{units,extract,resolve,classify,report,score,exposure}.py`, the I3 schema check in
+  `manifest.verify`, the CLI `loc units|extract|resolve|classify|swap|stats|score` and
+  `loc gold exposure|paper|supplement`.
+- **Tests:** `tests/test_loc_r2.py` (36).
+- **Config:**
+  - `config/function_predicates.yaml` (PROPOSED; חייב / ניתן / נראה pending);
+  - `config/locative_resolver.yaml` (PROPOSED, pre-registered);
+  - `config/verb_units.yaml` (generated; audit pending, so no automatic link is in force).
+- **Gold (ids only):** `annotation/gold/EXPOSURE.csv` + `EXPOSURE_MANUAL.csv`, and `mikra_paper_examples.csv`
+  (50 dev items).
+- **Data:**
+  - `data/loc/inventory_t/` (all five corpora; equals R1's inventory);
+  - `data/loc/review/units/` (review sheets; the examples sheet is local, D-042);
+  - `data/loc/mikra/mikra-all-verbs-0f4f3a4316/` and `mikra-lexicon-552a9651f4/` (roles R0–R2, classes, reports).
+- **Draft (not sent):** `docs/drafts/EFRAT_R2_REVIEW_TASKS_DRAFT.md`.
+
+**Ori decided at STOP-B on 2026-11-21** (D-060 accepted; see the section above). The original list:
+1. D-060 (Phase B implementation choices), including:
+   - the safeguards added after the plan (D-060 items 10–12);
+   - OTHER compared by exact preposition.
+2. `config/function_predicates.yaml`: approve the list; decide חייב, ניתן, נראה.
+3. `config/locative_resolver.yaml` (motion/position verbs, thresholds): approve it before any dev reading.
+4. **The review cut.** Efrat's unit review has 1,893 rows at n ≥ 20 (951 at n ≥ 500). Choose `--min-tokens`.
+5. Whether and when to hand Efrat the additional tasks (the draft above).
+6. Whether to commit Phase B (no tag; R2 stays unreleased until CHECKPOINT 2).
+
+**Then (Phase C, only after Ori's approval).** *Superseded by D-061: there is no human data work; the steps are the
+silver steps E1–E5 / O1–O3 above.* The original list:
+- **Human work:**
+  - noun types (Ori: Mikra 991 rows; Efrat: Modern 1,763) merged;
+  - the unit reviews and the 100-link audit;
+  - the P5 paper-variant review (Ori, 160 rows);
+  - the Mikra and Modern dev annotation.
+- **Then:**
+  - identification candidates I-1–I-5 on dev, each supplement approved;
+  - the resolver on dev and the paper examples;
+  - the variant choice on clean validation (once);
+  - test once;
+  - CHECKPOINT 2.
 
 ## ★ STAGE 3, Phase A: R1 RELEASED 2026-11-20 (tag `s56-r1`) → STOP. Phase B needs Ori's approval
 

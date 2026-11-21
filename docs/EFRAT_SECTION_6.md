@@ -1,8 +1,20 @@
 # EFRAT_SECTION_6.md — Efrat's §6 handoff and the shared §5–§6 methodology `S56-v1`
 
 **Status:** approved by Ori on 2026-11-19 (CHECKPOINT 1; decisions D-053 to D-056 in `docs/decisions.md`).
-**Release R1 (tag `s56-r1`) is out since 2026-11-20 (D-057): the §9.2 steps are now allowed.** R2 (`s56-v1`) is
-not out yet: nothing of §9.3.
+**Release R1 (tag `s56-r1`) is out since 2026-11-20 (D-057). Release R1.1 (tag `s56-r1.1`, D-061) replaces every
+manual annotation step with AI-only SILVER annotation: §9.2 as amended below is allowed once `git tag -l s56-r1.1`
+lists the tag.** R2 (`s56-v1`) is not out yet: nothing of §9.3.
+
+> **Amended by D-061 (2026-11-21): AI-only SILVER annotation.**
+> - **Zero manual data work.** Efrat and Ori annotate nothing, type no noun and review no row. They manage the
+>   project and approve project-level decisions.
+> - **Every AI label is SILVER** (`label_source = ai`), never human gold, and is never reported as validated
+>   accuracy.
+> - **Efrat's Claude Code is the silver annotator** for both frozen samples (Modern and Mikra), the paper anchor, the
+>   worked examples and the Modern noun types. It follows `annotation/S56_SILVER_PROTOCOL.md` exactly: isolated
+>   workspaces outside the repo, two independent passes, deterministic adjudication, QC, and a freeze.
+> - **Unchanged:** the methodology, the frozen samples and the roles.
+> - **The passages marked "D-061" below replace the manual steps.**
 
 **Who reads this:** Efrat and her Claude Code, on Efrat's computer, in her clone of the public repo.
 
@@ -158,9 +170,9 @@ two alternants".
 
 | Who | Task | When |
 |---|---|---|
-| **Ori** | Leads §5. **Stage 1 = Mikra**: builds and validates the shared code; annotates the Mikra gold standard; labels noun types for the historical corpora | Now → CHECKPOINT 2 |
+| **Ori** | Leads §5. **Stage 1 = Mikra**: builds and validates the shared code. **D-061:** his Claude Code (in isolated silver workspaces) makes the Mikra and historical noun types, the verb-unit links and the 100-link AI audit; it never annotates sentences (it is the developer) | Now → CHECKPOINT 2 |
 | **Ori + Adi** | **§5 stage 2**: the remaining corpora (Hazal, Medieval, Haskala, Modern), divided between them by corpus with a **balanced workload**, run **in parallel**. Adi uses her existing repo clone and an M5-style workflow (detached run, outbox, verified merge). **The split is decided at CHECKPOINT 2.** | After CHECKPOINT 2 |
-| **Efrat** | **All of §6, on Modern**: classify all verbs; find and characterize verbs in both structures. Also, for the shared validation: the **Modern gold sample** and the **Modern noun-type labels** | Preparation now; runs after R2 |
+| **Efrat** | **All of §6, on Modern**: classify all verbs; find and characterize verbs in both structures. Also, for the shared validation, **D-061:** her Claude Code produces the **SILVER labels of both frozen samples** (Modern and Mikra), the paper anchor and the **Modern noun types**; Efrat manages and delivers | Preparation now; runs after R2 |
 | Ori | Merges stage 2, computes the official §5 statistics **once, centrally**, reviews Efrat's §6 delivery, writes the report | After stage 2 |
 | — | §7 classifiers | Out of scope for now |
 
@@ -192,9 +204,9 @@ CHECKPOINT 2 = R2 = tag s56-v1 (Mikra validated; split of stage 2 decided) ◄�
 
 **What blocks what:**
 - Efrat's §6 runs need R2.
-- R2 is better with Efrat's Modern gold (development + validation parts) and Modern noun types. Deliver them as
-  early as possible after R1.
-- The **test** part of her gold can come later: it is scored once, after the choice of resolver.
+- **D-061:** "gold annotation" in the graph above is now **SILVER annotation by Efrat's Claude Code** (both samples).
+- Phase C needs the dev silver of both corpora and the Modern noun types. Deliver them first, after R1.1.
+- The validation and test silver can come later: each is frozen and its hash recorded before it is read once.
 
 ---
 
@@ -423,7 +435,14 @@ preposition, without any role decision.
 - **Modern** against §8;
 - **Hazal, Medieval and Haskala** as the diachronic path, which is our own contribution.
 
-### 5.8 Validation: human gold, three-way split
+### 5.8 Validation: SILVER labels (D-061), three-way split
+
+> **D-061.** The annotator is **Efrat's Claude Code**, under `annotation/S56_SILVER_PROTOCOL.md`. The labels are
+> **SILVER**: two independent passes in isolated workspaces, deterministic adjudication, QC, a freeze.
+> - **There is no human gold.** Every score against silver is "agreement with silver", never accuracy.
+> - **The 60 agreement items per corpus** become the fixed subset on which κ between pass A and pass B is reported.
+> - **The rest of this section stands as written** for the guideline, the sizes and the splits. Read "annotator" as
+>   "the silver annotator".
 
 **Annotation guideline** (released at R1). The annotator reads the sentence and marks:
 - whether the verb use is locative;
@@ -434,17 +453,18 @@ preposition, without any role decision.
 
 The annotator marks all of this from the sentence itself, so the gold also measures extraction recall.
 
-**Gold is human only.** No AI pre-labelling.
+**The labels are SILVER (D-061)**, not human gold. No AI label is ever presented as gold.
 
-| Corpus | Annotator | Size | Split |
+| Corpus | Annotator (D-061) | Size | Split |
 |---|---|---|---|
-| Mikra | Ori | the paper's ~110 example instances (development only) + a stratified random sample of 400 | 100 dev / 100 validation / 200 test |
-| Modern | **Efrat** | 400 = 300 paper-verb instances (serve §5 and §6) + 100 non-paper verbs with a locative signature (serve §6) | 100 / 100 / 200, within each stratum |
-| Agreement | Ori and Efrat | 60 Mikra + 60 Modern, each annotated independently by both | Cohen's κ |
-| Hazal, Medieval, Haskala | whoever runs that corpus in stage 2 | 150 each | test only |
+| Mikra | Efrat's Claude Code (silver; not Ori's, which is the developer) | a stratified random sample of 387 (frozen `mikra-r1b-1cd4ee9802`), plus the paper anchor (the single-token paper examples outside the frozen validation/test items) | 98 dev / 98 validation / 191 test |
+| Modern | Efrat's Claude Code (silver) | 400 = 300 paper-verb instances (serve §5 and §6) + 100 non-paper verbs with a locative signature (serve §6) | 101 / 101 / 198, within each stratum |
+| Agreement | pass A vs pass B | 60 Mikra + 60 Modern | Cohen's κ between the two independent passes (reliability, not validity) |
+| Hazal, Medieval, Haskala | — | 150 each | test only; silver only if Ori decides it at CHECKPOINT 2 |
 
-**Storage.** Sheets that show corpus text stay **local** (D-042). Only files with ids and labels are delivered and
-versioned (`annotation/gold/`).
+**Storage.** Sheets, workspaces, transcripts and silver label files stay **local** (`data/`, gitignored; D-042).
+- **Delivery:** by outbox only (`data/outbox/efrat-s6/silver/`).
+- **In git:** only `annotation/silver/FROZEN_SILVER.json` (ids and hashes).
 
 ### 5.9 §6 on Modern (Efrat)
 
@@ -469,8 +489,13 @@ per-genre tables), then the frozen resolver variant.
   - the swap test of 5.7, which needs no roles, with its supporting instance ids;
   - plus verbs whose resolved outcomes include both A and B;
   - plus verbs whose signature profiles show DO + PP[B] and DO + PP[MIN] patterns.
-- **Confirmation.** Efrat reviews a sample of each candidate's instances by hand, recorded in a review file. Her
-  Claude Code may help read the sentences; Efrat decides.
+- **Confirmation (D-061).** Efrat's Claude Code reviews a sample of each candidate's instances by the silver
+  protocol, recorded in a review file with `label_source = ai`:
+  - isolated workspaces;
+  - two independent passes;
+  - abstention when unsure.
+
+  Efrat approves the delivery, not the rows.
 
 **(3) Characterize the confirmed verbs.** For each one:
 - semantic field;
@@ -498,16 +523,22 @@ is reported to Ori. It may point to a lexicon or extraction issue.
   one.
 - **Dicta's existing parses are the main resource.** They give the lemmas, POS, morphology, suffixes and dependency
   trees for every unit. **We never re-run Dicta.**
-- **Each person's existing Claude Code** may be used **only** for steps a human then reviews:
-  - **Noun types.** It proposes a type for each noun on a frequent-noun list, in batches. The human accepts or
-    corrects **every** row, and the file records who proposed and who reviewed.
+- **Each person's existing Claude Code (D-061, amending D-054):**
+  - **SILVER annotation.** It makes every data label under `annotation/S56_SILVER_PROTOCOL.md`: sentence labels,
+    noun types, unit links, audits and the §6 candidate review.
+    - Each pass runs in an isolated workspace, and two independent passes are adjudicated deterministically.
+    - Abstention is allowed, QC thresholds are pre-registered, and every result is frozen.
+    - **Humans approve files and milestones, never rows.**
   - **Code and docs.** It writes the code (Ori's repo) and the documentation.
-  - **Reading.** It helps a human read and summarize the deciding instances during audits and during the §6
-    candidate review. The human decides.
 - **Never:**
-  - Claude Code labels **gold** instances (gold is human only, so it stays an independent check);
-  - Claude Code labels instances at run time.
-- These uses are disclosed in the report as AI-assisted work reviewed by a human. That is part of our §8 discussion.
+  - an AI label is presented as **gold**, or a silver-based score as validated accuracy;
+  - Claude Code labels instances **at run time** (the resolver is rules only);
+  - a frozen silver file is changed;
+  - the developer (Ori's Claude Code) annotates sentences, or reads validation or test silver outside the once-only
+    `--choose` and `--final-test`.
+- **Disclosure.** All of this is disclosed in the report as AI-generated annotation, approved at the project level by
+  Ori, with no row-level human review. The limits are part of our §8 discussion: no independent human gold;
+  annotator and developer are both Claude models; Modern has no external anchor.
 
 ---
 
@@ -523,6 +554,9 @@ is reported to Ori. It may point to a lexicon or extraction issue.
 - `config/locative_verbs.yaml`: the lexicon (5.1).
 - `config/noun_types.yaml`: the noun types. Each row has `lemma`, `type`, `corpus_source`, `proposed_by` (`human` or
   `claude_code`), `reviewed_by`, `note`.
+  - **D-061:** silver rows add `review_mode = automated`, `label_source = ai` and `silver_status`, with
+    `reviewed_by = auto-qc:<qc_id>`.
+  - They are merged only with `loc nouns merge --automated <frozen job folder>`.
 
 ### I2 — Commands (provisional names; exact syntax in the R1 and R2 release notes)
 
@@ -635,6 +669,12 @@ These are written under `data/loc/<corpus>/<output_id>/`.
   the extractor may not see).
 - The annotation columns of 5.8.
 - `split` (`dev`/`validation`/`test`), `annotator`, `guideline_version`.
+- **D-061: SILVER files** (`<corpus>_<split>_silver.csv`) add:
+  - `label_source = ai`, `silver_version`, `protocol_version`;
+  - `silver_status` (`agreed` / `agreed_ctx` / `adjudicated` / `abstained` / `single_pass`);
+  - `confidence`, `evidence_rule`, `abstain_reason`.
+
+  They stay out of git, and the scorer reads them only when their hash is in `annotation/silver/FROZEN_SILVER.json`.
 
 ### I5 — Manifest (`manifest.json` in every output folder)
 
@@ -761,35 +801,56 @@ shows Efrat each result.
    ask Ori for the Drive link.
 3. **Draw the two samples from the package** (Modern, then Mikra), and run `loc verify` on both folders. The ids and
    `items_match` must be as in §7.
-4. **Read the guideline** `annotation/S56_GUIDELINE.md` together with Efrat. Note §4.15: Modern **ישב.I** (יישב) is
-   kept for her sense judgement. "Populate / settle people in a place" is locative; "resolve a dispute" is
-   `NON_LOCATIVE`; when unsure, `locative = ?`. Never skip such items.
-5. **Modern gold: Efrat annotates by hand.**
-   - The sheets are `data/loc/gold/modern/modern-r1b-5fbb5e22e7/sheets/dev.csv`, then `validation.csv`, then
-     `test.csv`. Do them in that order.
-   - Open the sheets in Excel or VS Code. **Claude Code never fills, suggests or checks labels** (S8). It may
-     explain the guideline, run the check, and report the check's messages.
-   - After each sheet, run `loc gold check` (§7). Fix every `PROBLEM` and rerun until the sheet is clean. The
-     text-free file lands in `data/outbox/efrat-s6/gold/`.
-   - Time the first 20 items and tell Ori.
-   - **Deliver dev and validation early:** they are what Ori develops and chooses with before CHECKPOINT 2.
-6. **Mikra agreement items: Efrat annotates by hand.**
-   - The sheet is `data/loc/gold/mikra/mikra-r1b-1cd4ee9802/sheets/agreement.csv` (60 items).
-   - Same rules and the same check. Do not look at Ori's labels; Ori labels 60 of the Modern items blind.
-7. **Modern noun types.**
-   - The sheet is `data/loc/nouns/modern/modern-nouns-r1-826929982d/nouns_to_label.csv` (1,763 rows; the types
-     are defined in §5.4).
-   - Claude Code may fill `proposed_type` and `proposed_by = claude_code`, in batches of about 100 rows.
-   - **Efrat decides every row**: she writes `type` (LOCATION, LOCATUM, ANIMATE or UNCLEAR) and
-     `reviewed_by = efrat`, and adds `note` where useful.
-   - Save the finished file as `data/outbox/efrat-s6/noun_types_modern.csv`.
-8. **Deliver** (§10):
-   - `data/outbox/efrat-s6/` holds `gold/` and `noun_types_modern.csv`, plus a `DELIVERY.json` (who, when,
-     `git describe --tags --always`, every file with its sha256).
-   - Send the folder to Ori by Google Drive, OneDrive or USB. The sheets themselves stay local: they quote corpus
-     text.
-   - Partial deliveries are welcome: dev + validation + nouns first.
-9. **STOP** after delivering, and wait for R2. Nothing of §9.3 before Ori announces `s56-v1`.
+> **Steps 4–9 below are the D-061 version (R1.1, tag `s56-r1.1`).** Efrat does no manual data work: her Claude
+> Code runs every step, and Efrat approves and sends the deliveries.
+> - The coordinating session (Efrat's normal Claude Code, in the repo) builds and launches the isolated annotator
+>   sessions. It never labels anything itself, and never opens a sheet's labels or a workspace's output.
+> - Commands print counts and statuses only.
+> - Full protocol: `annotation/S56_SILVER_PROTOCOL.md`.
+
+4. **Check R1.1 and isolation (T1, T2):**
+   - `git describe --tags` shows `s56-r1.1`, and `docs/decisions.md` contains D-061. Otherwise STOP.
+   - Both frozen samples still give `items_match = true` (step 3).
+   - Run `uv run python -m hebloc loc silver isolation-test`. It must print `"ok": true`: the canary reads were
+     denied. Otherwise STOP and report to Ori.
+   - **From now until the last delivery, do not `git pull`** (the protocol is pinned), unless Ori announces a fix.
+5. **The worked-example compliance check (T3):**
+   ```
+   uv run python -m hebloc loc silver create --task worked
+   uv run python -m hebloc loc silver step worked       # repeat until "finalized" or "STOP"
+   ```
+   15/15 is required. On a STOP, send Ori the `QC_STOP.md` folder name and wait.
+6. **Modern noun types:**
+   - The earlier proposals are reused as pass A (D-061 D-f). Pass B never sees them.
+     ```
+     uv run python -m hebloc loc silver create --task noun --corpus modern --list data/loc/nouns/modern/modern-nouns-r1-826929982d/nouns_to_label.csv
+     uv run python -m hebloc loc silver import-pass noun-modern --pass A --from <the earlier proposals CSV> [--confidence-column <name>]
+     uv run python -m hebloc loc silver step noun-modern  # repeat until "finalized"
+     ```
+   - **Deliver it early:** `loc silver deliver noun-modern --out data/outbox/efrat-s6 --who efrat`.
+7. **Sentence silver, dev first.** For each job, create it, then repeat `step` until `finalized` or `STOP`:
+   ```
+   uv run python -m hebloc loc silver create --task sentence --corpus modern --split dev --sample data/loc/gold/modern/modern-r1b-5fbb5e22e7
+   uv run python -m hebloc loc silver step sentence-modern-dev --source package --package <package folder>
+   ```
+   - **Order:**
+     - Modern dev → Mikra dev → the paper anchor (`create --task anchor --source package --package <package folder>`;
+       it reads `annotation/silver/anchor_ids.csv`, which holds no frames) → deliver;
+     - then Modern validation → Mikra validation → deliver;
+     - then Modern test → Mikra test → deliver.
+   - Each split is finalized and **frozen** before the next one is opened.
+   - Never revise a frozen job. On any STOP (T4: κ < 0.6; T5: > 5% format failures; abstention > 30%; a second
+     isolation breach), send Ori the job name and wait for his project-level decision.
+   - **ישב.I** (guideline §4.15) is judged like every other item: locative, non-locative, or `?` with a reason.
+8. **Deliver** (§10), after each group of jobs:
+   ```
+   uv run python -m hebloc loc silver deliver <job> [<job> ...] --out data/outbox/efrat-s6 --who efrat
+   ```
+   - The outbox holds the frozen final files, pass files, QC, access logs and `DELIVERY.json`. It holds no input
+     texts.
+   - Send the folder to Ori by Google Drive, OneDrive or USB.
+9. **STOP** after each delivery, and wait for R2 after the last one. Nothing of §9.3 before Ori announces `s56-v1`.
+   Phase C supplements, if Ori approves any, come as new jobs by the same protocol.
 
 ### 9.3 After R2 = tag `s56-v1` (CHECKPOINT 2; Ori announces it)
 
@@ -809,7 +870,8 @@ shows Efrat each result.
    - research question;
    - method (by reference to this document);
    - results;
-   - limitations: the `UNDETERMINED` share, parser errors, resolver accuracy on the Modern test gold;
+   - limitations: the `UNDETERMINED` share, parser errors, the resolver's **agreement with the Modern test silver**
+     (D-061: never called accuracy);
    - feedback to §5.
 6. **Package and deliver** (§10).
 
@@ -822,10 +884,9 @@ by git**.
 
 ```
 data/outbox/efrat-s6/
-  DELIVERY.json            # who, when, git tag/commit, list of files with sha256
-  gold/                    # ids + labels only (I4): modern_dev.csv, modern_validation.csv, modern_test.csv,
-                           #   mikra_agreement.csv
-  noun_types_modern.csv    # proposals with provenance (I1 columns)
+  DELIVERY.json            # who, when, git tag/commit, list of files with sha256 (written by `loc silver deliver`)
+  silver/<job>/            # D-061: frozen SILVER jobs (final file, pass files, qc.json, access logs, FROZEN.json):
+                           #   sentence-modern-dev|validation|test, sentence-mikra-*, anchor-mikra, worked, noun-modern
   results/                 # copies of the R2 output folders (I3 tables + manifest.json), unchanged
   analyses/                # her §6 tables/figures, each with the script that made them
   code/                    # any §6-specific scripts (Ori reviews; only Ori commits them to git)
@@ -833,7 +894,7 @@ data/outbox/efrat-s6/
 ```
 
 **Partial deliveries are welcome:**
-- after R1: `gold/` and the noun types;
+- after R1.1: `silver/` jobs, in the order of §9.2;
 - after R2: everything else.
 
 Each delivery has its own `DELIVERY.json`.
@@ -876,9 +937,16 @@ these happens:
 | S5 | A step would use a paid or external API, or download BHSA. |
 | S6 | A step would delete or modify parse data, bundles or package files, or re-run Dicta. |
 | S7 | A step would put corpus text or data in git, or `git commit`/`git push`. Efrat never commits; only Ori pushes. |
-| S8 | A step would let AI pre-label or change **gold** annotations. |
+| S8 | (D-061) A step would present AI labels as human gold, omit `label_source`, change a FROZEN silver job, or label anything outside an isolated silver workspace. |
 | S9 | `git status` shows modified tracked files before `git pull`. |
 | S10 | The data or results look surprising: e.g. a paper A/B verb never alternates, or most instances are `UNDETERMINED`. **Report it; don't "fix" it.** |
+| T1 | (D-061) `s56-r1.1` or D-061 is missing after `git pull`. Nothing of §9.2 steps 4–9 runs before them. |
+| T2 | A frozen sample no longer gives `items_match = true`. |
+| T3 | The worked examples are below 15/15 after the one rerun. |
+| T4 | Frame κ between the first-run passes is below 0.6, or abstention is above 30% after recovery, in any split. |
+| T5 | More than 5% of a split's items fail the format or consistency check after their rerun. |
+| T6 | The isolation test fails, a chunk is breached twice, or a step would open extractor or resolver code or outputs inside an annotator session. |
+| T7 | A step would edit a tracked file, `config/` or a frozen dataset, or commit or push. |
 
 To report to Ori, send him:
 - what was run;
