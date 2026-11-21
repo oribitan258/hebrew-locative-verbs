@@ -1,0 +1,20 @@
+{
+  "meta": {
+    "rule": "SG2: recorded before any read; never revised"
+  },
+  "jobs": {
+    "noun-modern-r2": {
+      "files": {
+        "final/noun_types_modern.csv": "88382c7de7b25ac602680e38f5f857dcda2a5d20749de201fb5fef1847801454"
+      },
+      "placed": {
+        "noun_types_modern.csv": "88382c7de7b25ac602680e38f5f857dcda2a5d20749de201fb5fef1847801454"
+      },
+      "frozen_at": "2026-11-21T15:06:22+00:00",
+      "received_at": "2026-11-21T16:09:17+00:00",
+      "delivery_sha256": "51e3c7d9100052160cbad04d0a100dfb81601c195613b5cb94fbfbbfbcad44e8",
+      "protocol_sha256": "a79e6ec61621b5e0dd8fc78423371746053ddd4bd70f4142bd160820fa9af945",
+      "accepted_stop": null
+    }
+  }
+}

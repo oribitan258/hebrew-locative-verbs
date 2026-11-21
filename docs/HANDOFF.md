@@ -14,7 +14,39 @@
     - frozen; final `noun_types_mikra.csv` sha256 `47dc464e…c064`; κ(type) 0.907 [0.883, 0.928];
     - LOCATION 179, LOCATUM 261, ANIMATE 206, UNCLEAR 333 (132 of them abstentions); no STOP.
     - These are SILVER (`label_source = ai`); they enter `config/noun_types.yaml` only at O3.
-  - **Next: O2** (units, audit, P5). Then O3 waits for Efrat's `noun-modern-r2` delivery.
+  - **Next: O2** (units, audit, P5). O3 then has all its inputs: Efrat's E3 is received (stage R below).
+- **Stage R done (2026-11-21): Efrat's delivery 1 = `noun-modern-r2` (E3) received.**
+  - **What arrived.** Delivered at `data/efrat-s6/efrat-s6/` and copied unchanged to `data/incoming/efrat-s6/1/`.
+    - `DELIVERY.json` sha256 `51e3c7d9…44e8`; all 81 listed files are present and match their hashes.
+    - The job's `FROZEN.json`:
+      - git `s56-r1.2`, clean;
+      - protocol and guideline hashes identical to Ori's;
+      - `qc.json` hash OK;
+      - 1,668 items (the announced count);
+      - no QC STOP, `accepted_stop` null.
+  - **The record.** `loc silver receive` placed `data/loc/silver/final/other/noun-modern-r2/noun_types_modern.csv`
+    (sha256 `88382c7d…1454`) and recorded it in `annotation/silver/FROZEN_SILVER.json` (new file).
+    `frozen_file_ok` accepts it.
+  - **No label was read.** Only hashes, `FROZEN.json`, the STOP and count fields of `qc.json`, and Efrat's
+    `STATE.md` were opened.
+  - **9 unlisted extra files** came with the delivery. They are not in `DELIVERY.json`, are not received, and must
+    never be merged:
+    - `STATE.md`;
+    - `PROPOSAL_automation.md` (a proposal by Efrat, not read; Ori may review it separately);
+    - the pre-protocol proposals `noun_types_modern_PROPOSED.csv` and `.summary.json` (pass A's import source);
+    - `code/` (5 files).
+  - **Efrat's notes, from `STATE.md`:**
+    - The isolation test failed with the default model haiku (no breach) and passed with opus.
+    - `claude` was not on her PATH, so she used the VS Code extension's bundled CLI.
+    - Her pre-fix job `noun-modern` was never delivered.
+  - **OPEN, for Ori's decision before the next push.** `FROZEN_SILVER.json` is under `annotation/`, which several
+    checks require to be unchanged:
+    - Efrat's docs-only pull rule (STAGES.md §1 step 2; EFRAT_SECTION_6.md §9);
+    - the ES check and the `s56-r1.1`…`s56-r1.3` check (G3);
+    - the `annotation/` check of the EF announcement (STAGES.md §6).
+
+    Pushing it would make every later docs update look like a release to Efrat's pull rule, and the G3/ES checks
+    would fail. The local commit records it before any read (SG2).
 - History of O1's first attempt and of P1 (kept for the record):
   - O1 was stopped safely at a chunk boundary: a read-only audit found duplicate noun item ids. `nouns-r1` lists have
     one row per (lemma, upos), while silver noun ids are lemmas.
@@ -28,7 +60,7 @@
 - **§6 (Efrat):** E1–E6 (EFRAT_SECTION_6 §9.2 steps 4–9) since the R1.1 message; progress is in her `STATE.md`.
   - After P0's push, Ori sends her message M1 (STAGES.md §8).
   - After P1's push, Ori sends message M7: she takes `s56-r1.2` (stage EF) and redoes E3 with `noun-modern-r2`.
-- **Pending deliveries:** none received (`annotation/silver/FROZEN_SILVER.json` does not exist yet).
+- **Pending deliveries:** none. Delivery 1 (`noun-modern-r2`) was received 2026-11-21 (stage R above).
 - **Last verified:** 2026-11-21, O1 session:
   - 307 tests passed;
   - HEAD = origin/main = `s56-r1.2`;
