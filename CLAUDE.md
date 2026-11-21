@@ -7,10 +7,11 @@ Frame A [Locatum = direct object] and Frame B [Location = direct object] keep th
 
 **CURRENT SCOPE (2026-11-21): stage 3, Phase B + the AI-only SILVER workflow (D-061) RELEASED as R1.1 = tag `s56-r1.1`
 (G1 done: commits ebabdfc + 5341964, pushed). Efrat runs her silver steps (EFRAT_SECTION_6 §9.2 steps 4–9). Ori's
-silver steps O1–O3 wait for Ori's go; Phase C NOT started (needs G2).**
-**2026-11-21: O1 was STOPPED for the duplicate-noun-ID defect.** P1 = the fix (D-062: `nouns-r2` lists with one row
-per lemma, unique silver ids, noun jobs `noun-<corpus>-r2`) is built and verified. **Commit / tag `s56-r1.2` / push
-wait for Ori's approval;** then message M7 to Efrat (EF, then E3 again), then O1 restarts with `noun-mikra-r2`.
+silver steps run one per session (docs/STAGES.md §3); Phase C NOT started (needs G2).**
+**2026-11-21: P1 RELEASED** as tag `s56-r1.2` (0396a2b, pushed). P1 = the D-062 fix for the duplicate-noun-ID defect
+that stopped O1's first attempt: `nouns-r2` lists with one row per lemma, unique silver ids, noun jobs
+`noun-<corpus>-r2`. Efrat takes it as stage EF, then redoes E3.
+**2026-11-21: O1 DONE.** `noun-mikra-r2` is frozen: 979 lemmas, κ 0.907, 0 breaches. **Next: O2** (units, audit, P5).
 The pre-fix jobs (`noun-mikra`, any `noun-modern`) are kept and never used.
 - **THE ORDERED WORKFLOW IS `docs/STAGES.md`** (both people, through §5 and §6 completion): every session starts with
   `start` (STAGES.md §1: sync, checks, the next eligible stage) and ends with `end-of-session` (STAGES.md §2: update

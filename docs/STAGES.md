@@ -12,10 +12,11 @@ only orders the approved work, names who hands what to whom, and says when the n
 > recorded in the repo (this file, `docs/decisions.md`, `docs/HANDOFF.md`, the protocol). Never rely on a plan file.
 
 **Current position (updated by Ori's `end-of-session`):**
-- §5: **P0** done and pushed (2026-11-21).
-  - **O1 was stopped safely** (2026-11-21) because of the duplicate-noun-ID defect.
-  - **P1** = the fix (D-062) is built and verified, and awaits Ori's commit / tag `s56-r1.2` / push approval.
-  - Then: **O1** restarts with `noun-mikra-r2`, then O2.
+- §5: **P0** done and pushed (2026-11-21). **P1** = the D-062 fix, released as tag `s56-r1.2` (0396a2b, pushed
+  2026-11-21).
+  - **O1 done (2026-11-21):** job `noun-mikra-r2` frozen (979 lemmas; final sha256 `47dc464e…c064`; κ 0.907;
+    0 breaches; no STOP). The pre-fix job `noun-mikra` is kept unchanged and never used.
+  - Next: **O2** (units, audit, P5).
 - §6: Efrat is in **E1–E6**; her progress is in her `STATE.md`. After `s56-r1.2` is announced, her next `start` runs
   **EF** (take the fix), then E3 with `noun-modern-r2`.
 
@@ -91,8 +92,8 @@ Claude Code does these steps in order and shows each result.
 | Id | Prerequisites | Tasks | Completion checks | Outputs / handoff | Next | Status |
 |---|---|---|---|---|---|---|
 | **P0** | Ori's approval of the workflow plan | Docs only: this file, the restored Phase C rules (D-059 addendum), stale-doc fixes, `start` / `end-of-session` | Full tests; `hebloc check`; pinned files unchanged since `s56-r1.1` | Commit + push (★) → **SEND TO PARTNER** (§8 M1) | AUTO → O1 | done, pushed 2026-11-21 |
-| **P1** | O1 stopped (the duplicate-noun-ID defect); Ori's plan approval | D-062: `nouns-r2` lists (one row per lemma); unique item ids in every silver job; versioned noun job ids; pre-fix jobs kept but inactive; the import rule. Tests. The Mikra and Modern r2 lists (verified). Docs | Full tests; `hebloc check`; `git diff --quiet s56-r1.1 -- annotation/ config/`; old `noun-mikra` byte-identical | Commit + tag **`s56-r1.2`** + push (★) → **SEND TO PARTNER** (§8 M7) | ★ APPROVAL → O1 | built 2026-11-21; awaiting ★ |
-| **O1** | P1 | Mikra noun types: `loc nouns list --corpus mikra` (→ `mikra-nouns-r2-826929982d`, 979 lemmas; from the clean `s56-r1.2` tree, `nouns_to_label.csv` sha256 `f26714a0…cbd7`), then `loc silver create --task noun --corpus mikra --list data/loc/nouns/mikra/mikra-nouns-r2-826929982d/nouns_to_label.csv` → job `noun-mikra-r2`, then `loc silver step noun-mikra-r2` until `finalized` (protocol §9). The stopped pre-fix job `noun-mikra` is never used (D-062) | QC thresholds met; access logs clean; job frozen | Job `noun-mikra-r2` (local) | AUTO → O2 | stopped 2026-11-21 (pre-fix job kept); restart after P1 |
+| **P1** | O1 stopped (the duplicate-noun-ID defect); Ori's plan approval | D-062: `nouns-r2` lists (one row per lemma); unique item ids in every silver job; versioned noun job ids; pre-fix jobs kept but inactive; the import rule. Tests. The Mikra and Modern r2 lists (verified). Docs | Full tests; `hebloc check`; `git diff --quiet s56-r1.1 -- annotation/ config/`; old `noun-mikra` byte-identical | Commit + tag **`s56-r1.2`** + push (★) → **SEND TO PARTNER** (§8 M7) | ★ APPROVAL → O1 | done; `s56-r1.2` pushed 2026-11-21 |
+| **O1** | P1 | Mikra noun types: `loc nouns list --corpus mikra` (→ `mikra-nouns-r2-826929982d`, 979 lemmas; from the clean `s56-r1.2` tree, `nouns_to_label.csv` sha256 `f26714a0…cbd7`), then `loc silver create --task noun --corpus mikra --list data/loc/nouns/mikra/mikra-nouns-r2-826929982d/nouns_to_label.csv` → job `noun-mikra-r2`, then `loc silver step noun-mikra-r2` until `finalized` (protocol §9). The stopped pre-fix job `noun-mikra` is never used (D-062) | QC thresholds met; access logs clean; job frozen | Job `noun-mikra-r2` (local) | AUTO → O2 | done 2026-11-21: `noun-mikra-r2` frozen (final sha256 `47dc464e…c064`; κ 0.907; 0 breaches) |
 | **O2** | P0 | Units (D-061): `create --task unit --sheet data/loc/review/units/unit_review.csv --examples-csv …/unit_review_examples.csv`, `--task audit --sheet …/audit.csv`, `--task variant --sheet …/paper_variants.csv`; `step` each until `finalized` | Each job frozen; audit result ≥ 95 / 100 or the pre-registered withdrawal (D-059 P2) | Jobs `unit`, `audit`, `variant` (local); the P5 evidence | DEP: Efrat's Modern nouns (E3) → O3 | |
 | **R** | A delivery from Efrat in `data/incoming/efrat-s6/<n>/` (any time) | `loc silver receive <folder>` only: hashes into `annotation/silver/FROZEN_SILVER.json`. **Never read the labels.** Update §5 "Partner status" | Hashes match `DELIVERY.json` | Commit of `FROZEN_SILVER.json` (★, before any read) | Back to the stage that waited | |
 | **O3** | O1, O2, Efrat's E3 received (R) | `loc nouns merge --automated` (Modern, Mikra) → historical nouns (`loc nouns list --exclude-typed`, a noun job, merge) → `loc units merge` / `audit --automated` → freeze `config/noun_types.yaml` v1 and the unit map | Merge checks; cross-corpus conflicts listed (D-061 G1 rule); `loc verify`; tests | Config commit (★ Ori approves each merged **file**, never rows) | DEP: Efrat's dev silver (E4) | |

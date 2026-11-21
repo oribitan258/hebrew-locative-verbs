@@ -6,7 +6,16 @@
   `end-of-session` (STAGES.md §2: CONTINUE / SEND TO PARTNER / WAIT).
 - **§5 (Ori):** P0 done (2026-11-21: STAGES.md, the Phase C rules restored verbatim in D-059, stale docs fixed;
   documentation only), committed and pushed with Ori's approval.
-- **O1 stopped, P1 built (2026-11-21, D-062).**
+- **P1 released, O1 done (2026-11-21).**
+  - P1 (D-062) was committed (0396a2b), tagged `s56-r1.2` and pushed with Ori's approval.
+  - **O1:** official list `mikra-nouns-r2-826929982d` rebuilt from the clean `s56-r1.2` tree (979 lemmas,
+    `nouns_to_label.csv` sha256 `f26714a0…cbd7` = the dev copy). Job `noun-mikra-r2`:
+    - passes A ∥ B, 979/979 each, 0 invalid, 0 breaches;
+    - frozen; final `noun_types_mikra.csv` sha256 `47dc464e…c064`; κ(type) 0.907 [0.883, 0.928];
+    - LOCATION 179, LOCATUM 261, ANIMATE 206, UNCLEAR 333 (132 of them abstentions); no STOP.
+    - These are SILVER (`label_source = ai`); they enter `config/noun_types.yaml` only at O3.
+  - **Next: O2** (units, audit, P5). Then O3 waits for Efrat's `noun-modern-r2` delivery.
+- History of O1's first attempt and of P1 (kept for the record):
   - O1 was stopped safely at a chunk boundary: a read-only audit found duplicate noun item ids. `nouns-r1` lists have
     one row per (lemma, upos), while silver noun ids are lemmas.
   - The pre-fix job `noun-mikra` (pass A c00–c07, 780 labels, not frozen) is kept byte-identical and never used.
@@ -15,14 +24,16 @@
     lemmas and the Modern r2 list 1,668 (sha256 in STAGES.md §6). Both are verification copies built with `--dev` in
     `data/loc/nouns_d062_dev/`; the official lists are rebuilt from the clean `s56-r1.2` tree and must give the same
     `nouns_to_label.csv` hashes.
-  - **Waiting for Ori's ★ approval to commit, tag `s56-r1.2` and push**, then message M7 to Efrat.
-  - **Then O1 restarts** with `noun-mikra-r2`. Then **O2** (units, audit, P5), each one session; then O3 waits for
-    Efrat's Modern noun delivery (`noun-modern-r2`).
+  - (Then: approval, commit, tag and push, all done; M7 to Efrat; O1 restarted, done as above.)
 - **§6 (Efrat):** E1–E6 (EFRAT_SECTION_6 §9.2 steps 4–9) since the R1.1 message; progress is in her `STATE.md`.
   - After P0's push, Ori sends her message M1 (STAGES.md §8).
   - After P1's push, Ori sends message M7: she takes `s56-r1.2` (stage EF) and redoes E3 with `noun-modern-r2`.
 - **Pending deliveries:** none received (`annotation/silver/FROZEN_SILVER.json` does not exist yet).
-- **Last verified:** 2026-11-21, P0 checks (tests, `hebloc check`, pinned files unchanged since `s56-r1.1`).
+- **Last verified:** 2026-11-21, O1 session:
+  - 307 tests passed;
+  - HEAD = origin/main = `s56-r1.2`;
+  - tree clean;
+  - `noun-mikra` unchanged (780 labels, items sha256 `96071250…`).
 
 > **Two mandatory checkpoints (Ori, 2026-11-19):**
 > - **CHECKPOINT 1** = shared methodology approved → STOP, complete `docs/EFRAT_SECTION_6.md`, tell Ori it is ready
