@@ -1,4 +1,4 @@
-# Session Handoff: stage 3 — Phase B + the SILVER workflow (D-061) BUILT, uncommitted → STOP-S (G1): Ori's review; Phase C NOT started
+# Session Handoff: stage 3 — Phase B + the SILVER workflow (D-061) RELEASED as `s56-r1.1` (G1 done); silver runs next; Phase C NOT started
 
 > **Two mandatory checkpoints (Ori, 2026-11-19):**
 > - **CHECKPOINT 1** = shared methodology approved → STOP, complete `docs/EFRAT_SECTION_6.md`, tell Ori it is ready
@@ -12,7 +12,7 @@
 >
 > Nothing proceeds past a checkpoint without Ori's explicit approval.
 
-## ★ STAGE 3, S1–S2: AI-only SILVER workflow BUILT 2026-11-21 → STOP-S (G1, Ori's review). Phase C NOT started
+## ★ STAGE 3, S1–S2: AI-only SILVER workflow BUILT and RELEASED 2026-11-21 (tag `s56-r1.1`, G1 done). Phase C NOT started
 
 **What Ori approved on 2026-11-21 (G0).**
 - The unified continuation plan, with safeguards SG1–SG3. Plan file:
@@ -25,7 +25,7 @@
   - the A7 draft withdrawn.
 - **D-061**: AI-only SILVER annotation, zero manual data work.
 
-**What was built (S1; uncommitted).**
+**What was built (S1; committed in `s56-r1.1`: ebabdfc code, 5341964 docs).**
 - **Code:**
   - `src/hebloc/loc/silver.py`: jobs, blind inputs, isolated workspaces + canary, headless restricted launch,
     transcript access log, compare / context / adjudication, QC + STOP thresholds, freeze, deliver / receive,
@@ -54,9 +54,20 @@
   - `.gitignore` gets the D-061 private-material rules, proved by `tests/test_repo_hygiene.py`.
 - **Tests:** `tests/test_loc_silver.py` (20), plus a silver scoring test in `test_loc_r2.py`.
 
-**Ori decides at G1 (STOP-S).**
-- Approve the two commits, tag `s56-r1.1` and push.
-- Then Ori sends Efrat: "pull s56-r1.1 and follow EFRAT_SECTION_6 §9.2".
+**G1 done (Ori, 2026-11-21).**
+- Full suite 302 passed; `hebloc check`, the lexicon check, the frozen sample hashes and the git hygiene dry run were
+  OK.
+- Working copy renormalized to the committed LF bytes (`* text=auto eol=lf`), so config hashes match the partners'.
+- Noun rules: pass disagreement → UNCLEAR (`abstained`); cross-corpus conflict → UNCLEAR (`cross_corpus_conflict`).
+- Commits ebabdfc + 5341964; annotated tag `s56-r1.1` → 5341964; pushed and verified on origin.
+- Efrat was sent the instruction to pull and run §9.2 steps 4–9.
+- Later docs-only commits on main are fine: her check is `git merge-base --is-ancestor s56-r1.1 HEAD`, not an exact
+  `git describe`.
+
+**Next (each only on Ori's go).**
+- Ori's silver steps O1–O3.
+- `loc silver receive` for Efrat's deliveries.
+- Then G2 → Phase C.
 
 **After the push (Part 2 of the plan).**
 - **Efrat's computer, E1–E5** (pinned to `s56-r1.1` until her last delivery):
@@ -88,7 +99,7 @@
   - **Phase C has NOT started.**
 - **Plan file:** `~/.claude/plans/pasted-content-id-87be-read-claude-md-cheerful-valiant.md`.
 
-**What exists now (local, uncommitted).**
+**What existed at STOP-B (now committed in `s56-r1.1`).**
 - **Code:** `src/hebloc/loc/{units,extract,resolve,classify,report,score,exposure}.py`, the I3 schema check in
   `manifest.verify`, the CLI `loc units|extract|resolve|classify|swap|stats|score` and
   `loc gold exposure|paper|supplement`.

@@ -5,8 +5,9 @@ Test Doron & Dubnov (2017) "Locative Alternation Preposition Identity" (verbs th
 Frame A [Locatum = direct object] and Frame B [Location = direct object] keep the same preposition:
 ב- for putting, מן/מ- for removal) on 5 Hebrew corpora, using Dicta's parser.
 
-**CURRENT SCOPE (2026-11-21): stage 3, Phase B + the AI-only SILVER workflow (D-061) BUILT, uncommitted → STOP-S (G1):
-Ori approves the commits, tag `s56-r1.1` and the push. Phase C NOT started.**
+**CURRENT SCOPE (2026-11-21): stage 3, Phase B + the AI-only SILVER workflow (D-061) RELEASED as R1.1 = tag `s56-r1.1`
+(G1 done: commits ebabdfc + 5341964, pushed). Efrat runs her silver steps (EFRAT_SECTION_6 §9.2 steps 4–9). Ori's
+silver steps O1–O3 wait for Ori's go; Phase C NOT started (needs G2).**
 - **D-061 (accepted 2026-11-21): zero manual data work.**
   - Claude Code does all annotation, noun typing, verb linking, checks and audits, as **SILVER** (`label_source = ai`):
     never human gold, never reported as validated accuracy.
@@ -31,8 +32,8 @@ Ori approves the commits, tag `s56-r1.1` and the push. Phase C NOT started.**
   - Tests: `tests/test_loc_r2.py`.
   - Config: `config/function_predicates.yaml` and `config/locative_resolver.yaml` (both PROPOSED);
     `config/verb_units.yaml` (generated; audit pending).
-- **At STOP-S (G1; `docs/HANDOFF.md`, top section), Ori decides:** the two commits, tag `s56-r1.1`, the push, and
-  the message to Efrat.
+- **G1 done (2026-11-21):** tag `s56-r1.1` → 5341964 pushed; Efrat was sent the pull instruction. Later docs-only
+  commits on main keep `s56-r1.1` as an ancestor (checked with `git merge-base --is-ancestor s56-r1.1 HEAD`).
 - **Do NOT, without Ori's next approval:**
   - begin Phase C;
   - modify the frozen samples;
@@ -391,9 +392,9 @@ notebooks/     exploration only — never pipeline logic
   - the BHSA identification baseline (Mikra), with its limits in `docs/S56_R1.md` §0.1.
 
   Efrat's R1 steps: `docs/EFRAT_SECTION_6.md` §9.2.
-- [x] **Stage 3, Phase B = the R2 code BUILT (2026-11-20, D-059 accepted; D-060 accepted 2026-11-21; uncommitted).**
+- [x] **Stage 3, Phase B = the R2 code BUILT (2026-11-20, D-059 accepted; D-060 accepted 2026-11-21; committed in `s56-r1.1`).**
   See `docs/S56_R2.md`. Mikra runs end to end; repo = package.
-- [x] **STOP-B decided + the AI-only SILVER workflow (D-061) BUILT (2026-11-21; uncommitted)** → STOP-S (G1).
+- [x] **STOP-B decided + the AI-only SILVER workflow (D-061) BUILT and RELEASED (2026-11-21; tag `s56-r1.1`, G1 done).**
   See `annotation/S56_SILVER_PROTOCOL.md`, `docs/S56_R2.md` §6 and HANDOFF.
 - [ ] **Stage 3, rest (Phase C needs Ori's approval):**
   - §5 on Mikra: R1 (lexicon, guideline, gold sampler, noun lists), then the shared extractor, local resolver,

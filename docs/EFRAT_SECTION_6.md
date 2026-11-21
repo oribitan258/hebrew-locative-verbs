@@ -809,7 +809,9 @@ shows Efrat each result.
 > - Full protocol: `annotation/S56_SILVER_PROTOCOL.md`.
 
 4. **Check R1.1 and isolation (T1, T2):**
-   - `git describe --tags` shows `s56-r1.1`, and `docs/decisions.md` contains D-061. Otherwise STOP.
+   - `git tag -l s56-r1.1` lists the tag, `git merge-base --is-ancestor s56-r1.1 HEAD` succeeds (your checkout
+     contains R1.1; later documentation-only commits on main are fine), and `docs/decisions.md` contains D-061.
+     Otherwise STOP.
    - Both frozen samples still give `items_match = true` (step 3).
    - Run `uv run python -m hebloc loc silver isolation-test`. It must print `"ok": true`: the canary reads were
      denied. Otherwise STOP and report to Ori.
