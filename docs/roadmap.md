@@ -10,13 +10,14 @@ Status: **living document.** Part 1 (M0–M6) is done; M7 review is pending.
   - **Release R1 = tag `s56-r1`** (2026-11-20, D-057) is a provisional infrastructure milestone.
   - **OI-1/OI-2** were investigated, and the shared policy `vunit-v1` was approved (D-059).
   - **Phase B (the R2 code) is BUILT** (`docs/S56_R2.md`); STOP-B was decided on 2026-11-21 (D-060 accepted).
-  - **AI-only SILVER annotation (D-061, 2026-11-21) is BUILT** (zero manual data work; `annotation/S56_SILVER_PROTOCOL.md`).
-    It is uncommitted, at **STOP-S (G1)**: Ori approves the commits, tag `s56-r1.1` and the push.
-  - **Then:**
-    - Efrat's Claude Code makes the sentence silver and the Modern noun types (E1–E5);
+  - **AI-only SILVER annotation (D-061, 2026-11-21) is BUILT and RELEASED** as R1.1 = tag `s56-r1.1` (G1 done,
+    pushed; zero manual data work; `annotation/S56_SILVER_PROTOCOL.md`).
+  - **The ordered remaining stages, through §5 and §6 completion, are in [STAGES.md](STAGES.md)** (prerequisites,
+    completion checks, handoffs, gates; `start` / `end-of-session`). In short:
+    - Efrat's Claude Code makes the sentence silver and the Modern noun types (E1–E6);
     - Ori's Claude Code makes the Mikra and historical noun types, the unit links and the AI audit (O1–O3);
     - **Phase C** (identification and the resolver on dev silver; validation once; test once) needs Ori's approval
-      (G2).
+      (G2), and follows the pre-registered rules of D-059 (addendum).
 - Efrat does no manual data work (D-061); her steps are EFRAT_SECTION_6 §9.2 as amended.
 - **No paid external API** (D-054).
 - **Still closed** until Ori opens them: §7, the rest of §8, and §4 R7.
@@ -57,8 +58,8 @@ Assignment stages (`project.pdf`):
 | §3 | Dicta parsing of every verse/sentence | **Done** (M5: all units of all five corpora, all of Modern, 31/31, D-049). Dicta has no construct state or binyan (§3.2 lists construct) |
 | §4 | Statistics R1–R6 | **Done, final** (2026-11-16); analysis draft awaits Ori's approval |
 | §4 | "Any additional statistic" (R7) | **In progress, exploratory (Efrat):** analysis package D-051; findings reviewed by Ori before the report. Part B of the main design stays deferred (D-046). Parser accuracy vs BHSA was done as an extra |
-| §5 | Test the claim (Mikra first, then the other corpora) | **Methodology approved** (`S56-v1`, CHECKPOINT 1, 2026-11-19). Ori leads; stage 3 = Mikra (R1 → code → validation → CHECKPOINT 2 = tag `s56-v1`); stage 2 = Ori ∥ Adi, split by corpus with a balanced workload, decided at CHECKPOINT 2, M5-style workflow. **R1 released 2026-11-20 (`s56-r1`, provisional, D-057).** **Phase B built 2026-11-20 (D-059, D-060 accepted).** **SILVER workflow built 2026-11-21 (D-061) → STOP-S (G1).** Next: the silver runs, then Phase C (needs Ori's approval) |
-| §6 | Extend to all verbs in one corpus | **Handoff ready:** [EFRAT_SECTION_6.md](EFRAT_SECTION_6.md). Owner: Efrat; corpus = **Modern** (D-055). Preparation now; Modern gold and noun types after R1; runs after R2 |
+| §5 | Test the claim (Mikra first, then the other corpora) | **Methodology approved** (`S56-v1`, CHECKPOINT 1, 2026-11-19). Ori leads; stage 3 = Mikra (R1 → code → validation → CHECKPOINT 2 = tag `s56-v1`); stage 2 = Ori ∥ Adi, split by corpus with a balanced workload, decided at CHECKPOINT 2, M5-style workflow. **R1 released 2026-11-20 (`s56-r1`, provisional, D-057).** **Phase B built 2026-11-20 (D-059, D-060 accepted).** **SILVER workflow released 2026-11-21 (D-061, tag `s56-r1.1`).** Next: the silver runs (O1–O3), then Phase C (needs Ori's approval). Stages: [STAGES.md](STAGES.md) §3 |
+| §6 | Extend to all verbs in one corpus | **Handoff ready:** [EFRAT_SECTION_6.md](EFRAT_SECTION_6.md). Owner: Efrat; corpus = **Modern** (D-055). Now: her silver deliveries (E1–E6: Modern noun types, then the sentence silver of both samples, D-061); her §6 runs after R2 (`s56-v1`). Stages: [STAGES.md](STAGES.md) §4 |
 | §7 | Classifiers (lexical, morphological, syntactic and word2vec features; 10-fold CV; Acc/P/R/F1) | Not started (R5–R6). **Out of scope for now** (2026-11-19) |
 | §8 | LLM integration | Not started (R7). Policy (D-054): no paid external API without Ori's separate approval. Claude Code assists only human-reviewed steps of §5–§6, disclosed in the report |
 | §9 | Report | Partial: only the §4 part exists (`stats_report.md` + draft `stats_analysis.md`) |

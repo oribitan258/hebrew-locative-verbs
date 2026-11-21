@@ -1,5 +1,17 @@
 # Session Handoff: stage 3 — Phase B + the SILVER workflow (D-061) RELEASED as `s56-r1.1` (G1 done); silver runs next; Phase C NOT started
 
+## ★ CURRENT POSITION (read first; updated by every `end-of-session`)
+
+- **The ordered workflow is [STAGES.md](STAGES.md).** Every session: `start` (STAGES.md §1) → one stage →
+  `end-of-session` (STAGES.md §2: CONTINUE / SEND TO PARTNER / WAIT).
+- **§5 (Ori):** P0 done (2026-11-21: STAGES.md, the Phase C rules restored verbatim in D-059, stale docs fixed;
+  documentation only), committed and pushed with Ori's approval. **Next: O1** (Mikra noun types) and **O2** (units,
+  audit, P5), each one session; then O3 waits for Efrat's Modern noun delivery.
+- **§6 (Efrat):** E1–E6 (EFRAT_SECTION_6 §9.2 steps 4–9) since the R1.1 message; progress is in her `STATE.md`.
+  After P0's push, Ori sends her message M1 (STAGES.md §8).
+- **Pending deliveries:** none received (`annotation/silver/FROZEN_SILVER.json` does not exist yet).
+- **Last verified:** 2026-11-21, P0 checks (tests, `hebloc check`, pinned files unchanged since `s56-r1.1`).
+
 > **Two mandatory checkpoints (Ori, 2026-11-19):**
 > - **CHECKPOINT 1** = shared methodology approved → STOP, complete `docs/EFRAT_SECTION_6.md`, tell Ori it is ready
 >   for Efrat. **DONE 2026-11-19.**
@@ -15,8 +27,9 @@
 ## ★ STAGE 3, S1–S2: AI-only SILVER workflow BUILT and RELEASED 2026-11-21 (tag `s56-r1.1`, G1 done). Phase C NOT started
 
 **What Ori approved on 2026-11-21 (G0).**
-- The unified continuation plan, with safeguards SG1–SG3. Plan file:
-  `~/.claude/plans/pasted-content-id-87be-read-claude-md-cheerful-valiant.md`.
+- The unified continuation plan, with safeguards SG1–SG3. Its content is recorded in the repo: D-061,
+  `annotation/S56_SILVER_PROTOCOL.md`, this file and [STAGES.md](STAGES.md). (The plan file under `~/.claude/plans/`
+  is overwritten by later planning sessions; never rely on it.)
 - **D-060** (accepted), including the STOP-B decisions:
   - OTHER compared by exact preposition;
   - חייב and ניתן listed; נראה not listed;
@@ -64,13 +77,14 @@
 - Later docs-only commits on main are fine: her check is `git merge-base --is-ancestor s56-r1.1 HEAD`, not an exact
   `git describe`.
 
-**Next (each only on Ori's go).**
+**Next (each only on Ori's go): the stage order, prerequisites and handoffs are in [STAGES.md](STAGES.md) §3–§4.**
 - Ori's silver steps O1–O3.
-- `loc silver receive` for Efrat's deliveries.
-- Then G2 → Phase C.
+- `loc silver receive` for Efrat's deliveries (stage R).
+- Then G2 → Phase C, by the pre-registered rules in D-059 (addendum).
 
 **After the push (Part 2 of the plan).**
-- **Efrat's computer, E1–E5** (pinned to `s56-r1.1` until her last delivery):
+- **Efrat's computer, E1–E6 in [STAGES.md](STAGES.md) §4** (pinned files unchanged since `s56-r1.1` until her last
+  delivery; documentation-only pulls allowed by the pull rule):
   - the isolation test;
   - the worked examples;
   - Modern nouns (pass A reused);
@@ -97,7 +111,8 @@
   - nothing is committed, tagged or pushed;
   - R1, the frozen samples and Efrat's R1 work are unchanged;
   - **Phase C has NOT started.**
-- **Plan file:** `~/.claude/plans/pasted-content-id-87be-read-claude-md-cheerful-valiant.md`.
+- **Plan:** its content is recorded in `docs/decisions.md` (D-059, including the Phase C addendum) and
+  `docs/S56_R2.md`. The plan file under `~/.claude/plans/` was later overwritten; never rely on it.
 
 **What existed at STOP-B (now committed in `s56-r1.1`).**
 - **Code:** `src/hebloc/loc/{units,extract,resolve,classify,report,score,exposure}.py`, the I3 schema check in

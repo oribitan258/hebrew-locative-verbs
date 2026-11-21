@@ -8,6 +8,10 @@ Frame A [Locatum = direct object] and Frame B [Location = direct object] keep th
 **CURRENT SCOPE (2026-11-21): stage 3, Phase B + the AI-only SILVER workflow (D-061) RELEASED as R1.1 = tag `s56-r1.1`
 (G1 done: commits ebabdfc + 5341964, pushed). Efrat runs her silver steps (EFRAT_SECTION_6 §9.2 steps 4–9). Ori's
 silver steps O1–O3 wait for Ori's go; Phase C NOT started (needs G2).**
+- **THE ORDERED WORKFLOW IS `docs/STAGES.md`** (both people, through §5 and §6 completion): every session starts with
+  `start` (STAGES.md §1: sync, checks, the next eligible stage) and ends with `end-of-session` (STAGES.md §2: update
+  the docs, then exactly one of CONTINUE / SEND TO PARTNER / WAIT). One stage per session. Plan files are not durable:
+  the repo is the record.
 - **D-061 (accepted 2026-11-21): zero manual data work.**
   - Claude Code does all annotation, noun typing, verb linking, checks and audits, as **SILVER** (`label_source = ai`):
     never human gold, never reported as validated accuracy.
@@ -27,11 +31,12 @@ silver steps O1–O3 wait for Ori's go; Phase C NOT started (needs G2).**
   - Function predicates are tagged, never excluded.
   - Rule zero is stated precisely.
   - The exposure register; clean validation/test sets as primary.
-- **Phase B (B1–B9):** `docs/S56_R2.md`; implementation choices **D-060 (PROPOSED)**.
+- **Phase B (B1–B9):** `docs/S56_R2.md`; implementation choices **D-060 (accepted 2026-11-21)**.
   - Code: `hebloc.loc.{units,extract,resolve,classify,report,score,exposure}`.
   - Tests: `tests/test_loc_r2.py`.
-  - Config: `config/function_predicates.yaml` and `config/locative_resolver.yaml` (both PROPOSED);
-    `config/verb_units.yaml` (generated; audit pending).
+  - Config: `config/function_predicates.yaml` and `config/locative_resolver.yaml` (both APPROVED at STOP-B);
+    `config/verb_units.yaml` (generated; the AI audit is pending, O2).
+  - **Phase C rules** (I-0 … I-5, supplements): pre-registered, in `docs/decisions.md` D-059 (addendum, verbatim).
 - **G1 done (2026-11-21):** tag `s56-r1.1` → 5341964 pushed; Efrat was sent the pull instruction. Later docs-only
   commits on main keep `s56-r1.1` as an ancestor (checked with `git merge-base --is-ancestor s56-r1.1 HEAD`).
 - **Do NOT, without Ori's next approval:**
@@ -60,9 +65,9 @@ silver steps O1–O3 wait for Ori's go; Phase C NOT started (needs G2).**
 - **Still roadmap-only** (`docs/roadmap.md`) until Ori explicitly opens them: §7 classifiers, the rest of §8, and §4
   R7/Part B.
 
-- **New session? Start with `docs/HANDOFF.md`** (current state, checks to run, next milestone).
-  **Next session on Ori's computer: PLAN stage 3 (§5 on Mikra, release R1 first) in Plan Mode**, strictly per
-  `S56-v1` (`docs/EFRAT_SECTION_6.md` §5), `project.pdf` and the paper. `project.pdf` is the source of truth.
+- **New session? Type `start`** → `docs/STAGES.md` §1 (then `docs/HANDOFF.md` "Current position" for detail).
+  Work strictly per `S56-v1` (`docs/EFRAT_SECTION_6.md` §5), `project.pdf` and the paper. `project.pdf` is the
+  source of truth. **End every session with `end-of-session`** (STAGES.md §2).
 - **Agreed §5–§6 workflow (Ori, 2026-11-19; details in HANDOFF and EFRAT_SECTION_6.md §3):**
   - **Ori leads §5.**
     - **Stage 1:** Ori implements and validates Mikra first.
@@ -142,18 +147,21 @@ silver steps O1–O3 wait for Ori's go; Phase C NOT started (needs G2).**
   is set up in advance. Ori merges; M6 statistics are computed centrally (D-040, D-045).
   **A partner's part ends when they send `data/outbox/<name>`: partners never compute statistics.**
 - **On ORI's computer (`data/team/identity.json` = ori):** M5 is COMPLETE (all 31 slices merged and registered,
-  D-049) and the final M6 statistics exist (2026-11-16). `start`/`status` there = a read-only status check
-  (31/31, registry, final stats; M7 review pending; §5–§6 CHECKPOINT 1 done). The two rules below apply on
-  Efrat's and Adi's computers.
+  D-049) and the final M6 statistics exist (2026-11-16). **`start` there = `docs/STAGES.md` §1** (sync, checks,
+  pending deliveries in `data/incoming/`, the next eligible §5 stage); **`end-of-session` = STAGES.md §2**. The two
+  rules below apply on Efrat's and Adi's computers.
 - **On EFRAT's computer (`data/team/identity.json` = efrat): §6 is AUTHORIZED, staged as in
   `docs/EFRAT_SECTION_6.md` §9** (D-055, D-056).
   - Her M5 share is complete; never re-run it.
-  - **If her whole message is "start"** (or "go", "continue", "status"), or she asks about §6: read
-    `docs/EFRAT_SECTION_6.md` and follow its §9 "Start here".
+  - **If her whole message is "start"** (or "go", "continue", "status"), or she asks about §6: follow
+    `docs/STAGES.md` §1 and `docs/EFRAT_SECTION_6.md` §9 "Start here".
     - First `git status`: if tracked files are modified, STOP and report; never discard them.
-    - Then `git pull`, `uv sync`, tests, `whoami`.
-    - Then report which stage is unlocked (after CHECKPOINT 1 / after R1 / after R2 = tag `s56-v1`) and do only the
-      steps of that stage.
+    - Then **the pull rule** (STAGES.md §1 step 2): `git pull` only if the incoming change is documentation only;
+      a release (`s56-r1.2`, `s56-v1`) only when STAGES.md §6 announces it, by `git merge --ff-only <tag>`.
+    - Then `uv sync`, tests, `whoami`; read her `data/outbox/efrat-s6/STATE.md`.
+    - Then report the next eligible stage (E1 … E12 in STAGES.md §4) and do only that stage.
+  - **If her whole message is "end-of-session":** STAGES.md §2 (update `STATE.md`; print CONTINUE / SEND TO PARTNER /
+    WAIT with the exact instructions; never commit).
   - Plan Mode for non-trivial steps.
   - Obey the STOP rules in §12 (S1–S10, T1–T7):
     - no own extractor or frame rules;
@@ -397,8 +405,10 @@ notebooks/     exploration only — never pipeline logic
 - [x] **STOP-B decided + the AI-only SILVER workflow (D-061) BUILT and RELEASED (2026-11-21; tag `s56-r1.1`, G1 done).**
   See `annotation/S56_SILVER_PROTOCOL.md`, `docs/S56_R2.md` §6 and HANDOFF.
 - [ ] **Stage 3, rest (Phase C needs Ori's approval):**
+  - the ordered stages are in `docs/STAGES.md` §3 (O1 … O5, G2 … G7);
   - §5 on Mikra: R1 (lexicon, guideline, gold sampler, noun lists), then the shared extractor, local resolver,
-    classes, identity and statistics, then Mikra validation (BHSA identification + human gold);
+    classes, identity and statistics, then validation (BHSA identification + agreement with the frozen SILVER
+    labels, D-061; never "accuracy");
   - then **CHECKPOINT 2**: tag `s56-v1`, decide the balanced Ori/Adi split, build and test Adi's M5-style workflow,
     `docs/ADI_SECTION_5.md`, Adi's `start`.
   - Still closed until Ori opens them: §7, the rest of §8, §4 R7 extras (Part B); later §1 summaries, §9 report,

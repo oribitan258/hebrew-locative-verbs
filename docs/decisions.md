@@ -1114,6 +1114,43 @@ Design: [m6_design.md](m6_design.md).
   - 5 Modern items had their metadata viewed in the planning session.
   - Clean sets: Mikra test 174 of 191, validation 86 of 98; Modern test 196 of 198, validation 99 of 101.
 - *Unchanged.* S56-v1, R1 (`s56-r1`), the frozen samples, Efrat's R1 tasks, Adi's `start`, every checkpoint.
+- *Addendum (recorded 2026-11-21): the pre-registered Phase C rules (A6), restored verbatim.* They were approved with
+  this plan on 2026-11-20 but existed only in the plan file, which later planning sessions overwrote. The block below
+  is copied byte for byte from that approved plan (session transcript `e80b026e…`, 2026-11-20 13:51 UTC; sha256 of
+  the block `05cdf6f7029befd817f9e5b28e1b2cb1a2695cfff0ff31fd54f87121e67f33f0`). Reading notes (no rule changes):
+  - "gold" reads as **SILVER** (D-061), so "the gold shows" is "the dev silver shows";
+  - "annotated" is the SILVER protocol, by Efrat's Claude Code (D-061, sentence labels), including the I-3 sense
+    screen's 15 instances;
+  - the supplement size "proposed 120 (30 / 30 / 60)" is fixed per supplement when Ori approves its draw (G3 in
+    `docs/STAGES.md`).
+
+> ## Part 4 — Identification before R2 (Phase C; rules fixed now, decided on dev only)
+>
+> | Id | Candidate | Fixes | Decision rule |
+> |---|---|---|---|
+> | I-0 | R1 as is | — | baseline |
+> | I-1 | P5 `lexicon-v2` | missed present/passive tokens | stratum dev precision in the supplement ≥ 0.80 (D-057's threshold) |
+> | I-2 | lemma-only matches on a host that is a morph-v2 form of another template of the same root get a `~<root>.<T>` partner (combined key, never dropped) | lemma-only precision 0.46; Genesis 27:40, Jeremiah 30:17 | among the dev items and paper examples it re-keys, the gold shows R1's key was wrong in ≥ 50% |
+> | I-3 | forms-v3: an established self-lemma (≥ 50 tokens, ≥ 3 hosts) counts as foreign | צריך→צרר.S | per key, D-057's sense screen: 15 instances from **outside all samples**; dropped when ≤ 3 are the verb |
+> | I-4 | V2 generated forms for clean keys | blank-lemma real verbs (mainly Mikra) | stratum dev precision in the supplement ≥ 0.80 |
+> | I-5 | `function_lemma` flag | ניתן inside נתן.S | report only |
+>
+> **Supplements.**
+> - One supplement per corpus for I-1 + I-4 (`<corpus>-s1-<hash>`, S56_R1 §3), stratified by candidate. Proposed size
+>   120 (30 / 30 / 60).
+> - Ori approves each one with a decision before it is drawn. Its dev split is annotated first.
+> - Estimates combine the frozen sample (domain estimation; files unchanged) with the supplement stratum.
+>
+> **Then:**
+> 1. freeze identification;
+> 2. develop the resolver on dev and the paper examples;
+> 3. choose the variant on clean validation;
+> 4. score clean test once (full test secondary);
+> 5. the BHSA identification sensitivity run;
+> 6. the paper replication;
+> 7. the determinism and repo = package checks.
+>
+> STOP → **CHECKPOINT 2** as defined: tag `s56-v1`, the Ori/Adi split, Adi's workflow, `docs/ADI_SECTION_5.md`.
 
 ### D-060 · Phase B (the R2 code): implementation choices (2026-11-20) · accepted (Ori, 2026-11-21, with the STOP-B decisions below)
 1. **Modules.** `hebloc.loc.units` (B1), `extract` (B2), `resolve` (B3), `classify` (B4), `report` (B5),
@@ -1260,3 +1297,12 @@ Design: [m6_design.md](m6_design.md).
   - The annotator and the developer are both Claude models, so shared blind spots are likely and cannot be measured.
   - The anchor is Mikra-only and prototypical, an upper bound; Modern has no external anchor.
   - Agreement between passes is reliability, not validity.
+- *Clarification (2026-11-21, P0; no new decision, no methodology change).*
+  - **One ordered workflow:** [STAGES.md](STAGES.md) orders every remaining §5 and §6 stage, with prerequisites,
+    completion checks, handoffs and gates. `start` and `end-of-session` (CONTINUE / SEND TO PARTNER / WAIT) are
+    defined there.
+  - **Efrat's pull rule:** "Efrat does not pull" (protocol §6) means that the pinned files never change on her
+    computer. A pull whose incoming change leaves `annotation/`, `config/`, `src/`, `pyproject.toml` and `uv.lock`
+    unchanged is documentation only and is allowed; a release she must take (`s56-r1.2` for a supplement,
+    `s56-v1`) is announced in STAGES.md §6 and taken by `git merge --ff-only <tag>`.
+  - **P5 (`lexicon-v2`):** Ori approves the AI variant evidence at the file level (G4), never row by row.

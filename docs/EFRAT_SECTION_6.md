@@ -15,6 +15,10 @@ lists the tag.** R2 (`s56-v1`) is not out yet: nothing of §9.3.
 >   workspaces outside the repo, two independent passes, deterministic adjudication, QC, and a freeze.
 > - **Unchanged:** the methodology, the frozen samples and the roles.
 > - **The passages marked "D-061" below replace the manual steps.**
+>
+> **Sessions (2026-11-21): [STAGES.md](STAGES.md) orders every remaining stage** (E1 … E12 for Efrat), with
+> prerequisites, checks and handoffs. Begin each Claude Code session with `start` and finish it with `end-of-session`,
+> which updates `data/outbox/efrat-s6/STATE.md` and prints CONTINUE, SEND TO PARTNER or WAIT.
 
 **Who reads this:** Efrat and her Claude Code, on Efrat's computer, in her clone of the public repo.
 
@@ -382,7 +386,8 @@ sensitivity runs at `k = 2` and `k = 3`:
 - **Mixed verbs.** A verb with locative frames also has `nonlocative_share` reported. Locative verbs often have
   idiomatic uses too.
 - **Disagreements with the paper.** For §5, a class that differs from the paper lists the deciding instances, and
-  those are audited by hand as error analysis.
+  those are audited as error analysis by the silver protocol (D-061: isolated two-pass AI review, never manual; the
+  task is built before R2, STAGES.md C0).
 - **Thresholds are labels, not exclusions.** `k` and the "20 with an object" evidence threshold are fixed at R2 and
   recorded in the manifest. A verb that does not reach them is labelled; it is never dropped.
 
@@ -406,7 +411,8 @@ for putting, מן/מ- for removal).
 
 **Secondary check:** fn 8, that both מן and מ- occur in both frames.
 
-**Audit:** every verdict lists its deciding instances. Verdicts that differ from the paper are audited by hand.
+**Audit:** every verdict lists its deciding instances. Verdicts that differ from the paper are audited by the silver
+protocol (D-061: isolated two-pass AI review, never manual; the task is built before R2, STAGES.md C0).
 
 **Descriptive only:** distributions of preposition by frame are statistics, not the test.
 
@@ -500,7 +506,8 @@ per-genre tables), then the frozen resolver variant.
 **(3) Characterize the confirmed verbs.** For each one:
 - semantic field;
 - preposition family;
-- **template proxy** from the lemma's shape, validated on her Modern gold (e.g. ה_י_ → Causative; נ___ → Nifal;
+- **template proxy** from the lemma's shape, checked by the silver protocol (D-061: a two-pass AI check of a sample
+  of lemmas, `label_source = ai`; the task is built before R2) (e.g. ה_י_ → Causative; נ___ → Nifal;
   הת___ → Hitpael; a Modern plene spelling with י after the first radical → Intensive);
 - putting / removal / both;
 - path vs mereological, using the paper's two conditions for alternation (§3.1, §5): an agentive verb leading to a
@@ -591,6 +598,9 @@ The full explanation is in [S56_R1.md](S56_R1.md).
 **R1 is a provisional infrastructure milestone.** Its verb identification has known limits (S56_R1.md §0.1). They
 are improved and validated on the dev gold before R2. For Efrat this changes nothing: she annotates what the sampler
 gives her, by hand, and judges each item from the sentence.
+*(Amended by D-061, 2026-11-21: there is no manual annotation. "Gold" here is the dev SILVER, and every item is
+labelled by Efrat's Claude Code under `annotation/S56_SILVER_PROTOCOL.md`, §9.2 steps 4–9. The released R1 text above
+is kept as it was.)*
 
 **The exact R1 commands** (on Efrat's computer, `<package>` = the extracted D-051 package, e.g.
 `C:\hebloc\hebloc-analysis-pack`):
@@ -815,7 +825,12 @@ shows Efrat each result.
    - Both frozen samples still give `items_match = true` (step 3).
    - Run `uv run python -m hebloc loc silver isolation-test`. It must print `"ok": true`: the canary reads were
      denied. Otherwise STOP and report to Ori.
-   - **From now until the last delivery, do not `git pull`** (the protocol is pinned), unless Ori announces a fix.
+   - **From now until the last delivery, the pinned files never change** (`annotation/`, `config/`, `src/`,
+     `pyproject.toml`, `uv.lock`). The pull rule (STAGES.md §1 step 2): `git pull` only when
+     `git diff --quiet HEAD origin/main -- annotation/ config/ src/ pyproject.toml uv.lock` succeeds (a
+     documentation-only update, which Ori announces as allowed). A release you must take (`s56-r1.2` for a
+     supplement, `s56-v1`) is announced in STAGES.md §6 and taken with `git merge --ff-only <tag>`. Never
+     `git checkout` a tag.
 5. **The worked-example compliance check (T3):**
    ```
    uv run python -m hebloc loc silver create --task worked
@@ -850,20 +865,29 @@ shows Efrat each result.
    ```
    - The outbox holds the frozen final files, pass files, QC, access logs and `DELIVERY.json`. It holds no input
      texts.
-   - Send the folder to Ori by Google Drive, OneDrive or USB.
+   - Send the folder to Ori by Google Drive, OneDrive or USB, with message M2 of STAGES.md §8 (the jobs and the
+     `DELIVERY.json` sha256). `end-of-session` records it in `STATE.md`.
+   - **Order of deliveries** (STAGES.md §4): E3 Modern nouns → E4 dev (Modern, Mikra) + anchor → E5 validation →
+     E6 test.
 9. **STOP** after each delivery, and wait for R2 after the last one. Nothing of §9.3 before Ori announces `s56-v1`.
-   Phase C supplements, if Ori approves any, come as new jobs by the same protocol.
+   Phase C supplements, if Ori approves any, come as new jobs by the same protocol (STAGES.md stage ES: an
+   announcement in STAGES.md §6, then `git merge --ff-only s56-r1.2`, whose pinned protocol files are identical to
+   `s56-r1.1`).
 
 ### 9.3 After R2 = tag `s56-v1` (CHECKPOINT 2; Ori announces it)
 
-1. Check out and pin the release: `git pull`, `git checkout s56-v1`, `uv sync`, `uv run python -m pytest`.
+1. Take and pin the release (STAGES.md E7): `git fetch origin --tags`, `git merge --ff-only s56-v1`,
+   `git diff --quiet s56-v1 HEAD -- src/ config/` must succeed, then `uv sync`, `uv run python -m pytest`,
+   `hebpack.verify`, `loc lexicon check` and `loc silver isolation-test`. Afterwards only documentation-only pulls
+   (the pull rule of §9.2 step 4) until Ori announces a new release.
 2. Run `loc extract --mode all-verbs`, then `loc resolve`, `loc classify` and `loc swap` on Modern from the
    package. These are long runs: run them detached if the release notes say so.
 3. Run `loc verify` on the outputs. Any failure → STOP.
 4. **Analysis (Plan Mode; Efrat approves each step):**
    - the §6 tables;
    - evaluation against the paper and §8;
-   - candidate review;
+   - candidate review and the template-proxy check, by the silver protocol (§5.9(2), (3); the silver tasks come in R2;
+     STAGES.md E9);
    - characterization;
    - figures.
 
@@ -875,7 +899,9 @@ shows Efrat each result.
    - limitations: the `UNDETERMINED` share, parser errors, the resolver's **agreement with the Modern test silver**
      (D-061: never called accuracy);
    - feedback to §5.
-6. **Package and deliver** (§10).
+6. **Package and deliver** (§10), with message M2 (STAGES.md §8). §6 is **complete** when Ori has verified the
+   hashes, recomputed at least one output, checked the cross-checks of §7 and accepted `REPORT.md` (STAGES.md
+   E-done).
 
 ---
 
