@@ -1306,3 +1306,60 @@ Design: [m6_design.md](m6_design.md).
     unchanged is documentation only and is allowed; a release she must take (`s56-r1.2` for a supplement,
     `s56-v1`) is announced in STAGES.md §6 and taken by `git merge --ff-only <tag>`.
   - **P5 (`lexicon-v2`):** Ori approves the AI variant evidence at the file level (G4), never row by row.
+
+### D-062 · Noun lists and silver jobs: one item per lemma (the duplicate-noun-ID fix) (2026-11-21) · accepted (Ori, plan P1)
+- *The defect* (found by a read-only audit during O1; confirmed on the data).
+  - `loc nouns list` (`nouns-r1`) wrote one row per (lemma, upos).
+  - The silver noun job uses the lemma alone as the item id, and the noun types, the merge and the resolver are keyed by
+    lemma alone.
+  - A lemma that Dicta tags both NOUN and PROPN therefore became two items with the same id:
+    - Mikra: 991 rows, 964 lemmas, 27 duplicates;
+    - Modern: 1,763 rows, 1,734 lemmas, 29 duplicates.
+  - **Effects:** a chunk showed the lemma twice, each copy with part of its evidence; "last row wins" kept one answer;
+    `pass_state`, `finalize` and the QC counts were wrong; the final file would have listed the lemma twice.
+  - No silver job had been frozen, delivered or merged.
+- *O1 was stopped safely.* The stop came at a chunk boundary, after c07 was collected.
+  - `noun-mikra` (pass A, c00–c07, 780 labels; not frozen) is kept byte-identical.
+  - Its labels are never used: the new job runs fresh passes A and B.
+- *The fix (the minimum).*
+  1. **`nouns-r2` lists: one row per lemma.**
+     - The counts are summed over NOUN and PROPN, and `verbs` is the exact union.
+     - `upos` lists the tags (e.g. `NOUN|PROPN`); `nouns.parquet` gets `upos_breakdown`.
+     - The cut applies to the lemma. This is what D-057 already states ("every lemma with ≥ 2 argument tokens").
+     - New folders `<corpus>-nouns-r2-826929982d`. The `nouns-r1` folders are kept but superseded for typing.
+     - Mikra r2: 979 lemmas. These are the 964 r1 lemmas, plus 15 that now pass `min_n = 2` (e.g. NOUN 1 + PROPN 1).
+       For all 1,751 lemmas, the counts equal the summed r1 rows.
+     - Modern r2: 1,668 lemmas (85% coverage cut), `nouns_to_label.csv` sha256 `155e9b55…d4f` (STAGES.md §6).
+       - It is shorter than r1 (1,763 rows / 1,734 lemmas): summed evidence reaches the coverage cut with fewer
+         lemmas.
+       - 878 of the 1,668 lemmas carry both tags. In r1 most of their PROPN evidence fell below the cut, unseen.
+       - For both lists, in every lemma `n` = the sum of its `upos_breakdown`.
+  2. **Unique ids in every silver job.**
+     - `create_job` refuses item ids that are not unique (every task).
+     - `step`, `finalize`, `import-pass`, the workspace builder and `deliver` refuse a job made before the fix that has
+       duplicate ids. `status` still reads it, and it is never deleted or changed.
+     - `loc nouns merge` (and `--automated`) refuses a file that lists a lemma twice. So a pre-fix noun job can be
+       received (hashes recorded) but never merged.
+  3. **Versioned noun job ids:** `noun-<corpus>-r2`, read from the list's `manifest.json` (required). A corrected job
+     never collides with an earlier one. Protocol §9's example name `noun-modern` is illustrative; the CLI prints the
+     id.
+  4. **`import-pass` (Efrat's earlier Modern proposals, made on the r1 list):** a lemma with more than one proposal row
+     is not imported (`dropped_duplicate`).
+     - It stays missing, so `step` labels it in an isolated pass A with the merged evidence. It is never resolved by row
+       order.
+     - Lemmas new in r2 are labelled the same way.
+     - Pass B never sees pass A (unchanged).
+- *Release `s56-r1.2` = this fix.*
+  - `annotation/` (protocol, prompts, guideline, worked examples, anchor ids) and `config/` are byte-identical to
+    `s56-r1.1`.
+  - The sentence, anchor and worked paths behave identically; their item ids are unique, so the new guard never fires.
+  - Efrat takes it by `git merge --ff-only s56-r1.2` (the announced-release rule of D-061's clarification).
+  - **The supplement release of G3 is renamed `s56-r1.3`.**
+- *Unchanged.*
+  - S56-v1 and D-053 … D-061 (the noun rules of G1 included);
+  - the frozen samples;
+  - R1's lexicon, guideline and r1 lists (kept on disk);
+  - every frozen job;
+  - the unit, audit and variant inputs (their ids are unique: 2,065 / 100 / 160);
+  - the stage order.
+- *Next (each on Ori's go):* O1 restarts with `noun-mikra-r2`; Efrat redoes E3 with `noun-modern-r2` (STAGES.md §6).

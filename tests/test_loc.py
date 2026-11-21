@@ -231,7 +231,11 @@ def _with_offsets(rows):
 
 @pytest.fixture()
 def world(tmp_path):
-    rows = _with_offsets(_corpus_tokens())
+    return _make_world(tmp_path, _corpus_tokens())
+
+
+def _make_world(tmp_path, rows):
+    rows = _with_offsets(rows)
     docs = pa.table({"doc_id": sorted({r["sent_id"].split(":")[1] for r in rows}), "corpus_id": ["mikra"] * 3,
                      "subcorpus": [None] * 3, "source": [None] * 3, "stratum": ["mikra.torah"] * 3,
                      "in_full_view": [True] * 3, "in_curated_view": [True] * 3})
@@ -334,6 +338,30 @@ def test_noun_list_and_merge(world, lex, tmp_path, monkeypatch):
     r = N.merge(out, tmp_path / "noun_types.yaml")
     assert r["ok"] and r["total"] == 2
     assert N.load_types(tmp_path / "noun_types.yaml")["בית"]["type"] == "LOCATION"
+
+
+def test_noun_list_has_one_row_per_lemma_with_the_evidence_of_every_upos(lex, tmp_path, monkeypatch):
+    """D-062: a lemma Dicta tags NOUN in one unit and PROPN in another is ONE row (the noun types are keyed by lemma),
+    with summed counts and the union of its verbs; the cut applies to the lemma (NOUN 1 + PROPN 1 passes min_n 2)."""
+    rows = _corpus_tokens()
+    pair = []
+    for k, (verb, host, upos) in enumerate([("שלח", "וישלח", "NOUN"), ("מילא", "ימלא", "PROPN")]):
+        sid = f"mikra:d{k:011d}:{900 + k}:0"
+        pair += [_tok(sid, 0, host, verb, "VERB", -1, "root"), _tok(sid, 1, "את", "את", "ADP", 2, "case:acc"),
+                 _tok(sid, 2, "צדק", "צדק", upos, 0, "obj")]
+    w = _make_world(tmp_path, rows + pair)
+    monkeypatch.setattr(N, "NOUN_TYPES_PATH", tmp_path / "noun_types.yaml")
+    m = N.list_nouns("mikra", w["repo"], lex, out_root=tmp_path / "n", git=GIT, progress=False)
+    assert m["list_id"].startswith("mikra-nouns-r2-") and m["list_version"] == "nouns-r2"
+    folder = tmp_path / "n" / "mikra" / m["list_id"]
+    lab = list(csv.DictReader(open(folder / "nouns_to_label.csv", encoding="utf-8-sig")))
+    lemmas = [r["lemma"] for r in lab]
+    assert len(lemmas) == len(set(lemmas))                               # unique item ids
+    z = next(r for r in lab if r["lemma"] == "צדק")                      # n = 1 + 1 >= 2: included as ONE row
+    assert z["upos"] == "NOUN|PROPN" and z["n"] == "2" and z["n_as_do"] == "2" and z["n_verbs"] == "2"
+    full = {r["lemma"]: r for r in pq.read_table(folder / "nouns.parquet").to_pylist()}
+    assert full["צדק"]["upos_breakdown"] == "NOUN=1; PROPN=1"
+    assert full["בית"]["upos"] == "NOUN" and full["בית"]["upos_breakdown"] == f"NOUN={full['בית']['n']}"
 
 
 # ------------------------------------------------------------------------------------------- hygiene

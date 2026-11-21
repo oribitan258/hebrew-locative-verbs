@@ -9,6 +9,8 @@ lexicon-verb occurrences (full view). For Modern it also counts the arguments of
 (With min_n = 2 everywhere Ori would type ~5,400 historical nouns; this cut gives ~1,900. Resolver variant R1
 induces location-likeness for untyped nouns.)
 Both the cut and the coverage reached are written to the manifest and shown at review.
+Since ``nouns-r2`` (D-062) the list has ONE row per lemma (NOUN and PROPN evidence summed), because the noun types
+are keyed by lemma; ``nouns-r1`` lists (one row per lemma+upos) are kept on disk but superseded for typing.
 
 The typing itself is human: Claude Code may PROPOSE a type (``proposed_type``, ``proposed_by: claude_code``);
 the human accepts or corrects EVERY row (``type``, ``reviewed_by``). ``merge`` refuses rows without a human
@@ -34,7 +36,7 @@ from hebloc.store.io import atomic_write_parquet, atomic_write_text
 NOUN_TYPES_PATH = CONFIG_DIR / "noun_types.yaml"
 NOUNS_DIR = DATA_DIR / "loc" / "nouns"
 NOUN_TYPES = ("LOCATION", "LOCATUM", "ANIMATE", "UNCLEAR")
-LIST_VERSION = "nouns-r1"
+LIST_VERSION = "nouns-r2"    # D-062: one row per lemma (nouns-r1 had one row per lemma+upos: duplicate item ids)
 CUT = {"mikra": {"min_n": 2},
        "hazal": {"coverage": 0.85, "max_rows": 2000}, "medieval": {"coverage": 0.85, "max_rows": 2000},
        "haskala": {"coverage": 0.85, "max_rows": 2000}, "modern": {"coverage": 0.85, "max_rows": 2000}}
@@ -92,15 +94,26 @@ def list_nouns(corpus: str, source: Source, lex: Lexicon, *, out_root: Path = NO
               AND slot IN ('DO', 'PASSIVE_SUBJ', 'PP') AND (verb_key IS NOT NULL OR in_full_frame)
             GROUP BY ALL""").to_arrow_table())
     con.register("p", pa.concat_tables(parts))
-    t = con.sql("""SELECT lemma, upos, sum(n_lexicon)::BIGINT AS n_lexicon, sum(n_allverbs_full_frame)::BIGINT AS n_allverbs_full_frame,
+    # D-062: ONE row per lemma (the noun-type file and the resolver are keyed by lemma alone). A lemma that Dicta tags
+    # both NOUN and PROPN gets the evidence of both: summed counts, the exact union of its verbs; ``upos`` lists the
+    # tags (e.g. NOUN|PROPN) and ``upos_breakdown`` their counts.
+    t = con.sql("""WITH lu AS (SELECT lemma, upos, sum(n_lexicon)::BIGINT + sum(n_allverbs_full_frame)::BIGINT AS n_upos
+                               FROM p GROUP BY ALL),
+                        b AS (SELECT lemma, string_agg(upos, '|' ORDER BY upos) AS upos,
+                                     string_agg(upos || '=' || n_upos, '; ' ORDER BY upos) AS upos_breakdown
+                              FROM lu GROUP BY lemma)
+                   SELECT p.lemma, any_value(b.upos) AS upos, any_value(b.upos_breakdown) AS upos_breakdown,
+                          sum(n_lexicon)::BIGINT AS n_lexicon, sum(n_allverbs_full_frame)::BIGINT AS n_allverbs_full_frame,
                           sum(n_as_do)::BIGINT AS n_as_do, sum(n_pp_B)::BIGINT AS n_pp_B, sum(n_pp_MIN)::BIGINT AS n_pp_MIN,
                           sum(n_other_pp)::BIGINT AS n_other_pp, list_sort(list_distinct(flatten(list(verbs)))) AS verbs
-                   FROM p GROUP BY ALL""").to_arrow_table().to_pylist()
+                   FROM p JOIN b USING (lemma) GROUP BY p.lemma""").to_arrow_table().to_pylist()
     for r in t:
         r["n"] = r["n_lexicon"] + r["n_allverbs_full_frame"]
         r["n_verbs"] = len(r["verbs"])
         r["verbs"] = r["verbs"][:10]
-    t.sort(key=lambda r: (-r["n"], r["lemma"], r["upos"]))
+    t.sort(key=lambda r: (-r["n"], r["lemma"]))
+    if len({r["lemma"] for r in t}) != len(t):                       # D-062 invariant
+        raise NounsError("noun list: a lemma occurs in more than one row")
     total = sum(r["n"] for r in t)
     cut = CUT[corpus]
     cum = 0
@@ -147,6 +160,10 @@ def merge(reviewed: Path, path: Path = NOUN_TYPES_PATH, *, replace: bool = False
     with open(reviewed, encoding="utf-8-sig", newline="") as f:
         rows = [r for r in csv.DictReader(f) if (r.get("type") or "").strip()]
     probs = []
+    seen: dict[str, int] = {}
+    for r in rows:
+        seen[r.get("lemma")] = seen.get(r.get("lemma"), 0) + 1
+    probs += [f"lemma {k!r} occurs in {v} rows: one row per lemma (D-062)" for k, v in sorted(seen.items(), key=str) if v > 1]
     if automated is not None:
         from hebloc.loc.silver import check_automated
 

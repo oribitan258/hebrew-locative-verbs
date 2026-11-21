@@ -620,7 +620,7 @@ uv run python -m hebloc loc gold check <sheet.csv> --sample <sample folder> --an
 | `loc lexicon check` | OK |
 | Modern sample | `modern-r1b-5fbb5e22e7`, 400 items (dev 101 / validation 101 / test 198), manifest `frozen_check.items_match = true`. It takes about 10 minutes and 3.5 GB of memory |
 | Mikra sample | `mikra-r1b-1cd4ee9802`, 387 items, 60 of them agreement items, `items_match = true` |
-| Modern nouns | `modern-nouns-r1-826929982d`, 1,763 nouns to type |
+| Modern nouns | `modern-nouns-r2-826929982d` since `s56-r1.2` (D-062: one row per lemma; the row count and sha256 are in STAGES.md §6). The superseded r1 list had 1,763 rows for 1,734 lemmas |
 | `loc verify` | OK on each output folder |
 
 **The samples are frozen.** The sampler refuses to produce any other sample, so Ori and Efrat get the same ids.
@@ -828,8 +828,8 @@ shows Efrat each result.
    - **From now until the last delivery, the pinned files never change** (`annotation/`, `config/`, `src/`,
      `pyproject.toml`, `uv.lock`). The pull rule (STAGES.md §1 step 2): `git pull` only when
      `git diff --quiet HEAD origin/main -- annotation/ config/ src/ pyproject.toml uv.lock` succeeds (a
-     documentation-only update, which Ori announces as allowed). A release you must take (`s56-r1.2` for a
-     supplement, `s56-v1`) is announced in STAGES.md §6 and taken with `git merge --ff-only <tag>`. Never
+     documentation-only update, which Ori announces as allowed). A release you must take (`s56-r1.2` = the D-062 noun-ID
+     fix, `s56-r1.3` for a supplement, `s56-v1`) is announced in STAGES.md §6 and taken with `git merge --ff-only <tag>`. Never
      `git checkout` a tag.
 5. **The worked-example compliance check (T3):**
    ```
@@ -837,14 +837,19 @@ shows Efrat each result.
    uv run python -m hebloc loc silver step worked       # repeat until "finalized" or "STOP"
    ```
    15/15 is required. On a STOP, send Ori the `QC_STOP.md` folder name and wait.
-6. **Modern noun types:**
-   - The earlier proposals are reused as pass A (D-061 D-f). Pass B never sees them.
+6. **Modern noun types** (since `s56-r1.2`, D-062: the corrected `nouns-r2` list and the job `noun-modern-r2`;
+   the exact steps and the list's expected row count and sha256 are in STAGES.md §6, stages EF and E3):
+   - The earlier proposals are reused as pass A (D-061 D-f). Pass B never sees them. A lemma with two proposal rows
+     (NOUN and PROPN on the r1 list) is not imported; an isolated pass A labels it (`dropped_duplicate`).
      ```
-     uv run python -m hebloc loc silver create --task noun --corpus modern --list data/loc/nouns/modern/modern-nouns-r1-826929982d/nouns_to_label.csv
-     uv run python -m hebloc loc silver import-pass noun-modern --pass A --from <the earlier proposals CSV> [--confidence-column <name>]
-     uv run python -m hebloc loc silver step noun-modern  # repeat until "finalized"
+     uv run python -m hebloc loc nouns list --corpus modern --source package --package <package folder>
+     uv run python -m hebloc loc silver create --task noun --corpus modern --list data/loc/nouns/modern/modern-nouns-r2-826929982d/nouns_to_label.csv
+     uv run python -m hebloc loc silver import-pass noun-modern-r2 --pass A --from <the earlier proposals CSV> [--confidence-column <name>]
+     uv run python -m hebloc loc silver step noun-modern-r2  # repeat until "finalized"
      ```
-   - **Deliver it early:** `loc silver deliver noun-modern --out data/outbox/efrat-s6 --who efrat`.
+   - **Deliver it early:** `loc silver deliver noun-modern-r2 --out data/outbox/efrat-s6 --who efrat`.
+   - A `noun-modern` job made before the fix is kept and never used (the code refuses to step, finalize or deliver
+     it).
 7. **Sentence silver, dev first.** For each job, create it, then repeat `step` until `finalized` or `STOP`:
    ```
    uv run python -m hebloc loc silver create --task sentence --corpus modern --split dev --sample data/loc/gold/modern/modern-r1b-5fbb5e22e7
@@ -871,7 +876,7 @@ shows Efrat each result.
      E6 test.
 9. **STOP** after each delivery, and wait for R2 after the last one. Nothing of §9.3 before Ori announces `s56-v1`.
    Phase C supplements, if Ori approves any, come as new jobs by the same protocol (STAGES.md stage ES: an
-   announcement in STAGES.md §6, then `git merge --ff-only s56-r1.2`, whose pinned protocol files are identical to
+   announcement in STAGES.md §6, then `git merge --ff-only s56-r1.3`, whose pinned protocol files are identical to
    `s56-r1.1`).
 
 ### 9.3 After R2 = tag `s56-v1` (CHECKPOINT 2; Ori announces it)
@@ -914,7 +919,7 @@ by git**.
 data/outbox/efrat-s6/
   DELIVERY.json            # who, when, git tag/commit, list of files with sha256 (written by `loc silver deliver`)
   silver/<job>/            # D-061: frozen SILVER jobs (final file, pass files, qc.json, access logs, FROZEN.json):
-                           #   sentence-modern-dev|validation|test, sentence-mikra-*, anchor-mikra, worked, noun-modern
+                           #   sentence-modern-dev|validation|test, sentence-mikra-*, anchor-mikra, worked, noun-modern-r2
   results/                 # copies of the R2 output folders (I3 tables + manifest.json), unchanged
   analyses/                # her §6 tables/figures, each with the script that made them
   code/                    # any §6-specific scripts (Ori reviews; only Ori commits them to git)

@@ -120,7 +120,7 @@ def task_kind(task: str) -> str:
 
 
 # ============================================================================================ paths and jobs
-def job_id(task: str, corpus: str | None = None, split: str | None = None) -> str:
+def job_id(task: str, corpus: str | None = None, split: str | None = None, list_version: str | None = None) -> str:
     if task not in TASKS:
         raise SilverError(f"unknown task {task!r} (one of {sorted(TASKS)})")
     if task == "sentence":
@@ -130,7 +130,11 @@ def job_id(task: str, corpus: str | None = None, split: str | None = None) -> st
     if task == "noun":
         if not corpus:
             raise SilverError("a noun job needs --corpus")
-        return f"noun-{corpus}"
+        if not list_version:
+            raise SilverError("a noun job needs the list version (the manifest.json next to nouns_to_label.csv)")
+        # D-062: the id carries the list version (noun-mikra-r2), so a job made from a corrected list never collides
+        # with an earlier job, which is kept untouched
+        return f"noun-{corpus}-{list_version.removeprefix('nouns-')}"
     if task == "anchor":
         return "anchor-mikra"
     return task
@@ -163,14 +167,34 @@ def is_frozen(jid: str, jobs_dir: Path | None = None) -> bool:
     return (job_dir(jid, jobs_dir) / "FROZEN.json").exists()
 
 
+def duplicate_ids(items: list[dict]) -> list[str]:
+    """Item ids that occur more than once (D-062: every job's item ids must be unique)."""
+    seen: dict[str, int] = {}
+    for x in items:
+        seen[x["id"]] = seen.get(x["id"], 0) + 1
+    return sorted(k for k, v in seen.items() if v > 1)
+
+
+def _require_unique(jid: str, job: dict) -> None:
+    dup = duplicate_ids(job["items"])
+    if dup:
+        raise SilverError(f"job {jid} has {len(dup)} duplicate item ids (made before D-062): it is kept on file, "
+                          "never stepped, finalized, imported into or delivered. Make a new job from a corrected list")
+
+
 def _require_open(jid: str, jobs_dir: Path | None) -> None:
     if is_frozen(jid, jobs_dir):
         raise SilverError(f"job {jid} is FROZEN (SG2): it is never rebuilt, rerun or revised")
+    _require_unique(jid, load_job(jid, jobs_dir))
 
 
 def _write_job(jid: str, doc: dict, jobs_dir: Path | None) -> dict:
     d = job_dir(jid, jobs_dir)
     p = d / "items.json"
+    dup = duplicate_ids(doc["items"])
+    if dup:
+        raise SilverError(f"job {jid}: {len(dup)} item ids occur more than once (e.g. {dup[:3]}): refused (D-062; "
+                          "a noun list must have one row per lemma: hebloc loc nouns list makes nouns-r2 lists)")
     doc["items_sha256"] = _sha(json.dumps([[x["id"], x["blind"]] for x in doc["items"]], ensure_ascii=False, sort_keys=True))
     if p.exists():
         old = read_json(p)
@@ -349,7 +373,15 @@ def unit_items(sheet: Path, examples_csv: Path | None, kind: str) -> list[dict]:
 def create_job(task: str, corpus: str | None = None, split: str | None = None, *, lex=None, source=None,
                sample_dir: Path | None = None, list_csv: Path | None = None, sheet: Path | None = None,
                examples_csv: Path | None = None, jobs_dir: Path | None = None) -> dict:
-    jid = job_id(task, corpus, split)
+    list_version = None
+    if task == "noun":
+        if list_csv is None:
+            raise SilverError("a noun job needs --list <nouns_to_label.csv>")
+        man = Path(list_csv).parent / "manifest.json"
+        if not man.exists():
+            raise SilverError(f"{man} not found: a noun job is made from a list folder of hebloc loc nouns list")
+        list_version = read_json(man).get("list_version")
+    jid = job_id(task, corpus, split, list_version)
     if task == "sentence":
         if sample_dir is None:
             raise SilverError("a sentence job needs --sample <frozen sample folder>")
@@ -360,9 +392,7 @@ def create_job(task: str, corpus: str | None = None, split: str | None = None, *
     elif task == "anchor":
         items, inputs = anchor_items(source, lex, ANCHOR_IDS_PATH), {"anchor_ids.csv": file_sha256(ANCHOR_IDS_PATH)}
     elif task == "noun":
-        if list_csv is None:
-            raise SilverError("a noun job needs --list <nouns_to_label.csv>")
-        items, inputs = noun_items(list_csv), {"list": file_sha256(Path(list_csv))}
+        items, inputs = noun_items(list_csv), {"list": file_sha256(Path(list_csv)), "list_version": list_version}
     else:
         if sheet is None:
             raise SilverError(f"a {task} job needs --sheet (unit_review.csv / paper_variants.csv / audit.csv)")
@@ -786,9 +816,17 @@ def import_pass(jid: str, label: str, from_csv: Path, *, type_column: str = "pro
     if rows and confidence_column not in rows[0]:
         raise SilverError(f"{from_csv} has no {confidence_column!r} column (give --confidence-column)")
     out, probs = [], {}
+    # D-062: proposals made on a nouns-r1 list can hold two rows for one lemma (NOUN and PROPN), each typed on part of
+    # the evidence. Such a lemma is NOT imported: it stays missing, so the normal step labels it in an isolated pass A
+    # with the merged evidence (never resolved by row order)
+    n_rows: dict[str, int] = {}
+    for r in rows:
+        k = (r.get("lemma") or "").strip()
+        n_rows[k] = n_rows.get(k, 0) + 1
+    dropped = sorted(k for k, v in n_rows.items() if v > 1 and k in by_id)
     for r in rows:
         i = (r.get("lemma") or "").strip()
-        if i not in by_id:
+        if i not in by_id or n_rows[i] > 1:
             continue
         v = {"item_id": i, "type": (r.get(type_column) or "").strip(), "confidence": (r.get(confidence_column) or "").strip().lower(),
              "evidence": (r.get(evidence_column) or "").strip()[:200]}
@@ -804,8 +842,9 @@ def import_pass(jid: str, label: str, from_csv: Path, *, type_column: str = "pro
     atomic_write_json({"status": "ok", "imported": True, "source_file": str(from_csv), "source_sha256": file_sha256(Path(from_csv)),
                        "note": "made before the silver protocol (D-061 D-f); isolation not applicable"}, cd / "access.json")
     atomic_write_json({"workspace": "imported", "job_id": jid, "pass": label, "kind": "label", "attempt": 0, "chunk": 0,
-                       "items": [r["item_id"] for r in out], "imported": True}, cd / "WORKSPACE.json")
-    return {"imported": len(out), "invalid": len(probs), "missing": len(by_id) - len(out)}
+                       "items": [r["item_id"] for r in out], "imported": True, "dropped_duplicate": dropped},
+                      cd / "WORKSPACE.json")
+    return {"imported": len(out), "invalid": len(probs), "missing": len(by_id) - len(out), "dropped_duplicate": len(dropped)}
 
 
 def status(jid: str, jobs_dir: Path | None = None) -> dict:
@@ -1248,6 +1287,7 @@ def deliver(job_ids: list[str], outbox: Path, *, who: str, jobs_dir: Path | None
     for jid in job_ids:
         if not is_frozen(jid, jobs_dir):
             raise SilverError(f"job {jid} is not frozen: only frozen jobs are delivered (SG2)")
+        _require_unique(jid, load_job(jid, jobs_dir))
         d = job_dir(jid, jobs_dir)
         dest = outbox / "silver" / jid
         for p in sorted(d.rglob("*")):
@@ -1330,6 +1370,13 @@ def check_automated(reviewed_csv: Path, job_folder: Path) -> tuple[str | None, l
     if qc.get("stops") and not fz.get("accepted_stop"):
         probs.append(f"{fz['job_id']} has unresolved QC STOPs")
     qc_id = qc.get("qc_id")
+    lem: dict[str, int] = {}
+    for r in _read_csv(reviewed_csv):
+        lem[r.get("lemma")] = lem.get(r.get("lemma"), 0) + 1
+    dup = sorted(k for k, v in lem.items() if v > 1)
+    if dup:
+        probs.append(f"{fz['job_id']}: {len(dup)} lemmas occur in more than one row (a job made before D-062): never "
+                     "merged")
     for i, r in enumerate(_read_csv(reviewed_csv), 2):
         if (r.get("reviewed_by") or "").strip() != f"auto-qc:{qc_id}" or (r.get("review_mode") or "").strip() != "automated":
             probs.append(f"line {i}: reviewed_by must be auto-qc:{qc_id} with review_mode automated")

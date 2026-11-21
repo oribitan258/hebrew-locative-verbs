@@ -5,10 +5,22 @@
 - **The ordered workflow is [STAGES.md](STAGES.md).** Every session: `start` (STAGES.md §1) → one stage →
   `end-of-session` (STAGES.md §2: CONTINUE / SEND TO PARTNER / WAIT).
 - **§5 (Ori):** P0 done (2026-11-21: STAGES.md, the Phase C rules restored verbatim in D-059, stale docs fixed;
-  documentation only), committed and pushed with Ori's approval. **Next: O1** (Mikra noun types) and **O2** (units,
-  audit, P5), each one session; then O3 waits for Efrat's Modern noun delivery.
+  documentation only), committed and pushed with Ori's approval.
+- **O1 stopped, P1 built (2026-11-21, D-062).**
+  - O1 was stopped safely at a chunk boundary: a read-only audit found duplicate noun item ids. `nouns-r1` lists have
+    one row per (lemma, upos), while silver noun ids are lemmas.
+  - The pre-fix job `noun-mikra` (pass A c00–c07, 780 labels, not frozen) is kept byte-identical and never used.
+  - **P1 (the fix) is built and verified:** `nouns-r2` lists with one row per lemma; unique ids in every silver job;
+    noun jobs `noun-<corpus>-r2`; pre-fix jobs inactive; the import rule; 5 new tests. The Mikra r2 list has 979
+    lemmas and the Modern r2 list 1,668 (sha256 in STAGES.md §6). Both are verification copies built with `--dev` in
+    `data/loc/nouns_d062_dev/`; the official lists are rebuilt from the clean `s56-r1.2` tree and must give the same
+    `nouns_to_label.csv` hashes.
+  - **Waiting for Ori's ★ approval to commit, tag `s56-r1.2` and push**, then message M7 to Efrat.
+  - **Then O1 restarts** with `noun-mikra-r2`. Then **O2** (units, audit, P5), each one session; then O3 waits for
+    Efrat's Modern noun delivery (`noun-modern-r2`).
 - **§6 (Efrat):** E1–E6 (EFRAT_SECTION_6 §9.2 steps 4–9) since the R1.1 message; progress is in her `STATE.md`.
-  After P0's push, Ori sends her message M1 (STAGES.md §8).
+  - After P0's push, Ori sends her message M1 (STAGES.md §8).
+  - After P1's push, Ori sends message M7: she takes `s56-r1.2` (stage EF) and redoes E3 with `noun-modern-r2`.
 - **Pending deliveries:** none received (`annotation/silver/FROZEN_SILVER.json` does not exist yet).
 - **Last verified:** 2026-11-21, P0 checks (tests, `hebloc check`, pinned files unchanged since `s56-r1.1`).
 

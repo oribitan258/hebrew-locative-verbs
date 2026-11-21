@@ -297,11 +297,19 @@ def test_job_items_never_change(sw):
 
 
 # ============================================================================================ nouns / units / audit
+NOUN_HEADER = ("lemma,upos,n,n_as_do,n_pp_B,n_pp_MIN,n_other_pp,n_verbs,example_verbs,corpus_source,proposed_type,"
+               "proposed_by,type,reviewed_by,note\n")
+
+
+def _list_manifest(folder: Path, version: str = "nouns-r2") -> None:
+    (folder / "manifest.json").write_text(json.dumps({"list_version": version}), encoding="utf-8")
+
+
 def _noun_list(tmp_path) -> Path:
     p = tmp_path / "nouns_to_label.csv"
-    p.write_text("lemma,upos,n,n_as_do,n_pp_B,n_pp_MIN,n_other_pp,n_verbs,example_verbs,corpus_source,proposed_type,"
-                 "proposed_by,type,reviewed_by,note\nבית1,NOUN,9,1,5,1,0,3,שם,mikra,,,,,\nבית2,NOUN,8,1,5,1,0,3,שם,mikra,,,,,\n",
+    p.write_text(NOUN_HEADER + "בית1,NOUN,9,1,5,1,0,3,שם,mikra,,,,,\nבית2,NOUN,8,1,5,1,0,3,שם,mikra,,,,,\n",
                  encoding="utf-8")
+    _list_manifest(tmp_path)
     return p
 
 
@@ -341,12 +349,109 @@ def test_import_pass_reuses_earlier_noun_proposals_without_showing_them(sw, tmp_
     prop = tmp_path / "proposals.csv"
     prop.write_text("lemma,proposed_type,confidence,note\nבית1,LOCATION,high,x\nבית2,LOCATION,low,y\n", encoding="utf-8")
     r = SV.import_pass(jid, "A", prop, jobs_dir=sw["jobs"])
-    assert r == {"imported": 2, "invalid": 0, "missing": 0}
+    assert r == {"imported": 2, "invalid": 0, "missing": 0, "dropped_duplicate": 0}
     assert _run(sw, jid)["action"] == "finalized"
     for inp in (sw["tmp"] / "ws").glob(f"{jid}-B-*/input.csv"):
         assert "proposed_type" not in inp.read_text(encoding="utf-8-sig") and "LOCATION" not in inp.read_text(encoding="utf-8-sig")
     rows = {r["lemma"]: r for r in csv.DictReader(open(sw["jobs"] / jid / "final" / "noun_types_modern.csv", encoding="utf-8-sig"))}
     assert rows["בית2"]["type"] == "UNCLEAR"                            # low confidence in pass A -> abstention
+
+
+# ------------------------------------------------------------------------------------------- D-062 unique item ids
+def _tree_hashes(d: Path) -> dict[str, str]:
+    from hebloc.store.io import file_sha256
+
+    return {str(p.relative_to(d)): file_sha256(p) for p in sorted(d.rglob("*")) if p.is_file()}
+
+
+def test_noun_job_ids_are_unique_and_carry_the_list_version(sw, tmp_path):
+    r = SV.create_job("noun", "mikra", list_csv=_noun_list(tmp_path), jobs_dir=sw["jobs"])
+    assert r["job_id"] == "noun-mikra-r2" and r["items"] == 2
+    assert SV.load_job("noun-mikra-r2", sw["jobs"])["inputs"]["list_version"] == "nouns-r2"
+    dup = tmp_path / "dup"
+    dup.mkdir()
+    (dup / "nouns_to_label.csv").write_text(NOUN_HEADER + "ארץ,NOUN,9,1,5,1,0,3,שם,modern,,,,,\n"
+                                            "ארץ,PROPN,2,0,2,0,0,2,שם,modern,,,,,\n", encoding="utf-8")
+    _list_manifest(dup, "nouns-r1")
+    with pytest.raises(SV.SilverError, match="more than once"):         # a nouns-r1 list with a NOUN/PROPN pair
+        SV.create_job("noun", "modern", list_csv=dup / "nouns_to_label.csv", jobs_dir=sw["jobs"])
+    assert not (sw["jobs"] / "noun-modern-r1").exists()
+    bare = tmp_path / "bare"
+    bare.mkdir()
+    (bare / "nouns_to_label.csv").write_text(NOUN_HEADER + "בית,NOUN,9,1,5,1,0,3,שם,mikra,,,,,\n", encoding="utf-8")
+    with pytest.raises(SV.SilverError, match="manifest.json"):          # the list version is required
+        SV.create_job("noun", "mikra", list_csv=bare / "nouns_to_label.csv", jobs_dir=sw["jobs"])
+    sheet = tmp_path / "unit_review.csv"
+    sheet.write_text("lemma,candidates,n,pres_share,fin_share,n_by_corpus\nרוצה,רצה (participle),60,0.9,0.1,modern=60\n"
+                     "רוצה,רצה (participle),60,0.9,0.1,modern=60\n", encoding="utf-8")
+    with pytest.raises(SV.SilverError, match="more than once"):         # the guard holds for every task
+        SV.create_job("unit", sheet=sheet, jobs_dir=sw["jobs"])
+
+
+def test_a_job_made_before_d062_is_kept_but_never_used(sw, tmp_path):
+    """A job with duplicate item ids (made from a nouns-r1 list before the fix) stays on file byte-identical; status
+    still reads it; nothing steps, finalizes, imports into, builds a workspace for, or delivers it."""
+    d = sw["jobs"] / "noun-mikra"
+    item = lambda lem, upos: {"id": lem, "blind": {"item_id": lem, "upos": upos}, "private": {"corpus_source": "mikra"}}
+    (d / "passes" / "A").mkdir(parents=True)
+    (d / "items.json").write_text(json.dumps({"job_id": "noun-mikra", "task": "noun", "corpus": "mikra", "split": None,
+                                              "items": [item("ארץ", "NOUN"), item("ארץ", "PROPN"), item("יד", "NOUN")],
+                                              "items_sha256": "legacy"}, ensure_ascii=False), encoding="utf-8")
+    before = _tree_hashes(d)
+    assert SV.status("noun-mikra", sw["jobs"])["items"] == 3
+    for call in (lambda: SV.step("noun-mikra", **sw["kw"]),
+                 lambda: SV.finalize("noun-mikra", jobs_dir=sw["jobs"]),
+                 lambda: SV.import_pass("noun-mikra", "B", _noun_list(tmp_path), jobs_dir=sw["jobs"]),
+                 lambda: SV.build_workspace(SV.load_job("noun-mikra", sw["jobs"]), "A", ["יד"], attempt=1, chunk=0,
+                                            root=sw["tmp"] / "ws", jobs_dir=sw["jobs"], projects_dir=sw["tmp"] / "projects")):
+        with pytest.raises(SV.SilverError, match="duplicate item ids"):
+            call()
+    (d / "FROZEN.json").write_text("{}", encoding="utf-8")              # even a frozen one is never delivered
+    with pytest.raises(SV.SilverError, match="duplicate item ids"):
+        SV.deliver(["noun-mikra"], tmp_path / "outbox", who="efrat", jobs_dir=sw["jobs"])
+    (d / "FROZEN.json").unlink()
+    assert _tree_hashes(d) == before
+    assert not (tmp_path / "outbox").exists()
+
+
+def test_import_pass_drops_lemmas_with_several_proposal_rows(sw, tmp_path):
+    """Proposals made on a nouns-r1 list may type one lemma twice (NOUN and PROPN rows). That lemma is not imported:
+    an isolated pass A labels it with the merged evidence."""
+    jid = SV.create_job("noun", "modern", list_csv=_noun_list(tmp_path), jobs_dir=sw["jobs"])["job_id"]
+    prop = tmp_path / "proposals.csv"
+    prop.write_text("lemma,upos,proposed_type,confidence,note\nבית1,NOUN,LOCATION,high,x\nבית1,PROPN,ANIMATE,high,y\n"
+                    "בית2,NOUN,LOCATION,high,z\n", encoding="utf-8")
+    r = SV.import_pass(jid, "A", prop, jobs_dir=sw["jobs"])
+    assert r == {"imported": 1, "invalid": 0, "missing": 1, "dropped_duplicate": 1}
+    assert _run(sw, jid)["action"] == "finalized"
+    a_inputs = [p.read_text(encoding="utf-8-sig") for p in (sw["tmp"] / "ws").glob(f"{jid}-A-*/input.csv")]
+    assert len(a_inputs) == 1 and "בית1" in a_inputs[0] and "בית2" not in a_inputs[0]
+    final = list(csv.DictReader(open(sw["jobs"] / jid / "final" / "noun_types_modern.csv", encoding="utf-8-sig")))
+    assert sorted(x["lemma"] for x in final) == ["בית1", "בית2"]           # one row per lemma
+    st = SV.status(jid, sw["jobs"])
+    assert st["passes"]["A"]["labelled"] == 2 and st["passes"]["A"]["missing"] == 0
+
+
+def test_repeated_lemma_rows_are_never_merged(sw, tmp_path):
+    rev = tmp_path / "reviewed.csv"
+    rev.write_text("lemma,type,proposed_by,reviewed_by,note,corpus_source\nארץ,LOCATION,human,ori,,mikra\n"
+                   "ארץ,ANIMATE,human,ori,,mikra\n", encoding="utf-8")
+    r = N.merge(rev, tmp_path / "noun_types.yaml")
+    assert not r["ok"] and any("D-062" in p for p in r["problems"])
+    assert not (tmp_path / "noun_types.yaml").exists()
+    # check_automated: the final file of a (pre-fix) frozen job that lists a lemma twice is refused
+    from hebloc.store.io import file_sha256
+
+    job = tmp_path / "legacy-job"
+    (job / "final").mkdir(parents=True)
+    fin = job / "final" / "noun_types_modern.csv"
+    fin.write_text("lemma,type,reviewed_by,review_mode\nארץ,LOCATION,auto-qc:q1,automated\nארץ,UNCLEAR,auto-qc:q1,automated\n",
+                   encoding="utf-8")
+    (job / "FROZEN.json").write_text(json.dumps({"job_id": "noun-modern", "files": {"final": file_sha256(fin)}}), encoding="utf-8")
+    (job / "qc.json").write_text(json.dumps({"qc_id": "q1", "stops": []}), encoding="utf-8")
+    _, probs = SV.check_automated(fin, job)
+    assert any("more than one row" in p for p in probs)
+    assert not N.merge(fin, tmp_path / "noun_types.yaml", automated=job)["ok"]
 
 
 def test_unit_links_need_both_passes_to_accept_the_same_base(sw, monkeypatch, tmp_path):
