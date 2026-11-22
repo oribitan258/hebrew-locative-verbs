@@ -11,8 +11,12 @@ silver steps run one per session (docs/STAGES.md §3); Phase C NOT started (need
 **2026-11-21: P1 RELEASED** as tag `s56-r1.2` (0396a2b, pushed). P1 = the D-062 fix for the duplicate-noun-ID defect
 that stopped O1's first attempt: `nouns-r2` lists with one row per lemma, unique silver ids, noun jobs
 `noun-<corpus>-r2`. Efrat takes it as stage EF, then redoes E3.
-**2026-11-21: O1 DONE.** `noun-mikra-r2` is frozen: 979 lemmas, κ 0.907, 0 breaches. **Next: O2** (units, audit, P5).
+**2026-11-21: O1 DONE.** `noun-mikra-r2` is frozen: 979 lemmas, κ 0.907, 0 breaches.
 The pre-fix jobs (`noun-mikra`, any `noun-modern`) are kept and never used.
+**2026-11-22: O2 DONE.** Frozen: `audit` 95/100 (exactly the threshold; an AI audit), `variant` 136/160 agree,
+`unit` κ 0.873 (1,440 links / 625 no link). **D-063** (usage-limit refusal = outage, not attempt) is local commit
+`83aade8`, NOT pushed. **Next: O3.** Open for Ori before any push: D-063's release to Efrat, and the
+`FROZEN_SILVER.json`-under-`annotation/` conflict.
 - **THE ORDERED WORKFLOW IS `docs/STAGES.md`** (both people, through §5 and §6 completion): every session starts with
   `start` (STAGES.md §1: sync, checks, the next eligible stage) and ends with `end-of-session` (STAGES.md §2: update
   the docs, then exactly one of CONTINUE / SEND TO PARTNER / WAIT). One stage per session. Plan files are not durable:

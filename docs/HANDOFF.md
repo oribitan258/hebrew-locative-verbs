@@ -14,7 +14,29 @@
     - frozen; final `noun_types_mikra.csv` sha256 `47dc464e…c064`; κ(type) 0.907 [0.883, 0.928];
     - LOCATION 179, LOCATUM 261, ANIMATE 206, UNCLEAR 333 (132 of them abstentions); no STOP.
     - These are SILVER (`label_source = ai`); they enter `config/noun_types.yaml` only at O3.
-  - **Next: O2** (units, audit, P5). O3 then has all its inputs: Efrat's E3 is received (stage R below).
+  - **O2 done (2026-11-22).** Three silver jobs, made in isolated workspaces (opus) and frozen:
+    - `audit` (the 100 P2 links; pass A never sees the rule): **95 / 100 `Y`**, exactly the D-059 threshold, so the
+      452 automatic links come into force at O3. This is an AI audit, never validation, and it has no margin.
+    - `variant` (160 paper variants): A and B agree on **136 / 160**. This is evidence for P5 only; `lexicon-v2` is
+      Ori's decision at G4.
+    - `unit` (2,065 P3 rows): κ(decision) **0.873** [0.850, 0.898]; **1,440** links accepted (both passes, same
+      base, no low confidence), **625** no link. Final `unit_review_automated.csv` sha256 `7bfc9be2…afb2`.
+    - Access logs: 94 chunks ok, 0 breaches, 0 violations. No labels and no corpus text were read in the session;
+      `config/` is untouched (the merges are O3).
+  - **D-063 (Ori, 2026-11-22), local commit `83aade8` (no tag, not pushed; 312 tests).**
+    - The Claude Code session limit refused 16 `unit` launches (pass A, chunks c34–c41, twice; 0 tool calls).
+      The code filed them as breaches, which raised an SG3 STOP.
+    - D-063: a launch refused before any tool call (a synthetic `rate_limit` message) is an **outage**, not an
+      attempt. `step` returns WAIT (exit 3), and `loc silver reclassify-outages <job>` handles chunks filed before
+      the fix.
+    - The 16 chunks were reclassified (transcript hashes checked). The old STOP is kept as
+      `QC_STOP.superseded-D-063-1.md`; the job then completed normally.
+  - **OPEN, for Ori before the next push:**
+    1. **D-063 for Efrat.** Her sessions run `s56-r1.2` code, so a usage limit would stop her sentence jobs the same
+       way. Decide whether and how to release it (a tag name; `s56-r1.3` is reserved for the supplement), and an
+       announcement in STAGES.md §6.
+    2. **The `FROZEN_SILVER.json` conflict** (see stage R below). Commits `f5b045c` and `83aade8` are unpushed.
+  - **Next: O3** (all its inputs are present: O1, O2, and Efrat's E3 received).
 - **Stage R done (2026-11-21): Efrat's delivery 1 = `noun-modern-r2` (E3) received.**
   - **What arrived.** Delivered at `data/efrat-s6/efrat-s6/` and copied unchanged to `data/incoming/efrat-s6/1/`.
     - `DELIVERY.json` sha256 `51e3c7d9…44e8`; all 81 listed files are present and match their hashes.
@@ -61,11 +83,11 @@
   - After P0's push, Ori sends her message M1 (STAGES.md §8).
   - After P1's push, Ori sends message M7: she takes `s56-r1.2` (stage EF) and redoes E3 with `noun-modern-r2`.
 - **Pending deliveries:** none. Delivery 1 (`noun-modern-r2`) was received 2026-11-21 (stage R above).
-- **Last verified:** 2026-11-21, O1 session:
-  - 307 tests passed;
-  - HEAD = origin/main = `s56-r1.2`;
-  - tree clean;
-  - `noun-mikra` unchanged (780 labels, items sha256 `96071250…`).
+- **Last verified:** 2026-11-22, O2 session:
+  - 312 tests passed;
+  - HEAD `83aade8` is 2 commits ahead of origin/main (`f5b045c` R, `83aade8` D-063);
+  - `annotation/` and `config/` differ from `s56-r1.1` only by `FROZEN_SILVER.json`;
+  - `noun-mikra` unchanged (780 labels, not frozen), and `noun-mikra-r2` frozen.
 
 > **Two mandatory checkpoints (Ori, 2026-11-19):**
 > - **CHECKPOINT 1** = shared methodology approved → STOP, complete `docs/EFRAT_SECTION_6.md`, tell Ori it is ready
