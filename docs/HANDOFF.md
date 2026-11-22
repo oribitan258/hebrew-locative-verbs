@@ -4,7 +4,26 @@
 
 - **The ordered workflow is [STAGES.md](STAGES.md).** Every session: `start` (STAGES.md §1) → one stage →
   `end-of-session` (STAGES.md §2: CONTINUE / SEND TO PARTNER / WAIT).
-- **§5 (Ori):** P0 done (2026-11-21: STAGES.md, the Phase C rules restored verbatim in D-059, stale docs fixed;
+- **O3 DONE (2026-11-22). Next: C0 (Phase C build; Plan Mode, ★ plan approval first).**
+  - `start` checks: clean tree, HEAD = origin/main = `b7e8ef2`, 312 tests passed, `hebloc check` OK, whoami Ori.
+  - **Units:** `loc units merge … --automated data/loc/silver/jobs/unit` → 2,065 reviewed, 1,440 accepted;
+    `loc units audit … --automated data/loc/silver/jobs/audit` → passed 95 / 100 (AI audit, SILVER): the 452
+    automatic links are in force.
+  - **Nouns, checkpoint A:** `noun-modern-r2` (received, 1,668) + `noun-mikra-r2` (979) merged `--automated` →
+    2,280 lemmas, 110 cross-corpus conflicts → UNCLEAR. Ori approved both files → local commit `d6f6cf9`.
+  - **Historical nouns:** lists built from `d6f6cf9` with `--exclude-typed` (all three from the same state, so no
+    corpus is favoured by order): Hazal 213, Medieval 199, Haskala 315 rows (497 distinct lemmas; S56_R1 had estimated
+    ~110). Jobs `noun-hazal-r2` / `noun-medieval-r2` / `noun-haskala-r2`: A ∥ B complete, 0 invalid, 0 breaches,
+    0 outages, no STOP, frozen; κ(type) 0.898 / 0.877 / 0.875. Merged `--automated` (+15 conflicts).
+  - **Checkpoint B:** `config/noun_types.yaml` **v1** = 2,777 lemmas (LOCATION 339, LOCATUM 551, ANIMATE 417,
+    UNCLEAR 1,470; 125 cross-corpus conflicts), sha256 `88fb829e…6b99`. Ori approved → local commit `d75dbe5`.
+  - Checks: `loc verify` OK on the three list folders; 312 tests passed; `hebloc check` OK; protocol files identical
+    to `s56-r1.1`; **no dev / validation / test silver opened**.
+  - Information for Ori (STAGES.md §9 B6, B7): 112 of the 125 conflicts are UNCLEAR vs a type (the released rule counts
+    them; kept); the historical lists were larger than estimated (the pre-registered cut was applied unchanged).
+  - Push: see the end-of-session decision. After `config/` is pushed, Efrat's docs-only pulls stop until the next tag
+    (B5, by design).
+- **§5 (Ori), earlier:** P0 done (2026-11-21: STAGES.md, the Phase C rules restored verbatim in D-059, stale docs fixed;
   documentation only), committed and pushed with Ori's approval.
 - **P1 released, O1 done (2026-11-21).**
   - P1 (D-062) was committed (0396a2b), tagged `s56-r1.2` and pushed with Ori's approval.

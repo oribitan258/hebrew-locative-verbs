@@ -29,8 +29,12 @@ only orders the approved work, names who hands what to whom, and says when the n
     (with `f5b045c`, `83aade8`, `64c260a`, `055ed29`). Ori sends Efrat M8.
   - **R done again (2026-11-22): Efrat's delivery 2 (E4: Modern dev, Mikra dev, the anchor) received**, its hashes
     recorded in `FROZEN_SILVER.json` before any read (§5 row 2). No label was read; nothing was scored.
-  - Next: **O3** (all inputs present: O1, O2, Efrat's E3 received). O3's onward DEP (Efrat's dev silver, E4) is now
-    met too, as is the dev-silver part of G2.
+  - **O3 done (2026-11-22):** `config/verb_units.yaml` (2,065 SILVER links reviewed, 1,440 accepted; AI audit
+    passed 95 / 100, so the 452 automatic links are in force) and `config/noun_types.yaml` **v1** (2,777 lemmas: Modern,
+    Mikra, then the historical jobs `noun-hazal-r2` 213 / `noun-medieval-r2` 199 / `noun-haskala-r2` 315, κ 0.898 /
+    0.877 / 0.875, 0 breaches; 125 cross-corpus conflicts → UNCLEAR). Both files frozen before any dev silver was read.
+    Local commits `d6f6cf9` (checkpoint A) and `d75dbe5` (checkpoint B), each file approved by Ori.
+  - Next: **C0** (the Phase C build): its plan needs Ori's ★ approval in Plan Mode first.
 - §6: Efrat has done EF, E3 and **E4** (delivery 2 received). Her next stage is **E5** (validation silver); after P2's
   push and message M8, she first takes **ED** (`s56-r1.2.1`) at the start of a session. Her
   progress is in her `STATE.md`.
@@ -114,7 +118,7 @@ Claude Code does these steps in order and shows each result.
 | **O2** | P0 | Units (D-061): `create --task unit --sheet data/loc/review/units/unit_review.csv --examples-csv …/unit_review_examples.csv`, `--task audit --sheet …/audit.csv`, `--task variant --sheet …/paper_variants.csv`; `step` each until `finalized` | Each job frozen; audit result ≥ 95 / 100 or the pre-registered withdrawal (D-059 P2) | Jobs `unit`, `audit`, `variant` (local); the P5 evidence | DEP: Efrat's Modern nouns (E3) → O3 | done 2026-11-22: all frozen; audit 95/100; variant 136/160 agree; unit κ 0.873, 1,440 / 625; 0 breaches (16 usage-limit outages, D-063) |
 | **P2** | O2; Ori's plan approval (2026-11-22) | D-064 (docs only): release D-063 to Efrat as tag **`s56-r1.2.1`**; `FROZEN_SILVER.json` excluded from the pinned-file checks (the pull rule, G3, ES); stage ED + its announcement in §6; template M8 | Full tests; `hebloc check`; `git diff --quiet s56-r1.1 HEAD -- annotation/ config/ ':(exclude)annotation/silver/FROZEN_SILVER.json'`; `git diff --quiet s56-r1.2 HEAD -- config/ pyproject.toml uv.lock`; a rehearsal of Efrat's path in a scratch clone | Commit + tag `s56-r1.2.1` + push (★) → **SEND TO PARTNER** (§8 M8) | AUTO → O3 | done 2026-11-22: `4fd17e5` = tag `s56-r1.2.1`, pushed; rehearsal of Efrat's path OK |
 | **R** | A delivery from Efrat in `data/incoming/efrat-s6/<n>/` (any time) | `loc silver receive <folder>` only: hashes into `annotation/silver/FROZEN_SILVER.json`. **Never read the labels.** Update §5 "Partner status" | Hashes match `DELIVERY.json` | Commit of `FROZEN_SILVER.json` (★, before any read) | Back to the stage that waited | delivery 1 (`noun-modern-r2`) received 2026-11-21; delivery 2 (dev × 2 + anchor) received 2026-11-22; see §5 |
-| **O3** | O1, O2, Efrat's E3 received (R) | `loc nouns merge --automated` (Modern, Mikra) → historical nouns (`loc nouns list --exclude-typed`, a noun job, merge) → `loc units merge` / `audit --automated` → freeze `config/noun_types.yaml` v1 and the unit map | Merge checks; cross-corpus conflicts listed (D-061 G1 rule); `loc verify`; tests | Config commit (★ Ori approves each merged **file**, never rows) | DEP: Efrat's dev silver (E4) | |
+| **O3** | O1, O2, Efrat's E3 received (R) | `loc nouns merge --automated` (Modern, Mikra) → historical nouns (`loc nouns list --exclude-typed`, a noun job, merge) → `loc units merge` / `audit --automated` → freeze `config/noun_types.yaml` v1 and the unit map | Merge checks; cross-corpus conflicts listed (D-061 G1 rule); `loc verify`; tests | Config commit (★ Ori approves each merged **file**, never rows) | DEP: Efrat's dev silver (E4) | done 2026-11-22: `d6f6cf9` (units + audit + Modern/Mikra nouns) and `d75dbe5` (historical nouns; `noun_types.yaml` v1 sha256 `88fb829e…6b99`); 125 conflicts → UNCLEAR; checks OK |
 | **C0** | O3 (reads no silver) | **Phase C build**, in Plan Mode (★ plan approval first): supplement silver jobs that do not collide (`job_id` is `sentence-<corpus>-<split>` today); I-2, I-3, I-4 code; the I-3 sense-screen draw; the §6 silver tasks (EFRAT §5.9(2) candidate review, §5.9(3) template proxy); the class/identity audit task (EFRAT §5.5, §5.6) and who runs it under D-061 | Full tests; pinned protocol files unchanged | Local code commit (pushed only at G3 or G7) | ★ APPROVAL; then DEP: dev silver | |
 | **G2** | O3, C0, dev silver of **both** corpora + the anchor received (R) and QC-passed | — | — | — | ★ APPROVAL → C1 | |
 | **C1** | G2 | Identification candidates I-0 … I-5 on dev silver + the paper examples, by the **pre-registered rules** (D-059 addendum) | Each rule applied exactly as written | A decision record per candidate | ★ G3 if a supplement or sense screen is needed, else ★ G4 | |
@@ -278,3 +282,8 @@ Next: start → E<n+1>
 - B5 (D-064): once O3's `config/` commit is pushed, `config/` differs from Efrat's tag, so her documentation-only pulls
   stop until the next announced tag. Announcements still reach her (`git show origin/main:docs/STAGES.md`). This is
   by design; no action.
+- B6 (O3, information): of the 125 cross-corpus conflicts in `noun_types.yaml` v1, only 13 are type vs type; 112 are
+  UNCLEAR in one corpus vs a type in another. The released merge rule (`s56-r1.1`, G1) counts both as conflicts →
+  UNCLEAR. Kept as is; a change would need a decision entry and a code change.
+- B7 (O3, information): the historical `--exclude-typed` lists held 727 rows (Hazal 213, Medieval 199, Haskala 315;
+  497 distinct lemmas), not the ~110 estimated in `S56_R1.md`; the pre-registered 85% cut was applied unchanged.

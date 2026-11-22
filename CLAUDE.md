@@ -20,7 +20,10 @@ The pre-fix jobs (`noun-mikra`, any `noun-modern`) are kept and never used.
 hashes recorded in `FROZEN_SILVER.json`; no labels read.
 **2026-11-22: P2 (D-064) DONE.** D-063 released to Efrat as tag `s56-r1.2.1` (4fd17e5, pushed; her stage ED, message
 M8); `annotation/silver/FROZEN_SILVER.json` is excluded from the pinned-file checks (the pull rule, G3, ES).
-**Next: O3.**
+**2026-11-22: O3 DONE.** `config/verb_units.yaml` (2,065 links reviewed, 1,440 accepted; AI audit 95/100 passed)
+and `config/noun_types.yaml` v1 (2,777 lemmas; 125 cross-corpus conflicts → UNCLEAR) frozen before any dev silver
+was read; local commits `d6f6cf9` + `d75dbe5`.
+**Next: C0** (Phase C build; Plan Mode, Ori's ★ plan approval first).
 - **THE ORDERED WORKFLOW IS `docs/STAGES.md`** (both people, through §5 and §6 completion): every session starts with
   `start` (STAGES.md §1: sync, checks, the next eligible stage) and ends with `end-of-session` (STAGES.md §2: update
   the docs, then exactly one of CONTINUE / SEND TO PARTNER / WAIT). One stage per session. Plan files are not durable:
@@ -48,7 +51,7 @@ M8); `annotation/silver/FROZEN_SILVER.json` is excluded from the pinned-file che
   - Code: `hebloc.loc.{units,extract,resolve,classify,report,score,exposure}`.
   - Tests: `tests/test_loc_r2.py`.
   - Config: `config/function_predicates.yaml` and `config/locative_resolver.yaml` (both APPROVED at STOP-B);
-    `config/verb_units.yaml` (generated; the AI audit is pending, O2).
+    `config/verb_units.yaml` (generated; links reviewed and AI audit passed at O3); `config/noun_types.yaml` v1 (O3).
   - **Phase C rules** (I-0 … I-5, supplements): pre-registered, in `docs/decisions.md` D-059 (addendum, verbatim).
 - **G1 done (2026-11-21):** tag `s56-r1.1` → 5341964 pushed; Efrat was sent the pull instruction. Later docs-only
   commits on main keep `s56-r1.1` as an ancestor (checked with `git merge-base --is-ancestor s56-r1.1 HEAD`).
