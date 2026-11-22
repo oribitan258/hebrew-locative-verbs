@@ -18,9 +18,9 @@ The pre-fix jobs (`noun-mikra`, any `noun-modern`) are kept and never used.
 `83aade8`, NOT pushed.
 **2026-11-22: R (delivery 2) DONE.** Efrat's dev silver (Modern 101, Mikra 98) and anchor (48) were received, their
 hashes recorded in `FROZEN_SILVER.json`; no labels read.
-**2026-11-22: P2 (D-064) docs written.** D-063 goes to Efrat as tag `s56-r1.2.1` (her stage ED, message M8);
-`annotation/silver/FROZEN_SILVER.json` is excluded from the pinned-file checks (the pull rule, G3, ES). Commit, tag and
-push await Ori's approval. **Next: O3.**
+**2026-11-22: P2 (D-064) DONE.** D-063 released to Efrat as tag `s56-r1.2.1` (4fd17e5, pushed; her stage ED, message
+M8); `annotation/silver/FROZEN_SILVER.json` is excluded from the pinned-file checks (the pull rule, G3, ES).
+**Next: O3.**
 - **THE ORDERED WORKFLOW IS `docs/STAGES.md`** (both people, through §5 and §6 completion): every session starts with
   `start` (STAGES.md §1: sync, checks, the next eligible stage) and ends with `end-of-session` (STAGES.md §2: update
   the docs, then exactly one of CONTINUE / SEND TO PARTNER / WAIT). One stage per session. Plan files are not durable:

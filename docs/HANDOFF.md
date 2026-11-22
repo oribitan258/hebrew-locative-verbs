@@ -31,7 +31,10 @@
       the fix.
     - The 16 chunks were reclassified (transcript hashes checked). The old STOP is kept as
       `QC_STOP.superseded-D-063-1.md`; the job then completed normally.
-  - **P2 (D-064, 2026-11-22): both open items resolved, docs only.** Commit, tag and push await Ori's approval.
+  - **P2 DONE (D-064, 2026-11-22): both open items resolved, docs only.** Commit `4fd17e5`, annotated tag
+    `s56-r1.2.1` → `4fd17e5`; `main` and the tag pushed and verified on origin. A scratch-clone rehearsal from
+    `a820d3e` passed: the old rule refuses, the ff-merge and every announced check pass, a record-only update is now
+    docs-only, and a real pinned change is still refused. Ori sends Efrat **M8**. **Next: O3.**
     1. **D-063 for Efrat** → annotated tag **`s56-r1.2.1`** on the P2 docs commit (it contains `83aade8`). She takes it as
        stage **ED** (STAGES.md §4 and the §6 announcement) after message **M8**, at the start of a session.
     2. **`FROZEN_SILVER.json`** stays where the pinned protocol puts it. The pull rule, G3 and ES checks now exclude
@@ -111,7 +114,8 @@
   - After P1's push, Ori sends message M7: she takes `s56-r1.2` (stage EF) and redoes E3 with `noun-modern-r2`.
 - **Pending deliveries:** none. Delivery 1 (`noun-modern-r2`) was received 2026-11-21, and delivery 2 (dev × 2 +
   anchor) on 2026-11-22 (stage R above).
-- **Last verified:** 2026-11-22, O2 session:
+- **Last verified:** 2026-11-22, P2 session: 312 tests passed; `hebloc check` OK; HEAD = origin/main = `s56-r1.2.1`
+  (`4fd17e5`). Earlier, the O2 session:
   - 312 tests passed;
   - HEAD `83aade8` is 2 commits ahead of origin/main (`f5b045c` R, `83aade8` D-063);
   - `annotation/` and `config/` differ from `s56-r1.1` only by `FROZEN_SILVER.json`;
