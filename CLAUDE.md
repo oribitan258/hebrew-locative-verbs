@@ -17,8 +17,10 @@ The pre-fix jobs (`noun-mikra`, any `noun-modern`) are kept and never used.
 `unit` κ 0.873 (1,440 links / 625 no link). **D-063** (usage-limit refusal = outage, not attempt) is local commit
 `83aade8`, NOT pushed.
 **2026-11-22: R (delivery 2) DONE.** Efrat's dev silver (Modern 101, Mikra 98) and anchor (48) were received, their
-hashes recorded in `FROZEN_SILVER.json`; no labels read. **Next: O3.** Open for Ori before any push: D-063's release to Efrat, and the
-`FROZEN_SILVER.json`-under-`annotation/` conflict.
+hashes recorded in `FROZEN_SILVER.json`; no labels read.
+**2026-11-22: P2 (D-064) docs written.** D-063 goes to Efrat as tag `s56-r1.2.1` (her stage ED, message M8);
+`annotation/silver/FROZEN_SILVER.json` is excluded from the pinned-file checks (the pull rule, G3, ES). Commit, tag and
+push await Ori's approval. **Next: O3.**
 - **THE ORDERED WORKFLOW IS `docs/STAGES.md`** (both people, through §5 and §6 completion): every session starts with
   `start` (STAGES.md §1: sync, checks, the next eligible stage) and ends with `end-of-session` (STAGES.md §2: update
   the docs, then exactly one of CONTINUE / SEND TO PARTNER / WAIT). One stage per session. Plan files are not durable:
@@ -168,8 +170,9 @@ hashes recorded in `FROZEN_SILVER.json`; no labels read. **Next: O3.** Open for 
     `docs/STAGES.md` §1 and `docs/EFRAT_SECTION_6.md` §9 "Start here".
     - First `git status`: if tracked files are modified, STOP and report; never discard them.
     - Then **the pull rule** (STAGES.md §1 step 2): `git pull` only if the incoming change is documentation only;
-      a release (`s56-r1.2` = the D-062 fix, `s56-r1.3` = a supplement, `s56-v1`) only when STAGES.md §6 announces
-      it, by `git merge --ff-only <tag>`.
+      a release (`s56-r1.2` = the D-062 fix, `s56-r1.2.1` = D-063 + D-064, `s56-r1.3` = a supplement, `s56-v1`) only
+      when STAGES.md §6 announces it, by `git merge --ff-only <tag>`. Ori's record
+      `annotation/silver/FROZEN_SILVER.json` is not a pinned file (D-064).
     - Then `uv sync`, tests, `whoami`; read her `data/outbox/efrat-s6/STATE.md`.
     - Then report the next eligible stage (E1 … E12 in STAGES.md §4) and do only that stage.
   - **If her whole message is "end-of-session":** STAGES.md §2 (update `STATE.md`; print CONTINUE / SEND TO PARTNER /

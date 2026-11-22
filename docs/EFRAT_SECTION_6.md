@@ -826,11 +826,12 @@ shows Efrat each result.
    - Run `uv run python -m hebloc loc silver isolation-test`. It must print `"ok": true`: the canary reads were
      denied. Otherwise STOP and report to Ori.
    - **From now until the last delivery, the pinned files never change** (`annotation/`, `config/`, `src/`,
-     `pyproject.toml`, `uv.lock`). The pull rule (STAGES.md §1 step 2): `git pull` only when
-     `git diff --quiet HEAD origin/main -- annotation/ config/ src/ pyproject.toml uv.lock` succeeds (a
-     documentation-only update, which Ori announces as allowed). A release you must take (`s56-r1.2` = the D-062 noun-ID
-     fix, `s56-r1.3` for a supplement, `s56-v1`) is announced in STAGES.md §6 and taken with `git merge --ff-only <tag>`. Never
-     `git checkout` a tag.
+     `pyproject.toml`, `uv.lock`, except Ori's record `annotation/silver/FROZEN_SILVER.json`, D-064). The pull rule
+     (STAGES.md §1 step 2): `git pull` only when
+     `git diff --quiet HEAD origin/main -- annotation/ config/ src/ pyproject.toml uv.lock ':(exclude)annotation/silver/FROZEN_SILVER.json'`
+     succeeds (a documentation-only update, which Ori announces as allowed). A release you must take (`s56-r1.2` = the
+     D-062 noun-ID fix, `s56-r1.2.1` = D-063 + D-064, `s56-r1.3` for a supplement, `s56-v1`) is announced in STAGES.md §6
+     and taken with `git merge --ff-only <tag>`. Never `git checkout` a tag.
 5. **The worked-example compliance check (T3):**
    ```
    uv run python -m hebloc loc silver create --task worked
@@ -863,6 +864,8 @@ shows Efrat each result.
    - Each split is finalized and **frozen** before the next one is opened.
    - Never revise a frozen job. On any STOP (T4: κ < 0.6; T5: > 5% format failures; abstention > 30%; a second
      isolation breach), send Ori the job name and wait for his project-level decision.
+   - **`WAIT` (exit code 3; since `s56-r1.2.1`, D-063)** means the usage limit refused the launch before any work. It
+     is not a STOP and needs no message: stop stepping and run `step` again after the reset time it prints.
    - **ישב.I** (guideline §4.15) is judged like every other item: locative, non-locative, or `?` with a reason.
 8. **Deliver** (§10), after each group of jobs:
    ```
@@ -877,7 +880,7 @@ shows Efrat each result.
 9. **STOP** after each delivery, and wait for R2 after the last one. Nothing of §9.3 before Ori announces `s56-v1`.
    Phase C supplements, if Ori approves any, come as new jobs by the same protocol (STAGES.md stage ES: an
    announcement in STAGES.md §6, then `git merge --ff-only s56-r1.3`, whose pinned protocol files are identical to
-   `s56-r1.1`).
+   `s56-r1.1`: `git diff --quiet s56-r1.1 HEAD -- annotation/ ':(exclude)annotation/silver/FROZEN_SILVER.json'`, D-064).
 
 ### 9.3 After R2 = tag `s56-v1` (CHECKPOINT 2; Ori announces it)
 

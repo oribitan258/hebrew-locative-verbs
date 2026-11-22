@@ -23,14 +23,15 @@ only orders the approved work, names who hands what to whom, and says when the n
     accepted, 625 no link) frozen; 0 breaches.
     - On the way, the usage limit refused 16 `unit` launches. **D-063** (Ori): such a refusal is an outage, not an
       attempt (`step` WAITs; `loc silver reclassify-outages`). Local commit `83aade8`.
-    - **Open (Ori, before the next push):** (1) whether and how to release D-063 to Efrat (her `s56-r1.2` code has the
-      same exposure; `s56-r1.3` is reserved for the supplement); (2) `FROZEN_SILVER.json` under `annotation/`
-      (commit `f5b045c`) breaks Efrat's pull rule and the G3/ES checks. Both commits are unpushed.
+    - **Both open items are resolved by P2 (D-064, 2026-11-22):** D-063 goes to Efrat as tag `s56-r1.2.1` (stage ED);
+      `FROZEN_SILVER.json` is excluded from the pinned-file checks (the pull rule, G3, ES). Commit, tag and push await
+      Ori's ★.
   - **R done again (2026-11-22): Efrat's delivery 2 (E4: Modern dev, Mikra dev, the anchor) received**, its hashes
     recorded in `FROZEN_SILVER.json` before any read (§5 row 2). No label was read; nothing was scored.
   - Next: **O3** (all inputs present: O1, O2, Efrat's E3 received). O3's onward DEP (Efrat's dev silver, E4) is now
     met too, as is the dev-silver part of G2.
-- §6: Efrat has done EF, E3 and **E4** (delivery 2 received). Her next stage is **E5** (validation silver). Her
+- §6: Efrat has done EF, E3 and **E4** (delivery 2 received). Her next stage is **E5** (validation silver); after P2's
+  push and message M8, she first takes **ED** (`s56-r1.2.1`) at the start of a session. Her
   progress is in her `STATE.md`.
 
 ---
@@ -46,7 +47,7 @@ only orders the approved work, names who hands what to whom, and says when the n
 | **SEND TO PARTNER** | `end-of-session` result: this session produced a handoff. Send it exactly as printed. |
 | **WAIT** | `end-of-session` result: nothing is eligible until the named input or approval arrives. |
 | **Delivery** | A folder made by `loc silver deliver` (or `hebloc work` / the §6 outbox), with `DELIVERY.json`. It travels by Google Drive, OneDrive or USB, **never by git**. |
-| **Pinned files** | `annotation/` (the protocol, the prompts, the guideline, the worked examples, the anchor ids), `config/`, `src/`, `pyproject.toml`, `uv.lock`. |
+| **Pinned files** | `annotation/` (the protocol, the prompts, the guideline, the worked examples, the anchor ids), `config/`, `src/`, `pyproject.toml`, `uv.lock`, **except `annotation/silver/FROZEN_SILVER.json`** (Ori's SG2 record of received hashes: not an input of any job; D-064). As a git pathspec, **PINNED** = `annotation/ config/ src/ pyproject.toml uv.lock ':(exclude)annotation/silver/FROZEN_SILVER.json'`. |
 
 ---
 
@@ -58,10 +59,12 @@ Claude Code does these steps in order and shows each result.
 2. **Synchronize with GitHub** (`git fetch origin --tags`):
    - **Ori:** `git pull` if origin is ahead (only Ori pushes, so this is a fast-forward).
    - **Efrat (the pull rule):**
-     - If `git diff --quiet HEAD origin/main -- annotation/ config/ src/ pyproject.toml uv.lock` succeeds, the update
-       is documentation only: `git pull`.
+     - If `git diff --quiet HEAD origin/main -- annotation/ config/ src/ pyproject.toml uv.lock ':(exclude)annotation/silver/FROZEN_SILVER.json'`
+       succeeds, the update is documentation only: `git pull`. (Since D-064 the exclusion is part of the rule: Ori's
+       `FROZEN_SILVER.json` record is not a pinned file.)
      - Otherwise do **not** pull. Read the announcements with `git show origin/main:docs/STAGES.md` (§6 below). If an
-       announcement names a tag for Efrat (`s56-r1.2` = the D-062 fix, `s56-r1.3` = a supplement, `s56-v1`):
+       announcement names a tag for Efrat (`s56-r1.2` = the D-062 fix, `s56-r1.2.1` = D-063 + D-064,
+       `s56-r1.3` = a supplement, `s56-v1`):
        `git merge --ff-only <tag>`, then run the checks
        that announcement lists.
      - Never `git checkout` a tag (a detached checkout breaks later pulls), and never pull pinned files in any other
@@ -108,12 +111,13 @@ Claude Code does these steps in order and shows each result.
 | **P1** | O1 stopped (the duplicate-noun-ID defect); Ori's plan approval | D-062: `nouns-r2` lists (one row per lemma); unique item ids in every silver job; versioned noun job ids; pre-fix jobs kept but inactive; the import rule. Tests. The Mikra and Modern r2 lists (verified). Docs | Full tests; `hebloc check`; `git diff --quiet s56-r1.1 -- annotation/ config/`; old `noun-mikra` byte-identical | Commit + tag **`s56-r1.2`** + push (★) → **SEND TO PARTNER** (§8 M7) | ★ APPROVAL → O1 | done; `s56-r1.2` pushed 2026-11-21 |
 | **O1** | P1 | Mikra noun types: `loc nouns list --corpus mikra` (→ `mikra-nouns-r2-826929982d`, 979 lemmas; from the clean `s56-r1.2` tree, `nouns_to_label.csv` sha256 `f26714a0…cbd7`), then `loc silver create --task noun --corpus mikra --list data/loc/nouns/mikra/mikra-nouns-r2-826929982d/nouns_to_label.csv` → job `noun-mikra-r2`, then `loc silver step noun-mikra-r2` until `finalized` (protocol §9). The stopped pre-fix job `noun-mikra` is never used (D-062) | QC thresholds met; access logs clean; job frozen | Job `noun-mikra-r2` (local) | AUTO → O2 | done 2026-11-21: `noun-mikra-r2` frozen (final sha256 `47dc464e…c064`; κ 0.907; 0 breaches) |
 | **O2** | P0 | Units (D-061): `create --task unit --sheet data/loc/review/units/unit_review.csv --examples-csv …/unit_review_examples.csv`, `--task audit --sheet …/audit.csv`, `--task variant --sheet …/paper_variants.csv`; `step` each until `finalized` | Each job frozen; audit result ≥ 95 / 100 or the pre-registered withdrawal (D-059 P2) | Jobs `unit`, `audit`, `variant` (local); the P5 evidence | DEP: Efrat's Modern nouns (E3) → O3 | done 2026-11-22: all frozen; audit 95/100; variant 136/160 agree; unit κ 0.873, 1,440 / 625; 0 breaches (16 usage-limit outages, D-063) |
+| **P2** | O2; Ori's plan approval (2026-11-22) | D-064 (docs only): release D-063 to Efrat as tag **`s56-r1.2.1`**; `FROZEN_SILVER.json` excluded from the pinned-file checks (the pull rule, G3, ES); stage ED + its announcement in §6; template M8 | Full tests; `hebloc check`; `git diff --quiet s56-r1.1 HEAD -- annotation/ config/ ':(exclude)annotation/silver/FROZEN_SILVER.json'`; `git diff --quiet s56-r1.2 HEAD -- config/ pyproject.toml uv.lock`; a rehearsal of Efrat's path in a scratch clone | Commit + tag `s56-r1.2.1` + push (★) → **SEND TO PARTNER** (§8 M8) | AUTO → O3 | docs written 2026-11-22; commit / tag / push await ★ |
 | **R** | A delivery from Efrat in `data/incoming/efrat-s6/<n>/` (any time) | `loc silver receive <folder>` only: hashes into `annotation/silver/FROZEN_SILVER.json`. **Never read the labels.** Update §5 "Partner status" | Hashes match `DELIVERY.json` | Commit of `FROZEN_SILVER.json` (★, before any read) | Back to the stage that waited | delivery 1 (`noun-modern-r2`) received 2026-11-21; delivery 2 (dev × 2 + anchor) received 2026-11-22; see §5 |
 | **O3** | O1, O2, Efrat's E3 received (R) | `loc nouns merge --automated` (Modern, Mikra) → historical nouns (`loc nouns list --exclude-typed`, a noun job, merge) → `loc units merge` / `audit --automated` → freeze `config/noun_types.yaml` v1 and the unit map | Merge checks; cross-corpus conflicts listed (D-061 G1 rule); `loc verify`; tests | Config commit (★ Ori approves each merged **file**, never rows) | DEP: Efrat's dev silver (E4) | |
 | **C0** | O3 (reads no silver) | **Phase C build**, in Plan Mode (★ plan approval first): supplement silver jobs that do not collide (`job_id` is `sentence-<corpus>-<split>` today); I-2, I-3, I-4 code; the I-3 sense-screen draw; the §6 silver tasks (EFRAT §5.9(2) candidate review, §5.9(3) template proxy); the class/identity audit task (EFRAT §5.5, §5.6) and who runs it under D-061 | Full tests; pinned protocol files unchanged | Local code commit (pushed only at G3 or G7) | ★ APPROVAL; then DEP: dev silver | |
 | **G2** | O3, C0, dev silver of **both** corpora + the anchor received (R) and QC-passed | — | — | — | ★ APPROVAL → C1 | |
 | **C1** | G2 | Identification candidates I-0 … I-5 on dev silver + the paper examples, by the **pre-registered rules** (D-059 addendum) | Each rule applied exactly as written | A decision record per candidate | ★ G3 if a supplement or sense screen is needed, else ★ G4 | |
-| **G3** | C1 needs a supplement / screen | Ori approves each draw (decision id). Push the code + tag **`s56-r1.3`** (pinned protocol files byte-identical to `s56-r1.1`; `s56-r1.2` is the D-062 fix) + an announcement in §6 | `git diff --quiet s56-r1.1 s56-r1.3 -- annotation/` | **SEND TO PARTNER** (§8 M3) | DEP: Efrat's ES delivery → R → C1 | |
+| **G3** | C1 needs a supplement / screen | Ori approves each draw (decision id). Push the code + tag **`s56-r1.3`** (pinned protocol files byte-identical to `s56-r1.1`; `s56-r1.2` is the D-062 fix) + an announcement in §6 | `git diff --quiet s56-r1.1 s56-r1.3 -- annotation/ ':(exclude)annotation/silver/FROZEN_SILVER.json'` (D-064) | **SEND TO PARTNER** (§8 M3) | DEP: Efrat's ES delivery → R → C1 | |
 | **G4** | C1 complete | Freeze `lexicon-v2` / `forms-v3` (P5 decided here, file level) | Tests; `loc lexicon check`; `loc verify` | Commit (★) | ★ APPROVAL → C2 | |
 | **C2** | G4 | Resolver development on dev silver + the paper examples | Determinism | Commit | DEP: validation silver (E5) received → G5 | |
 | **G5** | C2, validation silver of both corpora received | `loc score --choose` (once; ledger) | Ledger `annotation/gold/VALIDATION_CHOICE.json` written | Commit (★) | DEP: test silver (E6) received → G6 | |
@@ -133,11 +137,12 @@ CHECKPOINT 2.
 | **E1** | `s56-r1.1` in her checkout | §9.2 step 4: T1, T2, `loc silver isolation-test` | `"ok": true`; both samples `items_match = true` | — | AUTO |
 | **E2** | E1 | §9.2 step 5: worked examples | 15 / 15 (T3) | — | AUTO |
 | **EF** | The P1 announcement in §6 (`s56-r1.2`, D-062) | Take the fix: `git merge --ff-only s56-r1.2`; checks as announced. A pre-fix `noun-modern` job (any state) is kept untouched and never stepped, finalized or delivered | All announced checks OK | — | AUTO → E3 (redone), and the current E4–E6 stage continues |
+| **ED** | The P2 announcement in §6 (`s56-r1.2.1`, D-063 + D-064) | Take the release at the start of a session, never while a `step` is running: `git merge --ff-only s56-r1.2.1`; checks as announced; `reclassify-outages` only for a STOP caused by refused launches | All announced checks OK | — | AUTO → the current E5 / E6 stage continues |
 | **E3** | E2, EF | §9.2 step 6: the Modern r2 list (`loc nouns list --corpus modern --source package`; row count and sha256 as announced in §6) → `create` → job `noun-modern-r2` → pass A imported (`dropped_duplicate` lemmas relabelled in an isolated pass A), pass B → `deliver noun-modern-r2` | List = announced; QC; frozen | **SEND TO PARTNER** (§8 M2) | AUTO → E4 |
 | **E4** | E2 | §9.2 step 7: Modern dev → Mikra dev → anchor → `deliver` | QC per job; frozen | **SEND TO PARTNER** (M2) | AUTO → E5 |
 | **E5** | E4 | Modern validation → Mikra validation → `deliver` | Same | **SEND TO PARTNER** (M2) | AUTO → E6 |
 | **E6** | E5 | Modern test → Mikra test → `deliver` | Same | **SEND TO PARTNER** (M2) | WAIT: a G3 announcement (→ ES) or `s56-v1` (→ E7) |
-| **ES** | A G3 announcement in §6 | `git merge --ff-only s56-r1.3`; check `git diff --quiet s56-r1.1 HEAD -- annotation/`; draw the announced supplement / screen from the package; its jobs (dev first) → `deliver` | `items_match`; QC; frozen | **SEND TO PARTNER** (M2) | WAIT |
+| **ES** | A G3 announcement in §6 | `git merge --ff-only s56-r1.3`; check `git diff --quiet s56-r1.1 HEAD -- annotation/ ':(exclude)annotation/silver/FROZEN_SILVER.json'` (D-064); draw the announced supplement / screen from the package; its jobs (dev first) → `deliver` | `items_match`; QC; frozen | **SEND TO PARTNER** (M2) | WAIT |
 | **E7** | `s56-v1` announced (§8 M4) | §9.3 step 1: `git merge --ff-only s56-v1`, `uv sync`, tests, `hebpack.verify`, `loc lexicon check`, `loc silver isolation-test` | All OK; `git diff --quiet s56-v1 HEAD -- src/ config/` | — | AUTO |
 | **E8** | E7 | §9.3 steps 2–3: `loc extract --mode all-verbs` → `resolve` → `classify` → `swap` on Modern → `loc verify` | Verify OK | `results/` | AUTO |
 | **E9** | E8 | §5.9(2) candidate review and §5.9(3) template-proxy check, by the silver protocol (tasks in R2) | QC; frozen | `silver/` | AUTO |
@@ -146,7 +151,7 @@ CHECKPOINT 2.
 | **E12** | E11 | §9.3 step 6: deliver (§10) | `DELIVERY.json` | **SEND TO PARTNER** (M2) | WAIT: Ori's review |
 | **E-done** | E12 received | Ori verifies the hashes, recomputes at least one output, checks the cross-checks, reviews `REPORT.md` | Ori's acceptance (★) | **§6 COMPLETE** | — |
 
-**§6 depends on §5 only through releases:** `s56-r1.1` (now), `s56-r1.2` (the D-062 noun-ID fix), `s56-r1.3` (only
+**§6 depends on §5 only through releases:** `s56-r1.1` (now), `s56-r1.2` (the D-062 noun-ID fix), `s56-r1.2.1` (D-063 outages + D-064 checks), `s56-r1.3` (only
 if Ori requests a supplement), and
 `s56-v1` (R2). Any STOP of a T1–T7 or S1–S10 rule ends Efrat's session with **SEND TO PARTNER** (§8 M6).
 
@@ -199,6 +204,35 @@ if Ori requests a supplement), and
          labelled by an isolated pass A in the next step.
     5. `uv run python -m hebloc loc silver step noun-modern-r2`, repeated until `finalized` (or `STOP` → M6).
     6. `uv run python -m hebloc loc silver deliver noun-modern-r2 --out data/outbox/efrat-s6 --who efrat` → M2.
+- **2026-11-22: `s56-r1.2.1` = D-063 (a launch refused by the usage limit is an outage, not an attempt) + D-064 (the
+  corrected pull rule). Take it at the start of your next session (stage ED), never while a `step` is running.**
+  - **What it is.**
+    - D-063 (code: `src/hebloc/loc/silver.py`, `src/hebloc/cli.py`, tests). A launch that the Claude Code client
+      refuses before doing anything (the usage / session limit) used to be filed as a breach, so two refusals raised a
+      false SG3 STOP. Now it is kept on file as an outage, it is not an attempt, and `step` prints `WAIT` (exit code 3).
+    - D-064 (docs). `annotation/silver/FROZEN_SILVER.json` is Ori's record of the hashes he received. It is not a
+      pinned file, so the pull rule (§1 step 2) and the ES check exclude it.
+    - The protocol, prompts, guideline, worked examples, anchor ids and `config/` are byte-identical to `s56-r1.1`;
+      `pyproject.toml` and `uv.lock` to `s56-r1.2`. Every label rule and QC threshold is unchanged.
+  - **ED (at the start of a session, never while a `step` is running).**
+    1. `git status`: if tracked files are modified, STOP (M6).
+    2. `git fetch origin --tags`, then `git merge --ff-only s56-r1.2.1`.
+    3. These must all succeed, otherwise STOP (M6):
+       - `git merge-base --is-ancestor s56-r1.2 HEAD`;
+       - `git diff --quiet s56-r1.1 HEAD -- annotation/ config/ ':(exclude)annotation/silver/FROZEN_SILVER.json'`;
+       - `git diff --quiet s56-r1.2 HEAD -- pyproject.toml uv.lock`;
+       - `uv sync`;
+       - `uv run python -m pytest -q` (all pass).
+    4. **New behaviour.** A `step` that prints `"action": "WAIT"` (exit code 3) was refused by the usage limit. Stop
+       stepping and run `step` again after the reset time it prints. It is not a STOP; send no M6.
+    5. **An open (not frozen) job whose `QC_STOP.md` was caused by refused launches** (sessions with 0 tool calls):
+       run `uv run python -m hebloc loc silver reclassify-outages <job>` once.
+       - If it reports a `stop_superseded` file, continue with `step`.
+       - Otherwise the STOP stands: M6.
+       - Frozen jobs and earlier deliveries are never touched.
+    6. Record ED in `STATE.md`, then continue your current stage (E5 or E6) as before.
+    7. `annotation/silver/FROZEN_SILVER.json` is now in your checkout. Never edit or use it. When Ori later updates
+       only that record, your pull rule treats it as documentation.
 
 ## 7. Efrat's `STATE.md` (local: `data/outbox/efrat-s6/STATE.md`, never git)
 
@@ -224,6 +258,10 @@ Next: start → E<n+1>
   lists; the protocol, prompts and guideline are unchanged). Type `start`: it fast-forwards to `s56-r1.2` (stage EF)
   and then redoes E3 with the corrected Modern noun list. Do not use your earlier `noun-modern` job; keep it. Your
   sentence work (E4 on) is not affected."
+- **M8 (Ori → Efrat, after P2's push):** "I released `s56-r1.2.1` (D-063: a launch refused by the usage limit is now a
+  WAIT, not a breach; D-064: the pull rule ignores my `FROZEN_SILVER.json` record). The protocol, prompts, guideline
+  and config are unchanged. At the start of your next session type `start`: it fast-forwards to `s56-r1.2.1` (stage
+  ED), then continues your current stage. Never take it while a `step` is running."
 - **M4 (Ori → Efrat, R2):** "`s56-v1` is released. Type `start`: it fast-forwards to `s56-v1` and runs E7."
 - **M5 (Ori → Adi, R2):** "Type `start` (`docs/ADI_SECTION_5.md`)."
 - **M6 (Efrat → Ori, a STOP):** "STOP `<rule>` at `<stage>`: `<message>`; `git describe --tags --always`; `<job>`
@@ -236,3 +274,6 @@ Next: start → E<n+1>
 - B2: Efrat's Claude Code must support `--restricted` (E1 isolation test; a STOP goes to Ori).
 - B3: the confidence-column name of her Modern pass A file (`import-pass --confidence-column`, E3).
 - B4: the CHECKPOINT 2 decisions (stage-2 split, the historical test silver), by design at G7.
+- B5 (D-064): once O3's `config/` commit is pushed, `config/` differs from Efrat's tag, so her documentation-only pulls
+  stop until the next announced tag. Announcements still reach her (`git show origin/main:docs/STAGES.md`). This is
+  by design; no action.

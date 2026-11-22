@@ -31,11 +31,14 @@
       the fix.
     - The 16 chunks were reclassified (transcript hashes checked). The old STOP is kept as
       `QC_STOP.superseded-D-063-1.md`; the job then completed normally.
-  - **OPEN, for Ori before the next push:**
-    1. **D-063 for Efrat.** Her sessions run `s56-r1.2` code, so a usage limit would stop her sentence jobs the same
-       way. Decide whether and how to release it (a tag name; `s56-r1.3` is reserved for the supplement), and an
-       announcement in STAGES.md §6.
-    2. **The `FROZEN_SILVER.json` conflict** (see stage R below). Commits `f5b045c` and `83aade8` are unpushed.
+  - **P2 (D-064, 2026-11-22): both open items resolved, docs only.** Commit, tag and push await Ori's approval.
+    1. **D-063 for Efrat** → annotated tag **`s56-r1.2.1`** on the P2 docs commit (it contains `83aade8`). She takes it as
+       stage **ED** (STAGES.md §4 and the §6 announcement) after message **M8**, at the start of a session.
+    2. **`FROZEN_SILVER.json`** stays where the pinned protocol puts it. The pull rule, G3 and ES checks now exclude
+       it: `':(exclude)annotation/silver/FROZEN_SILVER.json'`.
+    - Checked before the edits: 312 tests passed; `origin/main` = `a820d3e`;
+      `git diff --quiet s56-r1.1 HEAD -- annotation/ config/ ':(exclude)…'` = 0;
+      `git diff --quiet s56-r1.2 HEAD -- config/ pyproject.toml uv.lock` = 0.
 - **Stage R done again (2026-11-22): Efrat's delivery 2 (E4) received.**
   - **The transfer.** It came by Google Drive as `data/efrat-s6/efrat-s6 (1)-20261122T095313Z-1-001/efrat-s6 (1)/`.
     Drive renamed the top folder `silver` → `silver (1)` and the manifest → `DELIVERY (1).json`.
@@ -85,8 +88,8 @@
     - The isolation test failed with the default model haiku (no breach) and passed with opus.
     - `claude` was not on her PATH, so she used the VS Code extension's bundled CLI.
     - Her pre-fix job `noun-modern` was never delivered.
-  - **OPEN, for Ori's decision before the next push.** `FROZEN_SILVER.json` is under `annotation/`, which several
-    checks require to be unchanged:
+  - **(Resolved by P2 / D-064: the checks now exclude the file.)** `FROZEN_SILVER.json` is under `annotation/`, which
+    several checks required to be unchanged:
     - Efrat's docs-only pull rule (STAGES.md §1 step 2; EFRAT_SECTION_6.md §9);
     - the ES check and the `s56-r1.1`…`s56-r1.3` check (G3);
     - the `annotation/` check of the EF announcement (STAGES.md §6).

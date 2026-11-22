@@ -1394,4 +1394,38 @@ Design: [m6_design.md](m6_design.md).
 - *Unchanged:* the protocol, prompts and guideline (`annotation/` is byte-identical); every label rule; QC
   thresholds; recovery for real failures; frozen jobs.
 - *Release:* code only (`src/hebloc/loc/silver.py`, `src/hebloc/cli.py`, tests). Efrat runs `s56-r1.2` code and has
-  the same exposure. Whether and how it is released to her is decided by Ori separately.
+  the same exposure. Whether and how it is released to her is decided by Ori separately. → Released to her as tag
+  `s56-r1.2.1` (D-064).
+
+### D-064 · Sync: D-063 released to Efrat as `s56-r1.2.1`; `FROZEN_SILVER.json` is not a pinned file (2026-11-22) · accepted (Ori, P2 plan)
+- *Problem 1.* D-063 (outages) existed only in local commit `83aade8`. Efrat's E5/E6 jobs run `s56-r1.2` code, so a
+  usage-limit refusal there would still be filed as a breach and raise a false SG3 STOP.
+- *Problem 2.* Stage R commits Ori's SG2 record `annotation/silver/FROZEN_SILVER.json` (commits `f5b045c`,
+  `055ed29`). Three checks treated all of `annotation/` as pinned:
+  - Efrat's pull rule (STAGES.md §1 step 2);
+  - the G3 check (`git diff --quiet s56-r1.1 s56-r1.3 -- annotation/`);
+  - the ES check (`git diff --quiet s56-r1.1 HEAD -- annotation/`).
+
+  Once pushed, every later docs update would look like a release to her, and G3 / ES would fail for good.
+- *Why not move the file.* The pinned protocol (`annotation/S56_SILVER_PROTOCOL.md`), `.gitignore` and
+  `tests/test_repo_hygiene.py` name `annotation/silver/FROZEN_SILVER.json` as the committed record. Moving it would
+  contradict a pinned file. The defect is in the checks. No silver job reads the file: only Ori's `receive`,
+  `frozen_file_ok` and `score` do.
+- *Decision.*
+  - **Pinned files** = `annotation/ config/ src/ pyproject.toml uv.lock` **except** `annotation/silver/FROZEN_SILVER.json`.
+    The pathspec is `':(exclude)annotation/silver/FROZEN_SILVER.json'`. It is added to the pull rule, the G3 check and the
+    ES check (STAGES.md §0, §1, §3, §4; EFRAT_SECTION_6 §9.2 steps 4 and 9).
+  - **Tag `s56-r1.2.1`** (annotated) on the P2 docs commit, which contains `83aade8`. A patch on `s56-r1.2`;
+    `s56-r1.3` stays reserved for the supplement. The tag carries the corrected pull rule, so Efrat's fast-forward
+    also brings it.
+  - **Bootstrap.** Efrat's old rule sees `src/` changed, so she does not pull. She reads the §6 announcement from
+    origin and takes the tag (stage ED) at the start of a session, never while a `step` is running. Announced checks:
+    `merge-base --is-ancestor s56-r1.2 HEAD`; `annotation/` + `config/` equal to `s56-r1.1` (with the exclusion);
+    `pyproject.toml` + `uv.lock` equal to `s56-r1.2`; `uv sync`; tests.
+  - A job started on `s56-r1.2` and finished on `s56-r1.2.1` stays valid. `FROZEN.json` / `DELIVERY.json` record
+    the git state only at freeze and deliver; `receive` does not check it; and no label rule changed.
+- *Unchanged:* the protocol, prompts, guideline, worked examples, anchor ids and `config/` (byte-identical to
+  `s56-r1.1`); `pyproject.toml` / `uv.lock` (= `s56-r1.2`); every frozen job and delivery; the bytes of
+  `FROZEN_SILVER.json`; no history rewrite; tags `s56-r1` … `s56-r1.2`.
+- *Known consequence (no action).* Once O3's `config/` commit is pushed, Efrat's documentation-only pulls stop until
+  the next announced tag. Announcements still reach her from origin (STAGES.md §9 B5).
