@@ -23,7 +23,10 @@ M8); `annotation/silver/FROZEN_SILVER.json` is excluded from the pinned-file che
 **2026-11-22: O3 DONE.** `config/verb_units.yaml` (2,065 links reviewed, 1,440 accepted; AI audit 95/100 passed)
 and `config/noun_types.yaml` v1 (2,777 lemmas; 125 cross-corpus conflicts → UNCLEAR) frozen before any dev silver
 was read; local commits `d6f6cf9` + `d75dbe5`.
-**Next: C0** (Phase C build; Plan Mode, Ori's ★ plan approval first).
+**2026-11-22: C0 DONE** (D-065): the Phase C build, code and pre-registration only (`loc ident`, `loc draw`,
+supplement / `instances` / `template` silver jobs, addendum `annotation/silver/r2/`); local commit `87a106d`, NOT pushed
+(G3 or G7). No silver opened, drawn or run.
+**Next: G2** (★ Ori approves opening the dev silver), then C1.
 - **THE ORDERED WORKFLOW IS `docs/STAGES.md`** (both people, through §5 and §6 completion): every session starts with
   `start` (STAGES.md §1: sync, checks, the next eligible stage) and ends with `end-of-session` (STAGES.md §2: update
   the docs, then exactly one of CONTINUE / SEND TO PARTNER / WAIT). One stage per session. Plan files are not durable:

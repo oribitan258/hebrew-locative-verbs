@@ -1,10 +1,31 @@
-# Session Handoff: stage 3 — Phase B + the SILVER workflow (D-061) RELEASED as `s56-r1.1` (G1 done); silver runs next; Phase C NOT started
+# Session Handoff: stage 3 — C0 (Phase C build, D-065) done; next G2 (★ open the dev silver); Phase C runs NOT started
 
 ## ★ CURRENT POSITION (read first; updated by every `end-of-session`)
 
 - **The ordered workflow is [STAGES.md](STAGES.md).** Every session: `start` (STAGES.md §1) → one stage →
   `end-of-session` (STAGES.md §2: CONTINUE / SEND TO PARTNER / WAIT).
-- **O3 DONE (2026-11-22). Next: C0 (Phase C build; Plan Mode, ★ plan approval first).**
+- **C0 DONE (2026-11-22, D-065). Next: G2 (★ Ori approves opening the dev silver), then C1.**
+  - `start` checks: clean tree, HEAD = origin/main = `4cb6127`, 312 tests passed, whoami Ori; both deliveries recorded.
+  - Ori's decisions (AskUserQuestion, recorded as D-065): new paths `annotation/silver/r2/` + exact pinned-file
+    checks; the class / identity audits run by Efrat's Claude Code (new stage EA); default sizes (review ≤ 5 A + 5 B
+    per candidate, ≤ 100 candidates; template 200 lemmas ≥ 20 tokens, ≥ 20 per value; audit = `deciding_ids` +
+    `identity_ids`; I-3 screen 15 / key).
+  - Built: `hebloc.loc.ident` (`loc ident build`: I-1 … I-4 candidate folders in `data/loc/ident/`, used only via
+    `--ident`; I-5 = report table `function_lemma.csv`), `hebloc.loc.draws` (`loc draw screen|review|template|audit`;
+    screen needs `--approval`), supplements stratified by candidate with ordinal + `items_sha256` and the registry
+    `gold.FROZEN_SUPPLEMENTS` (empty until G3), supplement jobs `sentence-<supplement id>-<split>`, SILVER tasks
+    `instances` (screen / review / audit, the pinned sentence prompt) and `template` (new prompt
+    `annotation/silver/r2/template_pass.md`), addendum `annotation/silver/r2/PROTOCOL_R2.md`; `receive` refuses to
+    overwrite a differing placed file. Docs: D-065, STAGES (C0, G3/ES exact checks, G6/O5, EA, E9, M9), EFRAT §5.5/
+    §5.6/§5.9, S56_R2 §7.
+  - Checks: 325 tests passed; pinned protocol files = `s56-r1.1`; `config/` unchanged; the Mikra R1 extract is
+    identical (12,045 instances, 15,593 arguments); frozen-sample job ids / files / prompt record unchanged.
+  - Dry runs (counts only, scratchpad): I-2 4,847 partners, re-keys 2,571 / 3,165 lemma-only Mikra tokens; I-3 18
+    host changes (29 Mikra tokens leave, 33 re-keyed); I-4 3,463 hosts (+1,287 Mikra tokens). Draws on Phase B Mikra
+    outputs: review 456 ids / 100 candidates, template 200 lemmas, audit 418 ids / 294 keys (broad: non-A/B classes
+    of paper verbs count as differing, per the approved wording).
+  - Commit: local `87a106d` (Ori approved), **not pushed** (G3 or G7). No silver opened, drawn or run.
+- **O3 DONE (2026-11-22).**
   - `start` checks: clean tree, HEAD = origin/main = `b7e8ef2`, 312 tests passed, `hebloc check` OK, whoami Ori.
   - **Units:** `loc units merge … --automated data/loc/silver/jobs/unit` → 2,065 reviewed, 1,440 accepted;
     `loc units audit … --automated data/loc/silver/jobs/audit` → passed 95 / 100 (AI audit, SILVER): the 452
