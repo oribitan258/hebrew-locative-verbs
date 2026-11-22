@@ -12,8 +12,10 @@ regenerated at every STOP (``hebloc loc gold exposure``); any new reading outsid
 register before it is used.
 
 Sources read automatically: the R1 quality-review readings in ``data/loc/review/quality/`` (sense screens,
-suspect keys, the form/combined/unidentified audits, the Modern homograph readings) and the lexicon's paper
-references. Texts are compared by program; only ids are written or printed.
+suspect keys, the form/combined/unidentified audits, the Modern homograph readings), the lexicon's paper
+references and (D-065) the Phase C I-3 sense-screen draws (``data/loc/draws/screen/``: their SILVER is read by the
+developer at C1). The items covered are the frozen samples and every registered supplement
+(``gold.FROZEN_SUPPLEMENTS``). Texts are compared by program; only ids are written or printed.
 """
 
 from __future__ import annotations
@@ -26,13 +28,14 @@ from pathlib import Path
 import pyarrow as pa
 import pyarrow.parquet as pq
 
-from hebloc.loc.gold import FROZEN_SAMPLES, GOLD_DIR
+from hebloc.loc.gold import FROZEN_SAMPLES, FROZEN_SUPPLEMENTS, GOLD_DIR
 from hebloc.loc.lexicon import Lexicon
 from hebloc.loc.manifest import write_csv
 from hebloc.loc.source import Source, connect
 from hebloc.paths import DATA_DIR, ROOT
 
 QUALITY_DIR = DATA_DIR / "loc" / "review" / "quality"
+DRAWS_DIR = DATA_DIR / "loc" / "draws"
 EXPOSURE_PATH = ROOT / "annotation" / "gold" / "EXPOSURE.csv"
 MANUAL_PATH = ROOT / "annotation" / "gold" / "EXPOSURE_MANUAL.csv"
 LEVELS = ("TOKEN", "SENTENCE", "META")
@@ -46,12 +49,14 @@ def _bracket(ctx: str | None) -> str | None:
 
 
 def _items(corpus: str, source: Source, gold_dir: Path) -> list[dict]:
-    sid = FROZEN_SAMPLES[corpus]["sample_id"]
-    f = Path(gold_dir) / corpus / sid / "sample.parquet"
-    if not f.exists():
+    rows = []
+    for sid in [FROZEN_SAMPLES[corpus]["sample_id"]] + sorted(FROZEN_SUPPLEMENTS.get(corpus, {})):
+        f = Path(gold_dir) / corpus / sid / "sample.parquet"
+        if f.exists():
+            rows += pq.read_table(f, columns=["sample_id", "item_id", "sent_id", "piece_idx", "word_idx", "verb_key", "split",
+                                              "agreement"]).to_pylist()
+    if not rows:
         return []
-    rows = pq.read_table(f, columns=["sample_id", "item_id", "sent_id", "piece_idx", "word_idx", "verb_key", "split",
-                                     "agreement"]).to_pylist()
     con = connect()
     con.register("want", pa.table({"sent_id": sorted({r["sent_id"] for r in rows})}))
     unit = {r[0]: (r[1], r[2]) for r in con.sql(f"SELECT sent_id, ref, text_norm FROM {source.units_sql(corpus, ('sent_id', 'ref', 'text_norm'))} "
@@ -78,8 +83,8 @@ def _same_token(it: dict, word: str | None, key: str | None) -> bool:
 
 
 def compute(lex: Lexicon, source: Source, *, gold_dir: Path = GOLD_DIR, quality_dir: Path = QUALITY_DIR,
-            manual_path: Path = MANUAL_PATH) -> list[dict]:
-    """Every (item, source) exposure of the frozen samples, deterministic order."""
+            manual_path: Path = MANUAL_PATH, draws_dir: Path = DRAWS_DIR) -> list[dict]:
+    """Every (item, source) exposure of the frozen samples and registered supplements, deterministic order."""
     items = {c: _items(c, source, gold_dir) for c in FROZEN_SAMPLES}
     by_ref, by_sent = defaultdict(list), defaultdict(list)
     for c, rows in items.items():
@@ -131,6 +136,16 @@ def compute(lex: Lexicon, source: Source, *, gold_dir: Path = GOLD_DIR, quality_
             for it in modern:
                 if probe and probe in it["text"]:
                     check([it], _bracket(ctx), None, "R1 homograph reading (modern)")
+    for f in sorted(Path(draws_dir).glob("screen/*/*/ids.csv")):
+        c = f.parent.parent.name
+        with open(f, encoding="utf-8-sig", newline="") as fh:
+            for row in csv.DictReader(fh):
+                sid, _, rest = row["instance_key"].partition("|")
+                for it in by_sent.get(sid, []):
+                    if it["corpus"] != c:
+                        continue
+                    same = f"{it['sent_id']}|{it['piece_idx']}|{it['word_idx']}" == row["instance_key"]
+                    hit(it, "TOKEN" if same else "SENTENCE", f"I-3 sense screen ({f.parent.name})")
     for e in lex.entries:
         for r in e.paper_refs:
             ref = r.get("he")

@@ -65,6 +65,11 @@ FROZEN_SAMPLES: dict[str, dict[str, str]] = {
                "items_sha256": "37c26d60a40a08f67f578334ee4b5f8026ec68e14d18f514022078bda4197d87",
                "sample_sha256": "f0903a45102493c1d5783809ba4c1dac9989ade8bb2c868edef6934903c6851f"},
 }
+#: supplemental samples (S56_R1.md §3; D-059 addendum; D-065), registered by Ori at G3 with the decision that approved
+#: the draw: corpus -> {sample_id: {"items_sha256", "approval"}}. EMPTY until G3. A SILVER sentence job is made only
+#: from a frozen sample or a registered supplement; a supplement drawn again (Efrat, from the package) must give the
+#: same items (``items_match``), exactly like FROZEN_SAMPLES.
+FROZEN_SUPPLEMENTS: dict[str, dict[str, dict[str, str]]] = {}
 GUIDELINE_VERSION = "S56-v1-g1"
 GOLD_DIR = DATA_DIR / "loc" / "gold"
 CAP_PER_KEY = 8

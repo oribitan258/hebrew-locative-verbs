@@ -540,3 +540,194 @@ def test_scoring_silver_reports_agreement_and_leaves_abstentions_out(r2world, tm
     assert full["abstained_excluded"] == 1 and full["variants"]["R0"]["n"] == 2
     assert r["sets"]["agreed_only"]["variants"]["R0"]["n"] == 1
     assert "accuracy" not in json.dumps({k: v for k, v in r.items() if k != "measure"})
+
+
+# ============================================================================================ Phase C build (C0, D-065)
+def test_i2_lemma_partner_python_equals_sql(r2world, tmp_path):
+    """I-2: a LEMMA-ONLY match on a host that is a form of another template of the same root gets ~<root>.<T>; a form
+    match does not; a partner already covered by a member is never added. Python == SQL."""
+    import duckdb
+
+    from hebloc.loc import identify as ID
+
+    fy = tmp_path / "forms_i2.yaml"
+    fy.write_text("meta: {lexicon_file_sha256: null}\nforms:\n  מלא.I: [ימלא]\nlemma_partners:\n  מלא.I: {מלא: ['~מלא.S']}\n"
+                  "  שלח.I: {שלח: ['~שלח.S']}\n", encoding="utf-8")
+    lex = L.load(tmp_path / "lex.yaml", fy)
+    idx = ID.build_index(lex)
+    cases = [("מילא", "מלא"), ("מילא", "ימלא"), ("שלח", "שלח"), ("מילא", "מילא")]
+    py = [ID.identify(idx, lem, host, "VERB")["verb_key"] for lem, host in cases]
+    assert py == ["מלא.I|~מלא.S", "מלא.I", "שלח.I|שלח.S", "מלא.I"]
+    con = duckdb.connect()
+    con.register("tk", pa.table({"sent_id": [f"s{i}" for i in range(len(cases))], "piece_idx": [0] * len(cases),
+                                 "word_idx": [0] * len(cases), "lemma": [c[0] for c in cases], "host": [c[1] for c in cases],
+                                 "upos": ["VERB"] * len(cases)}))
+    ID.register(con, lex)
+    sql = {r[0]: r[1] for r in con.sql(f"SELECT sent_id, verb_key FROM ({ID.identify_sql('tk')})").fetchall()}
+    assert [sql[f"s{i}"] for i in range(len(cases))] == py
+    r1 = ID.build_index(r2world["lex"])                                          # R1 (no lemma_partners): unchanged
+    assert ID.identify(r1, "מילא", "מלא", "VERB")["verb_key"] == "מלא.I"
+
+
+I3_LEX = LEX_YAML + """- {id: צרר.S, root: צרר, template: Simple, citation: צרר, gloss: bind, class: null, status: paper_other,
+   putting_removal: UNKNOWN, flags: [no_own_lemma]}
+"""
+
+
+def _inv(rows):
+    return pa.table({"lemma": [r[0] for r in rows], "host": [r[1] for r in rows], "n": [r[2] for r in rows],
+                     "corpus": ["modern"] * len(rows)})
+
+
+def test_forms_candidates_i2_i3_i4(tmp_path):
+    from hebloc.loc import morph
+
+    (tmp_path / "lex.yaml").write_text(I3_LEX, encoding="utf-8")
+    lex = L.load(tmp_path / "lex.yaml", tmp_path / "none.yaml")
+    simple_m, int_m = morph.forms("מלא", "Simple"), morph.forms("מלא", "Intensive")
+    g_clean, g_amb = sorted(int_m - simple_m)[:2]                                 # Intensive-only generated shapes
+    inv = _inv([("צריך", "צריך", 60), ("צריך", "צריכ1", 1), ("צריך", "צריכ2", 1),          # an established self-lemma
+                ("מילא", "מלא", 10), ("מילא", "מילא", 10),                                # own lemma of מלא.I
+                ("[BLANK]", g_clean, 5),                                                   # a clean generated host
+                ("אחר", g_amb, 3), ("[BLANK]", g_amb, 7), ("אחר", "x1", 30), ("אחר", "x2", 30), ("אחר", "x3", 30)])
+    r1 = L.build_forms(lex, inv)
+    assert "צריך" in r1["forms"]["צרר.S"] and "~form" in r1["ambiguous"]["צרר.S"]["צריך"]     # R1: self-copy is neutral
+    i3 = L.build_forms(lex, inv, established_self_foreign=True)
+    assert "צריך" not in i3["forms"]["צרר.S"]                                     # I-3: foreign -> dropped
+    assert g_clean not in r1["forms"]["מלא.I"]                                    # R1: no generated forms (own lemma)
+    i4 = L.build_forms(lex, inv, generated="clean_keys")
+    assert g_clean in i4["forms"]["מלא.I"] and g_clean not in i4["ambiguous"].get("מלא.I", {})
+    assert g_amb not in i4["forms"]["מלא.I"]                                       # I-4: only clean generated hosts
+    assert i4["forms"]["צרר.S"] == r1["forms"]["צרר.S"]                           # no own lemma: R1 treatment kept
+    i2 = L.build_forms(lex, inv, lemma_partners=True)
+    want = sorted(f"~מלא.{L.TEMPLATE_CODE[t]}" for t in ("Simple", "Causative") if "מלא" in morph.forms("מלא", t, exclude_kinds=("inf_n",) if t == "Simple" else ()))
+    assert i2["lemma_partners"]["מלא.I"]["מלא"] == want and "~מלא.S" in want
+    assert i2["forms"] == r1["forms"] and i2["ambiguous"] == r1["ambiguous"]     # I-2 changes no form
+
+
+def test_ident_build_candidate_folder_and_i1_draft(r2world, tmp_path):
+    from hebloc.loc import ident as IDN
+
+    w = r2world
+    inv = _inv([("מילא", "מלא", 10), ("מילא", "מילא", 10), ("שלח", "שלח", 20)])
+    m = IDN.build(["I-2"], w["lex"], inv, git=GIT, out_root=tmp_path / "ident", lexicon_path=tmp_path / "lex.yaml")
+    folder = tmp_path / "ident" / m["candidate_id"]
+    cand = IDN.load(folder)
+    assert m["candidates"] == ["I-2"] and cand.lemma_partners and not L.forms_stale(cand, folder / IDN.LEXICON_NAME)
+    assert verify(folder) == [] and (folder / "changes.csv").exists()
+    with pytest.raises(IDN.IdentError):                                          # built once
+        IDN.build(["I-2"], w["lex"], inv, git=GIT, out_root=tmp_path / "ident", lexicon_path=tmp_path / "lex.yaml")
+    with pytest.raises(IDN.IdentError):
+        IDN.parse_candidates("I-5")                                              # report only: no folder
+    ev = [{"lemma": "ממלא", "agree": "True", "suggestion": "dicta_lemma:מלא.I", "voice_a": "active", "voice_b": "active"},
+          {"lemma": "נשלח2", "agree": "False", "suggestion": "undecided"},
+          {"lemma": "שולח", "agree": "True", "suggestion": "shared_lemma:שלח.S"}]
+    text, summ = IDN.lexicon_v2_draft(LEX_YAML, ev)
+    assert summ["applied"] == {"dicta_lemma": 1, "shared_lemma": 1} and summ["skipped"] == {"undecided": 1}
+    import yaml as Y
+
+    ent = {e["id"]: e for e in Y.safe_load(text)["entries"]}
+    assert {"lemma": "ממלא", "voice": "active"} in ent["מלא.I"]["dicta_lemmas"]
+    bad = [{"lemma": "מילא", "agree": "True", "suggestion": "dicta_lemma:שלח.S"}]   # one lemma, two entries, no flag
+    evp = tmp_path / "ev.csv"
+    with open(evp, "w", encoding="utf-8", newline="") as f:
+        wr = csv.DictWriter(f, fieldnames=["lemma", "agree", "suggestion"])
+        wr.writeheader()
+        wr.writerows(bad)
+    with pytest.raises(IDN.IdentError):                                          # never fixed silently (Ori's G4)
+        IDN.build(["I-1"], w["lex"], inv, git=GIT, out_root=tmp_path / "ident2", lexicon_path=tmp_path / "lex.yaml",
+                  variant_evidence=evp)
+
+
+def test_supplement_strata_by_candidate_registry_and_ordinal(r2world, tmp_path, monkeypatch):
+    w = r2world
+    new_yaml = LEX_YAML.replace("{lemma: מולא, voice: passive}", "{lemma: מולא, voice: passive}, {lemma: צריך, voice: active}")
+    (tmp_path / "new.yaml").write_text(new_yaml, encoding="utf-8")
+    new = L.load(tmp_path / "new.yaml", tmp_path / "forms.yaml")
+    m = S.supplement("mikra", w["repo"], w["lex"], new, approval="D-TEST", size=4, git=GIT, out_root=tmp_path / "s", progress=False)
+    s = pq.read_table(tmp_path / "s" / "mikra" / m["sample_id"] / "sample.parquet").to_pylist()
+    assert {x["candidate"] for x in s} == {"I-1"} and all(x["stratum"].startswith("I-1/") for x in s)
+    assert all(0 < x["pi"] <= 1 for x in s) and m["items_sha256"] == G.items_fingerprint(s)
+    sid = m["sample_id"]
+    monkeypatch.setattr(G, "FROZEN_SUPPLEMENTS", {"mikra": {sid: {"items_sha256": "WRONG"}}})
+    with pytest.raises(S.ScoreError):                                            # registered, other items: STOP
+        S.supplement("mikra", w["repo"], w["lex"], new, approval="D-TEST", size=4, git=GIT, out_root=tmp_path / "s2", progress=False)
+    monkeypatch.setattr(G, "FROZEN_SUPPLEMENTS", {"mikra": {sid: {"items_sha256": m["items_sha256"]}}})
+    m2 = S.supplement("mikra", w["repo"], w["lex"], new, approval="D-TEST", size=4, git=GIT, out_root=tmp_path / "s3", progress=False)
+    assert m2["frozen_check"] == {"items_match": True}                           # a second draw (e.g. the package) matches
+    with pytest.raises(S.ScoreError):                                            # an ordinal is never reused
+        S.supplement("mikra", w["repo"], w["lex"], new, approval="D-TEST", size=5, git=GIT, out_root=tmp_path / "s4", progress=False)
+    assert S._allocate(10, {"I-1/A": 50, "I-1/HOMOGRAPH": 50}) == {"I-1/HOMOGRAPH": 1, "I-1/A": 9}   # HOMOGRAPH <= 10%
+
+
+def test_screen_draw_is_outside_every_sample_and_deterministic(r2world, tmp_path, monkeypatch):
+    from hebloc.loc import draws as DR
+
+    w = r2world
+    gd = tmp_path / "gold"
+    (gd / "mikra" / "mikra-test").mkdir(parents=True)
+    pq.write_table(pa.table({"sent_id": ["mikra:d0:1:0"]}), gd / "mikra" / "mikra-test" / "sample.parquet")
+    monkeypatch.setattr(G, "FROZEN_SAMPLES", {"mikra": {"sample_id": "mikra-test"}})
+    aff = {"מלא.I": {"מילא"}}
+    with pytest.raises(DR.DrawError):
+        DR.screen("mikra", w["repo"], w["lex"], aff, approval=None, git=GIT, candidate_sha256="c", gold_dir=gd,
+                  quality_dir=tmp_path / "q", out_root=tmp_path / "d1", progress=False)
+    m = DR.screen("mikra", w["repo"], w["lex"], aff, approval="D-TEST", git=GIT, candidate_sha256="c", gold_dir=gd,
+                  quality_dir=tmp_path / "q", out_root=tmp_path / "d1", progress=False)
+    rows, _ = DR.read_ids(tmp_path / "d1" / "screen" / "mikra" / m["draw_id"])
+    assert rows and not any(r["instance_key"].startswith("mikra:d0:1:0|") for r in rows)     # the sample's sentence is out
+    assert m["shortfall"] == {"מלא.I": DR.SCREEN_PER_KEY - len(rows)}
+    m2 = DR.screen("mikra", w["package"], w["lex"], aff, approval="D-TEST", git=GIT, candidate_sha256="c", gold_dir=gd,
+                   quality_dir=tmp_path / "q", out_root=tmp_path / "d2", progress=False)
+    assert m2["items_sha256"] == m["items_sha256"] and m2["draw_id"] == m["draw_id"]     # repo == package
+
+
+def test_review_template_audit_draws_and_the_i5_report(r2world, tmp_path):
+    from hebloc.loc import draws as DR
+    from hebloc.loc import report as RP
+
+    w = r2world
+    m = _extract(w, w["repo"], "all-verbs", "a")
+    folder = _folder(w, "a", m)
+    _resolve_all(w, folder, ("R0",))
+    C.classify(folder, "R0", w["lex"], R.load_config(), git=GIT, progress=False)
+    for k in (1, 2):
+        rv = DR.review(folder, "R0", git=GIT, out_root=tmp_path / f"r{k}")
+        tp = DR.template(folder, git=GIT, out_root=tmp_path / f"t{k}", size=4, min_tokens=1, min_per_value=1)
+        au = DR.audit(folder, "R0", git=GIT, out_root=tmp_path / f"a{k}")
+    assert rv["items_sha256"] == DR.review(folder, "R0", git=GIT, out_root=tmp_path / "r3")["items_sha256"]
+    rows, _ = DR.read_ids(tmp_path / "r1" / "review" / "mikra" / rv["draw_id"])
+    assert all(not r["verb_key"] or ":" in r["verb_key"] for r in rows)          # non-lexicon units only
+    trows, tman = DR.read_ids(tmp_path / "t1" / "template" / "mikra" / tp["draw_id"])
+    assert len(trows) == 4 and tman["population_by_value"]
+    adir = tmp_path / "a1" / "audit" / "mikra" / au["draw_id"]
+    head = open(adir / "ids.csv", encoding="utf-8-sig").readline()
+    assert "outcome" not in head and (adir / "audit_key.csv").exists()          # outcomes stay in the local key file
+    RP.report(folder, "R0", w["lex"], git=GIT)
+    fl = list(csv.DictReader(open(folder / "report-R0" / "function_lemma.csv", encoding="utf-8-sig")))
+    cov = {r["what"] for r in csv.DictReader(open(folder / "report-R0" / "coverage.csv", encoding="utf-8-sig"))}
+    assert "function_lemma" in cov and isinstance(fl, list)
+
+
+def test_exposure_covers_supplements_and_screen_readings(r2world, tmp_path, monkeypatch):
+    from hebloc.loc import exposure as EX
+
+    w = r2world
+    gd = tmp_path / "gold"
+    cols = {"sample_id": [], "item_id": [], "sent_id": [], "piece_idx": [], "word_idx": [], "verb_key": [], "split": [], "agreement": []}
+    for sid, item, unit in (("mikra-test", "MI0001", 1), ("mikra-s1-x", "MIS1001", 10)):
+        (gd / "mikra" / sid).mkdir(parents=True)
+        t = {k: list(v) for k, v in cols.items()}
+        for k, v in (("sample_id", sid), ("item_id", item), ("sent_id", f"mikra:d0:{unit}:0"), ("piece_idx", 0), ("word_idx", 0),
+                     ("verb_key", "מלא.I"), ("split", "dev"), ("agreement", False)):
+            t[k].append(v)
+        pq.write_table(pa.table(t), gd / "mikra" / sid / "sample.parquet")
+    monkeypatch.setattr(EX, "FROZEN_SAMPLES", {"mikra": {"sample_id": "mikra-test"}})
+    monkeypatch.setattr(EX, "FROZEN_SUPPLEMENTS", {"mikra": {"mikra-s1-x": {"items_sha256": "x"}}})
+    dd = tmp_path / "draws" / "screen" / "mikra" / "mikra-screen-x"
+    dd.mkdir(parents=True)
+    (dd / "ids.csv").write_text("item_id,instance_key,verb_key,stratum\nSCMI0001,mikra:d0:10:0|0|2,x,y\n", encoding="utf-8")
+    rows = EX.compute(w["lex"], w["repo"], gold_dir=gd, quality_dir=tmp_path / "q", manual_path=tmp_path / "none.csv",
+                      draws_dir=tmp_path / "draws")
+    hit = {(r["item_id"], r["level"]) for r in rows}
+    assert ("MIS1001", "SENTENCE") in hit and not any(r["item_id"] == "MI0001" for r in rows)

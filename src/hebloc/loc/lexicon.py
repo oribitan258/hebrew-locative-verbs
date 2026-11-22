@@ -60,6 +60,16 @@ FORMS_RULE_VERSION = "forms-v2"
 #: "all" / "none" remain available for the measurement only (hebloc.loc.bhsa_eval).
 FORMS_GENERATED_POLICY = "no_own_lemma"
 GENERATED_PARTNER = "~form"
+#: Phase C identification candidates (D-059 addendum, pre-registered; code D-065). They are OFF in R1 and are used only
+#: to build candidate folders (hebloc.loc.ident), never the config files:
+#: - I-2 ``lemma_partners``: a token matched by LEMMA ONLY on a host that is a morph-v2 form of ANOTHER template of the
+#:   same root gets the partner ``~<root>.<T>`` (a combined key, never dropped);
+#: - I-3 ``established_self_foreign`` (forms-v3): an established lemma that is Dicta's copy of the word itself is
+#:   FOREIGN (the self-copy exemption applies only to non-established lemmas, which are neutral anyway);
+#: - I-4 ``generated="clean_keys"``: V2 generated paradigm forms also for entries WITH a Dicta lemma of their own, kept
+#:   only where the host is clean (no partner at all); entries without an own lemma keep R1's ``~form`` treatment.
+FORMS_RULE_VERSION_I3 = "forms-v3"
+GENERATED_POLICIES = ("all", "none", "no_own_lemma", "clean_keys")
 
 
 class LexiconError(Exception):
@@ -100,6 +110,8 @@ class Lexicon:
     sha256: str
     forms_meta: dict = field(default_factory=dict)
     ambiguous: dict[str, dict[str, list[str]]] = field(default_factory=dict)   # entry id -> host -> ~partners
+    #: I-2 (Phase C candidates only; empty in R1): entry id -> host -> ~<root>.<T> partners of LEMMA-ONLY matches
+    lemma_partners: dict[str, dict[str, list[str]]] = field(default_factory=dict)
 
     def by_id(self) -> dict[str, Entry]:
         return {e.id: e for e in self.entries}
@@ -123,13 +135,14 @@ def load(path: Path = LEXICON_PATH, forms_path: Path = FORMS_PATH, *, validate: 
                              shared_lemmas=e.get("shared_lemmas") or [], flags=e.get("flags") or [],
                              paper_refs=e.get("paper_refs") or [], nonlocative_idioms=e.get("nonlocative_idioms") or [],
                              raw=e))
-    forms, fmeta, amb = {}, {}, {}
+    forms, fmeta, amb, lp = {}, {}, {}, {}
     if Path(forms_path).exists():
         fr = yaml.safe_load(Path(forms_path).read_text(encoding="utf-8")) or {}
         fmeta = fr.get("meta") or {}
         forms = {k: list(v or []) for k, v in (fr.get("forms") or {}).items()}
         amb = {k: {h: list(x) for h, x in (v or {}).items()} for k, v in (fr.get("ambiguous") or {}).items()}
-    lex = Lexicon(raw.get("meta") or {}, entries, forms, _sha([Path(path), Path(forms_path)]), fmeta, amb)
+        lp = {k: {h: list(x) for h, x in (v or {}).items()} for k, v in (fr.get("lemma_partners") or {}).items()}
+    lex = Lexicon(raw.get("meta") or {}, entries, forms, _sha([Path(path), Path(forms_path)]), fmeta, amb, lp)
     if validate:
         probs = problems(lex)
         if probs:
@@ -238,11 +251,13 @@ def looks_inflected(lem: str, own_space: set[str] = frozenset()) -> bool:
     return lem[:1] in ("ו", "ש") and lem[1:] in own_space
 
 
-def build_forms(lex: Lexicon, inventory, *, generated: str = FORMS_GENERATED_POLICY) -> dict:
+def build_forms(lex: Lexicon, inventory, *, generated: str = FORMS_GENERATED_POLICY, established_self_foreign: bool = False,
+                lemma_partners: bool = False) -> dict:
     """Fallback forms per entry from the pooled verb inventory (pyarrow table lemma, host, n, corpus); forms-v2.
 
     ``generated``: "all" (every entry), "none", or "no_own_lemma" (only entries without a Dicta lemma of their own;
-    their generated forms are always AMBIGUOUS, partner ``~form``).
+    their generated forms are always AMBIGUOUS, partner ``~form``); "clean_keys" (Phase C candidate I-4).
+    ``established_self_foreign`` (I-3) and ``lemma_partners`` (I-2) are the other Phase C candidates (off in R1).
 
     Candidates = generated paradigm forms (hebloc.loc.morph; per ``generated``) + hosts seen with the entry's
     own lemmas (stronger support when the host is outside the root's paradigm). Each attested candidate is then
@@ -279,24 +294,47 @@ def build_forms(lex: Lexicon, inventory, *, generated: str = FORMS_GENERATED_POL
                 paradigm[(root, template)] = set()
         return paradigm[(root, template)]
 
+    other_cache: dict[tuple[str, str], set[str]] = {}
+
+    def other_template_forms(root: str, template: str) -> set[str]:
+        """I-2: the morph-v2 forms of ``root`` in ``template`` (Simple without the hollow nif'al infinitive shapes,
+        as for the ~<root>.S partner below)."""
+        if (root, template) not in other_cache:
+            try:
+                other_cache[(root, template)] = morph.forms(root, template, exclude_kinds=("inf_n",) if template == "Simple" else ())
+            except ValueError:
+                other_cache[(root, template)] = set()
+        return other_cache[(root, template)]
+
     lemma_on_host: dict[tuple[str, str], int] = {}
     for host, c in by_host.items():
         for lem, n in c.items():
             lemma_on_host[(lem, host)] = n
 
     def self_share(lem: str, host: str) -> float:
+        if established_self_foreign:
+            return 0.0                           # I-3: an established self-copy is never neutral
         on = sum(lemma_on_host.get((lem, p + host), 0) for p in ("",) + PROCLITICS)
         return on / lemma_total[lem] if lemma_total[lem] else 0.0
 
-    out, amb, stats, blockers, dropped = {}, {}, {}, {}, []
+    if generated not in GENERATED_POLICIES:
+        raise ValueError(f"generated={generated!r}")
+    out, amb, stats, blockers, dropped, lpart = {}, {}, {}, {}, [], {}
     for e in lex.entries:
         mine = e.own_lemmas | set(e.shared)
         own_gen = gen(e.root, e.template)
         any_gen = own_gen | gen(e.root, "Simple") | gen(e.root, "Intensive") | gen(e.root, "Causative")
-        if generated not in ("all", "none", "no_own_lemma"):
-            raise ValueError(f"generated={generated!r}")
-        gen_here = generated == "all" or (generated == "no_own_lemma" and not e.own_lemmas)
-        mark_generated = generated == "no_own_lemma"
+        gen_here = generated in ("all", "clean_keys") or (generated == "no_own_lemma" and not e.own_lemmas)
+        mark_generated = generated == "no_own_lemma" or (generated == "clean_keys" and not e.own_lemmas)
+        clean_generated_only = generated == "clean_keys" and bool(e.own_lemmas)
+        if lemma_partners:
+            lpart_e = {}
+            for h in sorted({h for lem in mine for h in hosts_of_lemma.get(lem, ())}):
+                ps = sorted(f"~{e.root}.{TEMPLATE_CODE[t]}" for t in TEMPLATES if t != e.template and h in other_template_forms(e.root, t))
+                if ps:
+                    lpart_e[h] = ps
+            if lpart_e:
+                lpart[e.id] = lpart_e
         cands = {h for h in own_gen if h in by_host} if gen_here else set()
         attested_here: set[str] = set()
         for lem in e.own_lemmas:
@@ -334,6 +372,8 @@ def build_forms(lex: Lexicon, inventory, *, generated: str = FORMS_GENERATED_POL
             share = sum(foreign.values()) / total if total else 1.0
             top = [k for k, _ in sorted(foreign.items(), key=lambda x: (-x[1], x[0]))]
             if share > FORMS_DROP_ABOVE_FOREIGN:
+                if clean_generated_only and h not in attested_here:
+                    continue                             # I-4: never a candidate of R1, so not an R1 drop either
                 blocked.update(foreign)
                 n_drop += 1
                 dropped.append({"entry": e.id, "host": h, "tokens": total, "foreign_share": round(share, 3),
@@ -343,6 +383,8 @@ def build_forms(lex: Lexicon, inventory, *, generated: str = FORMS_GENERATED_POL
             if simple_partner and (h in simple_forms or simple_ev / total > FORMS_CLEAN_MAX_FOREIGN):
                 partners.append(f"~{e.root}.S")
             partners += entry_partners
+            if clean_generated_only and h not in attested_here and partners:
+                continue                                 # I-4: a generated form is added only where it is clean
             if mark_generated and h not in attested_here:
                 partners.append(GENERATED_PARTNER)
             kept.append(h)
@@ -353,16 +395,24 @@ def build_forms(lex: Lexicon, inventory, *, generated: str = FORMS_GENERATED_POL
             amb[e.id] = ambig
         stats[e.id] = {"candidates_attested": len(cands), "kept": len(kept), "ambiguous": len(ambig), "dropped": n_drop}
         blockers[e.id] = blocked.most_common(5)
-    return {"forms": out, "ambiguous": amb, "stats": stats, "blockers": blockers, "dropped": dropped}
+    return {"forms": out, "ambiguous": amb, "stats": stats, "blockers": blockers, "dropped": dropped, "lemma_partners": lpart}
 
 
 def write_forms(lex: Lexicon, inventory, path: Path = FORMS_PATH, inventory_info: dict | None = None, *,
-                generated: str = FORMS_GENERATED_POLICY) -> dict:
+                generated: str = FORMS_GENERATED_POLICY, established_self_foreign: bool = False,
+                lemma_partners: bool = False, lexicon_path: Path | None = None, candidates: list[str] | None = None) -> dict:
+    """Write a forms file. With the defaults it is the R1 file (byte-identical rule text); the Phase C options
+    (``generated="clean_keys"``, ``established_self_foreign``, ``lemma_partners``) are written only into candidate
+    folders (hebloc.loc.ident) and recorded in ``meta.candidates``."""
     from hebloc.loc import morph
     from hebloc.store.io import atomic_write_text
 
-    r = build_forms(lex, inventory, generated=generated)
-    lex_sha = hashlib.sha256(LEXICON_PATH.read_bytes()).hexdigest() if path == FORMS_PATH else None
+    r = build_forms(lex, inventory, generated=generated, established_self_foreign=established_self_foreign,
+                    lemma_partners=lemma_partners)
+    if lexicon_path is not None:
+        lex_sha = hashlib.sha256(Path(lexicon_path).read_bytes()).hexdigest()
+    else:
+        lex_sha = hashlib.sha256(LEXICON_PATH.read_bytes()).hexdigest() if path == FORMS_PATH else None
     header = ("# GENERATED by `hebloc loc lexicon forms` from config/locative_verbs.yaml and the five verb\n"
               "# inventories (data/loc/inventory). Do not edit by hand (D-057). Rule: meta.rule.\n")
     st = r["stats"]
@@ -387,8 +437,18 @@ def write_forms(lex: Lexicon, inventory, path: Path = FORMS_PATH, inventory_info
                                "dropped": sum(x["dropped"] for x in st.values())},
                     "lexicon_file_sha256": lex_sha, "inventory": inventory_info or {}},
            "forms": r["forms"], "ambiguous": r["ambiguous"]}
+    if candidates:     # Phase C candidate folder only (hebloc.loc.ident); the R1 file never has these keys
+        if established_self_foreign:
+            doc["meta"]["rule_version"] = FORMS_RULE_VERSION_I3
+        doc["meta"]["candidates"] = list(candidates)
+        doc["meta"]["candidate_options"] = {"generated_forms": generated, "established_self_foreign": established_self_foreign,
+                                            "lemma_partners": lemma_partners}
+        header = ("# Phase C identification CANDIDATE (hebloc.loc.ident; D-059 addendum, D-065). Not the R1 config.\n" + header)
+        if lemma_partners:
+            doc["lemma_partners"] = r["lemma_partners"]
     atomic_write_text(header + yaml.safe_dump(doc, allow_unicode=True, sort_keys=False, width=200), path)
-    return {"stats": st, "blockers": r["blockers"], "dropped": r["dropped"]}
+    return {"stats": st, "blockers": r["blockers"], "dropped": r["dropped"], "forms": r["forms"],
+            "ambiguous": r["ambiguous"], "lemma_partners": r["lemma_partners"]}
 
 
 # ---------------------------------------------------------------------------------------------- data checks

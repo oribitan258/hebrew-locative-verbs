@@ -318,6 +318,11 @@ uv run python -m hebloc loc units inventory|build|review|merge|audit · loc extr
     loc swap · loc stats · loc score · loc gold exposure|paper|supplement   # R2 code, Phase B (docs/S56_R2.md §1)
 uv run python -m hebloc loc silver isolation-test|create|import-pass|step|status|finalize|deliver|receive|anchor-ids|anchor-agreement
                                          # D-061 SILVER workflow (annotation/S56_SILVER_PROTOCOL.md §9)
+                                         #   + D-065: create --task instances --purpose screen|review|audit --ids <draw>
+                                         #            create --task template --ids <draw>   (annotation/silver/r2/)
+uv run python -m hebloc loc ident build --candidate I-2|I-3|I-4[,..]   # Phase C candidates (data/loc/ident; never config)
+uv run python -m hebloc loc draw screen|review|template|audit           # Phase C id lists (screen: G3, --approval)
+#   --ident <candidate folder> on extract/resolve/classify/stats/gold supplement; gold supplement --ordinal n (G3)
 ```
 
 ## Repo map

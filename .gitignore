@@ -55,6 +55,11 @@ desktop.ini
 !/annotation/silver/worked_examples.csv
 !/annotation/silver/anchor_ids.csv
 !/annotation/silver/FROZEN_SILVER.json
+# Phase C additions (D-065): the addendum and its prompt only (new files; the pinned prompts/ are never changed)
+!/annotation/silver/r2/
+/annotation/silver/r2/*
+!/annotation/silver/r2/PROTOCOL_R2.md
+!/annotation/silver/r2/template_pass.md
 *_silver.csv
 silver-ws/
 hebloc-silver-ws/

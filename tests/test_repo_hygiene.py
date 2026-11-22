@@ -78,8 +78,10 @@ def test_silver_private_material_is_ignored_and_approved_files_are_not():
                "annotation/silver/test/mikra_test_silver.csv", "annotation/gold/mikra_test_silver.csv",
                "data/loc/silver/final/test/mikra_test_silver.csv", "silver-ws/a/input.csv",
                "hebloc-silver-ws/a/out/labels.csv", "notes/session.jsonl", "annotation/gold/mikra_paper_examples.csv",
-               "docs/drafts/EFRAT_R2_REVIEW_TASKS_DRAFT.md", "QC_STOP.md"]
+               "docs/drafts/EFRAT_R2_REVIEW_TASKS_DRAFT.md", "QC_STOP.md", "annotation/silver/r2/screen_ids.csv",
+               "annotation/silver/r2/audit_key.csv"]
     approved = ["annotation/S56_SILVER_PROTOCOL.md", "annotation/silver/prompts/sentence_pass.md",
+                "annotation/silver/r2/PROTOCOL_R2.md", "annotation/silver/r2/template_pass.md",
                 "annotation/silver/worked_examples.csv", "annotation/silver/anchor_ids.csv",
                 "annotation/silver/FROZEN_SILVER.json", "annotation/gold/EXPOSURE.csv", "src/hebloc/loc/silver.py"]
     ign = _ignored(private + approved)

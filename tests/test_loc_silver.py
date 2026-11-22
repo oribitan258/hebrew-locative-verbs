@@ -57,7 +57,7 @@ for r in rows:
     i = r["item_id"]
     if meta["kind"] == "adjudicate":
         out.append({"item_id": i, "choice": "1", "confidence": "high", "evidence_rule": "3.5", "reason": "x"})
-    elif meta["task"] in ("sentence", "anchor", "worked"):
+    elif meta["task"] in ("sentence", "anchor", "worked", "instances"):
         if mode == "invalid":
             out.append({"item_id": i, "is_target_verb": "X", "confidence": "high"})
             continue
@@ -79,6 +79,9 @@ for r in rows:
         out.append({"item_id": i, "decision": dec, "base": base if dec == "accept" else "", "confidence": "high", "evidence": "x"})
     elif meta["task"] == "audit":
         out.append({"item_id": i, "correct": "Y", "confidence": "high", "evidence": "x"})
+    elif meta["task"] == "template":
+        t = "Intensive" if (mode == "disagree" and label == "B") else "Causative"
+        out.append({"item_id": i, "template": t, "confidence": "high", "evidence": "x"})
 (ws / "out").mkdir(exist_ok=True)
 with open(ws / "out" / "labels.csv", "w", encoding="utf-8", newline="") as f:
     w = csv.DictWriter(f, fieldnames=meta["out_columns"], extrasaction="ignore")
@@ -626,3 +629,142 @@ def test_kappa_ci_is_deterministic():
     a, b = ["A", "B", "A", "B", "A"] * 4, ["A", "B", "B", "B", "A"] * 4
     assert SV.kappa_ci(a, b) == SV.kappa_ci(a, b)
     assert SV.kappa(["A"] * 5, ["A"] * 5) == 1.0
+
+
+# ============================================================================================ Phase C (C0, D-065)
+def test_c0_leaves_the_frozen_sample_jobs_unchanged(sw):
+    """D-065: the job id, the final file name and the FROZEN.json prompt record of a frozen-sample job are exactly as
+    before C0 (the E5/E6 jobs run the older code and must stay comparable)."""
+    jid = _create(sw)["job_id"]
+    assert jid == "sentence-mikra-dev"
+    assert _run(sw, jid)["action"] == "finalized"
+    assert (sw["jobs"] / jid / "final" / "mikra_dev_silver.csv").exists()
+    fz = json.loads((sw["jobs"] / jid / "FROZEN.json").read_text(encoding="utf-8"))
+    assert sorted(fz["prompts_sha256"]) == sorted(["adjudicate.md", "audit_pass.md", "noun_pass.md", "sentence_pass.md",
+                                                   "unit_pass.md", "variant_pass.md"])
+    assert "protocol_r2_sha256" not in fz and "prompt_r2_sha256" not in fz
+
+
+def _supplement_dir(w, sid="mikra-s1-0123456789", items_sha="FP"):
+    d = w["tmp"] / "supp"
+    (d / "sheets").mkdir(parents=True)
+    items = [{"sample_id": sid, "item_id": f"MIS10{k:02d}", "instance_key": f"mikra:d0:{k + 10}:0|0|1", "split": "dev",
+              "stratum": "I-1/B", "agreement": False, "members": ["מלא.I"], "verb_key": "מלא.I", "sent_id": f"mikra:d0:{k + 10}:0",
+              "doc_id": "d0"} for k in range(1, 3)]
+    pq.write_table(pa.Table.from_pylist(items), d / "sample.parquet")
+    (d / "manifest.json").write_text(json.dumps({"sample_id": sid, "supplement_version": "gold-sup-c0", "items_sha256": items_sha}),
+                                     encoding="utf-8")
+    with open(d / "sheets" / "dev.csv", "w", encoding="utf-8-sig", newline="") as f:
+        wr = csv.writer(f)
+        wr.writerow(["item_id", "split", "agreement", "stratum", "where", "verb_key", "target", "sentence", "words"]
+                    + list(G.ANNOTATION_COLUMNS))
+        for x in items:
+            wr.writerow([x["item_id"], "dev", "", "I-1/B", "Genesis 1:2", "מלא.I", "מילא", "דני [[מילא]] את הכד במים",
+                         "0:דני 1:מילא 2:את 3:הכד 4:במים"] + [""] * len(G.ANNOTATION_COLUMNS))
+    return d, sid
+
+
+def test_supplement_jobs_never_collide_and_are_scored_as_a_second_stratum(sw, tmp_path, monkeypatch):
+    d, sid = _supplement_dir(sw)
+    with pytest.raises(SV.SilverError):                                    # not registered (G3): refused
+        SV.create_job("sentence", "mikra", "dev", sample_dir=d, jobs_dir=sw["jobs"])
+    monkeypatch.setattr(G, "FROZEN_SUPPLEMENTS", {"mikra": {sid: {"items_sha256": "OTHER"}}})
+    with pytest.raises(SV.SilverError):                                    # registered with other items: refused
+        SV.create_job("sentence", "mikra", "dev", sample_dir=d, jobs_dir=sw["jobs"])
+    monkeypatch.setattr(G, "FROZEN_SUPPLEMENTS", {"mikra": {sid: {"items_sha256": "FP"}}})
+    sj = SV.create_job("sentence", "mikra", "dev", sample_dir=d, jobs_dir=sw["jobs"])["job_id"]
+    fj = _create(sw)["job_id"]
+    assert sj == f"sentence-{sid}-dev" and fj == "sentence-mikra-dev"
+    for j in (sj, fj):
+        assert _run(sw, j)["action"] == "finalized"
+    assert (sw["jobs"] / sj / "final" / f"{sid}_dev_silver.csv").exists()
+    out, frozen, final = tmp_path / "outbox", tmp_path / "FROZEN_SILVER.json", tmp_path / "final"
+    SV.deliver([fj, sj], out, who="efrat", jobs_dir=sw["jobs"])
+    SV.receive(out, frozen_path=frozen, final_dir=final, received_dir=tmp_path / "received")
+    assert sorted(p.name for p in (final / "dev").glob("*.csv")) == sorted(["mikra_dev_silver.csv", f"{sid}_dev_silver.csv"])
+    rows = S.load_gold("mikra", "dev", gold_dir=final, frozen_path=frozen)
+    assert len(rows) == 6 and {r["sample_id"] for r in rows} == {"mikra-test", sid}
+    assert len(S.load_gold("mikra", "dev", gold_dir=final, frozen_path=frozen, include_supplements=False)) == 4
+    placed = final / "dev" / "mikra_dev_silver.csv"
+    placed.write_text("changed", encoding="utf-8")                        # a different file already placed
+    with pytest.raises(SV.SilverError):
+        SV.receive(out, frozen_path=frozen, final_dir=final, received_dir=tmp_path / "received")
+
+
+def _draw_dir(tmp_path, kind, rows, corpus="mikra"):
+    d = tmp_path / "draws" / kind / corpus / f"{corpus}-{kind}-x"
+    d.mkdir(parents=True)
+    cols = list(rows[0])
+    with open(d / "ids.csv", "w", encoding="utf-8-sig", newline="") as f:
+        wr = csv.DictWriter(f, fieldnames=cols)
+        wr.writeheader()
+        wr.writerows(rows)
+    (d / "manifest.json").write_text(json.dumps({"kind": kind, "corpus": corpus, "draw_id": d.name,
+                                                 "items_sha256": "abcdef0123456789" + kind}), encoding="utf-8")
+    return d
+
+
+def test_instances_job_end_to_end_uses_the_pinned_sentence_prompt(sw, tmp_path, monkeypatch):
+    rows = [{"item_id": f"SCMI000{k}", "instance_key": f"mikra:d0:{k}:0|0|1", "verb_key": "צרר.S|~form", "stratum": "צרר.S"}
+            for k in range(1, 4)]
+    d = _draw_dir(tmp_path, "screen", rows)
+
+    def fake_sentences(con, source, corpus, keys):
+        return {k: {"sentence": "הוא [[צריך]] ללכת", "words": "0:הוא 1:צריך 2:ללכת", "target": "צריך", "doc_id": "d0"} for k in keys}
+
+    monkeypatch.setattr(SV, "unit_sentences", fake_sentences)
+    with pytest.raises(SV.SilverError):                                    # the draw kind must match the purpose
+        SV.create_job("instances", purpose="review", ids=d, source=object(), jobs_dir=sw["jobs"])
+    r = SV.create_job("instances", purpose="screen", ids=d, source=object(), jobs_dir=sw["jobs"])
+    jid = r["job_id"]
+    assert jid.startswith("screen-mikra-")
+    job = SV.load_job(jid, sw["jobs"])
+    assert set(job["items"][0]["blind"]) == set(SV.BLIND_COLUMNS["sentence"])      # the stratum is never shown
+    assert _run(sw, jid)["action"] == "finalized"
+    fz = json.loads((sw["jobs"] / jid / "FROZEN.json").read_text(encoding="utf-8"))
+    assert f"{jid}_silver.csv" in "".join(fz["files"]) and fz["protocol_r2_sha256"]
+    ws = sorted((sw["tmp"] / "ws").glob(f"{jid}-A-*"))[0]
+    assert (ws / "PROMPT.md").read_text(encoding="utf-8").startswith("# SILVER pass: annotate verb instances")
+
+
+def test_template_job_end_to_end(sw, tmp_path):
+    rows = [{"item_id": f"TPMO000{k}", "lemma": f"הכניס{k}", "verb_key": "הכניס (40); מכניס (20)", "stratum": "Causative", "n": "60"}
+            for k in range(1, 4)]
+    d = _draw_dir(tmp_path, "template", rows, corpus="modern")
+    jid = SV.create_job("template", ids=d, jobs_dir=sw["jobs"])["job_id"]
+    assert jid.startswith("template-modern-")
+    job = SV.load_job(jid, sw["jobs"])
+    assert "proxy" not in job["items"][0]["blind"] and "stratum" not in job["items"][0]["blind"]
+    assert _run(sw, jid)["action"] == "finalized"
+    out = list(csv.DictReader(open(sw["jobs"] / jid / "final" / "template_check.csv", encoding="utf-8-sig")))
+    assert {r["template"] for r in out} == {"Causative"} and {r["label_source"] for r in out} == {"ai"}
+    fz = json.loads((sw["jobs"] / jid / "FROZEN.json").read_text(encoding="utf-8"))
+    assert list(fz["prompt_r2_sha256"]) == ["template_pass.md"]
+    ws = sorted((sw["tmp"] / "ws").glob(f"{jid}-A-*"))[0]
+    assert "binyan" in (ws / "PROMPT.md").read_text(encoding="utf-8")
+
+
+def test_template_passes_that_disagree_give_unclear(sw, tmp_path, monkeypatch):
+    monkeypatch.setenv("FAKE_MODE", "disagree")
+    d = _draw_dir(tmp_path, "template", [{"item_id": "TPMO0001", "lemma": "שם", "verb_key": "שם (9)", "stratum": "Simple", "n": "9"}],
+                  corpus="modern")
+    jid = SV.create_job("template", ids=d, jobs_dir=sw["jobs"])["job_id"]
+    assert _run(sw, jid)["action"] == "finalized"
+    out = list(csv.DictReader(open(sw["jobs"] / jid / "final" / "template_check.csv", encoding="utf-8-sig")))
+    assert out[0]["template"] == "unclear" and out[0]["silver_status"] == "abstained"
+
+
+def test_pinned_prompts_unchanged_and_phase_c_files_separate():
+    """D-065: the six pinned prompts stay alone in prompts/ (byte-identical to s56-r1.1); Phase C files are in r2/."""
+    import subprocess
+
+    assert sorted(p.name for p in SV.PROMPTS_DIR.glob("*")) == sorted(
+        ["adjudicate.md", "audit_pass.md", "noun_pass.md", "sentence_pass.md", "unit_pass.md", "variant_pass.md"])
+    assert sorted(p.name for p in SV.R2_DIR.glob("*")) == ["PROTOCOL_R2.md", "template_pass.md"]
+    pinned = ["annotation/S56_SILVER_PROTOCOL.md", "annotation/S56_GUIDELINE.md", "annotation/silver/prompts/",
+              "annotation/silver/worked_examples.csv", "annotation/silver/anchor_ids.csv"]
+    tag = subprocess.run(["git", "rev-parse", "--verify", "--quiet", "s56-r1.1^{commit}"], cwd=ROOT, capture_output=True)
+    if tag.returncode != 0:
+        pytest.skip("tag s56-r1.1 not available")
+    r = subprocess.run(["git", "diff", "--quiet", "s56-r1.1", "--", *pinned], cwd=ROOT)
+    assert r.returncode == 0, "a pinned protocol file differs from s56-r1.1"

@@ -552,7 +552,7 @@ def _cmd_stats(args: argparse.Namespace) -> int:
     raise SystemExit(f"unknown stats action {args.action!r}")
 
 
-LOC_R2_GROUPS = ("units", "extract", "resolve", "classify", "swap", "stats", "score")
+LOC_R2_GROUPS = ("units", "extract", "resolve", "classify", "swap", "stats", "score", "ident", "draw")
 
 
 def _loc_r2_options(q: argparse.ArgumentParser) -> None:
@@ -577,6 +577,12 @@ def _loc_r2_options(q: argparse.ArgumentParser) -> None:
                    help="nouns merge / units merge|audit: the frozen SILVER job folder (D-061; Ori approves the file)")
     q.add_argument("--label-source", default="silver", choices=["silver", "human"],
                    help="score: SILVER labels (default, D-061) or human gold; never mixed")
+    q.add_argument("--ident", default=None,
+                   help="Phase C (D-065): an identification CANDIDATE folder (hebloc loc ident build) instead of the R1 config; "
+                        "gold supplement: the new lexicon; draw screen: the I-3 candidate")
+    q.add_argument("--candidate", default=None, help="ident build: I-1,I-2,I-3,I-4 (any combination; D-059 addendum)")
+    q.add_argument("--variant-evidence", default=None, help="ident build I-1: the frozen variant job's paper_variants_evidence.csv (C1)")
+    q.add_argument("--ordinal", type=int, default=1, help="gold supplement: the supplement number announced at G3 (s1, s2, ...)")
 
 
 def _loc_folder(args: argparse.Namespace) -> "Path":
@@ -606,11 +612,46 @@ def _cmd_loc_r2(args: argparse.Namespace) -> int:
     from hebloc.loc.source import Source, SourceError
     from hebloc.paths import CORPORA
 
+    from hebloc.loc import draws as DR
+    from hebloc.loc import ident as IDN
+
     group, action = args.loc_group, args.loc_action
     errors = (SourceError, L.LexiconError, U.UnitsError, X.ExtractError, R.ResolveError, C.ClassifyError,
-              RP.ReportError, S.ScoreError, M.ReleaseRefusal, FileNotFoundError)
+              RP.ReportError, S.ScoreError, M.ReleaseRefusal, FileNotFoundError, IDN.IdentError, DR.DrawError)
     try:
-        lex = L.load()
+        r1_lex = L.load()
+        ident = Path(args.ident) if getattr(args, "ident", None) else None
+        # D-065: a Phase C candidate is used only when its folder is named; R1 (the config) stays the default
+        use_cand = ident is not None and not (group == "gold" and action == "supplement") and group != "draw"
+        lex = IDN.load(ident) if use_cand else r1_lex
+        if group == "ident":
+            from hebloc.loc import inventory as INV
+
+            st = M.require_clean(args.dev)
+            inv = INV.load()
+            missing = sorted(set(CORPORA) - set(inv["corpus"].to_pylist()))
+            if missing:
+                print(f"REFUSED: inventories missing for {missing} (run: hebloc loc lexicon inventory)")
+                return 2
+            m = IDN.build(IDN.parse_candidates(args.candidate), r1_lex, inv, git=st,
+                          variant_evidence=Path(args.variant_evidence) if args.variant_evidence else None,
+                          inventory_info={"corpora": list(CORPORA), "git_commit": st["git_commit"]})
+            print(f"candidate {m['candidate_id']}: {m['n_changes']} entry x host changes {m['changes_by_kind']}; "
+                  f"tokens on changed hosts {m['tokens_affected']}")
+            print(f"-> {IDN.IDENT_DIR / m['candidate_id']}  (decided at C1 on dev silver; never the config)")
+            return 0
+        if group == "draw" and action in ("review", "template", "audit"):
+            st = M.require_clean(args.dev)
+            folder = _loc_folder(args)
+            if action == "review":
+                m = DR.review(folder, args.variant or "R0", git=st)
+            elif action == "template":
+                m = DR.template(folder, git=st)
+            else:
+                m = DR.audit(folder, args.variant or "R0", git=st)
+            print(f"{action} draw {m['draw_id']}: {m['n_items']} items; items_sha256 {m['items_sha256']}")
+            print(f"-> {DR.DRAWS_DIR / action / m['corpus'] / m['draw_id']}")
+            return 0
         if group == "units" and action == "merge":
             r = U.merge_review(Path(args.target), automated=Path(args.automated) if args.automated else None)
             _json(r)
@@ -669,6 +710,22 @@ def _cmd_loc_r2(args: argparse.Namespace) -> int:
             print(f"§5.7 tables (PROVISIONAL): {m['tables']} -> {folder / ('report-' + variant)}")
             return 0
         source = Source.make(args.source, args.package)
+        if group == "draw" and action == "screen":
+            if not (args.corpus and ident):
+                print("REFUSED: draw screen needs --corpus, --ident <the I-3 candidate folder> and --approval (G3)")
+                return 2
+            st = M.require_clean(args.dev)
+            cman = M.read_json(ident / "manifest.json")
+            if cman.get("candidates") != ["I-3"]:
+                print("REFUSED: the screen is drawn from the I-3-only candidate folder")
+                return 2
+            from hebloc.loc import silver as SV
+
+            m = DR.screen(args.corpus, source, r1_lex, DR.affected_from_changes(ident / "changes.csv"), approval=args.approval,
+                          git=st, candidate_sha256=cman["candidate_lexicon_sha256"], anchor_ids=SV.ANCHOR_IDS_PATH)
+            print(f"screen {m['draw_id']}: {m['n_items']} items (per key {m['per_key']}; shortfall {m['shortfall'] or 'none'}); "
+                  f"items_sha256 {m['items_sha256']}")
+            return 0
         if group == "gold" and action == "exposure":
             rows = EX.compute(lex, source)
             s = EX.write(rows)
@@ -679,12 +736,15 @@ def _cmd_loc_r2(args: argparse.Namespace) -> int:
             _json(S.paper_examples(_loc_folder(args), lex))
             return 0
         if group == "gold" and action == "supplement":
-            if not (args.corpus and args.new_lexicon):
-                print("REFUSED: gold supplement needs --corpus, --new-lexicon <yaml> [--new-forms <yaml>] and --approval")
+            if not (args.corpus and (args.new_lexicon or ident)):
+                print("REFUSED: gold supplement needs --corpus, --ident <candidate folder> (or --new-lexicon <yaml> "
+                      "[--new-forms <yaml>]) and --approval")
                 return 2
             st = M.require_clean(args.dev)
-            new = L.load(Path(args.new_lexicon), Path(args.new_forms) if args.new_forms else L.FORMS_PATH)
-            m = S.supplement(args.corpus, source, lex, new, approval=args.approval, size=args.size or 120, git=st)
+            new = (IDN.load(ident) if ident is not None
+                   else L.load(Path(args.new_lexicon), Path(args.new_forms) if args.new_forms else L.FORMS_PATH))
+            m = S.supplement(args.corpus, source, r1_lex, new, approval=args.approval, size=args.size or 120, git=st,
+                             ordinal=args.ordinal)
             print(f"supplement {m['sample_id']}: {m['n_items']} items {m['by_split']} -> data/loc/gold/{args.corpus}/{m['sample_id']}")
             return 0
         if group == "units":
@@ -728,8 +788,8 @@ def _cmd_loc_r2(args: argparse.Namespace) -> int:
             if not args.corpus or args.corpus not in CORPORA:
                 print(f"REFUSED: --corpus must be one of {', '.join(CORPORA)}")
                 return 2
-            if L.forms_stale(lex):
-                print("REFUSED: config/locative_verb_forms.yaml does not match the lexicon (Ori: hebloc loc lexicon forms)")
+            if L.forms_stale(lex, IDN.lexicon_paths(ident if use_cand else None)[0]):
+                print("REFUSED: the forms file does not match the lexicon (Ori: hebloc loc lexicon forms)")
                 return 2
             st = M.require_clean(args.dev)
             umap = U.UnitMap.load(allow_unaudited=args.provisional_units)
@@ -772,11 +832,12 @@ def _cmd_loc_silver(args: argparse.Namespace) -> int:
                 print("REFUSED: create needs --task")
                 return 2
             lex = L.load()
-            source = Source.make(args.source, args.package) if args.task == "anchor" else None
+            source = Source.make(args.source, args.package) if args.task in ("anchor", "instances") else None
             r = SV.create_job(args.task, args.corpus, args.split, lex=lex, source=source,
                               sample_dir=Path(args.sample) if args.sample else None,
                               list_csv=Path(args.list) if args.list else None, sheet=Path(args.sheet) if args.sheet else None,
-                              examples_csv=Path(args.examples_csv) if args.examples_csv else None)
+                              examples_csv=Path(args.examples_csv) if args.examples_csv else None,
+                              purpose=args.purpose, ids=Path(args.ids) if args.ids else None)
             _json(r)
             return 0
         if action == "import-pass":
@@ -1161,7 +1222,10 @@ def main(argv: list[str] | None = None) -> int:
                                 "gold sampler / text-free check / R2: exposure register, paper examples, supplement (Ori)"),
                                ("nouns", ["list", "merge"], "frequent-argument-noun list / merge reviewed types (Ori only)"),
                                ("units", ["inventory", "build", "review", "merge", "audit"],
-                                "R2 (D-059): tense-aware inventory, verb-unit map, review sheets, merge / audit (Ori only)")):
+                                "R2 (D-059): tense-aware inventory, verb-unit map, review sheets, merge / audit (Ori only)"),
+                               ("ident", ["build"], "Phase C (D-065): build an identification candidate folder (I-1 ... I-4)"),
+                               ("draw", ["screen", "review", "template", "audit"],
+                                "Phase C (D-065): id lists for the new SILVER jobs (screen: G3, with Ori's approval)")):
         q = lsub.add_parser(name, help=hlp)
         q.add_argument("loc_action", choices=actions)
         q.add_argument("target", nargs="?", help="gold check: the filled sheet; nouns merge: the reviewed CSV")
@@ -1197,7 +1261,11 @@ def main(argv: list[str] | None = None) -> int:
     q = lsub.add_parser("silver", help="D-061: AI-only SILVER annotation (isolated workspaces, two passes, QC, freeze)")
     q.add_argument("loc_action", choices=list(SILVER_ACTIONS))
     q.add_argument("target", nargs="*", help="job id(s) (step, status, finalize, deliver) or a delivery folder (receive)")
-    q.add_argument("--task", default=None, choices=["sentence", "anchor", "worked", "noun", "unit", "variant", "audit"])
+    q.add_argument("--task", default=None, choices=["sentence", "anchor", "worked", "noun", "unit", "variant", "audit",
+                                                    "instances", "template"])
+    q.add_argument("--purpose", default=None, choices=["screen", "review", "audit"],
+                   help="create instances (D-065): the I-3 sense screen, the §6 candidate review, the class/identity audit")
+    q.add_argument("--ids", default=None, help="create instances|template (D-065): the draw folder (hebloc loc draw ...)")
     q.add_argument("--corpus", default=None)
     q.add_argument("--split", default=None, choices=["dev", "validation", "test"])
     q.add_argument("--sample", default=None, help="create sentence: the frozen sample folder (with its local sheets/)")

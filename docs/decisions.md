@@ -1429,3 +1429,96 @@ Design: [m6_design.md](m6_design.md).
   `FROZEN_SILVER.json`; no history rewrite; tags `s56-r1` … `s56-r1.2`.
 - *Known consequence (no action).* Once O3's `config/` commit is pushed, Efrat's documentation-only pulls stop until
   the next announced tag. Announcements still reach her from origin (STAGES.md §9 B5).
+### D-065 · C0: the Phase C build (identification candidates, supplement jobs, the new SILVER jobs) (2026-11-22) · accepted (Ori, C0 plan)
+- *Scope.* Stage C0 (STAGES.md §3): code and pre-registration only. In C0:
+  - no silver was read, drawn or run;
+  - `config/` and the pinned protocol files are unchanged;
+  - nothing was committed without Ori's approval.
+- *Three decisions (Ori, in the C0 planning session).*
+  1. **Pinning by exact file list.** New SILVER material goes in new paths: `annotation/silver/r2/` holds the addendum
+     `PROTOCOL_R2.md` and the prompt `template_pass.md`. Nothing is added to `annotation/silver/prompts/`, so the
+     `FROZEN.json` prompt record of every earlier job stays identical.
+     - The G3 and ES checks compare exactly the pinned files with `s56-r1.1`:
+       `git diff --quiet s56-r1.1 <ref> -- annotation/S56_SILVER_PROTOCOL.md annotation/S56_GUIDELINE.md annotation/silver/prompts/ annotation/silver/worked_examples.csv annotation/silver/anchor_ids.csv`.
+     - Additions and Ori's registers (`FROZEN_SILVER.json`, `annotation/gold/*`) are not pinned. This is the same
+       reasoning as D-064.
+     - The pull rule's PINNED pathspec (STAGES.md §0) is unchanged: it stays conservative (Efrat takes tags).
+  2. **The class / identity audits (EFRAT §5.5, §5.6) are run by Efrat's Claude Code.** D-061 is unchanged: the
+     developer never annotates sentences.
+     - Ori draws the ids (`loc draw audit`) and sends the draw folder (ids only). Efrat builds the job from her
+       package.
+     - The pipeline outcomes stay in Ori's local `audit_key.csv`.
+     - New Efrat stage **EA**: Mikra after G6, all corpora at O5.
+  3. **Sample sizes, pre-registered now:**
+     - §6 candidate review: ≤ 5 instances per pool (A / B), ≤ 100 candidates by token count;
+     - template proxy: 200 lemmas with ≥ 20 tokens, proportional by proxy value with a minimum of 20 per value;
+     - class / identity audit: every differing PRIMARY verb's existing `deciding_ids` (≤ 5 per outcome) and
+       `identity_ids` (≤ 3 + 3);
+     - I-3 screen: 15 per key (already pre-registered).
+- *Implementation choices (C0).*
+  - **Identification candidates** (`hebloc.loc.ident`, `loc ident build --candidate …`).
+    - A candidate is a folder `data/loc/ident/<id>/` with its own lexicon and forms files, `changes.csv` and a
+      manifest. It never touches `config/`.
+    - R1 stays the default everywhere. A candidate is used only by `--ident <folder>` (extract, resolve, classify,
+      stats, gold supplement).
+    - **I-2:** `forms.lemma_partners`. A token matched by LEMMA ONLY on a host that is a morph-v2 form of another
+      template of the same root gets `~<root>.<T>`, unless that verb is already a member. Simple shapes are taken
+      without the hollow nif'al infinitive, as for the `~<root>.S` partner. Identify Python = SQL.
+    - **I-3:** `established_self_foreign`, rule version `forms-v3`. The self-copy exemption no longer covers an
+      established lemma.
+    - **I-4:** generated policy `clean_keys`. V2 generated forms are added for entries WITH an own lemma, only on
+      clean hosts (no partner), without `~form`. Entries without an own lemma keep R1's `~form` treatment.
+    - **I-1:** the draft `lexicon-v2`.
+      - It applies the P5 evidence rows whose two passes agree; `undecided` rows are not applied.
+      - An invalid draft (e.g. one lemma in two entries without a flag) is refused, never fixed: that is Ori's G4
+        decision.
+      - Built at C1, not in C0.
+    - **I-5:** report only. `report-<variant>/function_lemma.csv` and a `function_lemma` coverage row.
+  - **Supplement** (`score.supplement`, S56_R1 §3 brought in line with the D-059 addendum).
+    - Strata: candidate (new lemma match = I-1, new form match = I-4, both = I-1+I-4) × gold stratum.
+    - Caps: gold-r1b (8 per key; HOMOGRAPH 4 per key and ≤ 10% of the size).
+    - `pi` / `weight_ht` / calibrated `weight`; `items_sha256`.
+    - The ordinal `--ordinal` (announced at G3; never reused). Id `<corpus>-s<n>-<hash>`.
+    - Registry `gold.FROZEN_SUPPLEMENTS` (empty until G3). A second draw must match it (`items_match`).
+  - **Supplement SILVER jobs never collide.**
+    - Job id `sentence-<supplement id>-<split>`; file `<supplement id>_<split>_silver.csv`.
+    - A job is made only from a registered supplement.
+    - `receive` refuses to overwrite a placed file with different content.
+    - `score.load_gold` reads the registered supplements' files too (rows keep `sample_id`: two strata of one
+      design).
+    - The frozen-sample jobs are unchanged (id, file name, `FROZEN.json` prompt record; tested).
+  - **New SILVER jobs** (`annotation/silver/r2/PROTOCOL_R2.md`).
+    - `instances` (`--purpose screen|review|audit --ids <draw>`) uses the pinned sentence prompt, guideline,
+      decisions and QC unchanged. A non-lexicon verb is shown as `lemma:<lemma>` with a plain entry text.
+    - `template` (`--ids <template draw>`, prompt `r2/template_pass.md`): A ∥ B; agree with no `low` → the label,
+      else `unclear`; κ reported, no STOP (as for nouns).
+    - `FROZEN.json` of these jobs also records the r2 hashes.
+  - **Draws** (`hebloc.loc.draws`, `loc draw screen|review|template|audit`): deterministic, independent of the
+    source, `items_sha256`.
+    - **screen:** drawn only with `--approval` at G3. It excludes every sentence holding a frozen or supplement item,
+      an anchor item, a paper-example verse or an R1 screen reading.
+    - **review:** non-lexicon units only (§6 asks for verbs beyond the paper's).
+    - **audit:** `audit_key.csv` stays local.
+  - **Exposure register:** covers registered supplements and the I-3 screen draws (their silver is read at C1).
+- *Checks (C0).*
+  - Full tests pass.
+  - The R1 path is byte-identical: Mikra lexicon extract `mikra-lexicon-125c4d20d9` before and after = 12,045
+    instances and 15,593 arguments, the same rows.
+  - The pinned files equal `s56-r1.1`; `config/` is unchanged.
+- *Dry runs* (counts only; scratch folders, not `data/`).
+  - **I-2:** 4,847 entry × host partners. On Mikra it re-keys 2,571 of the 3,165 lemma-only tokens; all of them were
+    lemma-only in R1.
+  - **I-3:** 18 entry × host changes (13 removed, 5 zone changes), e.g. צריך leaves צרר.S. On Mikra, 29 tokens leave
+    and 33 change key.
+  - **I-4:** 3,463 added hosts. On Mikra, +1,287 tokens (92 keys) and 318 keys changed.
+  - **Draw smoke runs on the Phase B Mikra outputs:**
+    - review: 456 ids / 100 candidates;
+    - template: 200 lemmas;
+    - audit: 418 ids / 294 keys. It is broad because "differs from the paper" includes non-A/B classes of paper
+      verbs; it is pre-registered as such.
+- *Unchanged:*
+  - S56-v1 and D-053 … D-064;
+  - the protocol, prompts, guideline, worked examples and anchor ids;
+  - `config/` and the frozen samples;
+  - every frozen job and delivery;
+  - the stage order (C0 → G2 → C1 …).

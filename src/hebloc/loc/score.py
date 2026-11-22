@@ -49,7 +49,7 @@ CHOICE_LEDGER = GOLD_FILES_DIR / "VALIDATION_CHOICE.json"
 PAPER_EXAMPLES = GOLD_FILES_DIR / "mikra_paper_examples.csv"
 SIMPLER_WINS_WITHIN = 0.01          # 1 F1 point (S56-v1 §5.4)
 MCNEMAR_ALPHA = 0.05
-SUPPLEMENT_VERSION = "gold-s1"
+SUPPLEMENT_VERSION = "gold-sup-c0"   # D-065 (the Phase C build); no supplement was drawn before
 
 
 class ScoreError(Exception):
@@ -62,10 +62,13 @@ SILVER_MEASURE = "agreement with SILVER labels (AI, two independent passes, adju
 
 
 def load_gold(corpus: str, split: str, *, gold_dir: Path | None = None, final_test: bool = False,
-              _choice: bool = False, label_source: str = "silver", frozen_path: Path | None = None) -> list[dict]:
+              _choice: bool = False, label_source: str = "silver", frozen_path: Path | None = None,
+              include_supplements: bool = True) -> list[dict]:
     """The text-free label rows (I4) of one split. Test needs ``final_test``; validation is only read through
     :func:`choose_variant`. ``silver`` (default, D-061): the received FROZEN silver file, its hash checked against
-    FROZEN_SILVER.json; ``human``: human gold files (an AI row is refused). The two are never mixed."""
+    FROZEN_SILVER.json; ``human``: human gold files (an AI row is refused). The two are never mixed. Rows of a
+    registered supplement (gold.FROZEN_SUPPLEMENTS; S56_R1 §3) are included and keep their ``sample_id``, so estimates
+    treat the frozen sample and the supplement as two strata of one design."""
     if label_source not in LABEL_SOURCES:
         raise ScoreError(f"label_source must be one of {LABEL_SOURCES}")
     if split == "test" and not final_test:
@@ -74,7 +77,12 @@ def load_gold(corpus: str, split: str, *, gold_dir: Path | None = None, final_te
         raise ScoreError("the validation split is read only by the pre-registered variant choice (loc score --choose)")
     rows = []
     if label_source == "silver":
-        for f in sorted((Path(gold_dir or SV.FINAL_DIR) / split).glob(f"{corpus}_{split}_silver.csv")):
+        base = Path(gold_dir or SV.FINAL_DIR) / split
+        files = sorted(base.glob(f"{corpus}_{split}_silver.csv"))
+        if include_supplements:          # D-065: a registered supplement's file is <sample_id>_<split>_silver.csv
+            files += [base / f"{sid}_{split}_silver.csv" for sid in sorted(G.FROZEN_SUPPLEMENTS.get(corpus, {}))
+                      if (base / f"{sid}_{split}_silver.csv").exists()]
+        for f in files:
             ok, why = SV.frozen_file_ok(f, Path(frozen_path or SV.FROZEN_PATH))
             if not ok:
                 raise ScoreError(f"refused: {why}")
@@ -334,16 +342,54 @@ def paper_examples(extract_folder: Path, lex: Lexicon, *, out: Path = PAPER_EXAM
 
 
 # ============================================================================================ supplement
+SUPPLEMENT_CANDIDATE = {"lemma": "I-1", "form": "I-4", "both": "I-1+I-4"}
+
+
+def supplement_id(corpus: str, r1_lex: Lexicon, new_lex: Lexicon, size: int, ordinal: int) -> tuple[str, str]:
+    salt = f"{METHODOLOGY}:{corpus}:supplement:s{ordinal}:"
+    sid = f"{corpus}-s{ordinal}-" + hashlib.sha256(
+        f"{corpus}|{r1_lex.sha256}|{new_lex.sha256}|{size}|{salt}|{SUPPLEMENT_VERSION}".encode()).hexdigest()[:10]
+    return sid, salt
+
+
+def _allocate(size: int, pop: dict[str, int]) -> dict[str, int]:
+    """Proportional allocation (largest remainders); HOMOGRAPH strata together at most HOMOGRAPH_MAX_SHARE of the size,
+    as in gold-r1b (the rest is shared by the other strata)."""
+    total = sum(pop.values())
+    if not total or size <= 0:
+        return {}
+    homo = {k: n for k, n in pop.items() if k.endswith("/HOMOGRAPH")}
+    n_homo = min(round(size * sum(homo.values()) / total), round(size * G.HOMOGRAPH_MAX_SHARE)) if homo else 0
+
+    def prop(n_items: int, part: dict[str, int]) -> dict[str, int]:
+        t = sum(part.values())
+        if not t or n_items <= 0:
+            return {k: 0 for k in part}
+        a = {k: (n_items * n) // t for k, n in part.items()}
+        for k in sorted(part, key=lambda k: (-((n_items * part[k]) % t), k))[: n_items - sum(a.values())]:
+            a[k] += 1
+        return a
+
+    rest = {k: n for k, n in pop.items() if k not in homo}
+    return {**prop(n_homo, homo), **prop(size - n_homo if rest else 0, rest)}
+
+
 def supplement(corpus: str, source: Source, r1_lex: Lexicon, new_lex: Lexicon, *, approval: str | None, size: int,
-               git: dict, out_root: Path = G.GOLD_DIR, progress: bool = True) -> dict:
-    """The supplemental sampling procedure (S56_R1.md §3): tokens identified by the NEW lexicon/forms but not by R1 and
-    not in any R1 sampling population (Modern: not in R1's NONPAPER frame) form a separate population; a sample is
-    drawn from it with the gold strata (+ the candidate source: lemma or form match), cap per key, hash order and the
-    1:1:2 split, under a new salt and id ``<corpus>-s1-<hash>``. Refused without Ori's approval id (a decision)."""
+               git: dict, out_root: Path = G.GOLD_DIR, progress: bool = True, ordinal: int = 1) -> dict:
+    """The supplemental sampling procedure (S56_R1.md §3; D-059 addendum; D-065): tokens identified by the NEW
+    lexicon/forms but not by R1 and not in any R1 sampling population (Modern: not in R1's NONPAPER frame) form a
+    separate population. It is stratified by CANDIDATE (a new lemma match = I-1, a new form match = I-4, both =
+    I-1+I-4) x the gold stratum, with the gold-r1b caps (8 per key; HOMOGRAPH 4 per key and <= 10% of the size),
+    hash order, the 1:1:2 split, a new salt and the id ``<corpus>-s<ordinal>-<hash>`` (the ordinal is announced at
+    G3; never reused). Refused without Ori's approval id. A registered supplement (gold.FROZEN_SUPPLEMENTS) drawn
+    again must give the same items (``items_match``), else nothing is written."""
     if not approval:
         raise ScoreError("a supplement is drawn only with Ori's approval and a decision: --approval D-0xx")
-    salt = f"{METHODOLOGY}:{corpus}:supplement:s1:"
-    sid = f"{corpus}-s1-" + hashlib.sha256(f"{corpus}|{r1_lex.sha256}|{new_lex.sha256}|{size}|{salt}|{SUPPLEMENT_VERSION}".encode()).hexdigest()[:10]
+    sid, salt = supplement_id(corpus, r1_lex, new_lex, size, ordinal)
+    registered = G.FROZEN_SUPPLEMENTS.get(corpus, {})
+    for other in registered:
+        if other.startswith(f"{corpus}-s{ordinal}-") and other != sid:
+            raise ScoreError(f"ordinal s{ordinal} is already used by the registered supplement {other}: refused (never reused)")
     out = Path(out_root) / corpus / sid
     if (out / "manifest.json").exists():
         raise ScoreError(f"{out} already exists")
@@ -368,53 +414,77 @@ def supplement(corpus: str, source: Source, r1_lex: Lexicon, new_lex: Lexicon, *
                            HAVING bool_or(slot = 'DO') AND bool_or(p_family IN ('B', 'MIN'))""")
             con.execute("CREATE OR REPLACE TEMP TABLE nw AS SELECT * FROM nw ANTI JOIN np USING (sent_id, piece_idx, word_idx)")
         pops.append(con.sql(f"""SELECT n.sent_id, n.piece_idx, n.word_idx, n.verb_key, n.members, n.match_method,
-                {G._stratum_sql()} AS stratum,
-                CASE WHEN n.match_method IN ('lemma', 'both') THEN 'lemma' ELSE 'form' END AS candidate_source,
+                {G._stratum_sql()} AS gold_stratum,
+                CASE n.match_method WHEN 'lemma' THEN 'I-1' WHEN 'form' THEN 'I-4' ELSE 'I-1+I-4' END AS candidate,
                 t.lemma, t.run_id, t.shard, t.doc_id,
                 n.sent_id || '|' || n.piece_idx || '|' || n.word_idx AS instance_key,
                 sha256('{salt}' || n.sent_id || '|' || n.piece_idx || '|' || n.word_idx) AS h
             FROM nw n JOIN tok t USING (sent_id, piece_idx, word_idx)""").to_arrow_table())
     pop = pa.concat_tables(pops)
     con.register("pop", pop)
-    con.execute("CREATE OR REPLACE TEMP TABLE p2 AS SELECT *, stratum || '/' || candidate_source AS sst FROM pop WHERE stratum <> 'OTHER'")
-    pk = {(r[0], r[1]): r[2] for r in con.sql("SELECT sst, verb_key, count(*) FROM p2 GROUP BY ALL").fetchall()}
+    con.execute("CREATE OR REPLACE TEMP TABLE p2 AS SELECT *, candidate || '/' || gold_stratum AS stratum, verb_key AS cap_key "
+                "FROM pop WHERE gold_stratum <> 'OTHER'")
+    pk = {(r[0], r[1]): r[2] for r in con.sql("SELECT stratum, cap_key, count(*) FROM p2 GROUP BY ALL").fetchall()}
     pst: dict[str, int] = {}
-    for (s, _), n in pk.items():
-        pst[s] = pst.get(s, 0) + n
-    total = sum(pst.values())
-    alloc = {s: (size * n) // total for s, n in pst.items()} if total else {}
-    for s in sorted(pst, key=lambda s: -((size * pst[s]) % max(total, 1)))[: size - sum(alloc.values())] if total else []:
-        alloc[s] += 1
-    sel = con.sql(f"""WITH c AS (SELECT *, row_number() OVER (PARTITION BY sst, verb_key ORDER BY h) AS rk FROM p2),
-                          r AS (SELECT *, row_number() OVER (PARTITION BY sst ORDER BY h) - 1 AS rank FROM c WHERE rk <= {G.CAP_PER_KEY})
-                     SELECT * EXCLUDE (rk) FROM r ORDER BY sst, rank""").to_arrow_table().to_pylist()
-    rows = [x for x in sel if x["rank"] < alloc.get(x["sst"], 0)]
+    for (st, _), n in pk.items():
+        pst[st] = pst.get(st, 0) + n
+    alloc = _allocate(size, pst)
+
+    def cap(st: str) -> int:
+        return G.cap_of(st.split("/", 1)[1])
+
+    sel = con.sql(f"""WITH c AS (SELECT *, row_number() OVER (PARTITION BY stratum, cap_key ORDER BY h) AS rk FROM p2),
+                          r AS (SELECT *, row_number() OVER (PARTITION BY stratum ORDER BY h) - 1 AS rank FROM c
+                                WHERE rk <= CASE WHEN gold_stratum = 'HOMOGRAPH' THEN {G.HOMOGRAPH_CAP_PER_KEY} ELSE {G.CAP_PER_KEY} END)
+                     SELECT * EXCLUDE (rk) FROM r ORDER BY stratum, rank""").to_arrow_table().to_pylist()
+    rows = [x for x in sel if x["rank"] < alloc.get(x["stratum"], 0)]
+    pool: dict[str, int] = {}
+    for (st, _), n in pk.items():
+        pool[st] = pool.get(st, 0) + min(n, cap(st))
+    m_st: dict[str, int] = {}
     s_key: dict[tuple, int] = {}
     for x in rows:
-        s_key[(x["sst"], x["verb_key"])] = s_key.get((x["sst"], x["verb_key"]), 0) + 1
+        m_st[x["stratum"]] = m_st.get(x["stratum"], 0) + 1
+        s_key[(x["stratum"], x["cap_key"])] = s_key.get((x["stratum"], x["cap_key"]), 0) + 1
     sampled: dict[str, int] = {}
-    for (s, k) in s_key:
-        sampled[s] = sampled.get(s, 0) + pk[(s, k)]
+    for (st, k) in s_key:
+        sampled[st] = sampled.get(st, 0) + pk[(st, k)]
     for i, x in enumerate(rows, 1):
-        x.update({"sample_id": sid, "item_id": f"{corpus[:2].upper()}S{i:04d}", "split": G.SPLITS[min(x["rank"] % 4, 2)],
-                  "agreement": False, "pop_stratum": pst[x["sst"]], "pop_key": pk[(x["sst"], x["verb_key"])],
-                  "weight": (pk[(x["sst"], x["verb_key"])] / s_key[(x["sst"], x["verb_key"])]) * (pst[x["sst"]] / sampled[x["sst"]])})
+        st, pkey = x["stratum"], pk[(x["stratum"], x["cap_key"])]
+        x.update({"sample_id": sid, "item_id": f"{corpus[:2].upper()}S{ordinal}{i:03d}", "split": G.SPLITS[min(x["rank"] % 4, 2)],
+                  "agreement": False, "pop_stratum": pst[st], "pop_key": pkey, "pool_stratum": pool[st],
+                  "pi": (m_st[st] / pool[st]) * (min(pkey, cap(st)) / pkey)})
+        x["weight_ht"] = 1 / x["pi"]
+        x["weight"] = (pkey / s_key[(st, x["cap_key"])]) * (pst[st] / sampled[st])
+    fp = G.items_fingerprint(rows)
+    frozen_check = None
+    if sid in registered:
+        if fp != registered[sid]["items_sha256"]:
+            raise ScoreError(f"the supplement {sid} is registered but this draw gives different items "
+                             f"({fp[:12]} vs {registered[sid]['items_sha256'][:12]}): STOP and report to Ori (nothing written)")
+        frozen_check = {"items_match": True}
     cols = ["sample_id", "item_id", "instance_key", "sent_id", "piece_idx", "word_idx", "run_id", "shard", "doc_id", "verb_key",
-            "members", "match_method", "lemma", "stratum", "candidate_source", "split", "agreement", "rank", "h", "pop_stratum",
-            "pop_key", "weight"]
+            "members", "match_method", "lemma", "candidate", "gold_stratum", "stratum", "cap_key", "split", "agreement", "rank", "h",
+            "pop_stratum", "pop_key", "pool_stratum", "pi", "weight_ht", "weight"]
     sample = pa.Table.from_pylist([{c: x.get(c) for c in cols} for x in rows]) if rows else pa.table({c: [] for c in cols})
     out.mkdir(parents=True, exist_ok=True)
     atomic_write_parquet(sample, out / "sample.parquet")
     write_csv(sample.drop(["h"]) if rows else sample, out / "sample.csv")
-    atomic_write_parquet(pa.Table.from_pylist([{"stratum": s, "verb_key": k, "n": n} for (s, k), n in sorted(pk.items())])
-                         if pk else pa.table({"stratum": [], "verb_key": [], "n": []}), out / "population.parquet")
+    atomic_write_parquet(pa.Table.from_pylist([{"stratum": s, "cap_key": k, "n": n} for (s, k), n in sorted(pk.items())])
+                         if pk else pa.table({"stratum": [], "cap_key": [], "n": []}), out / "population.parquet")
     if rows:
         G._write_sheets(con, source, corpus, rows, out / "sheets")
+    shortfall = {st: n - m_st.get(st, 0) for st, n in alloc.items() if m_st.get(st, 0) < n}
     return write_manifest(out, what="supplemental gold sample (ids only + local sheets)", git=git, source=source.describe(corpus),
-                          extra={"corpus": corpus, "sample_id": sid, "supplement_version": SUPPLEMENT_VERSION, "approval": approval,
-                                 "supplements": G.FROZEN_SAMPLES.get(corpus, {}).get("sample_id"), "salt": salt,
+                          extra={"corpus": corpus, "sample_id": sid, "supplement_version": SUPPLEMENT_VERSION, "ordinal": ordinal,
+                                 "approval": approval, "supplements": G.FROZEN_SAMPLES.get(corpus, {}).get("sample_id"), "salt": salt,
                                  "r1_lexicon_sha256": r1_lex.sha256, "new_lexicon_sha256": new_lex.sha256, "size": size,
-                                 "allocation": alloc, "population_by_stratum": pst, "n_items": len(rows),
+                                 "strata": "candidate (I-1 lemma / I-4 form / I-1+I-4) x gold stratum",
+                                 "cap_per_key": G.CAP_PER_KEY, "homograph_cap_per_key": G.HOMOGRAPH_CAP_PER_KEY,
+                                 "homograph_max_share": G.HOMOGRAPH_MAX_SHARE,
+                                 "allocation": alloc, "population_by_stratum": pst, "shortfall": shortfall, "n_items": len(rows),
                                  "by_split": {s: sum(1 for x in rows if x["split"] == s) for s in G.SPLITS},
+                                 "by_candidate": {c: sum(1 for x in rows if x["candidate"] == c) for c in ("I-1", "I-4", "I-1+I-4")},
+                                 "items_sha256": fp, "frozen_check": frozen_check,
                                  "estimation": "two strata of one design: the frozen sample (domain-restricted) + this supplement",
                                  "local_only": ["sheets/ (quote corpus text: never git, D-042)"]})

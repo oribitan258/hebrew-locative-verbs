@@ -5,7 +5,9 @@ Every label made by Claude Code is SILVER: ``label_source = ai``, never gold. It
 its abstention rate; no figure computed against it is called accuracy.
 
 A *job* is one labelling task (``sentence`` per corpus x split, ``anchor``, ``worked``, ``noun`` per corpus, ``unit``,
-``variant``, ``audit``). A job's items are built once (``items.json``, private: it quotes corpus text, under
+``variant``, ``audit``; Phase C, D-065: ``sentence`` of a registered supplement, ``instances`` = sentence labels of an
+id list (the I-3 sense screen, the §6 candidate review, the class / identity audit), ``template`` = the §6 template
+proxy check; annotation/silver/r2/PROTOCOL_R2.md). A job's items are built once (``items.json``, private: it quotes corpus text, under
 ``data/``). Each *pass* (A, B; A2/B2 with context; C adjudication; A3/B3 abstention context) is run in chunks, each
 chunk by its own Claude Code session inside an ISOLATED WORKSPACE (SG1):
 
@@ -51,7 +53,9 @@ FINAL_DIR = SILVER_DIR / "final"            # received, frozen SILVER files (Ori
 RECEIVED_DIR = SILVER_DIR / "received"
 CANARY_DIR = SILVER_DIR / "canary"
 SILVER_ANN = ANNOTATION_DIR / "silver"
-PROMPTS_DIR = SILVER_ANN / "prompts"
+PROMPTS_DIR = SILVER_ANN / "prompts"            # the six pinned prompts (s56-r1.1): never changed, never added to
+R2_DIR = SILVER_ANN / "r2"                       # Phase C additions (D-065): new files only, never in PROMPTS_DIR
+R2_PROTOCOL_PATH = R2_DIR / "PROTOCOL_R2.md"
 FROZEN_PATH = SILVER_ANN / "FROZEN_SILVER.json"   # ids and hashes only (git): recorded BEFORE any read (SG2)
 WORKED_PATH = SILVER_ANN / "worked_examples.csv"  # the guideline's 15 worked examples (texts already in the guideline)
 ANCHOR_IDS_PATH = SILVER_ANN / "anchor_ids.csv"   # instance keys of the paper anchor, WITHOUT the paper's frames
@@ -79,7 +83,13 @@ TASKS: dict[str, dict] = {
     "unit": {"chunk": 50, "passes": ("A", "B"), "prompt": "unit_pass.md", "guideline": False},
     "variant": {"chunk": 40, "passes": ("A", "B"), "prompt": "variant_pass.md", "guideline": False},
     "audit": {"chunk": 50, "passes": ("A",), "prompt": "audit_pass.md", "guideline": False},
+    # Phase C (D-065; PROTOCOL_R2.md): the sentence prompt, guideline, decisions and QC unchanged
+    "instances": {"chunk": 25, "passes": ("A", "B"), "prompt": "sentence_pass.md", "guideline": True},
+    "template": {"chunk": 50, "passes": ("A", "B"), "prompt": "template_pass.md", "guideline": False, "prompt_dir": "r2"},
 }
+#: the purposes of an ``instances`` job (hebloc.loc.draws kinds) and the template labels (binyanim; PROTOCOL_R2.md)
+INSTANCE_PURPOSES = ("screen", "review", "audit")
+TEMPLATE_LABELS = ("Simple", "Nifal", "Intensive", "Pual", "Hitpael", "Causative", "Hufal", "not_a_verb", "unclear")
 SENTENCE_FIELDS = ("is_target_verb", "member", "locative", "frame", "do", "pps", "bare_np", "locatum", "location", "notes")
 OUT_COLUMNS = {
     "sentence": ("item_id",) + SENTENCE_FIELDS + ("confidence", "evidence_rule", "abstain_reason"),
@@ -88,6 +98,7 @@ OUT_COLUMNS = {
     "unit": ("item_id", "decision", "base", "confidence", "evidence"),
     "variant": ("item_id", "decision", "entry", "voice", "confidence", "evidence"),
     "audit": ("item_id", "correct", "confidence", "evidence"),
+    "template": ("item_id", "template", "confidence", "evidence"),
 }
 BLIND_COLUMNS = {
     "sentence": ("item_id", "verb_key", "verb_entries", "target", "sentence", "words"),
@@ -95,6 +106,7 @@ BLIND_COLUMNS = {
     "unit": ("item_id", "candidates", "n", "pres_share", "fin_share", "n_by_corpus", "examples"),
     "variant": ("item_id", "candidates", "n", "pres_share", "fin_share", "n_by_corpus", "examples"),
     "audit": ("item_id", "base", "n", "pres_share", "fin_share", "examples"),
+    "template": ("item_id", "lemma", "forms", "n"),
 }
 CONTEXT_COLUMNS = ("context_before", "context_after")
 #: the fields whose disagreement sends an item to context expansion / adjudication (SG3)
@@ -116,17 +128,26 @@ def _sha(s: str) -> str:
 
 
 def task_kind(task: str) -> str:
-    return "sentence" if task in ("sentence", "anchor", "worked") else task
+    return "sentence" if task in ("sentence", "anchor", "worked", "instances") else task
 
 
 # ============================================================================================ paths and jobs
-def job_id(task: str, corpus: str | None = None, split: str | None = None, list_version: str | None = None) -> str:
+def job_id(task: str, corpus: str | None = None, split: str | None = None, list_version: str | None = None, *,
+           supplement: str | None = None, purpose: str | None = None, ids_sha256: str | None = None) -> str:
     if task not in TASKS:
         raise SilverError(f"unknown task {task!r} (one of {sorted(TASKS)})")
     if task == "sentence":
         if not corpus or split not in ("dev", "validation", "test"):
             raise SilverError("a sentence job needs --corpus and --split dev|validation|test")
-        return f"sentence-{corpus}-{split}"
+        # D-065: a supplement's job never collides with the frozen sample's (the split stays the last part)
+        return f"sentence-{supplement}-{split}" if supplement else f"sentence-{corpus}-{split}"
+    if task in ("instances", "template"):
+        p = purpose if task == "instances" else "template"
+        if task == "instances" and p not in INSTANCE_PURPOSES:
+            raise SilverError(f"an instances job needs --purpose {'|'.join(INSTANCE_PURPOSES)}")
+        if not corpus or not ids_sha256:
+            raise SilverError(f"the {task} job needs --corpus and --ids <draw folder>")
+        return f"{p}-{corpus}-{ids_sha256[:10]}"
     if task == "noun":
         if not corpus:
             raise SilverError("a noun job needs --corpus")
@@ -225,7 +246,11 @@ def verb_entries_text(verb_key: str, lex) -> str:
     by_id = {e.id: e for e in lex.entries} if lex is not None else {}
     out = []
     for part in filter(None, (verb_key or "").split("|")):
-        if part.startswith("~"):
+        if part.startswith(("lemma:", "unit:")):      # D-065: a verb outside the lexicon (§6 review)
+            out.append(f"{part}: the verb whose dictionary form (Dicta's lemma) is {part.split(':', 1)[1]} (not in the lexicon)")
+        elif part.startswith("form:"):
+            out.append(f"{part}: an unlemmatized verb written {part.split(':', 1)[1]} (not in the lexicon)")
+        elif part.startswith("~"):
             out.append(f"{part}: another verb that shares this form (the token may be that verb)")
         elif part in by_id:
             e = by_id[part]
@@ -341,6 +366,75 @@ def write_anchor_ids(paper_examples: Path, out: Path = ANCHOR_IDS_PATH, worked: 
     return {"anchor_items": len(out_rows), "excluded_worked_refs": len(worked_refs), "out": str(out)}
 
 
+def _members(verb_key: str) -> list[str]:
+    return [m for m in (verb_key or "").split("|") if m and not m.startswith("~") and ":" not in m]
+
+
+def read_draw(folder: Path) -> tuple[list[dict], dict]:
+    from hebloc.loc.draws import read_ids
+
+    folder = Path(folder)
+    if not (folder / "manifest.json").exists() or not (folder / "ids.csv").exists():
+        raise SilverError(f"{folder} is not a draw folder (hebloc loc draw ...: ids.csv + manifest.json)")
+    return read_ids(folder)
+
+
+def instance_items(folder: Path, purpose: str, source, lex) -> tuple[list[dict], dict]:
+    """D-065: sentence items from a draw's id list (screen / review / audit). Blind exactly like the sample items;
+    the stratum and the draw stay private."""
+    from hebloc.loc.source import connect
+
+    rows, man = read_draw(folder)
+    if man.get("kind") != purpose:
+        raise SilverError(f"{folder} is a {man.get('kind')!r} draw, not {purpose!r}")
+    corpus = man["corpus"]
+    keys = [_parse_key(r["instance_key"]) for r in rows]
+    texts = unit_sentences(connect(), source, corpus, keys)
+    items = []
+    for r, k in zip(rows, keys):
+        t = texts.get(k)
+        if t is None:
+            raise SilverError(f"{purpose} instance {r['instance_key']} not found in the {corpus} parse")
+        items.append({"id": r["item_id"],
+                      "blind": {"item_id": r["item_id"], "verb_key": r["verb_key"],
+                                "verb_entries": verb_entries_text(r["verb_key"], lex), "target": t["target"],
+                                "sentence": t["sentence"], "words": t["words"]},
+                      "private": {"sample_id": man["draw_id"], "instance_key": r["instance_key"], "split": purpose,
+                                  "stratum": r.get("stratum", ""), "agreement": False, "members": _members(r["verb_key"]),
+                                  "sent_id": k[0], "doc_id": t["doc_id"], "corpus": corpus}})
+    return sorted(items, key=lambda x: x["id"]), man
+
+
+def template_items(folder: Path) -> tuple[list[dict], dict]:
+    """D-065: lemma items of a template draw (the lemma and its most frequent forms; the proxy stays private)."""
+    rows, man = read_draw(folder)
+    if man.get("kind") != "template":
+        raise SilverError(f"{folder} is a {man.get('kind')!r} draw, not 'template'")
+    items = [{"id": r["item_id"], "blind": {"item_id": r["item_id"], "lemma": r["lemma"], "forms": r["verb_key"], "n": r.get("n", "")},
+              "private": {"lemma": r["lemma"], "proxy": r.get("stratum", ""), "corpus": man["corpus"]}} for r in rows]
+    return sorted(items, key=lambda x: x["id"]), man
+
+
+def _supplement_of(sample_dir: Path, corpus: str) -> str | None:
+    """D-065: the sample id if ``sample_dir`` is a supplement (its manifest has ``supplement_version``), else None.
+    A supplement must be registered (gold.FROZEN_SUPPLEMENTS, at G3) with the same items."""
+    from hebloc.loc import gold as G
+
+    man_p = Path(sample_dir) / "manifest.json"
+    if not man_p.exists():
+        return None
+    man = read_json(man_p)
+    if not man.get("supplement_version"):
+        return None
+    sid = man["sample_id"]
+    reg = G.FROZEN_SUPPLEMENTS.get(corpus, {}).get(sid)
+    if reg is None:
+        raise SilverError(f"the supplement {sid} is not registered (gold.FROZEN_SUPPLEMENTS, Ori at G3): refused")
+    if reg.get("items_sha256") != man.get("items_sha256"):
+        raise SilverError(f"the supplement {sid} has different items than registered: STOP and report to Ori")
+    return sid
+
+
 def noun_items(list_csv: Path) -> list[dict]:
     items = []
     for r in _read_csv(list_csv):
@@ -372,8 +466,24 @@ def unit_items(sheet: Path, examples_csv: Path | None, kind: str) -> list[dict]:
 
 def create_job(task: str, corpus: str | None = None, split: str | None = None, *, lex=None, source=None,
                sample_dir: Path | None = None, list_csv: Path | None = None, sheet: Path | None = None,
-               examples_csv: Path | None = None, jobs_dir: Path | None = None) -> dict:
+               examples_csv: Path | None = None, jobs_dir: Path | None = None, purpose: str | None = None,
+               ids: Path | None = None) -> dict:
     list_version = None
+    extra: dict = {}
+    if task in ("instances", "template"):
+        if ids is None:
+            raise SilverError(f"the {task} job needs --ids <draw folder> (hebloc loc draw ...)")
+        if task == "instances":
+            if purpose not in INSTANCE_PURPOSES:
+                raise SilverError(f"an instances job needs --purpose {'|'.join(INSTANCE_PURPOSES)}")
+            items, man = instance_items(Path(ids), purpose, source, lex)
+        else:
+            items, man = template_items(Path(ids))
+        corpus = man["corpus"]
+        jid = job_id(task, corpus, None, purpose=purpose, ids_sha256=man["items_sha256"])
+        inputs = {"ids.csv": file_sha256(Path(ids) / "ids.csv"), "draw_id": man["draw_id"], "draw_items_sha256": man["items_sha256"]}
+        extra = {"purpose": purpose if task == "instances" else "template", "draw_id": man["draw_id"]}
+        return _create(jid, task, corpus, split, items, inputs, extra, jobs_dir)
     if task == "noun":
         if list_csv is None:
             raise SilverError("a noun job needs --list <nouns_to_label.csv>")
@@ -381,12 +491,15 @@ def create_job(task: str, corpus: str | None = None, split: str | None = None, *
         if not man.exists():
             raise SilverError(f"{man} not found: a noun job is made from a list folder of hebloc loc nouns list")
         list_version = read_json(man).get("list_version")
-    jid = job_id(task, corpus, split, list_version)
+    supp = _supplement_of(sample_dir, corpus) if task == "sentence" and sample_dir is not None else None
+    jid = job_id(task, corpus, split, list_version, supplement=supp)
     if task == "sentence":
         if sample_dir is None:
             raise SilverError("a sentence job needs --sample <frozen sample folder>")
         items = sentence_items(corpus, split, sample_dir, lex)
         inputs = {"sample.parquet": file_sha256(Path(sample_dir) / "sample.parquet")}
+        if supp:
+            extra = {"supplement": supp}
     elif task == "worked":
         items, inputs = worked_items(WORKED_PATH), {"worked_examples.csv": file_sha256(WORKED_PATH)}
     elif task == "anchor":
@@ -397,12 +510,16 @@ def create_job(task: str, corpus: str | None = None, split: str | None = None, *
         if sheet is None:
             raise SilverError(f"a {task} job needs --sheet (unit_review.csv / paper_variants.csv / audit.csv)")
         items, inputs = unit_items(sheet, examples_csv, task), {"sheet": file_sha256(Path(sheet))}
+    return _create(jid, task, corpus, split, items, inputs, extra, jobs_dir)
+
+
+def _create(jid: str, task: str, corpus, split, items: list[dict], inputs: dict, extra: dict, jobs_dir) -> dict:
     if not items:
         raise SilverError(f"job {jid}: no items")
     doc = {"job_id": jid, "task": task, "corpus": corpus, "split": split, "silver_version": SILVER_VERSION,
-           "protocol_version": PROTOCOL_VERSION, "created": _now(), "inputs": inputs, "items": items}
+           "protocol_version": PROTOCOL_VERSION, "created": _now(), "inputs": inputs, **extra, "items": items}
     d = _write_job(jid, doc, jobs_dir)
-    return {"job_id": jid, "items": len(d["items"]), "dir": str(job_dir(jid, jobs_dir))}
+    return {"job_id": jid, "items": len(d["items"]), "dir": str(job_dir(jid, jobs_dir)), "items_sha256": d["items_sha256"]}
 
 
 # ============================================================================================ context (SG3)
@@ -463,9 +580,14 @@ def _order(jid: str, label: str, ids: list[str]) -> list[str]:
     return sorted(ids, key=lambda i: _sha(f"S56-silver:{jid}:{label}:{i}"))
 
 
+def _prompt_path(task: str, kind: str) -> Path:
+    if kind == "adjudicate":
+        return PROMPTS_DIR / "adjudicate.md"
+    return (R2_DIR if TASKS[task].get("prompt_dir") == "r2" else PROMPTS_DIR) / TASKS[task]["prompt"]
+
+
 def _prompt(task: str, kind: str, **fill) -> str:
-    name = "adjudicate.md" if kind == "adjudicate" else TASKS[task]["prompt"]
-    text = (PROMPTS_DIR / name).read_text(encoding="utf-8")
+    text = _prompt_path(task, kind).read_text(encoding="utf-8")
     for k, v in fill.items():
         text = text.replace("{{" + k + "}}", str(v))
     return text
@@ -740,6 +862,9 @@ def validate(task: str, kind: str, v: dict, item: dict) -> list[str]:
     elif tk == "audit":
         if v["correct"] not in ("Y", "N"):
             probs.append("correct must be Y or N")
+    elif tk == "template":
+        if v["template"] not in TEMPLATE_LABELS:
+            probs.append(f"template must be one of {TEMPLATE_LABELS}")
     return [x.strip() for x in probs]
 
 
@@ -1250,6 +1375,17 @@ def _stop(job: dict, reasons: list[str], jobs_dir: Path | None, qc: dict | None 
     return {"stop_file": str(d / "QC_STOP.md"), "reasons": reasons}
 
 
+def _r2_hashes(task: str) -> dict:
+    """D-065: a Phase C task also records the r2 files it used (its prompt, the addendum); the record of every earlier
+    task is unchanged."""
+    if task not in ("instances", "template"):
+        return {}
+    out = {"protocol_r2_sha256": file_sha256(R2_PROTOCOL_PATH) if R2_PROTOCOL_PATH.exists() else None}
+    if task == "template":
+        out["prompt_r2_sha256"] = {TASKS[task]["prompt"]: file_sha256(R2_DIR / TASKS[task]["prompt"])}
+    return out
+
+
 def _freeze(jid: str, files: list[Path], qc: dict, jobs_dir: Path | None, accept_stop: str | None) -> dict:
     d = job_dir(jid, jobs_dir)
     from hebloc.loc.manifest import git_state
@@ -1257,6 +1393,7 @@ def _freeze(jid: str, files: list[Path], qc: dict, jobs_dir: Path | None, accept
     rec = {"job_id": jid, "frozen_at": _now(), "silver_version": SILVER_VERSION, "protocol_version": PROTOCOL_VERSION,
            "protocol_sha256": file_sha256(PROTOCOL_PATH), "guideline_sha256": file_sha256(GUIDELINE_PATH),
            "prompts_sha256": {p.name: file_sha256(p) for p in sorted(PROMPTS_DIR.glob("*.md"))},
+           **_r2_hashes(load_job(jid, jobs_dir)["task"]),
            "git": git_state(), "files": {str(p.relative_to(d)).replace("\\", "/"): file_sha256(p) for p in files},
            "qc_sha256": file_sha256(d / "qc.json"), "accepted_stop": accept_stop}
     atomic_write_json(rec, d / "FROZEN.json")
@@ -1292,7 +1429,10 @@ def finalize(jid: str, *, jobs_dir: Path | None = None, accept_stop: str | None 
                          **{c: r.get(c, "") for c in SENTENCE_FIELDS if c != "notes"}, "has_notes": bool(r.get("notes")),
                          "silver_status": status[i], "confidence": r.get("confidence", ""),
                          "evidence_rule": r.get("evidence_rule", ""), "abstain_reason": r.get("abstain_reason", "")})
-        name = f"{job['corpus']}_{job['split']}_silver.csv" if task == "sentence" else f"{jid}_silver.csv"
+        if task == "sentence":       # D-065: a registered supplement's file is named by its sample id
+            name = f"{job.get('supplement') or job['corpus']}_{job['split']}_silver.csv"
+        else:
+            name = f"{jid}_silver.csv"
         cols = list(rows[0])
         _write_csv_text(fin / name, cols, rows)
         out_files = [fin / name]
@@ -1357,6 +1497,22 @@ def _finalize_lemma_task(job: dict, st: dict, fin: Path) -> tuple[list[Path], di
                          "label_source": "ai", "use": "evidence for Phase C I-1 only (lexicon-v2 is Ori's decision)"})
         qc = {"agree": sum(1 for r in rows if r["agree"]), "n": len(rows)}
         name = "paper_variants_evidence.csv"
+    elif task == "template":          # D-065: the same rule as the noun types (agree, no low confidence; else unclear)
+        for x in job["items"]:
+            i = x["id"]
+            a, b = A.get(i), B.get(i)
+            agree = a and b and a["template"] == b["template"] and "low" not in (a["confidence"], b["confidence"])
+            rows.append({"item_id": i, "lemma": x["private"]["lemma"], "template": a["template"] if agree else "unclear",
+                         "proxy": x["private"]["proxy"], "silver_status": "agreed" if agree else "abstained",
+                         "label_source": "ai", "reviewed_by": f"auto-qc:{qc_id}", "review_mode": "automated",
+                         "note": f"A={(a or {}).get('template', '-')}/{(a or {}).get('confidence', '-')}; "
+                                 f"B={(b or {}).get('template', '-')}/{(b or {}).get('confidence', '-')}"})
+        both = [i for i in ids if i in A and i in B]
+        qc = {"kappa_template": kappa_ci([A[i]["template"] for i in both], [B[i]["template"] for i in both]),
+              "templates": {t: sum(1 for r in rows if r["template"] == t) for t in TEMPLATE_LABELS},
+              "abstained_unclear": sum(1 for r in rows if r["silver_status"] == "abstained"),
+              "use": "the §6 template-proxy check (EFRAT §5.9(3)); SILVER, never validation"}
+        name = "template_check.csv"
     else:   # audit
         for x in job["items"]:
             i = x["id"]
@@ -1432,6 +1588,9 @@ def receive(delivery: Path, *, frozen_path: Path = FROZEN_PATH, final_dir: Path 
                 target = Path(final_dir) / split / name
             else:
                 target = Path(final_dir) / "other" / jid / name
+            # D-065: a placed file is never overwritten by different content (another job with the same file name)
+            if target.exists() and file_sha256(target) != file_sha256(src / rel):
+                raise SilverError(f"{target} already holds a different received file: refused (silver is never revised)")
             target.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(src / rel, target)
             placed[name] = file_sha256(target)

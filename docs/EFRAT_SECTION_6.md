@@ -386,8 +386,9 @@ sensitivity runs at `k = 2` and `k = 3`:
 - **Mixed verbs.** A verb with locative frames also has `nonlocative_share` reported. Locative verbs often have
   idiomatic uses too.
 - **Disagreements with the paper.** For §5, a class that differs from the paper lists the deciding instances, and
-  those are audited as error analysis by the silver protocol (D-061: isolated two-pass AI review, never manual; the
-  task is built before R2, STAGES.md C0).
+  those are audited as error analysis by the silver protocol (D-061: isolated two-pass AI review, never manual).
+  Built at C0 (D-065; `annotation/silver/r2/PROTOCOL_R2.md`): Ori draws the ids (`loc draw audit`); **Efrat's Claude
+  Code** runs the job (`create --task instances --purpose audit`, STAGES.md stage EA).
 - **Thresholds are labels, not exclusions.** `k` and the "20 with an object" evidence threshold are fixed at R2 and
   recorded in the manifest. A verb that does not reach them is labelled; it is never dropped.
 
@@ -412,7 +413,7 @@ for putting, מן/מ- for removal).
 **Secondary check:** fn 8, that both מן and מ- occur in both frames.
 
 **Audit:** every verdict lists its deciding instances. Verdicts that differ from the paper are audited by the silver
-protocol (D-061: isolated two-pass AI review, never manual; the task is built before R2, STAGES.md C0).
+protocol (D-061: isolated two-pass AI review, never manual): the same audit job as for the classes (D-065, stage EA).
 
 **Descriptive only:** distributions of preposition by frame are statistics, not the test.
 
@@ -495,8 +496,10 @@ per-genre tables), then the frozen resolver variant.
   - the swap test of 5.7, which needs no roles, with its supporting instance ids;
   - plus verbs whose resolved outcomes include both A and B;
   - plus verbs whose signature profiles show DO + PP[B] and DO + PP[MIN] patterns.
-- **Confirmation (D-061).** Efrat's Claude Code reviews a sample of each candidate's instances by the silver
-  protocol, recorded in a review file with `label_source = ai`:
+- **Confirmation (D-061; built at C0, D-065).** Efrat's Claude Code reviews a sample of each candidate's instances
+  by the silver protocol, recorded in a review file with `label_source = ai` (`loc draw review`, then
+  `create --task instances --purpose review`; pre-registered: the 100 most frequent non-lexicon candidates, ≤ 5
+  instances of each pool):
   - isolated workspaces;
   - two independent passes;
   - abstention when unsure.
@@ -507,7 +510,8 @@ per-genre tables), then the frozen resolver variant.
 - semantic field;
 - preposition family;
 - **template proxy** from the lemma's shape, checked by the silver protocol (D-061: a two-pass AI check of a sample
-  of lemmas, `label_source = ai`; the task is built before R2) (e.g. ה_י_ → Causative; נ___ → Nifal;
+  of lemmas, `label_source = ai`; built at C0, D-065: `loc draw template` (200 lemmas with ≥ 20 tokens), then
+  `create --task template`, prompt `annotation/silver/r2/template_pass.md`) (e.g. ה_י_ → Causative; נ___ → Nifal;
   הת___ → Hitpael; a Modern plene spelling with י after the first radical → Intensive);
 - putting / removal / both;
 - path vs mereological, using the paper's two conditions for alternation (§3.1, §5): an agentive verb leading to a
@@ -880,7 +884,8 @@ shows Efrat each result.
 9. **STOP** after each delivery, and wait for R2 after the last one. Nothing of §9.3 before Ori announces `s56-v1`.
    Phase C supplements, if Ori approves any, come as new jobs by the same protocol (STAGES.md stage ES: an
    announcement in STAGES.md §6, then `git merge --ff-only s56-r1.3`, whose pinned protocol files are identical to
-   `s56-r1.1`: `git diff --quiet s56-r1.1 HEAD -- annotation/ ':(exclude)annotation/silver/FROZEN_SILVER.json'`, D-064).
+   `s56-r1.1`: `git diff --quiet s56-r1.1 HEAD -- annotation/S56_SILVER_PROTOCOL.md annotation/S56_GUIDELINE.md annotation/silver/prompts/ annotation/silver/worked_examples.csv annotation/silver/anchor_ids.csv`, D-065; the Phase C additions are new files in
+   `annotation/silver/r2/`).
 
 ### 9.3 After R2 = tag `s56-v1` (CHECKPOINT 2; Ori announces it)
 
@@ -894,8 +899,8 @@ shows Efrat each result.
 4. **Analysis (Plan Mode; Efrat approves each step):**
    - the §6 tables;
    - evaluation against the paper and §8;
-   - candidate review and the template-proxy check, by the silver protocol (§5.9(2), (3); the silver tasks come in R2;
-     STAGES.md E9);
+   - candidate review and the template-proxy check, by the silver protocol and its addendum
+     `annotation/silver/r2/PROTOCOL_R2.md` (§5.9(2), (3); D-065; STAGES.md E9);
    - characterization;
    - figures.
 

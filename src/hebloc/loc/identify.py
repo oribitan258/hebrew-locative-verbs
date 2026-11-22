@@ -12,6 +12,9 @@ One token = one instance:
 - forms-v2: an entry matched by FORM ONLY (the token's lemma is not one of the entry's own or shared lemmas) on an
   AMBIGUOUS host adds that host's ``~partners`` (a competing verb's lemma, or ``~<root>.S`` for a Causative/Intensive
   form that is also a Simple form of the same root): the token stays in, as a combined key, never dropped.
+- Phase C candidate I-2 (only when the forms file has ``lemma_partners``; empty in R1): a token matched by LEMMA ONLY
+  (no entry matched its host) on a host that is a morph-v2 form of another template of the same root adds
+  ``~<root>.<T>``, unless an entry of that root and template is already a member.
 
 ``match_method``: ``lemma`` (lemma or shared lemma only), ``form`` (host only) or ``both``.
 """
@@ -32,6 +35,7 @@ class Index:
     shared: dict[str, list[str]]                # lemma -> [entry id]
     form: dict[str, list[str]]                  # host -> [entry id]
     form_tilde: dict[tuple[str, str], list[str]]  # (host, entry id) -> ~partners (ambiguous forms)
+    lemma_tilde: dict[tuple[str, str], list[str]] = None  # (host, entry id) -> ~<root>.<T> (I-2; lemma-only matches)
 
 
 def build_index(lex: Lexicon) -> Index:
@@ -44,7 +48,14 @@ def build_index(lex: Lexicon) -> Index:
         for h in lex.forms.get(e.id, []):
             fo[h].append(e.id)
     ft = {(h, eid): list(p) for eid, hp in lex.ambiguous.items() for h, p in hp.items()}
-    return Index(dict(lem), dict(sh), dict(fo), ft)
+    lt = {(h, eid): list(p) for eid, hp in (lex.lemma_partners or {}).items() for h, p in hp.items()}
+    return Index(dict(lem), dict(sh), dict(fo), ft, lt)
+
+
+def _covered(partner: str, members: set[str]) -> bool:
+    """I-2: ``~<root>.<T>`` names a verb that is already a member (that entry, or one of its homographs)."""
+    base = partner[1:]
+    return any(m == base or m.startswith(base + ".") for m in members)
 
 
 def combine(entries: set[str], tildes: set[str]) -> str:
@@ -75,6 +86,9 @@ def identify(idx: Index, lemma: str | None, host: str | None, upos: str | None) 
             tildes.update(idx.form_tilde.get((host, eid), []))
     if not ents:
         return None
+    if by_lemma and not by_form and idx.lemma_tilde:     # I-2 (candidate only): lemma-only match
+        for eid in lemma_ents:
+            tildes.update(p for p in idx.lemma_tilde.get((host, eid), []) if not _covered(p, ents))
     return {"verb_key": combine(ents, tildes), "members": sorted(ents), "tilde": sorted(tildes),
             "match_method": "both" if by_lemma and by_form else ("lemma" if by_lemma else "form"),
             "voice": voices.pop() if len(voices) == 1 else ("mixed" if voices else "unknown")}
@@ -85,6 +99,7 @@ def register(con, lex: Lexicon) -> None:
     rows_l = [(d["lemma"], e.id, d["voice"]) for e in lex.entries for d in e.dicta_lemmas]
     rows_s = [(d["lemma"], e.id) for e in lex.entries for d in e.shared_lemmas]
     rows_f = [(h, e.id, lex.ambiguous.get(e.id, {}).get(h, [])) for e in lex.entries for h in lex.forms.get(e.id, [])]
+    rows_p = [(h, eid, list(p)) for eid, hp in (lex.lemma_partners or {}).items() for h, p in hp.items()]
     con.register("_lex_lemma", pa.table({"lemma": [r[0] for r in rows_l], "entry_id": [r[1] for r in rows_l],
                                          "voice": [r[2] for r in rows_l]}, schema=pa.schema([("lemma", pa.string()), ("entry_id", pa.string()), ("voice", pa.string())])))
     con.register("_lex_shared", pa.table({"lemma": [r[0] for r in rows_s], "entry_id": [r[1] for r in rows_s]},
@@ -93,10 +108,14 @@ def register(con, lex: Lexicon) -> None:
                                         "partners": [r[2] for r in rows_f]},
                                        schema=pa.schema([("host", pa.string()), ("entry_id", pa.string()),
                                                          ("partners", pa.list_(pa.string()))])))
+    con.register("_lex_lemma_partner", pa.table({"host": [r[0] for r in rows_p], "entry_id": [r[1] for r in rows_p],
+                                                 "partners": [r[2] for r in rows_p]},
+                                                schema=pa.schema([("host", pa.string()), ("entry_id", pa.string()),
+                                                                  ("partners", pa.list_(pa.string()))])))
     con.register("_lex_entry", pa.table({"entry_id": [e.id for e in lex.entries], "class": [e.klass for e in lex.entries],
                                          "status": [e.status for e in lex.entries]},
                                         schema=pa.schema([("entry_id", pa.string()), ("class", pa.string()), ("status", pa.string())])))
-    for t in ("lex_lemma", "lex_shared", "lex_form", "lex_entry"):
+    for t in ("lex_lemma", "lex_shared", "lex_form", "lex_lemma_partner", "lex_entry"):
         con.execute(f"CREATE OR REPLACE TEMP TABLE {t} AS SELECT * FROM _{t}")
 
 
@@ -129,6 +148,17 @@ def identify_sql(tokens_relation: str) -> str:
              bool_or(el) AS by_lemma, bool_or(ef) AS by_form,
              list_distinct(flatten(list(coalesce(voices, []::VARCHAR[])))) AS voices
       FROM me GROUP BY ALL
+    ),
+    lp AS (
+      SELECT me.sent_id, me.piece_idx, me.word_idx, flatten(list(p.partners)) AS lpart
+      FROM me JOIN t USING (sent_id, piece_idx, word_idx) JOIN lex_lemma_partner p ON p.host = t.host AND p.entry_id = me.entry_id
+      WHERE me.el GROUP BY ALL
+    ),
+    g2 AS (
+      SELECT g.* REPLACE (CASE WHEN g.by_lemma AND NOT g.by_form AND lp.lpart IS NOT NULL THEN
+               list_sort(list_distinct(list_concat(g.tilde, list_filter(lp.lpart, lambda x: len(list_filter(g.members,
+                   lambda m: m = substr(x, 2) OR starts_with(m, substr(x, 2) || '.'))) = 0)))) ELSE g.tilde END AS tilde)
+      FROM g LEFT JOIN lp USING (sent_id, piece_idx, word_idx)
     )
     SELECT g.sent_id, g.piece_idx, g.word_idx,
            array_to_string(list_concat(g.members, g.tilde), '|') AS verb_key, g.members, g.tilde,
@@ -136,4 +166,4 @@ def identify_sql(tokens_relation: str) -> str:
            CASE WHEN len(voices) = 1 THEN voices[1] WHEN len(voices) > 1 THEN 'mixed' ELSE 'unknown' END AS voice,
            (SELECT list_sort(list_distinct(list(coalesce(e.class, 'none')))) FROM lex_entry e WHERE list_contains(g.members, e.entry_id)) AS classes,
            (SELECT list_sort(list_distinct(list(e.status))) FROM lex_entry e WHERE list_contains(g.members, e.entry_id)) AS statuses
-    FROM g"""
+    FROM g2 g"""

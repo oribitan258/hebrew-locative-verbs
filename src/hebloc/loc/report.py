@@ -10,7 +10,9 @@ Written to ``<extract folder>/report-<variant>/`` (local data: CSV with a UTF-8 
 - ``identity.csv``: every A/B paper verb with its verdict (strict and על-as-ב), family and putting/removal;
 - ``table1_check.csv``: Table 1 verbs should be A or A/B, never B (§3.2.1);
 - ``sensitivity.csv``: what changes with the unit level vs the raw lemma, without function_use tokens, without
-  partitive evidence, and at k = 2 and 3.
+  partitive evidence, and at k = 2 and 3;
+- ``function_lemma.csv`` (Phase C candidate I-5, report only; D-059 addendum): lexicon tokens whose Dicta lemma is a
+  listed function predicate (e.g. ניתן inside נתן.S), per key and lemma, with their function_use share.
 Every number traces back to instance ids (``verb_classes.deciding_ids``) and so to ``sent_id`` and ``ref``.
 """
 
@@ -69,6 +71,7 @@ def report(extract_folder: Path, variant: str, lex: Lexicon, *, git: dict, inven
                           ("unit_link_auto", "link_status = 'auto'"), ("unit_link_reviewed", "link_status = 'reviewed'"),
                           ("unit_link_auto_inactive", "link_status = 'auto_inactive'"),
                           ("function_class_tagged", "function_class IS NOT NULL"), ("function_use", "function_use"),
+                          ("function_lemma", "list_contains(flags, 'function_lemma')"),
                           ("tree_invalid", "list_contains(flags, 'tree_invalid')"), ("multi_piece", "list_contains(flags, 'multi_piece')")):
             n = con.sql(f"SELECT count(*) FROM inst WHERE {col} AND ({sql})").fetchall()[0][0]
             cov.append({"view": view, "what": what, "n": n, "share_of_view": round(n / tot, 4) if tot else None})
@@ -148,6 +151,11 @@ def report(extract_folder: Path, variant: str, lex: Lexicon, *, git: dict, inven
     sens.append({"comparison": "primary_vs_without_partitive", "keys_with_a_different_class": n,
                  "note": "Frame A evidence from the partitive rule (fn 24, 27) removed (D-059 P7)"})
     tables["sensitivity"] = sens
+
+    # I-5 (report only) -------------------------------------------------------------------------------------
+    tables["function_lemma"] = _rows(con, """SELECT verb_key, lemma, function_class, count(*) AS n,
+        count(*) FILTER (WHERE function_use) AS n_function_use
+        FROM inst WHERE in_full_view AND list_contains(flags, 'function_lemma') GROUP BY ALL ORDER BY n DESC, verb_key, lemma""")
 
     for name, rows in tables.items():
         t = pa.Table.from_pylist(rows) if rows else pa.table({"empty": pa.array([], pa.string())})
