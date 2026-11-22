@@ -1363,3 +1363,35 @@ Design: [m6_design.md](m6_design.md).
   - the unit, audit and variant inputs (their ids are unique: 2,065 / 100 / 160);
   - the stage order.
 - *Next (each on Ori's go):* O1 restarts with `noun-mikra-r2`; Efrat redoes E3 with `noun-modern-r2` (STAGES.md §6).
+
+### D-063 · SILVER: a launch refused by the usage limit is an outage, not an attempt (2026-11-22) · accepted (Ori, O2 STOP decision)
+- *What happened (O2, job `unit`).*
+  - The Claude Code session limit was reached during pass A.
+  - Chunks c34–c41 (365 of 2,065 items) were launched twice (attempts a1 and a2, about 30 s apart). Each session was
+    refused by the client before doing anything:
+    - its only assistant entry is synthetic, "You've hit your session limit · resets 9pm (Asia/Jerusalem)", with
+      `isApiErrorMessage`, `error = rate_limit`;
+    - about 0.5 s; **0 tool calls, 0 violations**.
+  - `collect` files every chunk without a canary preflight as a `breach`. So the two refusals used up
+    `MAX_TECH_ATTEMPTS` and raised the SG3 STOP ("365 items … after 2 isolated attempts").
+  - Nothing was read in any refused session.
+  - The job's other chunks (c00–c33, 1,700 items) are clean, and the jobs `audit` and `variant` were already frozen.
+- *Decision (Ori chose "limit ≠ attempt").*
+  - **An outage** is a session that the client refuses before doing anything. That means a synthetic API-error
+    assistant entry with an error code in `OUTAGE_ERRORS` (`rate_limit`), no tool call at all, no output file, and
+    `is_error`. It is not an SG3 attempt:
+    - it is kept on file (`access.json` status `outage`) and nothing from it is used;
+    - it does not count toward `MAX_TECH_ATTEMPTS`;
+    - `step` launches no further chunk in that step and returns **WAIT** (CLI exit code 3; STOP stays 1).
+  - Any session that made even one tool call is classified exactly as before. So a real breach (a canary read, an
+    access outside the workspace, a forbidden tool) is never an outage, and other errors stay technical failures.
+  - **Chunks recorded before this decision:** `loc silver reclassify-outages <job>` (open jobs only).
+    - It adds `OUTAGE.json` next to the untouched `access.json`. It does so only when the chunk has no tool call and
+      no violation, the transcript's sha256 equals the recorded one, and the transcript is a refusal as above.
+    - A changed transcript is refused; a missing one is skipped.
+    - If no item is then over its attempt limit, the job's `QC_STOP.md` is kept, renamed
+      `QC_STOP.superseded-D-063-<n>.md`.
+- *Unchanged:* the protocol, prompts and guideline (`annotation/` is byte-identical); every label rule; QC
+  thresholds; recovery for real failures; frozen jobs.
+- *Release:* code only (`src/hebloc/loc/silver.py`, `src/hebloc/cli.py`, tests). Efrat runs `s56-r1.2` code and has
+  the same exposure. Whether and how it is released to her is decided by Ori separately.

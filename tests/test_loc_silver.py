@@ -34,6 +34,14 @@ ev = []
 def call(i, name, path, err, content=""):
     ev.append({"type": "assistant", "message": {"content": [{"type": "tool_use", "id": i, "name": name, "input": {"file_path": path}}]}})
     ev.append({"type": "user", "message": {"content": [{"type": "tool_result", "tool_use_id": i, "is_error": err, "content": content}]}})
+if mode == "limit":     # D-063: the client refuses the launch (usage limit) before any tool call
+    with open(proj / f"{sid}.jsonl", "w", encoding="utf-8") as f:
+        f.write(json.dumps({"type": "user", "message": {"role": "user", "content": "Read CLAUDE.md"}}) + "\n")
+        f.write(json.dumps({"type": "assistant", "isApiErrorMessage": True, "error": "rate_limit",
+                            "message": {"model": "<synthetic>", "role": "assistant",
+                                        "content": [{"type": "text", "text": "You've hit your session limit"}]}}) + "\n")
+    print(json.dumps({"session_id": sid, "is_error": True, "num_turns": 1}))
+    sys.exit(1)
 c1, c2 = meta["canary"]["repo"], meta["canary"]["sibling"]
 if mode == "breach":
     call("t1", "Read", c1, False, Path(c1).read_text())
@@ -190,6 +198,96 @@ def test_a_breach_discards_the_chunk_reruns_once_then_stops(sw, monkeypatch):
     stop = (sw["jobs"] / jid / "QC_STOP.md").read_text(encoding="utf-8")
     assert "never human row labelling" in stop
     assert not SV.is_frozen(jid, sw["jobs"])
+
+
+def test_a_usage_limit_refusal_is_an_outage_not_an_attempt(sw, monkeypatch):
+    """D-063: a launch refused by the client (usage limit, no tool call) is kept on file as an outage, is not an
+    attempt, launches nothing more in that step, and never leads to a STOP; the job then completes normally."""
+    monkeypatch.setitem(SV.TASKS["sentence"], "chunk", 1)              # 4 chunks: only the first may be launched
+    monkeypatch.setenv("FAKE_MODE", "limit")
+    jid = _create(sw)["job_id"]
+    for _ in range(3):
+        r = SV.step(jid, **sw["kw"])
+        assert r["action"] == "WAIT" and "session limit" in r["reason"] and len(r["ran"]) == 1
+        assert r["ran"][0]["status"] == "outage"
+    st = SV.pass_state(jid, "A", sw["jobs"])
+    assert st["outages"] == 3 and st["breaches"] == 0 and not st["tried"] and not st["labels"]
+    assert not (sw["jobs"] / jid / "QC_STOP.md").exists()
+    assert SV.status(jid, sw["jobs"])["passes"]["A"]["outages"] == 3
+    monkeypatch.setenv("FAKE_MODE", "agree")
+    assert _run(sw, jid)["action"] == "finalized"
+
+
+def _as_recorded_before_d063(jobs: Path, jid: str) -> int:
+    """Rewrite outage chunks the way the pre-D-063 code filed them (status breach, no outage field)."""
+    n = 0
+    for p in (jobs / jid / "passes").glob("*/a*/c*/access.json"):
+        acc = json.loads(p.read_text(encoding="utf-8"))
+        if acc.get("status") == "outage":
+            acc.pop("outage")
+            acc["status"] = "breach"
+            p.write_text(json.dumps(acc), encoding="utf-8")
+            n += 1
+    return n
+
+
+def test_reclassify_outages_supersedes_a_stop_caused_only_by_refusals(sw, monkeypatch):
+    monkeypatch.setenv("FAKE_MODE", "limit")
+    jid = _create(sw)["job_id"]
+    SV.step(jid, **sw["kw"])
+    SV.step(jid, **sw["kw"])
+    assert _as_recorded_before_d063(sw["jobs"], jid) == 2
+    r = SV.step(jid, **sw["kw"])                                         # the old classification: 2 "attempts" -> STOP
+    assert r["action"] == "STOP" and (sw["jobs"] / jid / "QC_STOP.md").exists()
+    rc = SV.reclassify_outages(jid, jobs_dir=sw["jobs"], projects_dir=sw["tmp"] / "projects")
+    assert rc["outages"] == 2 and not rc["items_over_limit"] and rc["stop_superseded"]
+    assert not (sw["jobs"] / jid / "QC_STOP.md").exists()
+    assert "D-063" in Path(rc["stop_superseded"]).read_text(encoding="utf-8")
+    assert len(list((sw["jobs"] / jid / "passes").glob("A/a*/c*/OUTAGE.json"))) == 2
+    assert SV.reclassify_outages(jid, jobs_dir=sw["jobs"], projects_dir=sw["tmp"] / "projects")["outages"] == 0
+    monkeypatch.setenv("FAKE_MODE", "agree")
+    assert _run(sw, jid)["action"] == "finalized"
+
+
+def test_reclassify_outages_never_turns_a_breach_into_an_outage(sw, monkeypatch):
+    monkeypatch.setenv("FAKE_MODE", "breach")
+    jid = _create(sw)["job_id"]
+    assert _run(sw, jid)["action"] == "STOP"
+    rc = SV.reclassify_outages(jid, jobs_dir=sw["jobs"], projects_dir=sw["tmp"] / "projects")
+    assert rc["outages"] == 0 and rc["items_over_limit"] and not rc["stop_superseded"]
+    assert (sw["jobs"] / jid / "QC_STOP.md").exists()
+
+
+def test_reclassify_outages_refuses_a_changed_transcript_and_skips_a_missing_one(sw, monkeypatch):
+    monkeypatch.setenv("FAKE_MODE", "limit")
+    jid = _create(sw)["job_id"]
+    SV.step(jid, **sw["kw"])
+    _as_recorded_before_d063(sw["jobs"], jid)
+    acc_p = next((sw["jobs"] / jid / "passes").glob("A/a*/c*/access.json"))
+    sid = json.loads(acc_p.read_text(encoding="utf-8"))["run"]["session_id"]
+    tr = sw["tmp"] / "projects" / "proj" / f"{sid}.jsonl"
+    tr.write_text(tr.read_text(encoding="utf-8") + "\n", encoding="utf-8")
+    with pytest.raises(SV.SilverError):
+        SV.reclassify_outages(jid, jobs_dir=sw["jobs"], projects_dir=sw["tmp"] / "projects")
+    tr.unlink()
+    rc = SV.reclassify_outages(jid, jobs_dir=sw["jobs"], projects_dir=sw["tmp"] / "projects")
+    assert rc["outages"] == 0 and rc["skipped"][0]["why"] == "no transcript"
+
+
+def test_outage_reason_needs_a_synthetic_rate_limit_and_no_tool_call(tmp_path):
+    t = tmp_path / "t.jsonl"
+    syn = {"type": "assistant", "isApiErrorMessage": True, "error": "rate_limit",
+           "message": {"model": "<synthetic>", "content": [{"type": "text", "text": "limit"}]}}
+    t.write_text(json.dumps(syn), encoding="utf-8")
+    assert SV.outage_reason(t) == "limit"
+    t.write_text(json.dumps({**syn, "error": "authentication_failed"}), encoding="utf-8")
+    assert SV.outage_reason(t) is None
+    tool = {"type": "assistant", "message": {"content": [{"type": "tool_use", "id": "x", "name": "Read", "input": {}}]}}
+    t.write_text(json.dumps(tool) + "\n" + json.dumps(syn), encoding="utf-8")
+    assert SV.outage_reason(t) is None
+    t.write_text(json.dumps({"type": "user", "message": {"content": "hi"}}), encoding="utf-8")
+    assert SV.outage_reason(t) is None
+    assert SV.outage_reason(None) is None
 
 
 def test_reads_outside_the_workspace_are_a_breach(sw, monkeypatch, tmp_path):

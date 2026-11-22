@@ -637,6 +637,37 @@ def access_log(transcript: Path, ws: Path, canary: dict, token: str) -> dict:
             "violations": violations, "calls": log, "transcript_sha256": file_sha256(Path(transcript))}
 
 
+OUTAGE_ERRORS = ("rate_limit",)   # D-063: client-side refusals before any work (the usage / session limit)
+
+
+def outage_reason(transcript: Path | None) -> str | None:
+    """D-063: the text of a launch the Claude Code client REFUSED before doing anything (usage / session limit), else
+    None. True only when the session made no tool call at all and every assistant entry is a synthetic API-error
+    message with an OUTAGE_ERRORS code. Reads entry metadata only, never tool results."""
+    if transcript is None or not Path(transcript).exists():
+        return None
+    texts, n_assistant = [], 0
+    for line in Path(transcript).read_text(encoding="utf-8", errors="replace").splitlines():
+        try:
+            e = json.loads(line)
+        except json.JSONDecodeError:
+            continue
+        msg = e.get("message") if isinstance(e, dict) else None
+        content = msg.get("content") if isinstance(msg, dict) else None
+        if isinstance(content, list) and any(isinstance(c, dict) and c.get("type") == "tool_use" for c in content):
+            return None
+        if e.get("type") != "assistant":
+            continue
+        n_assistant += 1
+        if not (isinstance(msg, dict) and msg.get("model") == "<synthetic>" and e.get("isApiErrorMessage")
+                and e.get("error") in OUTAGE_ERRORS):
+            return None
+        texts += [str(c.get("text", "")) for c in (content or []) if isinstance(c, dict) and c.get("type") == "text"]
+    if not n_assistant:
+        return None
+    return " ".join(t for t in texts if t).strip() or "usage limit"
+
+
 # ============================================================================================ collecting labels
 def _norm_pps(s: str) -> str:
     parts = []
@@ -747,14 +778,21 @@ def collect(ws: Path, *, jobs_dir: Path | None = None, projects_dir: Path | None
     for r in rows:
         seen[r["item_id"]] = r                   # the last row of an item wins within one chunk
     status = "breach" if not acc["ok"] else "ok"
-    atomic_write_json({**{k: v for k, v in acc.items()}, "workspace": meta["workspace"], "run": run, "status": status},
-                      dest / "access.json")
+    extra = {}
+    if (status == "breach" and not acc.get("calls") and not acc["violations"] and not outs and run.get("is_error")
+            and not any(p.is_file() for p in (ws / "out").glob("*"))):
+        why = outage_reason(tr)
+        if why:                                  # D-063: refused before any work: an outage, not an attempt
+            status, extra = "outage", {"outage": why}
+    atomic_write_json({**{k: v for k, v in acc.items()}, **extra, "workspace": meta["workspace"], "run": run,
+                       "status": status}, dest / "access.json")
     _write_csv_text(dest / "labels.csv", list(cols) + ["_valid"], list(seen.values()))
     atomic_write_json({"problems": probs}, dest / "problems.json")
     atomic_write_json(meta, dest / "WORKSPACE.json")
     missing = [i for i in meta["items"] if i not in seen]
     return {"workspace": meta["workspace"], "status": status, "labels": len(seen), "invalid": len(probs),
-            "missing": len(missing), "violations": acc["violations"], "preflight_ok": acc.get("preflight_ok")}
+            "missing": len(missing), "violations": acc["violations"], "preflight_ok": acc.get("preflight_ok"),
+            **extra}
 
 
 # ============================================================================================ pass state
@@ -766,11 +804,14 @@ def pass_state(jid: str, label: str, jobs_dir: Path | None = None) -> dict:
     invalid: dict[str, dict] = {}
     tried: dict[str, int] = {}
     format_reruns: dict[str, int] = {}
-    breaches = 0
+    breaches = outages = 0
     for ad in sorted(d.glob("a*"), key=lambda p: int(p.name[1:])):
         for cd in sorted(ad.glob("c*")):
             acc = read_json(cd / "access.json")
             meta = read_json(cd / "WORKSPACE.json")
+            if acc.get("status") == "outage" or (cd / "OUTAGE.json").exists():
+                outages += 1                     # D-063: kept on file, not an attempt, no labels
+                continue
             for i in meta["items"]:
                 tried[i] = tried.get(i, 0) + 1
             if meta.get("format_rerun"):
@@ -788,7 +829,7 @@ def pass_state(jid: str, label: str, jobs_dir: Path | None = None) -> dict:
     items = plan["items"] if plan else []
     missing = [i for i in items if i not in best and i not in invalid]
     return {"plan": plan, "labels": best, "invalid": invalid, "missing": missing, "tried": tried,
-            "format_reruns": format_reruns, "breaches": breaches}
+            "format_reruns": format_reruns, "breaches": breaches, "outages": outages}
 
 
 def _plan_pass(jid: str, label: str, items: list[str], kind: str, context: bool, jobs_dir: Path | None) -> dict:
@@ -847,6 +888,57 @@ def import_pass(jid: str, label: str, from_csv: Path, *, type_column: str = "pro
     return {"imported": len(out), "invalid": len(probs), "missing": len(by_id) - len(out), "dropped_duplicate": len(dropped)}
 
 
+def reclassify_outages(jid: str, *, jobs_dir: Path | None = None, projects_dir: Path | None = None) -> dict:
+    """D-063, one time, for chunks recorded BEFORE D-063: a chunk filed as a breach with no tool call and no violation,
+    whose transcript (same sha256 as recorded) is a client refusal (``outage_reason``), gets an ``OUTAGE.json`` next
+    to its untouched ``access.json``. If no item is then over its attempt limit, the job's ``QC_STOP.md`` is kept,
+    renamed as superseded. Counts only; never reads labels."""
+    _require_open(jid, jobs_dir)
+    d = job_dir(jid, jobs_dir)
+    found, skipped = [], []
+    for acc_p in sorted((d / "passes").glob("*/a*/c*/access.json")):
+        cd = acc_p.parent
+        acc = read_json(acc_p)
+        if acc.get("status") != "breach" or (cd / "OUTAGE.json").exists():
+            continue
+        where = str(cd.relative_to(d / "passes")).replace("\\", "/")
+        if acc.get("calls") or acc.get("violations") or not (acc.get("run") or {}).get("is_error"):
+            skipped.append({"chunk": where, "why": "tool calls, violations or no client error: a breach stays a breach"})
+            continue
+        tr = find_transcript((acc.get("run") or {}).get("session_id"), projects_dir)
+        if tr is None:
+            skipped.append({"chunk": where, "why": "no transcript"})
+            continue
+        sha = file_sha256(tr)
+        if sha != acc.get("transcript_sha256"):
+            raise SilverError(f"{where}: transcript sha256 differs from the recorded one: refused")
+        why = outage_reason(tr)
+        if not why:
+            skipped.append({"chunk": where, "why": "not a client refusal"})
+            continue
+        atomic_write_json({"decision": "D-063", "outage": why, "transcript_sha256": sha, "reclassified_at": _now()},
+                          cd / "OUTAGE.json")
+        found.append(where)
+    over = {}
+    for pd in sorted((d / "passes").glob("*")):
+        if (pd / "PLAN.json").exists():
+            st = pass_state(jid, pd.name, jobs_dir)
+            n = sum(1 for i in st["missing"] if st["tried"].get(i, 0) >= MAX_TECH_ATTEMPTS)
+            if n:
+                over[pd.name] = n
+    superseded = None
+    stop = d / "QC_STOP.md"
+    if found and not over and stop.exists():
+        k = 1 + len(list(d.glob("QC_STOP.superseded-D-063-*.md")))
+        superseded = d / f"QC_STOP.superseded-D-063-{k}.md"
+        stop.rename(superseded)
+        with open(superseded, "a", encoding="utf-8") as f:
+            f.write(f"\n## Superseded ({_now()}, D-063)\n{len(found)} chunk(s) were client refusals (usage limit), "
+                    "not attempts; they are kept on file with OUTAGE.json. The job resumes with `step`.\n")
+    return {"job_id": jid, "outages": len(found), "chunks": found, "skipped": skipped, "items_over_limit": over,
+            "stop_superseded": str(superseded) if superseded else None}
+
+
 def status(jid: str, jobs_dir: Path | None = None) -> dict:
     """Counts only (no labels): passes, labels, invalid, missing, breaches; frozen; STOP file."""
     job = load_job(jid, jobs_dir)
@@ -857,7 +949,7 @@ def status(jid: str, jobs_dir: Path | None = None) -> dict:
             continue
         st = pass_state(jid, pd.name, jobs_dir)
         passes[pd.name] = {"planned": len(st["plan"]["items"]), "labelled": len(st["labels"]), "invalid": len(st["invalid"]),
-                           "missing": len(st["missing"]), "breaches": st["breaches"]}
+                           "missing": len(st["missing"]), "breaches": st["breaches"], "outages": st["outages"]}
     return {"job_id": jid, "task": job["task"], "items": len(job["items"]), "passes": passes, "frozen": is_frozen(jid, jobs_dir),
             "stop": (d / "QC_STOP.md").exists()}
 
@@ -986,6 +1078,9 @@ def _run_pass(job: dict, label: str, items: list[str], *, kind: str = "label", c
     for ws in wss:
         run_workspace(ws, model=model, claude=claude)
         results.append(collect(ws, jobs_dir=jobs_dir, projects_dir=projects_dir))
+        if results[-1]["status"] == "outage":   # D-063: launch nothing more in this step; the caller WAITs
+            return {"done": False, "stop": None, "wait": results[-1]["outage"], "ran": results,
+                    "state": pass_state(jid, label, jobs_dir)}
     return {"done": False, "stop": None, "ran": results, "state": pass_state(jid, label, jobs_dir)}
 
 
@@ -1079,6 +1174,9 @@ def step(jid: str, *, source=None, run: bool = True, model: str = DEFAULT_MODEL,
         r = _run_pass(job, label, items, **kw, **k)
         if r["stop"]:
             return {"action": "STOP", "reason": r["stop"], **_stop(job, [r["stop"]], jobs_dir)}
+        if r.get("wait"):
+            return {"action": "WAIT", "reason": f"pass {label}: launch refused by the client (D-063 outage): {r['wait']}",
+                    **{k2: v for k2, v in r.items() if k2 not in ("state", "wait")}}
         if not r["done"]:
             return {"action": f"pass {label}", **{k2: v for k2, v in r.items() if k2 != "state"}}
         return None

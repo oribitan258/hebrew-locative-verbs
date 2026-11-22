@@ -747,7 +747,7 @@ def _cmd_loc_r2(args: argparse.Namespace) -> int:
 
 
 SILVER_ACTIONS = ("isolation-test", "create", "import-pass", "step", "status", "finalize", "deliver", "receive",
-                  "anchor-ids", "anchor-agreement")
+                  "anchor-ids", "anchor-agreement", "reclassify-outages")
 
 
 def _cmd_loc_silver(args: argparse.Namespace) -> int:
@@ -800,7 +800,13 @@ def _cmd_loc_silver(args: argparse.Namespace) -> int:
                 source = Source.make(args.source, args.package)
                 r = SV.step(jid, source=source, run=not args.no_run, model=model, root=root)
             _json({k: v for k, v in r.items() if k not in ("state",)})
-            return 1 if r.get("action") == "STOP" else 0
+            return 1 if r.get("action") == "STOP" else 3 if r.get("action") == "WAIT" else 0
+        if action == "reclassify-outages":
+            if len(args.target) != 1:
+                print("REFUSED: reclassify-outages <job id>")
+                return 2
+            _json(SV.reclassify_outages(args.target[0]))
+            return 0
         if action == "deliver":
             if not args.target or not args.out or not args.who:
                 print("REFUSED: deliver <job> [<job> ...] --out <outbox folder> --who <name>")
