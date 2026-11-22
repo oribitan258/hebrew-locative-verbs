@@ -36,7 +36,31 @@
        way. Decide whether and how to release it (a tag name; `s56-r1.3` is reserved for the supplement), and an
        announcement in STAGES.md §6.
     2. **The `FROZEN_SILVER.json` conflict** (see stage R below). Commits `f5b045c` and `83aade8` are unpushed.
-  - **Next: O3** (all its inputs are present: O1, O2, and Efrat's E3 received).
+- **Stage R done again (2026-11-22): Efrat's delivery 2 (E4) received.**
+  - **The transfer.** It came by Google Drive as `data/efrat-s6/efrat-s6 (1)-20261122T095313Z-1-001/efrat-s6 (1)/`.
+    Drive renamed the top folder `silver` → `silver (1)` and the manifest → `DELIVERY (1).json`.
+    - The manifest's sha256 is `acc3200b…1e95`, the value Ori announced.
+    - All 176 listed files match it under the name mapping.
+    - A verified copy with the original names is in `data/incoming/efrat-s6/2/`; bytes are unchanged and the download
+      is kept untouched.
+  - **The jobs.** `sentence-modern-dev` (101 items), `sentence-mikra-dev` (98) and `anchor-mikra` (48).
+    - The counts equal the frozen samples' dev splits and `anchor_ids.csv`.
+    - Each `FROZEN.json`: git `a820d3e` (`s56-r1.2` + docs), clean; protocol, guideline and prompts hashes equal
+      Ori's; the `qc.json` hash is OK.
+    - QC (counts only): no STOP and none accepted; 0 breaches; 0 qc_format.
+      - Abstention 4.95% / 2.04% / 4.17%.
+      - First-run κ(frame) 1.0 / 0.916 / 0.922.
+      - Mikra dev needed C for 31 of 98 items.
+  - **The record.** `loc silver receive` placed `data/loc/silver/final/dev/{modern,mikra}_dev_silver.csv` and
+    `final/other/anchor-mikra/anchor-mikra_silver.csv`, and recorded their hashes in `FROZEN_SILVER.json` (SG2, before
+    any read). `frozen_file_ok` accepts all four received files.
+  - **No label was read, nothing was scored, and the anchor agreement was not run.**
+  - **Unlisted extras** are kept in the download and never merged: Delivery 1's manifest (`DELIVERY-1.json`), Drive
+    re-copies of delivery-1 files (`(1)` names: `noun-modern-r2`, `code`, the proposals, `PROPOSAL_automation.md`) and
+    `STATE (1).md`.
+  - **Efrat's `STATE.md`:** E4 done, numbers identical to the QC above; next E5.
+  - **Next: O3** (all its inputs are present: O1, O2, and Efrat's E3 received). Its onward dependency, dev silver
+    (E4), is now met.
 - **Stage R done (2026-11-21): Efrat's delivery 1 = `noun-modern-r2` (E3) received.**
   - **What arrived.** Delivered at `data/efrat-s6/efrat-s6/` and copied unchanged to `data/incoming/efrat-s6/1/`.
     - `DELIVERY.json` sha256 `51e3c7d9…44e8`; all 81 listed files are present and match their hashes.
@@ -82,7 +106,8 @@
 - **§6 (Efrat):** E1–E6 (EFRAT_SECTION_6 §9.2 steps 4–9) since the R1.1 message; progress is in her `STATE.md`.
   - After P0's push, Ori sends her message M1 (STAGES.md §8).
   - After P1's push, Ori sends message M7: she takes `s56-r1.2` (stage EF) and redoes E3 with `noun-modern-r2`.
-- **Pending deliveries:** none. Delivery 1 (`noun-modern-r2`) was received 2026-11-21 (stage R above).
+- **Pending deliveries:** none. Delivery 1 (`noun-modern-r2`) was received 2026-11-21, and delivery 2 (dev × 2 +
+  anchor) on 2026-11-22 (stage R above).
 - **Last verified:** 2026-11-22, O2 session:
   - 312 tests passed;
   - HEAD `83aade8` is 2 commits ahead of origin/main (`f5b045c` R, `83aade8` D-063);

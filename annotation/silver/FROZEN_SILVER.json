@@ -15,6 +15,45 @@
       "delivery_sha256": "51e3c7d9100052160cbad04d0a100dfb81601c195613b5cb94fbfbbfbcad44e8",
       "protocol_sha256": "a79e6ec61621b5e0dd8fc78423371746053ddd4bd70f4142bd160820fa9af945",
       "accepted_stop": null
+    },
+    "sentence-modern-dev": {
+      "files": {
+        "final/modern_dev_silver.csv": "b120c2b69831d4e426b4991bca406308136098e1c95297f107f7cd3fbb9deaab"
+      },
+      "placed": {
+        "modern_dev_silver.csv": "b120c2b69831d4e426b4991bca406308136098e1c95297f107f7cd3fbb9deaab"
+      },
+      "frozen_at": "2026-11-22T07:55:29+00:00",
+      "received_at": "2026-11-22T09:55:52+00:00",
+      "delivery_sha256": "acc3200bffc6b05a6acd540c4782a11b86ef85fa3439ed488a2d7c36dce81e95",
+      "protocol_sha256": "a79e6ec61621b5e0dd8fc78423371746053ddd4bd70f4142bd160820fa9af945",
+      "accepted_stop": null
+    },
+    "sentence-mikra-dev": {
+      "files": {
+        "final/mikra_dev_silver.csv": "a62809f48d68bc07192ca3e4036253360d5672d7f27c049a1045251e7f53eb5c"
+      },
+      "placed": {
+        "mikra_dev_silver.csv": "a62809f48d68bc07192ca3e4036253360d5672d7f27c049a1045251e7f53eb5c"
+      },
+      "frozen_at": "2026-11-22T08:20:14+00:00",
+      "received_at": "2026-11-22T09:55:52+00:00",
+      "delivery_sha256": "acc3200bffc6b05a6acd540c4782a11b86ef85fa3439ed488a2d7c36dce81e95",
+      "protocol_sha256": "a79e6ec61621b5e0dd8fc78423371746053ddd4bd70f4142bd160820fa9af945",
+      "accepted_stop": null
+    },
+    "anchor-mikra": {
+      "files": {
+        "final/anchor-mikra_silver.csv": "0bea5c561309c0abc5323cdfe40258b757ff3dddfdf9d217b7a5a7d79cfee460"
+      },
+      "placed": {
+        "anchor-mikra_silver.csv": "0bea5c561309c0abc5323cdfe40258b757ff3dddfdf9d217b7a5a7d79cfee460"
+      },
+      "frozen_at": "2026-11-22T08:28:57+00:00",
+      "received_at": "2026-11-22T09:55:52+00:00",
+      "delivery_sha256": "acc3200bffc6b05a6acd540c4782a11b86ef85fa3439ed488a2d7c36dce81e95",
+      "protocol_sha256": "a79e6ec61621b5e0dd8fc78423371746053ddd4bd70f4142bd160820fa9af945",
+      "accepted_stop": null
     }
   }
 }

@@ -26,9 +26,12 @@ only orders the approved work, names who hands what to whom, and says when the n
     - **Open (Ori, before the next push):** (1) whether and how to release D-063 to Efrat (her `s56-r1.2` code has the
       same exposure; `s56-r1.3` is reserved for the supplement); (2) `FROZEN_SILVER.json` under `annotation/`
       (commit `f5b045c`) breaks Efrat's pull rule and the G3/ES checks. Both commits are unpushed.
-  - Next: **O3** (all inputs present: O1, O2, Efrat's E3 received).
-- §6: Efrat has done EF and **E3** (`noun-modern-r2` delivered and received). Her next stage is **E4** (dev silver).
-  Her progress is in her `STATE.md`.
+  - **R done again (2026-11-22): Efrat's delivery 2 (E4: Modern dev, Mikra dev, the anchor) received**, its hashes
+    recorded in `FROZEN_SILVER.json` before any read (§5 row 2). No label was read; nothing was scored.
+  - Next: **O3** (all inputs present: O1, O2, Efrat's E3 received). O3's onward DEP (Efrat's dev silver, E4) is now
+    met too, as is the dev-silver part of G2.
+- §6: Efrat has done EF, E3 and **E4** (delivery 2 received). Her next stage is **E5** (validation silver). Her
+  progress is in her `STATE.md`.
 
 ---
 
@@ -105,7 +108,7 @@ Claude Code does these steps in order and shows each result.
 | **P1** | O1 stopped (the duplicate-noun-ID defect); Ori's plan approval | D-062: `nouns-r2` lists (one row per lemma); unique item ids in every silver job; versioned noun job ids; pre-fix jobs kept but inactive; the import rule. Tests. The Mikra and Modern r2 lists (verified). Docs | Full tests; `hebloc check`; `git diff --quiet s56-r1.1 -- annotation/ config/`; old `noun-mikra` byte-identical | Commit + tag **`s56-r1.2`** + push (★) → **SEND TO PARTNER** (§8 M7) | ★ APPROVAL → O1 | done; `s56-r1.2` pushed 2026-11-21 |
 | **O1** | P1 | Mikra noun types: `loc nouns list --corpus mikra` (→ `mikra-nouns-r2-826929982d`, 979 lemmas; from the clean `s56-r1.2` tree, `nouns_to_label.csv` sha256 `f26714a0…cbd7`), then `loc silver create --task noun --corpus mikra --list data/loc/nouns/mikra/mikra-nouns-r2-826929982d/nouns_to_label.csv` → job `noun-mikra-r2`, then `loc silver step noun-mikra-r2` until `finalized` (protocol §9). The stopped pre-fix job `noun-mikra` is never used (D-062) | QC thresholds met; access logs clean; job frozen | Job `noun-mikra-r2` (local) | AUTO → O2 | done 2026-11-21: `noun-mikra-r2` frozen (final sha256 `47dc464e…c064`; κ 0.907; 0 breaches) |
 | **O2** | P0 | Units (D-061): `create --task unit --sheet data/loc/review/units/unit_review.csv --examples-csv …/unit_review_examples.csv`, `--task audit --sheet …/audit.csv`, `--task variant --sheet …/paper_variants.csv`; `step` each until `finalized` | Each job frozen; audit result ≥ 95 / 100 or the pre-registered withdrawal (D-059 P2) | Jobs `unit`, `audit`, `variant` (local); the P5 evidence | DEP: Efrat's Modern nouns (E3) → O3 | done 2026-11-22: all frozen; audit 95/100; variant 136/160 agree; unit κ 0.873, 1,440 / 625; 0 breaches (16 usage-limit outages, D-063) |
-| **R** | A delivery from Efrat in `data/incoming/efrat-s6/<n>/` (any time) | `loc silver receive <folder>` only: hashes into `annotation/silver/FROZEN_SILVER.json`. **Never read the labels.** Update §5 "Partner status" | Hashes match `DELIVERY.json` | Commit of `FROZEN_SILVER.json` (★, before any read) | Back to the stage that waited | delivery 1 (`noun-modern-r2`) received 2026-11-21; see §5 |
+| **R** | A delivery from Efrat in `data/incoming/efrat-s6/<n>/` (any time) | `loc silver receive <folder>` only: hashes into `annotation/silver/FROZEN_SILVER.json`. **Never read the labels.** Update §5 "Partner status" | Hashes match `DELIVERY.json` | Commit of `FROZEN_SILVER.json` (★, before any read) | Back to the stage that waited | delivery 1 (`noun-modern-r2`) received 2026-11-21; delivery 2 (dev × 2 + anchor) received 2026-11-22; see §5 |
 | **O3** | O1, O2, Efrat's E3 received (R) | `loc nouns merge --automated` (Modern, Mikra) → historical nouns (`loc nouns list --exclude-typed`, a noun job, merge) → `loc units merge` / `audit --automated` → freeze `config/noun_types.yaml` v1 and the unit map | Merge checks; cross-corpus conflicts listed (D-061 G1 rule); `loc verify`; tests | Config commit (★ Ori approves each merged **file**, never rows) | DEP: Efrat's dev silver (E4) | |
 | **C0** | O3 (reads no silver) | **Phase C build**, in Plan Mode (★ plan approval first): supplement silver jobs that do not collide (`job_id` is `sentence-<corpus>-<split>` today); I-2, I-3, I-4 code; the I-3 sense-screen draw; the §6 silver tasks (EFRAT §5.9(2) candidate review, §5.9(3) template proxy); the class/identity audit task (EFRAT §5.5, §5.6) and who runs it under D-061 | Full tests; pinned protocol files unchanged | Local code commit (pushed only at G3 or G7) | ★ APPROVAL; then DEP: dev silver | |
 | **G2** | O3, C0, dev silver of **both** corpora + the anchor received (R) and QC-passed | — | — | — | ★ APPROVAL → C1 | |
@@ -152,6 +155,7 @@ if Ori requests a supplement), and
 | Delivery | From | Jobs | Received | `DELIVERY.json` sha256 | Recorded in `FROZEN_SILVER.json` |
 |---|---|---|---|---|---|
 | 1 (`data/incoming/efrat-s6/1/`; copy of `data/efrat-s6/efrat-s6/`) | Efrat (E3) | `noun-modern-r2` (1,668 items; made at `s56-r1.2`, clean; no QC STOP) | 2026-11-21 (`loc silver receive`; 81/81 hashes OK) | `51e3c7d9100052160cbad04d0a100dfb81601c195613b5cb94fbfbbfbcad44e8` | yes: final `noun_types_modern.csv` sha256 `88382c7d…1454` (labels NOT read) |
+| 2 (`data/incoming/efrat-s6/2/`; verified copy of the Drive download `data/efrat-s6/efrat-s6 (1)-20261122T095313Z-1-001/efrat-s6 (1)/`: `silver (1)` → `silver`, `DELIVERY (1).json` → `DELIVERY.json`, bytes unchanged) | Efrat (E4) | `sentence-modern-dev` (101), `sentence-mikra-dev` (98), `anchor-mikra` (48); made at `a820d3e` (`s56-r1.2` + docs), clean; protocol, guideline and prompts = Ori's; no QC STOP, none accepted; 0 breaches; 0 qc_format; abstention 4.95 / 2.04 / 4.17%; first-run frame κ 1.0 / 0.916 / 0.922 | 2026-11-22 (`loc silver receive`; 176/176 hashes OK) | `acc3200bffc6b05a6acd540c4782a11b86ef85fa3439ed488a2d7c36dce81e95` | yes: `modern_dev_silver.csv` `b120c2b6…eaab`, `mikra_dev_silver.csv` `a62809f4…eb5c`, `anchor-mikra_silver.csv` `0bea5c56…e460` (labels NOT read) |
 
 ## 6. Announcements for Efrat (read by her `start` from origin)
 

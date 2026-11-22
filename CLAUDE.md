@@ -15,7 +15,9 @@ that stopped O1's first attempt: `nouns-r2` lists with one row per lemma, unique
 The pre-fix jobs (`noun-mikra`, any `noun-modern`) are kept and never used.
 **2026-11-22: O2 DONE.** Frozen: `audit` 95/100 (exactly the threshold; an AI audit), `variant` 136/160 agree,
 `unit` κ 0.873 (1,440 links / 625 no link). **D-063** (usage-limit refusal = outage, not attempt) is local commit
-`83aade8`, NOT pushed. **Next: O3.** Open for Ori before any push: D-063's release to Efrat, and the
+`83aade8`, NOT pushed.
+**2026-11-22: R (delivery 2) DONE.** Efrat's dev silver (Modern 101, Mikra 98) and anchor (48) were received, their
+hashes recorded in `FROZEN_SILVER.json`; no labels read. **Next: O3.** Open for Ori before any push: D-063's release to Efrat, and the
 `FROZEN_SILVER.json`-under-`annotation/` conflict.
 - **THE ORDERED WORKFLOW IS `docs/STAGES.md`** (both people, through §5 and §6 completion): every session starts with
   `start` (STAGES.md §1: sync, checks, the next eligible stage) and ends with `end-of-session` (STAGES.md §2: update
