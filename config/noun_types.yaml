@@ -9,6 +9,24 @@ meta:
   rule: 'human rows: reviewed by a human (D-054); automated rows: SILVER noun types by two independent AI passes, approved by Ori per file (D-061). Pass disagreement or low confidence -> UNCLEAR (silver_status
     abstained); a cross-corpus type conflict -> UNCLEAR (silver_status cross_corpus_conflict)'
 nouns:
+- lemma: '##זון'
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/high
+- lemma: '##מיש'
+  type: UNCLEAR
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/high
 - lemma: '%'
   type: UNCLEAR
   corpus_source: modern
@@ -18,6 +36,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/high; B=UNCLEAR/high
+- lemma: א"י
+  type: LOCATION
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATION/high; B=LOCATION/high
 - lemma: אב
   type: ANIMATE
   corpus_source: mikra
@@ -135,6 +162,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/high; B=LOCATUM/high
+- lemma: אבני
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/medium; B=LOCATUM/medium
 - lemma: אבנים
   type: LOCATUM
   corpus_source: mikra
@@ -153,6 +189,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=ANIMATE/high; B=ANIMATE/high
+- lemma: אבעבועות
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
 - lemma: אבק
   type: LOCATUM
   corpus_source: modern
@@ -207,6 +252,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/high; B=LOCATUM/high
+- lemma: אגדה
+  type: LOCATUM
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/medium; B=LOCATUM/medium
 - lemma: אגודה
   type: ANIMATE
   corpus_source: modern
@@ -216,6 +270,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=ANIMATE/high; B=ANIMATE/high
+- lemma: אגוז
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
 - lemma: אגף
   type: UNCLEAR
   corpus_source: modern
@@ -234,6 +297,24 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/high; B=LOCATUM/medium
+- lemma: אגרוף
+  type: LOCATION
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATION/medium; B=LOCATION/medium
+- lemma: אד
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
 - lemma: אדום
   type: LOCATION
   corpus_source: mikra
@@ -243,6 +324,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATION/medium; B=LOCATION/medium
+- lemma: אדון
+  type: ANIMATE
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/high; B=ANIMATE/high
 - lemma: אדם
   type: ANIMATE
   corpus_source: mikra
@@ -270,6 +360,15 @@ nouns:
   label_source: ai
   silver_status: abstained
   note: A=UNCLEAR/medium; B=LOCATUM/low
+- lemma: אדריאנוס
+  type: ANIMATE
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/high; B=ANIMATE/high
 - lemma: אדרת
   type: LOCATUM
   corpus_source: mikra
@@ -342,6 +441,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/high; B=UNCLEAR/high
+- lemma: אוהב
+  type: ANIMATE
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/high; B=ANIMATE/high
 - lemma: אוהד
   type: ANIMATE
   corpus_source: modern
@@ -540,6 +648,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATION/medium; B=LOCATION/medium
+- lemma: אונס
+  type: UNCLEAR
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/high
 - lemma: אוסף
   type: UNCLEAR
   corpus_source: modern
@@ -567,6 +684,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/high; B=UNCLEAR/medium
+- lemma: אופל
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
 - lemma: אופן
   type: UNCLEAR
   corpus_source: modern
@@ -585,6 +711,15 @@ nouns:
   label_source: ai
   silver_status: abstained
   note: A=UNCLEAR/medium; B=LOCATUM/low
+- lemma: אופנים
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=UNCLEAR/medium; B=UNCLEAR/low
 - lemma: אופציה
   type: UNCLEAR
   corpus_source: modern
@@ -639,6 +774,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/medium; B=LOCATUM/medium
+- lemma: אורה
+  type: UNCLEAR
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=LOCATUM/low; B=LOCATUM/medium
 - lemma: אורח
   type: UNCLEAR
   corpus_source: mikra
@@ -666,6 +810,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/medium; B=UNCLEAR/high
+- lemma: אושר
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/medium; B=LOCATUM/medium
 - lemma: אות
   type: UNCLEAR
   corpus_source: modern; mikra
@@ -675,6 +828,15 @@ nouns:
   label_source: ai
   silver_status: cross_corpus_conflict
   note: 'cross-corpus conflict: modern=UNCLEAR; mikra=LOCATUM'
+- lemma: אותה
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/high
 - lemma: אותת
   type: UNCLEAR
   corpus_source: mikra
@@ -693,6 +855,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/medium; B=LOCATUM/medium
+- lemma: אזוב
+  type: LOCATUM
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
 - lemma: אזור
   type: UNCLEAR
   corpus_source: modern; mikra
@@ -747,6 +918,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=ANIMATE/high; B=ANIMATE/high
+- lemma: אחדות
+  type: UNCLEAR
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/high
 - lemma: אחוז
   type: UNCLEAR
   corpus_source: modern
@@ -761,6 +941,15 @@ nouns:
   corpus_source: mikra
   proposed_by: claude_code
   reviewed_by: auto-qc:noun-mikra-r2-5d50d8ed466c
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATION/medium; B=LOCATION/medium
+- lemma: אחור
+  type: LOCATION
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
   review_mode: automated
   label_source: ai
   silver_status: agreed
@@ -819,6 +1008,15 @@ nouns:
   label_source: ai
   silver_status: cross_corpus_conflict
   note: 'cross-corpus conflict: modern=UNCLEAR; mikra=LOCATION'
+- lemma: איבה
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=LOCATUM/medium; B=LOCATUM/low
 - lemma: איבר
   type: LOCATION
   corpus_source: modern
@@ -918,6 +1116,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/high; B=UNCLEAR/high
+- lemma: איכר
+  type: ANIMATE
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/high; B=ANIMATE/high
 - lemma: איל
   type: ANIMATE
   corpus_source: mikra
@@ -927,6 +1134,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=ANIMATE/high; B=ANIMATE/high
+- lemma: אילן
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=LOCATUM/low; B=LOCATION/low
 - lemma: אילת
   type: LOCATION
   corpus_source: modern
@@ -1080,6 +1296,24 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/medium; B=LOCATUM/medium
+- lemma: אכזריות
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
+- lemma: אכילה
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/high
 - lemma: אל
   type: UNCLEAR
   corpus_source: mikra
@@ -1188,6 +1422,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=ANIMATE/high; B=ANIMATE/high
+- lemma: אלישבע
+  type: ANIMATE
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/high; B=ANIMATE/high
 - lemma: אלישע
   type: ANIMATE
   corpus_source: mikra
@@ -1215,6 +1458,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=ANIMATE/high; B=ANIMATE/high
+- lemma: אלקים
+  type: ANIMATE
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/medium; B=ANIMATE/high
 - lemma: אם
   type: ANIMATE
   corpus_source: mikra
@@ -1377,6 +1629,15 @@ nouns:
   label_source: ai
   silver_status: abstained
   note: A=LOCATUM/medium; B=UNCLEAR/medium
+- lemma: אנחה
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=LOCATUM/low; B=LOCATUM/medium
 - lemma: אסון
   type: UNCLEAR
   corpus_source: modern
@@ -1440,6 +1701,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=ANIMATE/high; B=ANIMATE/high
+- lemma: אף
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=UNCLEAR/medium; B=LOCATION/medium
 - lemma: אפגניסטן
   type: LOCATION
   corpus_source: modern
@@ -1458,6 +1728,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/high; B=LOCATUM/high
+- lemma: אפוטרופוס
+  type: ANIMATE
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/high; B=ANIMATE/high
 - lemma: אפי
   type: UNCLEAR
   corpus_source: mikra
@@ -1485,6 +1764,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATION/high; B=LOCATION/high
+- lemma: אפלה
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
 - lemma: אפליה
   type: UNCLEAR
   corpus_source: modern
@@ -1503,6 +1791,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/high; B=LOCATUM/high
+- lemma: אפרוח
+  type: ANIMATE
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/high; B=ANIMATE/high
 - lemma: אפריל
   type: UNCLEAR
   corpus_source: modern
@@ -1602,6 +1899,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATION/high; B=LOCATION/high
+- lemma: ארובה
+  type: LOCATION
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATION/high; B=LOCATION/high
 - lemma: ארוחה
   type: UNCLEAR
   corpus_source: modern
@@ -1620,6 +1926,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATION/high; B=LOCATION/high
+- lemma: ארונו
+  type: UNCLEAR
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
 - lemma: ארז
   type: LOCATUM
   corpus_source: mikra
@@ -1656,6 +1971,24 @@ nouns:
   label_source: ai
   silver_status: abstained
   note: A=ANIMATE/medium; B=ANIMATE/low
+- lemma: אריה
+  type: ANIMATE
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/high; B=ANIMATE/high
+- lemma: אריס
+  type: ANIMATE
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/high; B=ANIMATE/high
 - lemma: ארכה
   type: UNCLEAR
   corpus_source: modern
@@ -1692,6 +2025,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATION/high; B=LOCATION/high
+- lemma: ארס
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
 - lemma: ארץ
   type: LOCATION
   corpus_source: mikra
@@ -1818,11 +2160,38 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATION/high; B=LOCATION/high
+- lemma: ב"ד
+  type: LOCATION
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATION/medium; B=LOCATION/medium
+- lemma: ב"ר
+  type: UNCLEAR
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
 - lemma: בא
   type: UNCLEAR
   corpus_source: mikra
   proposed_by: claude_code
   reviewed_by: auto-qc:noun-mikra-r2-5d50d8ed466c
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/high
+- lemma: באזני
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
   review_mode: automated
   label_source: ai
   silver_status: agreed
@@ -1836,6 +2205,33 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATION/high; B=LOCATION/high
+- lemma: בארון
+  type: UNCLEAR
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/high
+- lemma: בבוא
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/high
+- lemma: בבחינת
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/high
 - lemma: בבל
   type: LOCATION
   corpus_source: mikra
@@ -1980,6 +2376,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATION/high; B=LOCATION/high
+- lemma: בורא
+  type: ANIMATE
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/high; B=ANIMATE/high
 - lemma: בורסה
   type: LOCATION
   corpus_source: modern
@@ -1989,6 +2394,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATION/medium; B=LOCATION/medium
+- lemma: בושה
+  type: LOCATUM
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/medium; B=LOCATUM/medium
 - lemma: בושם
   type: LOCATUM
   corpus_source: mikra
@@ -1998,6 +2412,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/high; B=LOCATUM/high
+- lemma: בושת
+  type: LOCATUM
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/medium; B=LOCATUM/medium
 - lemma: בז
   type: LOCATUM
   corpus_source: mikra
@@ -2007,6 +2430,33 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/medium; B=LOCATUM/medium
+- lemma: בזב
+  type: UNCLEAR
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/high
+- lemma: בזכות
+  type: UNCLEAR
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/high
+- lemma: בזעף
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/high
 - lemma: בזק
   type: ANIMATE
   corpus_source: modern
@@ -2016,6 +2466,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=ANIMATE/high; B=ANIMATE/medium
+- lemma: בחוצה
+  type: UNCLEAR
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/high
 - lemma: בחור
   type: ANIMATE
   corpus_source: mikra
@@ -2052,6 +2511,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/medium; B=UNCLEAR/medium
+- lemma: בחק
+  type: UNCLEAR
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/high
 - lemma: בטן
   type: LOCATION
   corpus_source: mikra
@@ -2061,6 +2529,24 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATION/high; B=LOCATION/high
+- lemma: ביאה
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/high
+- lemma: ביאור
+  type: UNCLEAR
+  corpus_source: medieval; haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: cross_corpus_conflict
+  note: 'cross-corpus conflict: medieval=UNCLEAR; haskala=LOCATUM'
 - lemma: ביב
   type: UNCLEAR
   corpus_source: mikra
@@ -2115,6 +2601,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/high; B=UNCLEAR/medium
+- lemma: בימה
+  type: LOCATION
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATION/high; B=LOCATION/high
 - lemma: בימוי
   type: UNCLEAR
   corpus_source: modern
@@ -2412,6 +2907,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATION/high; B=LOCATION/high
+- lemma: בנים
+  type: ANIMATE
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/high; B=ANIMATE/high
 - lemma: בנימין
   type: ANIMATE
   corpus_source: mikra
@@ -2430,6 +2934,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATION/medium; B=LOCATION/medium
+- lemma: בנקיטת
+  type: UNCLEAR
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/high
 - lemma: בנש
   type: UNCLEAR
   corpus_source: mikra
@@ -2462,6 +2975,24 @@ nouns:
   corpus_source: mikra
   proposed_by: claude_code
   reviewed_by: auto-qc:noun-mikra-r2-5d50d8ed466c
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/high
+- lemma: בעוה"ז
+  type: UNCLEAR
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/high
+- lemma: בעור
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
   review_mode: automated
   label_source: ai
   silver_status: agreed
@@ -2529,6 +3060,24 @@ nouns:
   label_source: ai
   silver_status: abstained
   note: A=UNCLEAR/high; B=LOCATUM/medium
+- lemma: בערך
+  type: UNCLEAR
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/high
+- lemma: בפ
+  type: UNCLEAR
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/high
 - lemma: בפועל
   type: UNCLEAR
   corpus_source: modern
@@ -2655,6 +3204,24 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/high; B=LOCATUM/high
+- lemma: בריאה
+  type: UNCLEAR
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
+- lemma: בריאות
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
 - lemma: בריח
   type: LOCATUM
   corpus_source: mikra
@@ -2673,6 +3240,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATION/high; B=LOCATION/high
+- lemma: ברייה
+  type: UNCLEAR
+  corpus_source: hazal; medieval; haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: cross_corpus_conflict
+  note: 'cross-corpus conflict: hazal=UNCLEAR; medieval=ANIMATE; haskala=ANIMATE'
 - lemma: בריכה
   type: LOCATION
   corpus_source: modern
@@ -2736,6 +3312,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATION/medium; B=LOCATION/medium
+- lemma: ברק
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/medium; B=LOCATUM/medium
 - lemma: ברקת
   type: LOCATUM
   corpus_source: mikra
@@ -2880,6 +3465,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/medium; B=LOCATUM/medium
+- lemma: גבינה
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
 - lemma: גביע
   type: LOCATUM
   corpus_source: modern
@@ -2943,6 +3537,24 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=ANIMATE/high; B=ANIMATE/high
+- lemma: גדול
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
+- lemma: גדולה
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=UNCLEAR/medium; B=LOCATUM/low
 - lemma: גדי
   type: ANIMATE
   corpus_source: mikra
@@ -2979,6 +3591,15 @@ nouns:
   label_source: ai
   silver_status: abstained
   note: A=UNCLEAR/medium; B=LOCATION/medium
+- lemma: גו
+  type: LOCATION
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATION/medium; B=LOCATION/medium
 - lemma: גובה
   type: UNCLEAR
   corpus_source: modern
@@ -2997,6 +3618,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=ANIMATE/high; B=ANIMATE/medium
+- lemma: גודל
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/high
 - lemma: גוי
   type: ANIMATE
   corpus_source: mikra
@@ -3060,6 +3690,15 @@ nouns:
   label_source: ai
   silver_status: abstained
   note: A=UNCLEAR/low; B=UNCLEAR/medium
+- lemma: גופרית
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
 - lemma: גורל
   type: UNCLEAR
   corpus_source: modern; mikra
@@ -3078,6 +3717,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/medium; B=UNCLEAR/medium
+- lemma: גורן
+  type: LOCATION
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATION/high; B=LOCATION/high
 - lemma: גוש
   type: UNCLEAR
   corpus_source: modern
@@ -3132,6 +3780,33 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/medium; B=UNCLEAR/medium
+- lemma: גחל
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
+- lemma: גט
+  type: LOCATUM
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
+- lemma: גיא
+  type: LOCATION
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATION/high; B=LOCATION/high
 - lemma: גיבוי
   type: UNCLEAR
   corpus_source: modern
@@ -3150,6 +3825,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=ANIMATE/high; B=ANIMATE/high
+- lemma: גיד
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=LOCATION/medium; B=LOCATUM/low
 - lemma: גידול
   type: UNCLEAR
   corpus_source: modern
@@ -3159,6 +3843,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/medium; B=UNCLEAR/medium
+- lemma: גיהנם
+  type: LOCATION
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATION/high; B=LOCATION/high
 - lemma: גיוס
   type: UNCLEAR
   corpus_source: modern
@@ -3213,6 +3906,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATION/high; B=LOCATION/medium
+- lemma: גירה
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/medium; B=LOCATUM/high
 - lemma: גירוש
   type: UNCLEAR
   corpus_source: modern
@@ -3330,6 +4032,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/medium; B=UNCLEAR/high
+- lemma: גמרא
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=UNCLEAR/medium; B=LOCATUM/medium
 - lemma: גן
   type: LOCATION
   corpus_source: mikra
@@ -3339,6 +4050,24 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATION/high; B=LOCATION/high
+- lemma: גנב
+  type: ANIMATE
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/high; B=ANIMATE/high
+- lemma: גנבה
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
 - lemma: גנות
   type: LOCATION
   corpus_source: mikra
@@ -3366,6 +4095,42 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=ANIMATE/high; B=ANIMATE/medium
+- lemma: גרגיר
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/medium
+- lemma: גרגר
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/medium
+- lemma: גרון
+  type: LOCATION
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATION/high; B=LOCATION/high
+- lemma: גרושה
+  type: ANIMATE
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/high; B=ANIMATE/high
 - lemma: גרם
   type: UNCLEAR
   corpus_source: mikra
@@ -3447,6 +4212,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/medium; B=LOCATUM/medium
+- lemma: דבורה
+  type: ANIMATE
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/high; B=ANIMATE/high
 - lemma: דביר
   type: LOCATION
   corpus_source: mikra
@@ -3465,6 +4239,15 @@ nouns:
   label_source: ai
   silver_status: cross_corpus_conflict
   note: 'cross-corpus conflict: modern=UNCLEAR; mikra=LOCATUM'
+- lemma: דבש
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
 - lemma: דג
   type: ANIMATE
   corpus_source: mikra
@@ -3600,6 +4383,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/high; B=LOCATUM/medium
+- lemma: דוחק
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
 - lemma: דויד
   type: ANIMATE
   corpus_source: mikra
@@ -3627,6 +4419,15 @@ nouns:
   label_source: ai
   silver_status: abstained
   note: A=LOCATUM/high; B=UNCLEAR/medium
+- lemma: דון
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=UNCLEAR/medium; B=UNCLEAR/low
 - lemma: דונם
   type: UNCLEAR
   corpus_source: modern
@@ -3636,6 +4437,24 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/high; B=UNCLEAR/high
+- lemma: דופי
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/medium; B=LOCATUM/medium
+- lemma: דופן
+  type: LOCATION
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATION/high; B=LOCATION/high
 - lemma: דור
   type: UNCLEAR
   corpus_source: mikra
@@ -3645,6 +4464,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/medium; B=UNCLEAR/medium
+- lemma: דורון
+  type: LOCATUM
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
 - lemma: דחייה
   type: UNCLEAR
   corpus_source: modern
@@ -3663,6 +4491,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/high; B=UNCLEAR/medium
+- lemma: דיבה
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/medium; B=LOCATUM/high
 - lemma: דיבור
   type: UNCLEAR
   corpus_source: modern
@@ -3726,6 +4563,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/high; B=LOCATUM/medium
+- lemma: דיין
+  type: ANIMATE
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/high; B=ANIMATE/high
 - lemma: דימוי
   type: UNCLEAR
   corpus_source: modern
@@ -3744,6 +4590,15 @@ nouns:
   label_source: ai
   silver_status: abstained
   note: A=UNCLEAR/low; B=UNCLEAR/medium
+- lemma: דינר
+  type: LOCATUM
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
 - lemma: דיסק
   type: LOCATUM
   corpus_source: modern
@@ -3780,6 +4635,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=ANIMATE/high; B=ANIMATE/high
+- lemma: דכא
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
 - lemma: דל
   type: ANIMATE
   corpus_source: mikra
@@ -3798,6 +4662,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/high; B=LOCATUM/high
+- lemma: דלקת
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
 - lemma: דלת
   type: UNCLEAR
   corpus_source: modern; mikra
@@ -3879,6 +4752,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/medium; B=UNCLEAR/medium
+- lemma: דממה
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
 - lemma: דמעה
   type: LOCATUM
   corpus_source: mikra
@@ -3933,6 +4815,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/medium; B=LOCATUM/medium
+- lemma: דעי
+  type: UNCLEAR
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/high
 - lemma: דעת
   type: UNCLEAR
   corpus_source: modern; mikra
@@ -3951,6 +4842,15 @@ nouns:
   label_source: ai
   silver_status: abstained
   note: A=UNCLEAR/medium; B=LOCATUM/medium
+- lemma: דפוס
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=UNCLEAR/medium; B=UNCLEAR/low
 - lemma: דצמבר
   type: UNCLEAR
   corpus_source: modern
@@ -4050,6 +4950,24 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/medium; B=UNCLEAR/medium
+- lemma: דרש
+  type: UNCLEAR
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
+- lemma: דרשה
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/medium; B=LOCATUM/medium
 - lemma: דשן
   type: LOCATUM
   corpus_source: mikra
@@ -4068,6 +4986,24 @@ nouns:
   label_source: ai
   silver_status: cross_corpus_conflict
   note: 'cross-corpus conflict: modern=UNCLEAR; mikra=LOCATUM'
+- lemma: ה"א
+  type: UNCLEAR
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
+- lemma: ה'
+  type: ANIMATE
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/medium; B=ANIMATE/high
 - lemma: האטה
   type: UNCLEAR
   corpus_source: modern
@@ -4131,6 +5067,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/high; B=UNCLEAR/high
+- lemma: הבל
+  type: UNCLEAR
+  corpus_source: medieval; haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: cross_corpus_conflict
+  note: 'cross-corpus conflict: medieval=UNCLEAR; haskala=LOCATUM'
 - lemma: הבנה
   type: UNCLEAR
   corpus_source: modern
@@ -4167,6 +5112,15 @@ nouns:
   label_source: ai
   silver_status: abstained
   note: A=LOCATUM/medium; B=UNCLEAR/medium
+- lemma: הגה
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/medium; B=LOCATUM/medium
 - lemma: הגלעד
   type: UNCLEAR
   corpus_source: mikra
@@ -4266,6 +5220,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/medium; B=LOCATUM/medium
+- lemma: הודאה
+  type: UNCLEAR
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
 - lemma: הודו
   type: LOCATION
   corpus_source: modern
@@ -4284,6 +5247,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/high; B=LOCATUM/medium
+- lemma: הוויה
+  type: UNCLEAR
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
 - lemma: הוכחה
   type: LOCATUM
   corpus_source: modern
@@ -4473,6 +5445,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/high; B=UNCLEAR/high
+- lemma: היזק
+  type: UNCLEAR
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
 - lemma: היכל
   type: LOCATION
   corpus_source: mikra
@@ -4581,6 +5562,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/medium; B=LOCATUM/medium
+- lemma: הכרח
+  type: UNCLEAR
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/high
 - lemma: הכרעה
   type: UNCLEAR
   corpus_source: modern
@@ -4653,6 +5643,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/high; B=UNCLEAR/medium
+- lemma: הליכה
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/high
 - lemma: הליכוד
   type: UNCLEAR
   corpus_source: modern
@@ -4662,6 +5661,15 @@ nouns:
   label_source: ai
   silver_status: abstained
   note: A=UNCLEAR/medium; B=ANIMATE/medium
+- lemma: הלכה
+  type: UNCLEAR
+  corpus_source: hazal; medieval; haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: cross_corpus_conflict
+  note: 'cross-corpus conflict: hazal=LOCATUM; medieval=UNCLEAR; haskala=LOCATUM'
 - lemma: הלם
   type: UNCLEAR
   corpus_source: mikra
@@ -4761,6 +5769,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/high; B=UNCLEAR/medium
+- lemma: הסבה
+  type: UNCLEAR
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/high
 - lemma: הסבר
   type: LOCATUM
   corpus_source: modern
@@ -4869,6 +5886,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/medium; B=UNCLEAR/medium
+- lemma: העלה
+  type: UNCLEAR
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/high
 - lemma: הערה
   type: LOCATUM
   corpus_source: modern
@@ -4883,6 +5909,15 @@ nouns:
   corpus_source: modern
   proposed_by: claude_code
   reviewed_by: auto-qc:noun-modern-r2-d20f9a1ae564
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
+- lemma: העתקה
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
   review_mode: automated
   label_source: ai
   silver_status: agreed
@@ -4932,6 +5967,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/high; B=UNCLEAR/high
+- lemma: הפך
+  type: UNCLEAR
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/high
 - lemma: הפלה
   type: UNCLEAR
   corpus_source: modern
@@ -5094,6 +6138,24 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/medium; B=UNCLEAR/medium
+- lemma: הקאה
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
+- lemma: הקב"ה
+  type: ANIMATE
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/high; B=ANIMATE/high
 - lemma: הקדם
   type: UNCLEAR
   corpus_source: modern
@@ -5103,6 +6165,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/high; B=UNCLEAR/high
+- lemma: הקדמה
+  type: UNCLEAR
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=LOCATUM/low; B=UNCLEAR/medium
 - lemma: הקלה
   type: UNCLEAR
   corpus_source: modern
@@ -5130,6 +6201,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/high; B=UNCLEAR/high
+- lemma: הקפה
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
 - lemma: הקרנה
   type: UNCLEAR
   corpus_source: modern
@@ -5265,6 +6345,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/medium; B=UNCLEAR/high
+- lemma: השגחה
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
 - lemma: השוואה
   type: UNCLEAR
   corpus_source: modern
@@ -5283,6 +6372,24 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/high; B=UNCLEAR/high
+- lemma: השחתה
+  type: UNCLEAR
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/high
+- lemma: השכלה
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=UNCLEAR/medium; B=LOCATUM/low
 - lemma: השלכה
   type: UNCLEAR
   corpus_source: modern
@@ -5373,6 +6480,24 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/medium; B=LOCATUM/medium
+- lemma: השתדלות
+  type: UNCLEAR
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/high
+- lemma: השתנות
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/high
 - lemma: השתתפות
   type: UNCLEAR
   corpus_source: modern
@@ -5562,6 +6687,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/high; B=UNCLEAR/high
+- lemma: התפשטות
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/high
 - lemma: התפתחות
   type: UNCLEAR
   corpus_source: modern
@@ -5661,6 +6795,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/high; B=UNCLEAR/high
+- lemma: ולד
+  type: ANIMATE
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/high; B=ANIMATE/high
 - lemma: ועד
   type: ANIMATE
   corpus_source: modern
@@ -5697,6 +6840,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=ANIMATE/high; B=ANIMATE/high
+- lemma: זבוב
+  type: ANIMATE
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/high; B=ANIMATE/high
 - lemma: זבח
   type: LOCATUM
   corpus_source: mikra
@@ -5706,6 +6858,24 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/medium; B=LOCATUM/medium
+- lemma: זבל
+  type: LOCATUM
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
+- lemma: זדון
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
 - lemma: זהב
   type: LOCATUM
   corpus_source: mikra
@@ -5742,6 +6912,15 @@ nouns:
   label_source: ai
   silver_status: abstained
   note: A=ANIMATE/medium; B=UNCLEAR/medium
+- lemma: זוהמה
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
 - lemma: זוהר
   type: UNCLEAR
   corpus_source: modern
@@ -5760,6 +6939,24 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/medium; B=UNCLEAR/medium
+- lemma: זוז
+  type: LOCATUM
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
+- lemma: זולת
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/high
 - lemma: זיכרון
   type: UNCLEAR
   corpus_source: modern
@@ -5778,6 +6975,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/high; B=UNCLEAR/high
+- lemma: זיעה
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
 - lemma: זירה
   type: LOCATION
   corpus_source: modern
@@ -5787,6 +6993,24 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATION/medium; B=LOCATION/high
+- lemma: זית
+  type: LOCATUM
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/medium
+- lemma: זכוכית
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
 - lemma: זכות
   type: LOCATUM
   corpus_source: modern
@@ -5931,6 +7155,24 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=ANIMATE/high; B=ANIMATE/high
+- lemma: חבור
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=UNCLEAR/medium; B=UNCLEAR/low
+- lemma: חבורה
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=ANIMATE/medium; B=UNCLEAR/low
 - lemma: חבילה
   type: LOCATUM
   corpus_source: modern
@@ -6129,6 +7371,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/medium; B=LOCATUM/medium
+- lemma: חוזק
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
 - lemma: חוט
   type: LOCATUM
   corpus_source: modern
@@ -6138,6 +7389,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/high; B=LOCATUM/high
+- lemma: חוטם
+  type: LOCATION
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATION/high; B=LOCATION/high
 - lemma: חוכמה
   type: LOCATUM
   corpus_source: mikra
@@ -6219,6 +7479,15 @@ nouns:
   label_source: ai
   silver_status: cross_corpus_conflict
   note: 'cross-corpus conflict: modern=UNCLEAR; mikra=LOCATION'
+- lemma: חומץ
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
 - lemma: חומר
   type: LOCATUM
   corpus_source: mikra
@@ -6237,6 +7506,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/high; B=UNCLEAR/medium
+- lemma: חומש
+  type: UNCLEAR
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/high
 - lemma: חוסר
   type: UNCLEAR
   corpus_source: modern
@@ -6336,6 +7614,24 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATION/high; B=LOCATION/high
+- lemma: חורבן
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/high
+- lemma: חוש
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
 - lemma: חושך
   type: UNCLEAR
   corpus_source: mikra
@@ -6381,6 +7677,15 @@ nouns:
   label_source: ai
   silver_status: abstained
   note: A=UNCLEAR/medium; B=LOCATION/medium
+- lemma: חזק
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/high
 - lemma: חזקה
   type: UNCLEAR
   corpus_source: mikra
@@ -6489,6 +7794,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/medium; B=UNCLEAR/medium
+- lemma: חיות
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=UNCLEAR/medium; B=UNCLEAR/low
 - lemma: חיזבאללה
   type: ANIMATE
   corpus_source: modern
@@ -6507,6 +7821,24 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/high; B=UNCLEAR/high
+- lemma: חיזיון
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=UNCLEAR/medium; B=LOCATUM/medium
+- lemma: חיטה
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
 - lemma: חייל
   type: ANIMATE
   corpus_source: modern
@@ -6597,6 +7929,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATION/high; B=LOCATION/high
+- lemma: חירות
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=LOCATUM/medium; B=UNCLEAR/medium
 - lemma: חירם
   type: ANIMATE
   corpus_source: mikra
@@ -6651,6 +7992,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=ANIMATE/high; B=ANIMATE/high
+- lemma: חלא
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/medium; B=LOCATUM/high
 - lemma: חלב
   type: LOCATUM
   corpus_source: mikra
@@ -6759,6 +8109,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=ANIMATE/high; B=ANIMATE/high
+- lemma: חמדה
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=LOCATUM/low; B=LOCATUM/low
 - lemma: חמה
   type: LOCATUM
   corpus_source: mikra
@@ -6777,6 +8136,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=ANIMATE/high; B=ANIMATE/high
+- lemma: חמלה
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/medium; B=LOCATUM/medium
 - lemma: חממה
   type: UNCLEAR
   corpus_source: modern
@@ -6795,6 +8163,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/medium; B=LOCATUM/high
+- lemma: חמץ
+  type: LOCATUM
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
 - lemma: חמר
   type: UNCLEAR
   corpus_source: mikra
@@ -6822,6 +8199,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATION/high; B=LOCATION/high
+- lemma: חנינה
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/medium; B=LOCATUM/medium
 - lemma: חנית
   type: LOCATUM
   corpus_source: mikra
@@ -6867,6 +8253,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/medium; B=LOCATUM/medium
+- lemma: חסרון
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
 - lemma: חפץ
   type: UNCLEAR
   corpus_source: modern; mikra
@@ -6881,6 +8276,15 @@ nouns:
   corpus_source: mikra
   proposed_by: claude_code
   reviewed_by: auto-qc:noun-mikra-r2-5d50d8ed466c
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
+- lemma: חצוצרה
+  type: LOCATUM
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
   review_mode: automated
   label_source: ai
   silver_status: agreed
@@ -6966,6 +8370,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/high; B=LOCATUM/high
+- lemma: חרדה
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/medium; B=LOCATUM/medium
 - lemma: חרון
   type: LOCATUM
   corpus_source: mikra
@@ -6993,6 +8406,24 @@ nouns:
   label_source: ai
   silver_status: cross_corpus_conflict
   note: 'cross-corpus conflict: modern=UNCLEAR; mikra=LOCATUM'
+- lemma: חרס
+  type: LOCATUM
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/medium; B=LOCATUM/medium
+- lemma: חרף
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/high
 - lemma: חרפה
   type: LOCATUM
   corpus_source: mikra
@@ -7092,6 +8523,15 @@ nouns:
   label_source: ai
   silver_status: abstained
   note: A=UNCLEAR/low; B=UNCLEAR/medium
+- lemma: חתול
+  type: ANIMATE
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/high; B=ANIMATE/high
 - lemma: חתיכה
   type: UNCLEAR
   corpus_source: modern
@@ -7128,6 +8568,15 @@ nouns:
   label_source: ai
   silver_status: abstained
   note: A=UNCLEAR/medium; B=UNCLEAR/low
+- lemma: טבילה
+  type: UNCLEAR
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/high
 - lemma: טבלה
   type: UNCLEAR
   corpus_source: modern
@@ -7155,6 +8604,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/high; B=LOCATUM/high
+- lemma: טהרה
+  type: UNCLEAR
+  corpus_source: hazal; medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: cross_corpus_conflict
+  note: 'cross-corpus conflict: hazal=UNCLEAR; medieval=LOCATUM'
 - lemma: טוב
   type: UNCLEAR
   corpus_source: mikra
@@ -7218,6 +8676,15 @@ nouns:
   label_source: ai
   silver_status: abstained
   note: A=UNCLEAR/low; B=UNCLEAR/medium
+- lemma: טורח
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
 - lemma: טורניר
   type: UNCLEAR
   corpus_source: modern
@@ -7245,6 +8712,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/high; B=UNCLEAR/high
+- lemma: טיט
+  type: LOCATUM
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
 - lemma: טיל
   type: LOCATUM
   corpus_source: modern
@@ -7272,6 +8748,15 @@ nouns:
   label_source: ai
   silver_status: abstained
   note: A=LOCATUM/medium; B=LOCATUM/low
+- lemma: טיפה
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=UNCLEAR/medium; B=LOCATUM/high
 - lemma: טיפול
   type: UNCLEAR
   corpus_source: modern
@@ -7299,6 +8784,15 @@ nouns:
   label_source: ai
   silver_status: cross_corpus_conflict
   note: 'cross-corpus conflict: modern=UNCLEAR; mikra=LOCATUM'
+- lemma: טלה
+  type: ANIMATE
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/high; B=ANIMATE/high
 - lemma: טלוויזיה
   type: UNCLEAR
   corpus_source: modern
@@ -7308,6 +8802,15 @@ nouns:
   label_source: ai
   silver_status: abstained
   note: A=LOCATION/medium; B=LOCATION/low
+- lemma: טלית
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
 - lemma: טלפון
   type: UNCLEAR
   corpus_source: modern
@@ -7362,6 +8865,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/medium; B=LOCATUM/medium
+- lemma: טפח
+  type: UNCLEAR
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/high
 - lemma: טקס
   type: UNCLEAR
   corpus_source: modern
@@ -7389,6 +8901,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/high; B=UNCLEAR/medium
+- lemma: טרחה
+  type: UNCLEAR
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
 - lemma: טריטוריה
   type: UNCLEAR
   corpus_source: mikra
@@ -7488,6 +9009,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/high; B=LOCATUM/high
+- lemma: יהב
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/medium; B=LOCATUM/medium
 - lemma: יהדות
   type: UNCLEAR
   corpus_source: modern
@@ -7677,6 +9207,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=ANIMATE/high; B=ANIMATE/high
+- lemma: יופי
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=UNCLEAR/medium; B=LOCATUM/medium
 - lemma: יוצא
   type: UNCLEAR
   corpus_source: mikra
@@ -7722,6 +9261,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=ANIMATE/high; B=ANIMATE/high
+- lemma: יורש
+  type: ANIMATE
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/high; B=ANIMATE/high
 - lemma: יושב
   type: ANIMATE
   corpus_source: mikra
@@ -7740,6 +9288,24 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=ANIMATE/high; B=ANIMATE/high
+- lemma: יחוד
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/high
+- lemma: יחיד
+  type: ANIMATE
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/medium; B=ANIMATE/medium
 - lemma: יחידה
   type: UNCLEAR
   corpus_source: modern
@@ -7758,6 +9324,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/medium; B=UNCLEAR/medium
+- lemma: יי
+  type: ANIMATE
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/medium; B=ANIMATE/high
 - lemma: יין
   type: LOCATUM
   corpus_source: mikra
@@ -7839,6 +9414,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/high; B=UNCLEAR/high
+- lemma: ילקוט
+  type: UNCLEAR
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
 - lemma: ים
   type: LOCATION
   corpus_source: mikra
@@ -7857,6 +9441,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/medium; B=UNCLEAR/high
+- lemma: ימי
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/high
 - lemma: ימין
   type: LOCATION
   corpus_source: mikra
@@ -7902,6 +9495,15 @@ nouns:
   label_source: ai
   silver_status: cross_corpus_conflict
   note: 'cross-corpus conflict: modern=UNCLEAR; mikra=LOCATION'
+- lemma: יסור
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=LOCATUM/low; B=LOCATUM/medium
 - lemma: יעד
   type: UNCLEAR
   corpus_source: modern
@@ -7943,6 +9545,15 @@ nouns:
   corpus_source: mikra
   proposed_by: claude_code
   reviewed_by: auto-qc:noun-mikra-r2-5d50d8ed466c
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/high; B=ANIMATE/high
+- lemma: יצור
+  type: ANIMATE
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
   review_mode: automated
   label_source: ai
   silver_status: agreed
@@ -7992,6 +9603,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/medium; B=LOCATUM/medium
+- lemma: יצר
+  type: UNCLEAR
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
 - lemma: יצרנית
   type: ANIMATE
   corpus_source: modern
@@ -8028,6 +9648,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATION/high; B=LOCATION/high
+- lemma: ירושה
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/medium; B=LOCATUM/high
 - lemma: ירושלים
   type: LOCATION
   corpus_source: mikra
@@ -8046,6 +9675,24 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATION/high; B=LOCATION/high
+- lemma: ירושלמי
+  type: UNCLEAR
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=UNCLEAR/low; B=UNCLEAR/low
+- lemma: ירח
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
 - lemma: ירי
   type: UNCLEAR
   corpus_source: modern
@@ -8118,6 +9765,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=ANIMATE/high; B=ANIMATE/high
+- lemma: ירק
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
 - lemma: ירשה
   type: LOCATUM
   corpus_source: mikra
@@ -8271,6 +9927,15 @@ nouns:
   label_source: ai
   silver_status: abstained
   note: A=UNCLEAR/low; B=LOCATION/low
+- lemma: כבדות
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/medium
 - lemma: כבוד
   type: UNCLEAR
   corpus_source: modern; mikra
@@ -8316,6 +9981,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=ANIMATE/high; B=ANIMATE/high
+- lemma: כבשן
+  type: LOCATION
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATION/high; B=LOCATION/high
 - lemma: כד
   type: LOCATION
   corpus_source: mikra
@@ -8487,6 +10161,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATION/high; B=LOCATION/high
+- lemma: כוסה
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=LOCATION/medium; B=LOCATION/low
 - lemma: כופר
   type: UNCLEAR
   corpus_source: modern
@@ -8505,6 +10188,15 @@ nouns:
   label_source: ai
   silver_status: abstained
   note: A=LOCATION/medium; B=UNCLEAR/low
+- lemma: כורח
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/medium
 - lemma: כושר
   type: UNCLEAR
   corpus_source: modern
@@ -8532,6 +10224,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/medium; B=LOCATUM/medium
+- lemma: כזית
+  type: UNCLEAR
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/high
 - lemma: כח
   type: UNCLEAR
   corpus_source: modern
@@ -8685,6 +10386,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=ANIMATE/high; B=ANIMATE/medium
+- lemma: כלוב
+  type: LOCATION
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATION/high; B=LOCATION/high
 - lemma: כלום
   type: UNCLEAR
   corpus_source: modern
@@ -8703,6 +10413,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATION/high; B=LOCATION/high
+- lemma: כליה
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=UNCLEAR/low; B=UNCLEAR/low
 - lemma: כלכלה
   type: UNCLEAR
   corpus_source: modern
@@ -8721,6 +10440,24 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/medium; B=UNCLEAR/high
+- lemma: כללות
+  type: UNCLEAR
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/high
+- lemma: כמ"ש
+  type: UNCLEAR
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/high
 - lemma: כמות
   type: UNCLEAR
   corpus_source: modern
@@ -8793,6 +10530,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/high; B=LOCATUM/high
+- lemma: כסיל
+  type: ANIMATE
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/high; B=ANIMATE/medium
 - lemma: כסף
   type: LOCATUM
   corpus_source: mikra
@@ -8838,6 +10584,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/medium; B=UNCLEAR/high
+- lemma: כפיו
+  type: UNCLEAR
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
 - lemma: כפים
   type: LOCATION
   corpus_source: mikra
@@ -8847,6 +10602,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATION/medium; B=LOCATION/medium
+- lemma: כפל
+  type: UNCLEAR
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
 - lemma: כפפה
   type: LOCATUM
   corpus_source: modern
@@ -8937,6 +10701,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATION/medium; B=LOCATION/medium
+- lemma: כרס
+  type: LOCATION
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATION/high; B=LOCATION/high
 - lemma: כשל
   type: UNCLEAR
   corpus_source: mikra
@@ -8946,6 +10719,15 @@ nouns:
   label_source: ai
   silver_status: abstained
   note: A=UNCLEAR/medium; B=UNCLEAR/low
+- lemma: כת
+  type: ANIMATE
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/high; B=ANIMATE/high
 - lemma: כתב
   type: UNCLEAR
   corpus_source: modern; mikra
@@ -8964,6 +10746,24 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/medium; B=LOCATUM/medium
+- lemma: כתוב
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
+- lemma: כתובה
+  type: LOCATUM
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
 - lemma: כתובת
   type: UNCLEAR
   corpus_source: modern
@@ -9063,6 +10863,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATION/high; B=LOCATION/medium
+- lemma: לבונה
+  type: LOCATUM
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
 - lemma: לבוש
   type: LOCATUM
   corpus_source: mikra
@@ -9117,6 +10926,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/medium; B=LOCATUM/medium
+- lemma: לה'
+  type: UNCLEAR
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/high
 - lemma: להב
   type: LOCATUM
   corpus_source: mikra
@@ -9126,6 +10944,24 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/medium; B=LOCATUM/medium
+- lemma: להבה
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
+- lemma: להמן
+  type: UNCLEAR
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/high
 - lemma: להנה
   type: UNCLEAR
   corpus_source: mikra
@@ -9189,6 +11025,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=ANIMATE/high; B=ANIMATE/high
+- lemma: לולב
+  type: LOCATUM
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
 - lemma: לונדון
   type: LOCATION
   corpus_source: modern
@@ -9243,6 +11088,15 @@ nouns:
   label_source: ai
   silver_status: abstained
   note: A=UNCLEAR/medium; B=LOCATUM/medium
+- lemma: לחש
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=UNCLEAR/medium; B=LOCATUM/low
 - lemma: לחת
   type: LOCATUM
   corpus_source: mikra
@@ -9252,6 +11106,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/medium; B=LOCATUM/medium
+- lemma: ליאור
+  type: UNCLEAR
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/high
 - lemma: ליגה
   type: ANIMATE
   corpus_source: modern
@@ -9270,6 +11133,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/high; B=UNCLEAR/high
+- lemma: ליה
+  type: UNCLEAR
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/high
 - lemma: ליווי
   type: UNCLEAR
   corpus_source: modern
@@ -9279,6 +11151,33 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/high; B=UNCLEAR/medium
+- lemma: ליחה
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
+- lemma: ליטר
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/high
+- lemma: ליי
+  type: UNCLEAR
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/high
 - lemma: ליכוד
   type: ANIMATE
   corpus_source: modern
@@ -9333,6 +11232,15 @@ nouns:
   label_source: ai
   silver_status: abstained
   note: A=LOCATUM/high; B=UNCLEAR/medium
+- lemma: לכבוד
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/high
 - lemma: לכיש
   type: LOCATION
   corpus_source: mikra
@@ -9347,6 +11255,42 @@ nouns:
   corpus_source: mikra
   proposed_by: claude_code
   reviewed_by: auto-qc:noun-mikra-r2-5d50d8ed466c
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/high
+- lemma: למופת
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/high
+- lemma: למען
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/high
+- lemma: לעג
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=UNCLEAR/medium; B=LOCATUM/medium
+- lemma: לעין
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
   review_mode: automated
   label_source: ai
   silver_status: agreed
@@ -9369,11 +11313,29 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/high; B=UNCLEAR/high
+- lemma: לעמו
+  type: UNCLEAR
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/high
 - lemma: לפי
   type: UNCLEAR
   corpus_source: mikra
   proposed_by: claude_code
   reviewed_by: auto-qc:noun-mikra-r2-5d50d8ed466c
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/high
+- lemma: לפרקים
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
   review_mode: automated
   label_source: ai
   silver_status: agreed
@@ -9396,6 +11358,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/medium; B=LOCATUM/medium
+- lemma: לרוב
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/high
 - lemma: לרשתה
   type: UNCLEAR
   corpus_source: mikra
@@ -9423,6 +11394,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATION/high; B=LOCATION/high
+- lemma: לשם
+  type: UNCLEAR
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/high
 - lemma: לשמה
   type: UNCLEAR
   corpus_source: mikra
@@ -9441,6 +11421,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/high; B=UNCLEAR/high
+- lemma: מ"ש
+  type: UNCLEAR
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=UNCLEAR/high; B=UNCLEAR/low
 - lemma: מ'
   type: UNCLEAR
   corpus_source: modern
@@ -9486,6 +11475,33 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=ANIMATE/medium; B=ANIMATE/medium
+- lemma: מאומה
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/high
+- lemma: מאור
+  type: UNCLEAR
+  corpus_source: hazal; medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: cross_corpus_conflict
+  note: 'cross-corpus conflict: hazal=UNCLEAR; medieval=LOCATUM'
+- lemma: מאורע
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/high
 - lemma: מאזן
   type: UNCLEAR
   corpus_source: modern
@@ -9621,6 +11637,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/medium; B=LOCATUM/medium
+- lemma: מבול
+  type: UNCLEAR
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
 - lemma: מבוקש
   type: ANIMATE
   corpus_source: modern
@@ -9756,6 +11781,15 @@ nouns:
   label_source: ai
   silver_status: abstained
   note: A=ANIMATE/medium; B=UNCLEAR/medium
+- lemma: מגילה
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/medium; B=LOCATUM/medium
 - lemma: מגירה
   type: UNCLEAR
   corpus_source: mikra
@@ -9927,6 +11961,24 @@ nouns:
   label_source: ai
   silver_status: abstained
   note: A=UNCLEAR/medium; B=LOCATION/medium
+- lemma: מדרס
+  type: UNCLEAR
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=LOCATUM/medium; B=UNCLEAR/medium
+- lemma: מדרש
+  type: UNCLEAR
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=UNCLEAR/low; B=UNCLEAR/low
 - lemma: מה
   type: UNCLEAR
   corpus_source: mikra
@@ -9954,6 +12006,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/high; B=UNCLEAR/medium
+- lemma: מהות
+  type: UNCLEAR
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
 - lemma: מהירות
   type: UNCLEAR
   corpus_source: modern
@@ -10287,6 +12348,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/high; B=LOCATUM/medium
+- lemma: מורא
+  type: UNCLEAR
+  corpus_source: hazal; medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: cross_corpus_conflict
+  note: 'cross-corpus conflict: hazal=UNCLEAR; medieval=LOCATUM'
 - lemma: מורד
   type: UNCLEAR
   corpus_source: modern
@@ -10323,6 +12393,15 @@ nouns:
   label_source: ai
   silver_status: abstained
   note: A=UNCLEAR/medium; B=LOCATION/high
+- lemma: מושבה
+  type: LOCATION
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATION/high; B=LOCATION/high
 - lemma: מושג
   type: LOCATUM
   corpus_source: modern
@@ -10359,6 +12438,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATION/high; B=LOCATION/high
+- lemma: מזג
+  type: UNCLEAR
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
 - lemma: מזוודה
   type: LOCATION
   corpus_source: modern
@@ -10422,6 +12510,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=ANIMATE/high; B=ANIMATE/high
+- lemma: מחברת
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/medium; B=LOCATUM/medium
 - lemma: מחווה
   type: UNCLEAR
   corpus_source: modern
@@ -10449,6 +12546,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/high; B=UNCLEAR/medium
+- lemma: מחול
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/medium
 - lemma: מחזה
   type: UNCLEAR
   corpus_source: modern
@@ -10467,6 +12573,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/medium; B=UNCLEAR/high
+- lemma: מחט
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
 - lemma: מחיה
   type: UNCLEAR
   corpus_source: mikra
@@ -10476,6 +12591,24 @@ nouns:
   label_source: ai
   silver_status: abstained
   note: A=LOCATUM/low; B=UNCLEAR/medium
+- lemma: מחילה
+  type: UNCLEAR
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=LOCATUM/low; B=LOCATUM/medium
+- lemma: מחיצה
+  type: LOCATION
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATION/medium; B=LOCATION/medium
 - lemma: מחיר
   type: UNCLEAR
   corpus_source: mikra
@@ -10548,6 +12681,15 @@ nouns:
   label_source: ai
   silver_status: abstained
   note: A=UNCLEAR/medium; B=LOCATION/medium
+- lemma: מחסור
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
 - lemma: מחסן
   type: LOCATION
   corpus_source: modern
@@ -10557,6 +12699,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATION/high; B=LOCATION/high
+- lemma: מחצה
+  type: UNCLEAR
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/high
 - lemma: מחצית
   type: UNCLEAR
   corpus_source: modern
@@ -10593,6 +12744,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/medium; B=LOCATUM/medium
+- lemma: מחשבת
+  type: UNCLEAR
+  corpus_source: medieval; haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: cross_corpus_conflict
+  note: 'cross-corpus conflict: medieval=LOCATUM; haskala=UNCLEAR'
 - lemma: מחתה
   type: LOCATION
   corpus_source: mikra
@@ -10670,6 +12830,15 @@ nouns:
   corpus_source: modern
   proposed_by: claude_code
   reviewed_by: auto-qc:noun-modern-r2-d20f9a1ae564
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
+- lemma: מטפחת
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
   review_mode: automated
   label_source: ai
   silver_status: agreed
@@ -10809,6 +12978,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/high; B=UNCLEAR/high
+- lemma: מין
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/medium
 - lemma: מינו
   type: UNCLEAR
   corpus_source: mikra
@@ -10845,6 +13023,33 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/medium; B=UNCLEAR/medium
+- lemma: מינים
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
+- lemma: מיעוט
+  type: UNCLEAR
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/high
+- lemma: מיץ
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
 - lemma: מיקום
   type: UNCLEAR
   corpus_source: modern
@@ -10881,6 +13086,15 @@ nouns:
   label_source: ai
   silver_status: abstained
   note: A=UNCLEAR/medium; B=LOCATION/medium
+- lemma: מיתה
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/high
 - lemma: מיתון
   type: UNCLEAR
   corpus_source: modern
@@ -10890,6 +13104,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/high; B=UNCLEAR/high
+- lemma: מכאוב
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=LOCATUM/low; B=LOCATUM/medium
 - lemma: מכבי
   type: ANIMATE
   corpus_source: modern
@@ -10935,6 +13158,15 @@ nouns:
   label_source: ai
   silver_status: abstained
   note: A=LOCATION/medium; B=LOCATUM/medium
+- lemma: מכילתא
+  type: UNCLEAR
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=UNCLEAR/medium; B=UNCLEAR/low
 - lemma: מכירה
   type: UNCLEAR
   corpus_source: modern
@@ -11097,6 +13329,15 @@ nouns:
   label_source: ai
   silver_status: abstained
   note: A=LOCATUM/low; B=UNCLEAR/medium
+- lemma: מליץ
+  type: ANIMATE
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/high; B=ANIMATE/high
 - lemma: מלך
   type: ANIMATE
   corpus_source: mikra
@@ -11133,6 +13374,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/medium; B=UNCLEAR/medium
+- lemma: מלתחה
+  type: LOCATION
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATION/high; B=LOCATION/medium
 - lemma: ממד
   type: UNCLEAR
   corpus_source: modern
@@ -11142,6 +13392,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/high; B=UNCLEAR/high
+- lemma: ממון
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
 - lemma: ממוצע
   type: UNCLEAR
   corpus_source: modern
@@ -11187,6 +13446,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=ANIMATE/medium; B=ANIMATE/high
+- lemma: מן
+  type: UNCLEAR
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=UNCLEAR/medium; B=LOCATUM/low
 - lemma: מנגנון
   type: UNCLEAR
   corpus_source: modern
@@ -11205,6 +13473,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/medium; B=LOCATUM/medium
+- lemma: מנדלי
+  type: ANIMATE
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/medium; B=ANIMATE/medium
 - lemma: מנה
   type: UNCLEAR
   corpus_source: modern; mikra
@@ -11214,6 +13491,15 @@ nouns:
   label_source: ai
   silver_status: cross_corpus_conflict
   note: 'cross-corpus conflict: modern=LOCATUM; mikra=UNCLEAR'
+- lemma: מנהג
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=UNCLEAR/medium; B=UNCLEAR/low
 - lemma: מנהיג
   type: ANIMATE
   corpus_source: modern
@@ -11241,6 +13527,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATION/medium; B=LOCATION/high
+- lemma: מנוח
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=UNCLEAR/medium; B=UNCLEAR/low
 - lemma: מנוחה
   type: UNCLEAR
   corpus_source: mikra
@@ -11268,6 +13563,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/high; B=LOCATUM/high
+- lemma: מנורה
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/medium; B=LOCATUM/medium
 - lemma: מנחה
   type: LOCATUM
   corpus_source: mikra
@@ -11295,6 +13599,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/medium; B=LOCATUM/high
+- lemma: מניין
+  type: UNCLEAR
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
 - lemma: מניע
   type: UNCLEAR
   corpus_source: modern
@@ -11385,6 +13698,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/high; B=UNCLEAR/high
+- lemma: מסילה
+  type: LOCATION
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATION/high; B=LOCATION/high
 - lemma: מסיר
   type: UNCLEAR
   corpus_source: mikra
@@ -11412,6 +13734,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/medium; B=LOCATUM/medium
+- lemma: מסכת
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=LOCATUM/low; B=UNCLEAR/low
 - lemma: מסלול
   type: LOCATION
   corpus_source: modern
@@ -11538,6 +13869,24 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/high; B=UNCLEAR/medium
+- lemma: מעות
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
+- lemma: מעט
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/high
 - lemma: מעטפה
   type: LOCATION
   corpus_source: modern
@@ -11619,6 +13968,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/medium; B=UNCLEAR/medium
+- lemma: מעמק
+  type: LOCATION
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATION/high; B=LOCATION/medium
 - lemma: מענה
   type: LOCATUM
   corpus_source: modern
@@ -11646,6 +14004,15 @@ nouns:
   label_source: ai
   silver_status: cross_corpus_conflict
   note: 'cross-corpus conflict: modern=ANIMATE; mikra=UNCLEAR'
+- lemma: מעצור
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=UNCLEAR/medium; B=UNCLEAR/low
 - lemma: מעצר
   type: UNCLEAR
   corpus_source: modern
@@ -11655,6 +14022,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/medium; B=UNCLEAR/medium
+- lemma: מער
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=UNCLEAR/low; B=UNCLEAR/low
 - lemma: מערב
   type: LOCATION
   corpus_source: modern
@@ -11754,6 +14130,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=ANIMATE/high; B=ANIMATE/high
+- lemma: מפלה
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
 - lemma: מפעל
   type: LOCATION
   corpus_source: modern
@@ -11880,6 +14265,24 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/medium; B=UNCLEAR/medium
+- lemma: מצורע
+  type: ANIMATE
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/high; B=ANIMATE/high
+- lemma: מצח
+  type: LOCATION
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATION/high; B=LOCATION/high
 - lemma: מציאות
   type: UNCLEAR
   corpus_source: modern
@@ -11925,6 +14328,24 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATION/high; B=LOCATION/high
+- lemma: מצר
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=LOCATION/medium; B=UNCLEAR/low
+- lemma: מצרי
+  type: ANIMATE
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/high; B=ANIMATE/high
 - lemma: מצרים
   type: LOCATION
   corpus_source: mikra
@@ -11939,6 +14360,15 @@ nouns:
   corpus_source: mikra
   proposed_by: claude_code
   reviewed_by: auto-qc:noun-mikra-r2-5d50d8ed466c
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATION/high; B=LOCATION/high
+- lemma: מקווה
+  type: LOCATION
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
   review_mode: automated
   label_source: ai
   silver_status: agreed
@@ -12006,6 +14436,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/high; B=UNCLEAR/medium
+- lemma: מקרא
+  type: UNCLEAR
+  corpus_source: hazal; haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: cross_corpus_conflict
+  note: 'cross-corpus conflict: hazal=LOCATUM; haskala=UNCLEAR'
 - lemma: מקרב
   type: UNCLEAR
   corpus_source: mikra
@@ -12033,6 +14472,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATION/high; B=LOCATION/high
+- lemma: מר
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=UNCLEAR/medium; B=UNCLEAR/low
 - lemma: מראה
   type: UNCLEAR
   corpus_source: mikra
@@ -12060,6 +14508,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=ANIMATE/high; B=ANIMATE/medium
+- lemma: מרגלית
+  type: LOCATUM
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
 - lemma: מרדכי
   type: ANIMATE
   corpus_source: mikra
@@ -12096,6 +14553,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/high; B=UNCLEAR/high
+- lemma: מרוצה
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/medium
 - lemma: מרחב
   type: LOCATION
   corpus_source: mikra
@@ -12177,6 +14643,24 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/medium; B=UNCLEAR/medium
+- lemma: מרק
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
+- lemma: מרתף
+  type: LOCATION
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATION/high; B=LOCATION/high
 - lemma: משא
   type: UNCLEAR
   corpus_source: modern; mikra
@@ -12312,6 +14796,15 @@ nouns:
   label_source: ai
   silver_status: abstained
   note: A=LOCATUM/medium; B=UNCLEAR/medium
+- lemma: משך
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/high
 - lemma: משכב
   type: LOCATION
   corpus_source: mikra
@@ -12321,6 +14814,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATION/high; B=LOCATION/high
+- lemma: משכון
+  type: LOCATUM
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
 - lemma: משכורת
   type: LOCATUM
   corpus_source: modern
@@ -12335,6 +14837,15 @@ nouns:
   corpus_source: mikra
   proposed_by: claude_code
   reviewed_by: auto-qc:noun-mikra-r2-5d50d8ed466c
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATION/high; B=LOCATION/high
+- lemma: משכנות
+  type: LOCATION
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
   review_mode: automated
   label_source: ai
   silver_status: agreed
@@ -12384,6 +14895,15 @@ nouns:
   label_source: ai
   silver_status: abstained
   note: A=UNCLEAR/high; B=LOCATUM/medium
+- lemma: משמעת
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
 - lemma: משמר
   type: LOCATION
   corpus_source: mikra
@@ -12447,6 +14967,15 @@ nouns:
   label_source: ai
   silver_status: abstained
   note: A=UNCLEAR/medium; B=UNCLEAR/low
+- lemma: משקה
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
 - lemma: משקיע
   type: ANIMATE
   corpus_source: modern
@@ -12483,6 +15012,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/medium; B=UNCLEAR/medium
+- lemma: משרת
+  type: ANIMATE
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/high; B=ANIMATE/medium
 - lemma: משתה
   type: UNCLEAR
   corpus_source: mikra
@@ -12546,6 +15084,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/medium; B=UNCLEAR/high
+- lemma: מתכת
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
 - lemma: מתן
   type: UNCLEAR
   corpus_source: modern
@@ -12636,6 +15183,15 @@ nouns:
   label_source: ai
   silver_status: abstained
   note: A=LOCATION/high; B=UNCLEAR/medium
+- lemma: נבואה
+  type: LOCATUM
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/medium; B=LOCATUM/medium
 - lemma: נבוכד
   type: UNCLEAR
   corpus_source: mikra
@@ -12753,6 +15309,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/high; B=LOCATUM/medium
+- lemma: נדו
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/high
 - lemma: נדח
   type: ANIMATE
   corpus_source: mikra
@@ -12771,6 +15336,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=ANIMATE/high; B=ANIMATE/high
+- lemma: נדר
+  type: UNCLEAR
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=UNCLEAR/medium; B=LOCATUM/low
 - lemma: נהג
   type: ANIMATE
   corpus_source: modern
@@ -12825,6 +15399,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/medium; B=UNCLEAR/high
+- lemma: נוכרי
+  type: ANIMATE
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/high; B=ANIMATE/high
 - lemma: נולד
   type: UNCLEAR
   corpus_source: mikra
@@ -12843,6 +15426,15 @@ nouns:
   label_source: ai
   silver_status: abstained
   note: A=LOCATUM/medium; B=UNCLEAR/medium
+- lemma: נוסחה
+  type: UNCLEAR
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=LOCATUM/medium; B=LOCATUM/low
 - lemma: נוסע
   type: ANIMATE
   corpus_source: modern
@@ -12852,6 +15444,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=ANIMATE/high; B=ANIMATE/high
+- lemma: נועם
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=UNCLEAR/medium; B=LOCATUM/medium
 - lemma: נוער
   type: UNCLEAR
   corpus_source: modern; mikra
@@ -12861,6 +15462,15 @@ nouns:
   label_source: ai
   silver_status: cross_corpus_conflict
   note: 'cross-corpus conflict: modern=ANIMATE; mikra=UNCLEAR'
+- lemma: נוצה
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
 - lemma: נושא
   type: UNCLEAR
   corpus_source: modern
@@ -12879,6 +15489,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/medium; B=UNCLEAR/medium
+- lemma: נזיר
+  type: ANIMATE
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/high; B=ANIMATE/high
 - lemma: נזק
   type: UNCLEAR
   corpus_source: modern
@@ -12897,6 +15516,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/high; B=LOCATUM/high
+- lemma: נח
+  type: ANIMATE
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/high; B=ANIMATE/medium
 - lemma: נחושת
   type: LOCATUM
   corpus_source: mikra
@@ -12951,6 +15579,24 @@ nouns:
   label_source: ai
   silver_status: abstained
   note: A=UNCLEAR/high; B=LOCATUM/low
+- lemma: נטייה
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
+- lemma: נטיעה
+  type: UNCLEAR
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=LOCATUM/medium; B=LOCATUM/low
 - lemma: נטל
   type: LOCATUM
   corpus_source: modern
@@ -13050,6 +15696,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/medium; B=UNCLEAR/high
+- lemma: ניצ
+  type: UNCLEAR
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/medium
 - lemma: ניצול
   type: UNCLEAR
   corpus_source: modern
@@ -13059,6 +15714,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/high; B=UNCLEAR/high
+- lemma: ניצוץ
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
 - lemma: ניצחון
   type: UNCLEAR
   corpus_source: modern
@@ -13077,6 +15741,24 @@ nouns:
   label_source: ai
   silver_status: abstained
   note: A=UNCLEAR/low; B=UNCLEAR/low
+- lemma: ניקיון
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=UNCLEAR/low; B=UNCLEAR/medium
+- lemma: ניר
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/medium; B=LOCATUM/medium
 - lemma: נישואים
   type: UNCLEAR
   corpus_source: modern
@@ -13149,6 +15831,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/high; B=UNCLEAR/high
+- lemma: נסים
+  type: UNCLEAR
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
 - lemma: נסיעה
   type: UNCLEAR
   corpus_source: modern
@@ -13158,6 +15849,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/high; B=UNCLEAR/high
+- lemma: נסכים
+  type: LOCATUM
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
 - lemma: נעורים
   type: UNCLEAR
   corpus_source: mikra
@@ -13230,6 +15930,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/high; B=UNCLEAR/high
+- lemma: נפל
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
 - lemma: נפש
   type: UNCLEAR
   corpus_source: modern; mikra
@@ -13275,6 +15984,24 @@ nouns:
   label_source: ai
   silver_status: abstained
   note: A=UNCLEAR/low; B=UNCLEAR/high
+- lemma: נקב
+  type: LOCATION
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATION/medium; B=LOCATION/medium
+- lemma: נקבה
+  type: ANIMATE
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/high; B=ANIMATE/high
 - lemma: נקודה
   type: UNCLEAR
   corpus_source: modern
@@ -13284,6 +16011,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/medium; B=UNCLEAR/high
+- lemma: נקל
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/high
 - lemma: נקם
   type: LOCATUM
   corpus_source: mikra
@@ -13437,6 +16173,24 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=ANIMATE/high; B=ANIMATE/high
+- lemma: סאה
+  type: UNCLEAR
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/high
+- lemma: סאת
+  type: UNCLEAR
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/medium
 - lemma: סבב
   type: UNCLEAR
   corpus_source: modern
@@ -13446,6 +16200,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/high; B=UNCLEAR/high
+- lemma: סבה
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/medium
 - lemma: סביבה
   type: LOCATION
   corpus_source: modern
@@ -13464,6 +16227,33 @@ nouns:
   label_source: ai
   silver_status: cross_corpus_conflict
   note: 'cross-corpus conflict: modern=UNCLEAR; mikra=LOCATUM'
+- lemma: סברה
+  type: LOCATUM
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/medium; B=LOCATUM/medium
+- lemma: סגולה
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=UNCLEAR/medium; B=LOCATUM/low
+- lemma: סגור
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=UNCLEAR/medium; B=UNCLEAR/low
 - lemma: סגירה
   type: UNCLEAR
   corpus_source: modern
@@ -13527,6 +16317,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=ANIMATE/high; B=ANIMATE/high
+- lemma: סדום
+  type: LOCATION
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATION/high; B=LOCATION/high
 - lemma: סדין
   type: LOCATUM
   corpus_source: mikra
@@ -13590,6 +16389,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/medium; B=LOCATUM/high
+- lemma: סוחר
+  type: ANIMATE
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/high; B=ANIMATE/high
 - lemma: סוכה
   type: LOCATION
   corpus_source: mikra
@@ -13617,6 +16425,15 @@ nouns:
   label_source: ai
   silver_status: abstained
   note: A=ANIMATE/medium; B=ANIMATE/low
+- lemma: סולם
+  type: LOCATUM
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/medium; B=LOCATUM/medium
 - lemma: סולת
   type: LOCATUM
   corpus_source: mikra
@@ -13815,6 +16632,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATION/high; B=LOCATION/high
+- lemma: סיני
+  type: LOCATION
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATION/high; B=LOCATION/high
 - lemma: סיסמה
   type: LOCATUM
   corpus_source: modern
@@ -13860,6 +16686,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATION/high; B=LOCATION/high
+- lemma: סירה
+  type: LOCATION
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATION/medium; B=LOCATION/medium
 - lemma: סירוב
   type: UNCLEAR
   corpus_source: modern
@@ -13959,6 +16794,24 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/high; B=LOCATUM/high
+- lemma: סמי
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=UNCLEAR/medium; B=UNCLEAR/low
+- lemma: סמיכה
+  type: UNCLEAR
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/medium
 - lemma: סמכות
   type: LOCATUM
   corpus_source: modern
@@ -13977,6 +16830,33 @@ nouns:
   label_source: ai
   silver_status: abstained
   note: A=LOCATUM/medium; B=UNCLEAR/medium
+- lemma: סממן
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
+- lemma: סמרטוט
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
+- lemma: סנהדרין
+  type: UNCLEAR
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=UNCLEAR/medium; B=ANIMATE/medium
 - lemma: סנט
   type: UNCLEAR
   corpus_source: modern
@@ -13986,6 +16866,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/medium; B=UNCLEAR/medium
+- lemma: סנטימטר
+  type: UNCLEAR
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/high
 - lemma: סניף
   type: LOCATION
   corpus_source: modern
@@ -13995,6 +16884,24 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATION/medium; B=LOCATION/medium
+- lemma: סנש
+  type: ANIMATE
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/medium; B=ANIMATE/medium
+- lemma: סעודה
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
 - lemma: סעיף
   type: UNCLEAR
   corpus_source: modern
@@ -14166,6 +17073,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=ANIMATE/high; B=ANIMATE/medium
+- lemma: סתר
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
 - lemma: עב
   type: UNCLEAR
   corpus_source: mikra
@@ -14193,6 +17109,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/medium; B=UNCLEAR/medium
+- lemma: עבה
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
 - lemma: עבודה
   type: UNCLEAR
   corpus_source: mikra
@@ -14202,6 +17127,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/medium; B=UNCLEAR/medium
+- lemma: עבות
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/medium; B=LOCATUM/medium
 - lemma: עבירה
   type: UNCLEAR
   corpus_source: modern
@@ -14238,6 +17172,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=ANIMATE/high; B=ANIMATE/high
+- lemma: עגיל
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
 - lemma: עגל
   type: ANIMATE
   corpus_source: mikra
@@ -14418,6 +17361,24 @@ nouns:
   label_source: ai
   silver_status: cross_corpus_conflict
   note: 'cross-corpus conflict: modern=UNCLEAR; mikra=LOCATUM'
+- lemma: עוון
+  type: LOCATUM
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/medium; B=LOCATUM/medium
+- lemma: עוז
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/medium; B=LOCATUM/medium
 - lemma: עול
   type: LOCATUM
   corpus_source: mikra
@@ -14472,6 +17433,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/medium; B=UNCLEAR/medium
+- lemma: עומר
+  type: UNCLEAR
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=LOCATUM/medium; B=UNCLEAR/low
 - lemma: עון
   type: LOCATUM
   corpus_source: mikra
@@ -14481,6 +17451,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/high; B=LOCATUM/medium
+- lemma: עונג
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/medium; B=LOCATUM/medium
 - lemma: עונה
   type: UNCLEAR
   corpus_source: mikra
@@ -14526,6 +17505,24 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=ANIMATE/high; B=ANIMATE/high
+- lemma: עופות
+  type: ANIMATE
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/high; B=ANIMATE/medium
+- lemma: עופרת
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
 - lemma: עוצמה
   type: UNCLEAR
   corpus_source: modern
@@ -14553,6 +17550,24 @@ nouns:
   label_source: ai
   silver_status: cross_corpus_conflict
   note: 'cross-corpus conflict: modern=UNCLEAR; mikra=LOCATUM'
+- lemma: עורב
+  type: ANIMATE
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/high; B=ANIMATE/high
+- lemma: עורה
+  type: UNCLEAR
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
 - lemma: עורך
   type: ANIMATE
   corpus_source: modern
@@ -14562,6 +17577,33 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=ANIMATE/high; B=ANIMATE/high
+- lemma: עורף
+  type: LOCATION
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATION/medium; B=LOCATION/medium
+- lemma: עורק
+  type: LOCATION
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATION/medium; B=LOCATION/medium
+- lemma: עושר
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/medium; B=LOCATUM/high
 - lemma: עותק
   type: LOCATUM
   corpus_source: modern
@@ -14589,6 +17631,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATION/high; B=LOCATION/high
+- lemma: עזר
+  type: UNCLEAR
+  corpus_source: hazal; medieval; haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: cross_corpus_conflict
+  note: 'cross-corpus conflict: hazal=UNCLEAR; medieval=LOCATUM; haskala=UNCLEAR'
 - lemma: עזרא
   type: ANIMATE
   corpus_source: mikra
@@ -14616,6 +17667,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=ANIMATE/high; B=ANIMATE/high
+- lemma: עט
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
 - lemma: עטרה
   type: LOCATUM
   corpus_source: mikra
@@ -14688,6 +17748,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATION/high; B=LOCATION/medium
+- lemma: עינב
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
 - lemma: עינה
   type: UNCLEAR
   corpus_source: mikra
@@ -14711,6 +17780,15 @@ nouns:
   corpus_source: mikra
   proposed_by: claude_code
   reviewed_by: auto-qc:noun-mikra-r2-5d50d8ed466c
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
+- lemma: עיניה
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
   review_mode: automated
   label_source: ai
   silver_status: agreed
@@ -14742,6 +17820,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/medium; B=UNCLEAR/medium
+- lemma: עיסה
+  type: LOCATUM
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
 - lemma: עיסוק
   type: UNCLEAR
   corpus_source: modern
@@ -14823,6 +17910,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/high; B=LOCATUM/high
+- lemma: עירוב
+  type: UNCLEAR
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
 - lemma: עירייה
   type: LOCATION
   corpus_source: modern
@@ -14859,6 +17955,33 @@ nouns:
   label_source: ai
   silver_status: abstained
   note: A=LOCATION/medium; B=UNCLEAR/medium
+- lemma: עכבר
+  type: ANIMATE
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/high; B=ANIMATE/high
+- lemma: עכו
+  type: LOCATION
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATION/high; B=LOCATION/high
+- lemma: עכו"ם
+  type: ANIMATE
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/medium; B=ANIMATE/medium
 - lemma: עלה
   type: UNCLEAR
   corpus_source: mikra
@@ -14895,6 +18018,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/medium; B=UNCLEAR/medium
+- lemma: עלמה
+  type: ANIMATE
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/high; B=ANIMATE/high
 - lemma: עם
   type: ANIMATE
   corpus_source: mikra
@@ -14904,6 +18036,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=ANIMATE/high; B=ANIMATE/high
+- lemma: עמ"י
+  type: UNCLEAR
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
 - lemma: עמדה
   type: UNCLEAR
   corpus_source: modern
@@ -15021,6 +18162,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/high; B=LOCATUM/high
+- lemma: עמלק
+  type: ANIMATE
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/high; B=ANIMATE/high
 - lemma: עמק
   type: LOCATION
   corpus_source: mikra
@@ -15174,6 +18324,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/medium; B=LOCATUM/high
+- lemma: עצלות
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/medium; B=LOCATUM/medium
 - lemma: עצם
   type: UNCLEAR
   corpus_source: modern; mikra
@@ -15210,6 +18369,15 @@ nouns:
   label_source: ai
   silver_status: abstained
   note: A=LOCATION/low; B=LOCATION/medium
+- lemma: עקר
+  type: UNCLEAR
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
 - lemma: עקרון
   type: LOCATION
   corpus_source: mikra
@@ -15264,6 +18432,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=ANIMATE/high; B=ANIMATE/high
+- lemma: ערוב
+  type: UNCLEAR
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=UNCLEAR/medium; B=LOCATUM/medium
 - lemma: ערוץ
   type: UNCLEAR
   corpus_source: modern
@@ -15336,6 +18513,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=ANIMATE/high; B=ANIMATE/high
+- lemma: ערפל
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/medium; B=LOCATUM/high
 - lemma: ערר
   type: UNCLEAR
   corpus_source: modern
@@ -15426,6 +18612,15 @@ nouns:
   label_source: ai
   silver_status: abstained
   note: A=LOCATUM/medium; B=UNCLEAR/medium
+- lemma: פאה
+  type: UNCLEAR
+  corpus_source: hazal; medieval; haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: cross_corpus_conflict
+  note: 'cross-corpus conflict: hazal=UNCLEAR; medieval=LOCATUM; haskala=UNCLEAR'
 - lemma: פאריס
   type: LOCATION
   corpus_source: modern
@@ -15480,6 +18675,24 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/high; B=UNCLEAR/high
+- lemma: פגם
+  type: UNCLEAR
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=UNCLEAR/medium; B=LOCATUM/low
+- lemma: פגע
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
 - lemma: פגר
   type: LOCATUM
   corpus_source: mikra
@@ -15507,6 +18720,15 @@ nouns:
   label_source: ai
   silver_status: cross_corpus_conflict
   note: 'cross-corpus conflict: modern=UNCLEAR; mikra=LOCATION'
+- lemma: פוד
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/high
 - lemma: פוטנציאל
   type: UNCLEAR
   corpus_source: modern
@@ -15570,6 +18792,15 @@ nouns:
   label_source: ai
   silver_status: abstained
   note: A=UNCLEAR/medium; B=ANIMATE/low
+- lemma: פורענות
+  type: LOCATUM
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/medium; B=LOCATUM/medium
 - lemma: פח
   type: UNCLEAR
   corpus_source: modern; mikra
@@ -15615,6 +18846,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/medium; B=UNCLEAR/medium
+- lemma: פיל
+  type: ANIMATE
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/high; B=ANIMATE/high
 - lemma: פינה
   type: LOCATION
   corpus_source: modern
@@ -15723,6 +18963,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/high; B=UNCLEAR/high
+- lemma: פירוש
+  type: LOCATUM
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/medium; B=LOCATUM/medium
 - lemma: פיתוח
   type: UNCLEAR
   corpus_source: modern
@@ -15741,6 +18990,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATION/medium; B=LOCATION/high
+- lemma: פלא
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
 - lemma: פלג
   type: LOCATION
   corpus_source: mikra
@@ -15750,6 +19008,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATION/medium; B=LOCATION/medium
+- lemma: פלוני
+  type: ANIMATE
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/high; B=ANIMATE/high
 - lemma: פלח
   type: LOCATUM
   corpus_source: mikra
@@ -15831,6 +19098,15 @@ nouns:
   label_source: ai
   silver_status: cross_corpus_conflict
   note: 'cross-corpus conflict: modern=UNCLEAR; mikra=LOCATION'
+- lemma: פנינה
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
 - lemma: פנסיה
   type: LOCATUM
   corpus_source: modern
@@ -15858,6 +19134,33 @@ nouns:
   label_source: ai
   silver_status: abstained
   note: A=UNCLEAR/medium; B=LOCATION/medium
+- lemma: פסול
+  type: UNCLEAR
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
+- lemma: פסולת
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
+- lemma: פסוק
+  type: UNCLEAR
+  corpus_source: hazal; medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: cross_corpus_conflict
+  note: 'cross-corpus conflict: hazal=LOCATUM; medieval=UNCLEAR'
 - lemma: פסח
   type: UNCLEAR
   corpus_source: mikra
@@ -16038,6 +19341,24 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=ANIMATE/high; B=ANIMATE/high
+- lemma: פראנק
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=UNCLEAR/medium; B=LOCATUM/medium
+- lemma: פרדס
+  type: LOCATION
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATION/high; B=LOCATION/high
 - lemma: פרה
   type: ANIMATE
   corpus_source: mikra
@@ -16047,6 +19368,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=ANIMATE/high; B=ANIMATE/high
+- lemma: פרוט
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=UNCLEAR/low; B=UNCLEAR/low
 - lemma: פרוטוקול
   type: LOCATUM
   corpus_source: modern
@@ -16074,6 +19404,15 @@ nouns:
   label_source: ai
   silver_status: abstained
   note: A=LOCATUM/medium; B=LOCATUM/low
+- lemma: פרוש
+  type: UNCLEAR
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
 - lemma: פרח
   type: LOCATUM
   corpus_source: modern
@@ -16137,6 +19476,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATION/medium; B=LOCATION/medium
+- lemma: פרנסה
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/medium; B=LOCATUM/medium
 - lemma: פרס
   type: LOCATUM
   corpus_source: modern
@@ -16146,6 +19494,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/medium; B=LOCATUM/high
+- lemma: פרסה
+  type: UNCLEAR
+  corpus_source: hazal; haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: cross_corpus_conflict
+  note: 'cross-corpus conflict: hazal=LOCATION; haskala=UNCLEAR'
 - lemma: פרסום
   type: UNCLEAR
   corpus_source: modern
@@ -16227,6 +19584,15 @@ nouns:
   label_source: ai
   silver_status: abstained
   note: A=LOCATUM/medium; B=LOCATUM/low
+- lemma: פשט
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
 - lemma: פשיטה
   type: UNCLEAR
   corpus_source: modern
@@ -16245,6 +19611,24 @@ nouns:
   label_source: ai
   silver_status: cross_corpus_conflict
   note: 'cross-corpus conflict: modern=UNCLEAR; mikra=LOCATUM'
+- lemma: פשתן
+  type: LOCATUM
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
+- lemma: פת
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
 - lemma: פתח
   type: LOCATION
   corpus_source: mikra
@@ -16254,6 +19638,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATION/high; B=LOCATION/high
+- lemma: פתחון
+  type: UNCLEAR
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=LOCATUM/medium; B=UNCLEAR/medium
 - lemma: פתיחה
   type: UNCLEAR
   corpus_source: modern
@@ -16497,6 +19890,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=ANIMATE/high; B=ANIMATE/high
+- lemma: ציד
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=UNCLEAR/medium; B=UNCLEAR/low
 - lemma: צידה
   type: LOCATUM
   corpus_source: mikra
@@ -16560,6 +19962,15 @@ nouns:
   label_source: ai
   silver_status: abstained
   note: A=UNCLEAR/medium; B=LOCATUM/medium
+- lemma: צימאון
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/medium; B=LOCATUM/medium
 - lemma: צינור
   type: UNCLEAR
   corpus_source: modern
@@ -16587,6 +19998,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=ANIMATE/high; B=ANIMATE/high
+- lemma: ציפורן
+  type: LOCATION
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATION/medium; B=LOCATION/medium
 - lemma: ציפייה
   type: UNCLEAR
   corpus_source: modern
@@ -16601,6 +20021,15 @@ nouns:
   corpus_source: mikra
   proposed_by: claude_code
   reviewed_by: auto-qc:noun-mikra-r2-5d50d8ed466c
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
+- lemma: ציצית
+  type: LOCATUM
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
   review_mode: automated
   label_source: ai
   silver_status: agreed
@@ -16632,6 +20061,15 @@ nouns:
   label_source: ai
   silver_status: cross_corpus_conflict
   note: 'cross-corpus conflict: modern=UNCLEAR; mikra=LOCATION'
+- lemma: צלוחית
+  type: LOCATION
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATION/high; B=LOCATION/high
 - lemma: צלחת
   type: LOCATION
   corpus_source: mikra
@@ -16686,6 +20124,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/medium; B=UNCLEAR/medium
+- lemma: צמח
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/medium; B=LOCATUM/medium
 - lemma: צמיחה
   type: UNCLEAR
   corpus_source: modern
@@ -16704,6 +20151,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/high; B=UNCLEAR/high
+- lemma: צמר
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
 - lemma: צמרת
   type: UNCLEAR
   corpus_source: modern; mikra
@@ -16812,6 +20268,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=ANIMATE/high; B=ANIMATE/high
+- lemma: צרעת
+  type: LOCATUM
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/medium; B=LOCATUM/medium
 - lemma: צרפת
   type: LOCATION
   corpus_source: modern
@@ -16848,6 +20313,15 @@ nouns:
   label_source: ai
   silver_status: abstained
   note: A=UNCLEAR/low; B=UNCLEAR/high
+- lemma: קבורה
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
 - lemma: קביעה
   type: UNCLEAR
   corpus_source: modern
@@ -16902,6 +20376,24 @@ nouns:
   label_source: ai
   silver_status: abstained
   note: A=ANIMATE/low; B=ANIMATE/medium
+- lemma: קדושה
+  type: LOCATUM
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/medium
+- lemma: קדחת
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=LOCATUM/medium; B=UNCLEAR/medium
 - lemma: קדים
   type: LOCATUM
   corpus_source: mikra
@@ -16911,6 +20403,24 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/medium; B=LOCATUM/medium
+- lemma: קדרה
+  type: LOCATION
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATION/high; B=LOCATION/high
+- lemma: קדרות
+  type: UNCLEAR
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=LOCATUM/medium; B=UNCLEAR/low
 - lemma: קדש
   type: LOCATION
   corpus_source: mikra
@@ -16974,6 +20484,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/medium; B=UNCLEAR/medium
+- lemma: קוטב
+  type: LOCATION
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATION/high; B=LOCATION/medium
 - lemma: קול
   type: UNCLEAR
   corpus_source: modern; mikra
@@ -16983,6 +20502,15 @@ nouns:
   label_source: ai
   silver_status: cross_corpus_conflict
   note: 'cross-corpus conflict: modern=UNCLEAR; mikra=LOCATUM'
+- lemma: קולה
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
 - lemma: קולנוע
   type: UNCLEAR
   corpus_source: modern
@@ -17001,6 +20529,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATION/high; B=LOCATION/high
+- lemma: קומץ
+  type: UNCLEAR
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/medium
 - lemma: קונגרס
   type: UNCLEAR
   corpus_source: modern
@@ -17019,6 +20556,24 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=ANIMATE/high; B=ANIMATE/high
+- lemma: קונסטנטינוס
+  type: ANIMATE
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/high; B=ANIMATE/high
+- lemma: קונסטנטינופול
+  type: LOCATION
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATION/high; B=LOCATION/high
 - lemma: קונצרט
   type: UNCLEAR
   corpus_source: modern
@@ -17055,6 +20610,15 @@ nouns:
   label_source: ai
   silver_status: abstained
   note: A=UNCLEAR/low; B=UNCLEAR/low
+- lemma: קור
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=LOCATUM/low; B=UNCLEAR/medium
 - lemma: קורא
   type: ANIMATE
   corpus_source: modern
@@ -17100,6 +20664,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/high; B=UNCLEAR/medium
+- lemma: קושיה
+  type: LOCATUM
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/medium; B=LOCATUM/medium
 - lemma: קטגוריה
   type: UNCLEAR
   corpus_source: modern
@@ -17118,6 +20691,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/high; B=LOCATUM/high
+- lemma: קטן
+  type: ANIMATE
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/medium; B=ANIMATE/medium
 - lemma: קטע
   type: UNCLEAR
   corpus_source: modern
@@ -17127,6 +20709,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/medium; B=UNCLEAR/medium
+- lemma: קיבה
+  type: LOCATION
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATION/high; B=LOCATION/high
 - lemma: קיבוץ
   type: LOCATION
   corpus_source: modern
@@ -17145,6 +20736,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/high; B=UNCLEAR/high
+- lemma: קידוש
+  type: UNCLEAR
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
 - lemma: קיום
   type: UNCLEAR
   corpus_source: modern
@@ -17154,6 +20754,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/medium; B=UNCLEAR/high
+- lemma: קיטור
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
 - lemma: קילומטר
   type: UNCLEAR
   corpus_source: modern
@@ -17172,6 +20781,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/medium; B=LOCATUM/medium
+- lemma: קיסר
+  type: ANIMATE
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/high; B=ANIMATE/high
 - lemma: קיץ
   type: UNCLEAR
   corpus_source: modern
@@ -17244,6 +20862,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/medium; B=LOCATUM/high
+- lemma: קליפה
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/medium; B=LOCATUM/medium
 - lemma: קללה
   type: LOCATUM
   corpus_source: mikra
@@ -17262,6 +20889,24 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATION/medium; B=LOCATION/high
+- lemma: קלרינט
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/medium; B=LOCATUM/high
+- lemma: קמח
+  type: LOCATUM
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
 - lemma: קמפיין
   type: UNCLEAR
   corpus_source: modern
@@ -17271,6 +20916,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/high; B=UNCLEAR/high
+- lemma: קן
+  type: LOCATION
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATION/high; B=LOCATION/high
 - lemma: קנאה
   type: LOCATUM
   corpus_source: mikra
@@ -17406,6 +21060,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/medium; B=UNCLEAR/medium
+- lemma: קצף
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/medium; B=LOCATUM/medium
 - lemma: קצר
   type: UNCLEAR
   corpus_source: modern
@@ -17415,6 +21078,24 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/high; B=UNCLEAR/medium
+- lemma: קצת
+  type: UNCLEAR
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/high
+- lemma: קרא
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
 - lemma: קרב
   type: UNCLEAR
   corpus_source: mikra
@@ -17451,6 +21132,51 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/medium; B=LOCATUM/medium
+- lemma: קרוב
+  type: ANIMATE
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/medium; B=ANIMATE/medium
+- lemma: קרובה
+  type: ANIMATE
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/high; B=ANIMATE/high
+- lemma: קרום
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=LOCATION/low; B=LOCATUM/medium
+- lemma: קרון
+  type: LOCATION
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATION/medium; B=LOCATION/medium
+- lemma: קרח
+  type: UNCLEAR
+  corpus_source: hazal; haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: cross_corpus_conflict
+  note: 'cross-corpus conflict: hazal=ANIMATE; haskala=UNCLEAR'
 - lemma: קריאה
   type: UNCLEAR
   corpus_source: modern
@@ -17550,6 +21276,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/high; B=UNCLEAR/medium
+- lemma: קשקוש
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=UNCLEAR/low; B=LOCATUM/medium
 - lemma: קשר
   type: UNCLEAR
   corpus_source: modern
@@ -17568,6 +21303,33 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/high; B=LOCATUM/high
+- lemma: ר'
+  type: ANIMATE
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/medium; B=ANIMATE/medium
+- lemma: ראובן
+  type: ANIMATE
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/high; B=ANIMATE/high
+- lemma: ראי
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/medium; B=LOCATUM/medium
 - lemma: ראיה
   type: LOCATUM
   corpus_source: modern
@@ -17622,6 +21384,33 @@ nouns:
   label_source: ai
   silver_status: cross_corpus_conflict
   note: 'cross-corpus conflict: modern=ANIMATE; mikra=UNCLEAR'
+- lemma: רבי
+  type: ANIMATE
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/high; B=ANIMATE/high
+- lemma: רבן
+  type: ANIMATE
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/medium; B=ANIMATE/medium
+- lemma: רבנן
+  type: ANIMATE
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/high; B=ANIMATE/high
 - lemma: רבע
   type: UNCLEAR
   corpus_source: modern
@@ -17712,6 +21501,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/high; B=LOCATUM/high
+- lemma: רובל
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=UNCLEAR/medium; B=LOCATUM/medium
 - lemma: רווח
   type: LOCATUM
   corpus_source: modern
@@ -17748,6 +21546,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/high; B=LOCATUM/high
+- lemma: רוכב
+  type: ANIMATE
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/high; B=ANIMATE/high
 - lemma: רוכש
   type: ANIMATE
   corpus_source: modern
@@ -17757,6 +21564,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=ANIMATE/high; B=ANIMATE/high
+- lemma: רומה
+  type: LOCATION
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATION/high; B=LOCATION/high
 - lemma: רומן
   type: UNCLEAR
   corpus_source: modern
@@ -17784,6 +21600,24 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATION/high; B=LOCATION/medium
+- lemma: רוע
+  type: UNCLEAR
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=UNCLEAR/medium; B=LOCATUM/low
+- lemma: רועה
+  type: ANIMATE
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/high; B=ANIMATE/high
 - lemma: רופא
   type: ANIMATE
   corpus_source: modern
@@ -17802,6 +21636,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=ANIMATE/high; B=ANIMATE/high
+- lemma: רוק
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
 - lemma: רושם
   type: UNCLEAR
   corpus_source: modern
@@ -17829,6 +21672,15 @@ nouns:
   label_source: ai
   silver_status: abstained
   note: A=ANIMATE/low; B=UNCLEAR/medium
+- lemma: רח"ל
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/high
 - lemma: רחב
   type: UNCLEAR
   corpus_source: mikra
@@ -17892,6 +21744,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/high; B=LOCATUM/medium
+- lemma: ריאה
+  type: LOCATION
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATION/medium; B=LOCATION/high
 - lemma: ריאיון
   type: UNCLEAR
   corpus_source: modern
@@ -17928,6 +21789,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/high; B=UNCLEAR/medium
+- lemma: ריבוי
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/high
 - lemma: ריבית
   type: LOCATUM
   corpus_source: modern
@@ -17973,6 +21843,33 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/high; B=UNCLEAR/high
+- lemma: ריק
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
+- lemma: ריר
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
+- lemma: ריש
+  type: UNCLEAR
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
 - lemma: רישום
   type: UNCLEAR
   corpus_source: modern
@@ -18081,6 +21978,24 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=ANIMATE/high; B=ANIMATE/high
+- lemma: רסיס
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/medium; B=LOCATUM/high
+- lemma: רסן
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
 - lemma: רע
   type: UNCLEAR
   corpus_source: mikra
@@ -18117,6 +22032,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/high; B=LOCATUM/medium
+- lemma: רעל
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
 - lemma: רעש
   type: UNCLEAR
   corpus_source: modern
@@ -18135,6 +22059,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/medium; B=UNCLEAR/medium
+- lemma: רפואה
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/medium; B=LOCATUM/medium
 - lemma: רפורמה
   type: UNCLEAR
   corpus_source: modern
@@ -18153,6 +22086,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATION/high; B=LOCATION/high
+- lemma: רפש
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/medium
 - lemma: רצון
   type: UNCLEAR
   corpus_source: mikra
@@ -18225,6 +22167,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATION/high; B=LOCATION/high
+- lemma: רקמה
+  type: LOCATUM
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/medium; B=LOCATUM/high
 - lemma: רקע
   type: UNCLEAR
   corpus_source: modern
@@ -18234,6 +22185,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/medium; B=UNCLEAR/medium
+- lemma: רש"י
+  type: ANIMATE
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/medium; B=ANIMATE/medium
 - lemma: רשות
   type: ANIMATE
   corpus_source: modern
@@ -18351,11 +22311,38 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/medium; B=UNCLEAR/medium
+- lemma: שאת
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
+- lemma: שב
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=UNCLEAR/low; B=UNCLEAR/medium
 - lemma: שב"כ
   type: ANIMATE
   corpus_source: modern
   proposed_by: claude_code
   reviewed_by: auto-qc:noun-modern-r2-d20f9a1ae564
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/high; B=ANIMATE/high
+- lemma: שבוי
+  type: ANIMATE
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
   review_mode: automated
   label_source: ai
   silver_status: agreed
@@ -18387,6 +22374,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/medium; B=UNCLEAR/medium
+- lemma: שבח
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/medium; B=LOCATUM/medium
 - lemma: שבט
   type: ANIMATE
   corpus_source: mikra
@@ -18414,6 +22410,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/high; B=UNCLEAR/medium
+- lemma: שביעית
+  type: UNCLEAR
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/high
 - lemma: שביתה
   type: UNCLEAR
   corpus_source: mikra
@@ -18540,6 +22545,24 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/high; B=LOCATUM/high
+- lemma: שוט
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
+- lemma: שוטה
+  type: ANIMATE
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/high; B=ANIMATE/high
 - lemma: שוטר
   type: ANIMATE
   corpus_source: modern
@@ -18572,6 +22595,15 @@ nouns:
   corpus_source: modern
   proposed_by: claude_code
   reviewed_by: auto-qc:noun-modern-r2-d20f9a1ae564
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/high; B=ANIMATE/high
+- lemma: שונא
+  type: ANIMATE
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
   review_mode: automated
   label_source: ai
   silver_status: agreed
@@ -18648,6 +22680,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATION/high; B=LOCATION/high
+- lemma: שושנה
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/medium; B=LOCATUM/medium
 - lemma: שותף
   type: ANIMATE
   corpus_source: modern
@@ -18675,6 +22716,24 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/high; B=LOCATUM/high
+- lemma: שחוק
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/medium; B=LOCATUM/medium
+- lemma: שחיטה
+  type: UNCLEAR
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/high
 - lemma: שחיתות
   type: UNCLEAR
   corpus_source: modern
@@ -18738,6 +22797,33 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/medium; B=LOCATUM/medium
+- lemma: שטן
+  type: ANIMATE
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/high; B=ANIMATE/high
+- lemma: שטף
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/medium; B=LOCATUM/medium
+- lemma: שטר
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
 - lemma: שיא
   type: UNCLEAR
   corpus_source: modern
@@ -18954,6 +23040,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATION/high; B=LOCATION/high
+- lemma: שכינה
+  type: UNCLEAR
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=UNCLEAR/medium; B=LOCATUM/low
 - lemma: שכל
   type: LOCATUM
   corpus_source: mikra
@@ -19026,6 +23121,15 @@ nouns:
   label_source: ai
   silver_status: abstained
   note: A=UNCLEAR/low; B=UNCLEAR/low
+- lemma: שלולית
+  type: LOCATION
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATION/medium; B=LOCATION/medium
 - lemma: שלום
   type: UNCLEAR
   corpus_source: modern; mikra
@@ -19062,6 +23166,15 @@ nouns:
   label_source: ai
   silver_status: abstained
   note: A=UNCLEAR/medium; B=ANIMATE/medium
+- lemma: שליו
+  type: ANIMATE
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/high; B=ANIMATE/high
 - lemma: שליח
   type: ANIMATE
   corpus_source: modern
@@ -19116,6 +23229,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/high; B=LOCATUM/high
+- lemma: שלם
+  type: UNCLEAR
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=UNCLEAR/low; B=UNCLEAR/medium
 - lemma: שלמה
   type: UNCLEAR
   corpus_source: mikra
@@ -19134,6 +23256,24 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/high; B=UNCLEAR/medium
+- lemma: שלשול
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=LOCATUM/medium; B=UNCLEAR/medium
+- lemma: שלשלת
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/medium; B=LOCATUM/high
 - lemma: שם
   type: UNCLEAR
   corpus_source: mikra
@@ -19215,6 +23355,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATION/high; B=LOCATION/high
+- lemma: שמיכה
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/medium; B=LOCATUM/high
 - lemma: שמירה
   type: UNCLEAR
   corpus_source: modern
@@ -19278,6 +23427,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=ANIMATE/high; B=ANIMATE/high
+- lemma: שמץ
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/high
 - lemma: שמרון
   type: LOCATION
   corpus_source: mikra
@@ -19305,6 +23463,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=ANIMATE/high; B=ANIMATE/high
+- lemma: שן
+  type: LOCATION
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATION/medium; B=LOCATION/medium
 - lemma: שנאה
   type: LOCATUM
   corpus_source: mikra
@@ -19319,6 +23486,15 @@ nouns:
   corpus_source: mikra
   proposed_by: claude_code
   reviewed_by: auto-qc:noun-mikra-r2-5d50d8ed466c
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/high
+- lemma: שנוי
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
   review_mode: automated
   label_source: ai
   silver_status: agreed
@@ -19341,6 +23517,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/high; B=UNCLEAR/high
+- lemma: שעבוד
+  type: UNCLEAR
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
 - lemma: שעה
   type: UNCLEAR
   corpus_source: modern
@@ -19355,6 +23540,15 @@ nouns:
   corpus_source: modern
   proposed_by: claude_code
   reviewed_by: auto-qc:noun-modern-r2-d20f9a1ae564
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
+- lemma: שעורה
+  type: LOCATUM
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
   review_mode: automated
   label_source: ai
   silver_status: agreed
@@ -19377,6 +23571,15 @@ nouns:
   label_source: ai
   silver_status: cross_corpus_conflict
   note: 'cross-corpus conflict: modern=UNCLEAR; mikra=LOCATION'
+- lemma: שערה
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/medium; B=LOCATUM/medium
 - lemma: שפה
   type: UNCLEAR
   corpus_source: modern; mikra
@@ -19386,6 +23589,15 @@ nouns:
   label_source: ai
   silver_status: cross_corpus_conflict
   note: 'cross-corpus conflict: modern=UNCLEAR; mikra=LOCATION'
+- lemma: שפחה
+  type: ANIMATE
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/high; B=ANIMATE/high
 - lemma: שפט
   type: UNCLEAR
   corpus_source: mikra
@@ -19431,6 +23643,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=ANIMATE/high; B=ANIMATE/high
+- lemma: שפע
+  type: UNCLEAR
+  corpus_source: hazal; medieval; haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: cross_corpus_conflict
+  note: 'cross-corpus conflict: hazal=UNCLEAR; medieval=LOCATUM; haskala=UNCLEAR'
 - lemma: שפעת
   type: UNCLEAR
   corpus_source: mikra
@@ -19521,6 +23742,15 @@ nouns:
   label_source: ai
   silver_status: cross_corpus_conflict
   note: 'cross-corpus conflict: modern=LOCATUM; mikra=ANIMATE'
+- lemma: שריון
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/medium; B=LOCATUM/medium
 - lemma: שרפה
   type: UNCLEAR
   corpus_source: mikra
@@ -19530,6 +23760,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/medium; B=UNCLEAR/medium
+- lemma: שרץ
+  type: ANIMATE
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/high; B=ANIMATE/high
 - lemma: שרשרת
   type: UNCLEAR
   corpus_source: modern
@@ -19548,6 +23787,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/high; B=LOCATUM/medium
+- lemma: שתייה
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
 - lemma: שתיקה
   type: UNCLEAR
   corpus_source: modern
@@ -19557,6 +23805,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/medium; B=UNCLEAR/medium
+- lemma: שתן
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
 - lemma: תא
   type: LOCATION
   corpus_source: mikra
@@ -19611,6 +23868,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/medium; B=LOCATUM/medium
+- lemma: תאנה
+  type: LOCATUM
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
 - lemma: תאריך
   type: UNCLEAR
   corpus_source: modern
@@ -19620,6 +23886,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/high; B=UNCLEAR/high
+- lemma: תבואה
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
 - lemma: תבוסה
   type: UNCLEAR
   corpus_source: modern
@@ -19656,6 +23931,15 @@ nouns:
   label_source: ai
   silver_status: cross_corpus_conflict
   note: 'cross-corpus conflict: modern=UNCLEAR; mikra=LOCATUM'
+- lemma: תבשיל
+  type: LOCATUM
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
 - lemma: תגובה
   type: UNCLEAR
   corpus_source: modern
@@ -19791,6 +24075,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/high; B=UNCLEAR/medium
+- lemma: תולעת
+  type: ANIMATE
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/high; B=ANIMATE/high
 - lemma: תום
   type: UNCLEAR
   corpus_source: modern
@@ -19890,6 +24183,24 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/medium; B=UNCLEAR/medium
+- lemma: תחבולה
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
+- lemma: תחבושת
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
 - lemma: תחום
   type: UNCLEAR
   corpus_source: modern
@@ -19917,6 +24228,15 @@ nouns:
   label_source: ai
   silver_status: abstained
   note: A=LOCATUM/medium; B=UNCLEAR/medium
+- lemma: תחייה
+  type: UNCLEAR
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/high
 - lemma: תחילה
   type: UNCLEAR
   corpus_source: modern
@@ -20052,6 +24372,24 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/high; B=UNCLEAR/medium
+- lemma: תכונה
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=UNCLEAR/low; B=LOCATUM/low
+- lemma: תכלית
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
 - lemma: תכנון
   type: UNCLEAR
   corpus_source: modern
@@ -20079,6 +24417,15 @@ nouns:
   label_source: ai
   silver_status: abstained
   note: A=LOCATUM/medium; B=LOCATUM/low
+- lemma: תלמוד
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: abstained
+  note: A=UNCLEAR/low; B=LOCATUM/low
 - lemma: תלמיד
   type: ANIMATE
   corpus_source: modern
@@ -20124,6 +24471,15 @@ nouns:
   label_source: ai
   silver_status: abstained
   note: A=UNCLEAR/medium; B=UNCLEAR/low
+- lemma: תמצית
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/medium; B=LOCATUM/medium
 - lemma: תמר
   type: ANIMATE
   corpus_source: mikra
@@ -20160,6 +24516,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/high; B=UNCLEAR/medium
+- lemma: תנור
+  type: LOCATION
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATION/high; B=LOCATION/high
 - lemma: תסריט
   type: LOCATUM
   corpus_source: modern
@@ -20178,6 +24543,24 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/high; B=LOCATUM/high
+- lemma: תעלה
+  type: LOCATION
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATION/high; B=LOCATION/high
+- lemma: תענוג
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/medium; B=LOCATUM/medium
 - lemma: תער
   type: LOCATUM
   corpus_source: mikra
@@ -20232,6 +24615,15 @@ nouns:
   label_source: ai
   silver_status: abstained
   note: A=LOCATUM/low; B=LOCATUM/medium
+- lemma: תפוח
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
 - lemma: תפוקה
   type: UNCLEAR
   corpus_source: modern
@@ -20250,6 +24642,15 @@ nouns:
   label_source: ai
   silver_status: cross_corpus_conflict
   note: 'cross-corpus conflict: modern=UNCLEAR; mikra=LOCATUM'
+- lemma: תפילין
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/high; B=LOCATUM/high
 - lemma: תפיסה
   type: UNCLEAR
   corpus_source: modern
@@ -20331,6 +24732,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/high; B=UNCLEAR/high
+- lemma: תקיעה
+  type: UNCLEAR
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/high
 - lemma: תקיפה
   type: UNCLEAR
   corpus_source: modern
@@ -20340,6 +24750,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/high; B=UNCLEAR/high
+- lemma: תקלה
+  type: UNCLEAR
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/medium; B=UNCLEAR/medium
 - lemma: תקליט
   type: LOCATUM
   corpus_source: modern
@@ -20475,6 +24894,42 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=ANIMATE/medium; B=ANIMATE/medium
+- lemma: תריסר
+  type: UNCLEAR
+  corpus_source: hazal
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-hazal-r2-732905055394
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/high
+- lemma: תרמיל
+  type: LOCATION
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATION/high; B=LOCATION/high
+- lemma: תרנגול
+  type: ANIMATE
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/high; B=ANIMATE/high
+- lemma: תרנגולת
+  type: ANIMATE
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=ANIMATE/high; B=ANIMATE/high
 - lemma: תשואה
   type: UNCLEAR
   corpus_source: modern
@@ -20502,6 +24957,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=UNCLEAR/high; B=UNCLEAR/medium
+- lemma: תשוקה
+  type: LOCATUM
+  corpus_source: haskala
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-haskala-r2-cd915e1d6902
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=LOCATUM/medium; B=LOCATUM/medium
 - lemma: תשלום
   type: LOCATUM
   corpus_source: modern
@@ -20511,6 +24975,15 @@ nouns:
   label_source: ai
   silver_status: agreed
   note: A=LOCATUM/high; B=LOCATUM/medium
+- lemma: תשמיש
+  type: UNCLEAR
+  corpus_source: medieval
+  proposed_by: claude_code
+  reviewed_by: auto-qc:noun-medieval-r2-84c400def016
+  review_mode: automated
+  label_source: ai
+  silver_status: agreed
+  note: A=UNCLEAR/high; B=UNCLEAR/medium
 - lemma: תשקיף
   type: LOCATUM
   corpus_source: modern
