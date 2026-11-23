@@ -628,6 +628,17 @@ def test_ident_build_candidate_folder_and_i1_draft(r2world, tmp_path):
 
     ent = {e["id"]: e for e in Y.safe_load(text)["entries"]}
     assert {"lemma": "ממלא", "voice": "active"} in ent["מלא.I"]["dicta_lemmas"]
+    # D-067: the variant job writes the chosen BASE; it is mapped through the unit map's paper_entries, exactly
+    links = {"ממלא": {"candidates": [{"base": "מילא", "paper_entries": ["מלא.I"]}, {"base": "מלא", "kind": "participle"}]},
+             "ששלח": {"candidates": [{"base": "שלח", "paper_entries": ["שלח.S", "שלח.I"]}]}}
+    ev2 = [{"lemma": "ממלא", "agree": "True", "suggestion": "dicta_lemma:מילא", "voice_a": "active", "voice_b": "active"},
+           {"lemma": "ממלא", "agree": "True", "suggestion": "shared_lemma:מלא"},                   # base with no paper entry
+           {"lemma": "ששלח", "agree": "True", "suggestion": "dicta_lemma:שלח"}]                    # two entries
+    text2, summ2 = IDN.lexicon_v2_draft(LEX_YAML, ev2, links=links)
+    assert summ2["applied"] == {"dicta_lemma": 1}
+    assert summ2["skipped"] == {"no_paper_entry": 1, "several_entries": 1}
+    assert {"lemma": "ממלא", "voice": "active"} in {e["id"]: e for e in Y.safe_load(text2)["entries"]}["מלא.I"]["dicta_lemmas"]
+    assert IDN.lexicon_v2_draft(LEX_YAML, ev2)[1]["skipped"] == {"unknown_entry": 3}          # without the map: nothing
     bad = [{"lemma": "מילא", "agree": "True", "suggestion": "dicta_lemma:שלח.S"}]   # one lemma, two entries, no flag
     evp = tmp_path / "ev.csv"
     with open(evp, "w", encoding="utf-8", newline="") as f:
@@ -637,6 +648,53 @@ def test_ident_build_candidate_folder_and_i1_draft(r2world, tmp_path):
     with pytest.raises(IDN.IdentError):                                          # never fixed silently (Ori's G4)
         IDN.build(["I-1"], w["lex"], inv, git=GIT, out_root=tmp_path / "ident2", lexicon_path=tmp_path / "lex.yaml",
                   variant_evidence=evp)
+
+
+def test_ident_dev_effects_dev_only_and_rekey_labels(r2world, tmp_path, monkeypatch):
+    """C1 (D-067): only dev items and dev paper examples are read; R1 vs the candidate per token; a re-keyed item
+    carries its dev SILVER label (is_target_verb N = R1 wrong) and a paper example counts as R1 right."""
+    from hebloc.loc import ident as IDN
+
+    w = r2world
+    t1, t2, t3 = "mikra:d0:1:0|0|0", "mikra:d0:2:0|0|0", "mikra:d0:3:0|0|0"
+    sd = tmp_path / "gold" / "mikra" / "S1"
+    sd.mkdir(parents=True)
+    with open(sd / "sample.csv", "w", encoding="utf-8", newline="") as f:
+        wr = csv.DictWriter(f, fieldnames=["item_id", "instance_key", "stratum", "verb_key", "split"])
+        wr.writeheader()
+        wr.writerows([{"item_id": "MI1", "instance_key": t1, "stratum": "lemma_only", "verb_key": "מלא.I", "split": "dev"},
+                      {"item_id": "MI2", "instance_key": t2, "stratum": "both", "verb_key": "שלח.I|שלח.S", "split": "dev"},
+                      {"item_id": "MI3", "instance_key": t3, "stratum": "both", "verb_key": "שלח.S", "split": "validation"}])
+    paper = tmp_path / "paper.csv"
+    with open(paper, "w", encoding="utf-8", newline="") as f:
+        wr = csv.DictWriter(f, fieldnames=["instance_key", "entry_id", "frame", "where", "ref", "status", "frozen_split"])
+        wr.writeheader()
+        wr.writerows([{"instance_key": t1, "entry_id": "מלא.I", "frame": "B", "where": "ex. 1", "ref": "Genesis 1:1", "status": "dev"},
+                      {"instance_key": t3, "entry_id": "שלח.S", "frame": "A", "where": "ex. 2", "ref": "Genesis 1:3",
+                       "status": "excluded_frozen_test", "frozen_split": "test"}])
+    monkeypatch.setattr(G, "FROZEN_SAMPLES", {"mikra": {"sample_id": "S1"}})
+    items = IDN.dev_items(gold_dir=tmp_path / "gold", paper_path=paper)
+    assert sorted(x["item_id"] for x in items) == ["MI1", "MI2", "paper:ex. 1:Genesis 1:1"]          # never validation/test
+    cf = tmp_path / "cand"
+    cf.mkdir()
+    (cf / IDN.LEXICON_NAME).write_text(LEX_YAML, encoding="utf-8")
+    (cf / IDN.FORMS_NAME).write_text("meta: {lexicon_file_sha256: null}\nforms:\n  מלא.I: [ימלא]\n"
+                                     "lemma_partners:\n  מלא.I: {מילא: ['~מלא.S']}\n", encoding="utf-8")
+    (cf / "manifest.json").write_text("{}", encoding="utf-8")
+    labels = {"mikra": [{"instance_key": t1, "is_target_verb": "N", "silver_status": "agreed"},
+                        {"instance_key": t2, "is_target_verb": "Y", "silver_status": "agreed"}]}
+    m = IDN.dev_effects(cf, w["repo"], w["lex"], git=GIT, labels=labels, gold_dir=tmp_path / "gold", paper_path=paper)
+    rows = {r["item_id"]: r for r in csv.DictReader(open(cf / "dev" / "dev_effects.csv", encoding="utf-8-sig"))}
+    assert rows["MI1"]["effect"] == "rekeyed" and rows["MI1"]["cand_key"] == "מלא.I|~מלא.S" and rows["MI1"]["r1_wrong"] == "yes"
+    assert rows["MI2"]["effect"] == "same" and rows["MI2"]["r1_wrong"] == "no"
+    assert rows["paper:ex. 1:Genesis 1:1"]["effect"] == "rekeyed" and rows["paper:ex. 1:Genesis 1:1"]["r1_wrong"] == "no"
+    assert m["summary"]["sample:mikra"]["changed_r1_wrong"] == {"yes": 1, "no": 0, "unknown": 0}
+    assert verify(cf / "dev") == []
+    # R1 against itself: no effect at all
+    (cf / IDN.FORMS_NAME).write_text(FORMS_YAML, encoding="utf-8")
+    shutil.rmtree(cf / "dev")
+    m0 = IDN.dev_effects(cf, w["repo"], w["lex"], git=GIT, labels=labels, gold_dir=tmp_path / "gold", paper_path=paper)
+    assert all(v["effects"]["same"] == v["n"] for v in m0["summary"].values())
 
 
 def test_supplement_strata_by_candidate_registry_and_ordinal(r2world, tmp_path, monkeypatch):

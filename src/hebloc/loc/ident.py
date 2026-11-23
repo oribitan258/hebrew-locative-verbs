@@ -34,7 +34,7 @@ from hebloc.loc.manifest import write_csv, write_manifest
 from hebloc.paths import DATA_DIR
 from hebloc.store.io import atomic_write_text, file_sha256
 
-IDENT_VERSION = "ident-c0"
+IDENT_VERSION = "ident-c1"      # c1 (D-067): the I-1 draft maps the variant job's chosen base to its lexicon id
 IDENT_DIR = DATA_DIR / "loc" / "ident"
 #: the forms options of each candidate (I-1 is a lexicon file, not a forms option)
 OPTIONS = {"I-2": {"lemma_partners": True}, "I-3": {"established_self_foreign": True}, "I-4": {"generated": "clean_keys"}}
@@ -68,15 +68,34 @@ def inventory_fingerprint(inventory) -> str:
 
 
 # ============================================================================================ I-1 (lexicon-v2 draft)
-def lexicon_v2_draft(lexicon_text: str, evidence_rows: list[dict]) -> tuple[str, dict]:
+def entry_of_base(lemma: str, base: str, links: dict | None, ids: set[str]) -> tuple[str | None, str]:
+    """D-067 (C1): the variant passes name the BASE they chose among the row's candidates (``נתן``), not a lexicon id
+    (``נתן.S``). Map it exactly through the frozen unit map: the candidate of ``lemma`` with that base, and its
+    ``paper_entries``. Returns ``(entry id, "")`` when exactly one id results, else ``(None, reason)``: no paper entry
+    on that base (``no_paper_entry``) or several (``several_entries``) are NOT applied (as ``undecided``)."""
+    if base in ids:
+        return base, ""
+    if links is None:
+        return None, "unknown_entry"
+    cands = [c for c in ((links.get(lemma) or {}).get("candidates") or []) if c.get("base") == base]
+    pe = sorted({p for c in cands for p in (c.get("paper_entries") or [])})
+    if len(pe) == 1 and pe[0] in ids:
+        return pe[0], ""
+    return None, ("no_paper_entry" if not pe else "several_entries" if len(pe) > 1 else "unknown_entry")
+
+
+def lexicon_v2_draft(lexicon_text: str, evidence_rows: list[dict], links: dict | None = None) -> tuple[str, dict]:
     """Apply the P5 variant evidence to the lexicon YAML (the I-1 candidate). Only rows whose two passes agree
-    (``agree`` true, ``suggestion`` = ``<decision>:<entry>``) are applied; ``undecided`` rows are not. Returns the new
-    YAML text and a summary. The draft is validated by the caller (``lexicon.problems``); a problem is a refusal,
-    never a silent fix (adding a flag is Ori's lexicon decision, G4)."""
+    (``agree`` true, ``suggestion`` = ``<decision>:<entry>``) are applied; ``undecided`` rows are not. ``<entry>`` is
+    a lexicon id or, as the variant job writes it, the chosen base, mapped by :func:`entry_of_base` through ``links``
+    (the frozen unit map's ``links``; D-067). Returns the new YAML text and a summary. The draft is validated by the
+    caller (``lexicon.problems``); a problem is a refusal, never a silent fix (adding a flag is Ori's lexicon decision,
+    G4)."""
     raw = yaml.safe_load(lexicon_text)
     by_id = {e["id"]: e for e in raw.get("entries") or []}
     applied = defaultdict(list)
     skipped = defaultdict(int)
+    skipped_rows = defaultdict(list)
     for r in evidence_rows:
         agree = str(r.get("agree", "")).strip().lower() in ("true", "1", "yes")
         sug = (r.get("suggestion") or "").strip()
@@ -88,8 +107,10 @@ def lexicon_v2_draft(lexicon_text: str, evidence_rows: list[dict]) -> tuple[str,
         if decision == "exclude":
             applied["exclude"].append(lemma)     # not added to any entry (R1 does not list it either)
             continue
-        if entry not in by_id:
-            skipped["unknown_entry"] += 1
+        entry, why = entry_of_base(lemma, entry, links, set(by_id))
+        if entry is None:
+            skipped[why] += 1
+            skipped_rows[why].append(f"{lemma}->{sug.split(':', 1)[1]}")
             continue
         e = by_id[entry]
         if decision == "dicta_lemma":
@@ -112,7 +133,8 @@ def lexicon_v2_draft(lexicon_text: str, evidence_rows: list[dict]) -> tuple[str,
     text = ("# Phase C candidate I-1 (lexicon-v2 DRAFT; hebloc.loc.ident). Not the config; Ori decides at G4.\n"
             + yaml.safe_dump(raw, allow_unicode=True, sort_keys=False, width=200))
     return text, {"applied": {k: len(v) for k, v in applied.items()}, "skipped": dict(skipped),
-                  "applied_rows": {k: sorted(v) for k, v in applied.items()}}
+                  "applied_rows": {k: sorted(v) for k, v in applied.items()},
+                  "skipped_rows": {k: sorted(v) for k, v in skipped_rows.items()}}
 
 
 def _read_csv(path: Path) -> list[dict]:
@@ -153,7 +175,8 @@ def changes(r1: L.Lexicon, cand: L.Lexicon, inventory) -> list[dict]:
 
 
 def build(cands: list[str], r1: L.Lexicon, inventory, *, git: dict, out_root: Path = IDENT_DIR,
-          lexicon_path: Path = L.LEXICON_PATH, variant_evidence: Path | None = None, inventory_info: dict | None = None) -> dict:
+          lexicon_path: Path = L.LEXICON_PATH, variant_evidence: Path | None = None, inventory_info: dict | None = None,
+          units_path: Path | None = None) -> dict:
     """Write one candidate folder (any combination of I-1 … I-4) from the CURRENT config lexicon and the pooled
     inventory. Refused if the folder exists or the draft lexicon is invalid."""
     if "I-1" in cands and variant_evidence is None:
@@ -161,7 +184,11 @@ def build(cands: list[str], r1: L.Lexicon, inventory, *, git: dict, out_root: Pa
     lex_text = Path(lexicon_path).read_text(encoding="utf-8")
     i1 = None
     if "I-1" in cands:
-        lex_text, i1 = lexicon_v2_draft(lex_text, _read_csv(Path(variant_evidence)))
+        from hebloc.loc import units as U
+
+        units_path = Path(units_path or U.UNITS_PATH)                      # D-067: base -> entry id, exactly
+        lex_text, i1 = lexicon_v2_draft(lex_text, _read_csv(Path(variant_evidence)),
+                                        links=U.load_raw(units_path).get("links") or {})
     lex_sha = hashlib.sha256(lex_text.encode("utf-8")).hexdigest()
     cid = candidate_id(cands, lex_sha, inventory_fingerprint(inventory))
     out = Path(out_root) / cid
@@ -196,6 +223,8 @@ def build(cands: list[str], r1: L.Lexicon, inventory, *, git: dict, out_root: Pa
                           source={"lexicon_file": str(lexicon_path), "lexicon_file_sha256": file_sha256(Path(lexicon_path)),
                                   "variant_evidence": str(variant_evidence) if variant_evidence else None,
                                   "variant_evidence_sha256": file_sha256(Path(variant_evidence)) if variant_evidence else None,
+                                  "units_file": str(units_path) if units_path else None,
+                                  "units_file_sha256": file_sha256(units_path) if units_path else None,
                                   "inventory": inventory_info or {}},
                           extra={"candidate_id": cid, "candidates": cands, "ident_version": IDENT_VERSION, "options": opts,
                                  "r1_lexicon_sha256": r1.sha256, "candidate_lexicon_sha256": cand.sha256,
@@ -218,3 +247,118 @@ def lexicon_paths(folder: Path | None) -> tuple[Path, Path]:
     if folder is None:
         return L.LEXICON_PATH, L.FORMS_PATH
     return Path(folder) / LEXICON_NAME, Path(folder) / FORMS_NAME
+
+
+# ============================================================================================ C1: dev effects
+DEV_SPLIT = "dev"
+EFFECTS = ("same", "rekeyed", "dropped", "added")
+
+
+def _key_parts(instance_key: str) -> tuple[str, int, int]:
+    sent_id, piece, word = instance_key.rsplit("|", 2)
+    return sent_id, int(piece), int(word)
+
+
+def dev_items(*, gold_dir: Path | None = None, paper_path: Path | None = None) -> list[dict]:
+    """The C1 items: the frozen samples' DEV split (Mikra, Modern) and the paper examples whose status is ``dev``.
+    Nothing of another split is returned (D-057 / P8: validation and test are read only at G5 / G6)."""
+    from hebloc.loc import gold as G
+    from hebloc.loc import score as S
+
+    out = []
+    for corpus, fz in sorted(G.FROZEN_SAMPLES.items()):
+        p = Path(gold_dir or G.GOLD_DIR) / corpus / fz["sample_id"] / "sample.csv"
+        for r in _read_csv(p):
+            if r["split"] != DEV_SPLIT:
+                continue
+            out.append({"kind": "sample", "corpus": corpus, "item_id": r["item_id"], "instance_key": r["instance_key"],
+                        "stratum": r["stratum"], "sample_verb_key": r["verb_key"], "paper_entry": ""})
+    for r in _read_csv(Path(paper_path or S.PAPER_EXAMPLES)):
+        if r["status"] != DEV_SPLIT:
+            continue
+        out.append({"kind": "paper", "corpus": "mikra", "item_id": f"paper:{r['where']}:{r['ref']}",
+                    "instance_key": r["instance_key"], "stratum": "", "sample_verb_key": "", "paper_entry": r["entry_id"]})
+    return out
+
+
+def _tokens_of(items: list[dict], source) -> dict[str, tuple]:
+    """(lemma, host, upos) of each item's token, by (sent_id, piece_idx, word_idx)."""
+    from hebloc.loc.source import connect
+
+    con = connect()
+    out: dict[str, tuple] = {}
+    for corpus in sorted({x["corpus"] for x in items}):
+        want = [x for x in items if x["corpus"] == corpus]
+        parts = [_key_parts(x["instance_key"]) for x in want]
+        con.register("want", pa.table({"sent_id": [p[0] for p in parts], "piece_idx": [p[1] for p in parts],
+                                       "word_idx": [p[2] for p in parts], "instance_key": [x["instance_key"] for x in want]}))
+        for run in source.runs(corpus):
+            rel = source.tokens_sql(run, ("sent_id", "piece_idx", "word_idx", "lemma", "host", "upos"))
+            for k, lemma, host, upos in con.sql(
+                    f"SELECT w.instance_key, t.lemma, t.host, t.upos FROM {rel} t "
+                    "JOIN want w USING (sent_id, piece_idx, word_idx)").fetchall():
+                out[k] = (lemma, host, upos)
+        con.unregister("want")
+    return out
+
+
+def dev_effects(folder: Path, source, r1: L.Lexicon, *, git: dict, labels: dict[str, list[dict]] | None = None,
+                gold_dir: Path | None = None, paper_path: Path | None = None) -> dict:
+    """C1 (D-067): R1 vs the candidate ``folder`` on every dev item and dev paper example. Per item: R1's key and the
+    candidate's (the same identification function, two indexes), the effect (same / rekeyed / dropped / added) and its
+    label: the dev SILVER ``is_target_verb`` (hash-checked by ``score.load_gold``; only the dev split can be read) or,
+    for a paper example, the paper's verb (R1 right iff the entry is one of R1's members). Writes
+    ``<folder>/dev/dev_effects.csv`` + ``summary.json`` + manifest (ids, keys and labels; no corpus text)."""
+    from hebloc.loc import identify as ID
+    from hebloc.loc import score as S
+
+    folder = Path(folder)
+    cand = load(folder)
+    items = dev_items(gold_dir=gold_dir, paper_path=paper_path)
+    if labels is None:
+        labels = {c: S.load_gold(c, DEV_SPLIT) for c in sorted({x["corpus"] for x in items if x["kind"] == "sample"})}
+    lab = {(c, r["instance_key"]): r for c, rows in labels.items() for r in rows if r.get("split", DEV_SPLIT) == DEV_SPLIT}
+    toks = _tokens_of(items, source)
+    i1, ic = ID.build_index(r1), ID.build_index(cand)
+    rows, problems = [], []
+    for x in items:
+        t = toks.get(x["instance_key"])
+        if t is None:
+            problems.append(f"token not found: {x['instance_key']}")
+            continue
+        a, b = ID.identify(i1, *t), ID.identify(ic, *t)
+        ka, kb = (a or {}).get("verb_key", ""), (b or {}).get("verb_key", "")
+        if x["kind"] == "sample" and ka != x["sample_verb_key"]:
+            problems.append(f"R1 key {ka!r} != the frozen sample's {x['sample_verb_key']!r} ({x['item_id']})")
+        effect = ("same" if ka == kb else "dropped" if not kb else "added" if not ka else "rekeyed")
+        if x["kind"] == "sample":
+            g = lab.get((x["corpus"], x["instance_key"])) or {}
+            itv, status = g.get("is_target_verb", ""), g.get("silver_status", "missing")
+            r1_wrong = {"N": "yes", "Y": "no"}.get(itv, "unknown")
+        else:
+            itv, status = "", "paper"
+            r1_wrong = "no" if x["paper_entry"] in (a or {}).get("members", []) else "yes"
+        rows.append({**{k: x[k] for k in ("kind", "corpus", "item_id", "instance_key", "stratum", "paper_entry")},
+                     "lemma": t[0], "match_method_r1": (a or {}).get("match_method", ""), "r1_key": ka, "cand_key": kb,
+                     "effect": effect, "is_target_verb": itv, "silver_status": status, "r1_wrong": r1_wrong})
+    if problems:
+        raise IdentError("dev effects refused:\n  " + "\n  ".join(problems[:20]))
+    summ: dict = {}
+    for kind in ("sample", "paper"):
+        for corpus in sorted({r["corpus"] for r in rows if r["kind"] == kind}):
+            sub = [r for r in rows if r["kind"] == kind and r["corpus"] == corpus]
+            summ[f"{kind}:{corpus}"] = {
+                "n": len(sub), "effects": {e: sum(r["effect"] == e for r in sub) for e in EFFECTS},
+                "r1_wrong": {w: sum(r["r1_wrong"] == w for r in sub) for w in ("yes", "no", "unknown")},
+                "changed_r1_wrong": {w: sum(r["r1_wrong"] == w for r in sub if r["effect"] != "same")
+                                     for w in ("yes", "no", "unknown")}}
+    out = folder / "dev"
+    out.mkdir(exist_ok=True)
+    write_csv(pa.Table.from_pylist(rows), out / "dev_effects.csv")
+    atomic_write_text(json.dumps(summ, ensure_ascii=False, indent=1), out / "summary.json")
+    return write_manifest(out, what=f"C1 dev effects of candidate {folder.name} (dev split + dev paper examples only)",
+                          git=git, source={"candidate": folder.name,
+                                           "candidate_manifest_sha256": file_sha256(folder / "manifest.json"),
+                                           "r1_lexicon_sha256": r1.sha256, "source": source.kind,
+                                           "labels": "dev SILVER via score.load_gold (frozen_file_ok)"},
+                          extra={"summary": summ, "n_items": len(rows)})

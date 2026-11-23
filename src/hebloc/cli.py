@@ -624,6 +624,16 @@ def _cmd_loc_r2(args: argparse.Namespace) -> int:
         # D-065: a Phase C candidate is used only when its folder is named; R1 (the config) stays the default
         use_cand = ident is not None and not (group == "gold" and action == "supplement") and group != "draw"
         lex = IDN.load(ident) if use_cand else r1_lex
+        if group == "ident" and action == "dev":
+            st = M.require_clean(args.dev)
+            if ident is None:
+                print("REFUSED: ident dev needs --ident <candidate folder>")
+                return 2
+            m = IDN.dev_effects(ident, Source.make(args.source, args.package), r1_lex, git=st)
+            for k, v in m["summary"].items():
+                print(f"{k}: n={v['n']} effects={v['effects']} changed items, R1 wrong={v['changed_r1_wrong']}")
+            print(f"-> {ident / 'dev'}  (dev split + dev paper examples only)")
+            return 0
         if group == "ident":
             from hebloc.loc import inventory as INV
 
@@ -1223,7 +1233,9 @@ def main(argv: list[str] | None = None) -> int:
                                ("nouns", ["list", "merge"], "frequent-argument-noun list / merge reviewed types (Ori only)"),
                                ("units", ["inventory", "build", "review", "merge", "audit"],
                                 "R2 (D-059): tense-aware inventory, verb-unit map, review sheets, merge / audit (Ori only)"),
-                               ("ident", ["build"], "Phase C (D-065): build an identification candidate folder (I-1 ... I-4)"),
+                               ("ident", ["build", "dev"],
+                                "Phase C (D-065): build an identification candidate folder (I-1 ... I-4); "
+                                "dev (C1, D-067): R1 vs the candidate (--ident) on the dev items + dev paper examples"),
                                ("draw", ["screen", "review", "template", "audit"],
                                 "Phase C (D-065): id lists for the new SILVER jobs (screen: G3, with Ori's approval)")):
         q = lsub.add_parser(name, help=hlp)
