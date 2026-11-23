@@ -1,10 +1,16 @@
-# Session Handoff: stage 3 — C0 (Phase C build, D-065) done; next G2 (★ open the dev silver); Phase C runs NOT started
+# Session Handoff: stage 3 — G2 done (Ori opened the dev silver); next C1 (identification candidates, Plan Mode)
 
 ## ★ CURRENT POSITION (read first; updated by every `end-of-session`)
 
 - **The ordered workflow is [STAGES.md](STAGES.md).** Every session: `start` (STAGES.md §1) → one stage →
   `end-of-session` (STAGES.md §2: CONTINUE / SEND TO PARTNER / WAIT).
-- **C0 DONE (2026-11-22, D-065). Next: G2 (★ Ori approves opening the dev silver), then C1.**
+- **G2 DONE (2026-11-22): Ori approved opening the dev silver. Next: C1** (Plan Mode; identification candidates
+  I-0 … I-5 on the dev silver + the paper examples, by the D-059 addendum rules exactly as written; ★ G3 or G4 after).
+  - `start` checks: clean tree, HEAD `164ff56` (2 local commits ahead of origin `4cb6127`, by design), 325 tests
+    passed, `hebloc check` OK, whoami Ori; no new delivery in `data/incoming/`.
+  - Verified read-only: `frozen_file_ok` = True for the Modern dev, Mikra dev and anchor silver; `noun_types.yaml` +
+    `verb_units.yaml` unchanged since `d75dbe5`; pinned protocol files = `s56-r1.1`. No label was read at G2.
+- **C0 DONE (2026-11-22, D-065).**
   - `start` checks: clean tree, HEAD = origin/main = `4cb6127`, 312 tests passed, whoami Ori; both deliveries recorded.
   - Ori's decisions (AskUserQuestion, recorded as D-065): new paths `annotation/silver/r2/` + exact pinned-file
     checks; the class / identity audits run by Efrat's Claude Code (new stage EA); default sizes (review ≤ 5 A + 5 B

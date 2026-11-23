@@ -26,7 +26,8 @@ was read; local commits `d6f6cf9` + `d75dbe5`.
 **2026-11-22: C0 DONE** (D-065): the Phase C build, code and pre-registration only (`loc ident`, `loc draw`,
 supplement / `instances` / `template` silver jobs, addendum `annotation/silver/r2/`); local commit `87a106d`, NOT pushed
 (G3 or G7). No silver opened, drawn or run.
-**Next: G2** (★ Ori approves opening the dev silver), then C1.
+**2026-11-22: G2 DONE**: Ori approved opening the dev silver (prerequisites verified; no label read at G2).
+**Next: C1** (Plan Mode): the identification candidates I-0 … I-5 on the dev silver, by the D-059 addendum rules.
 - **THE ORDERED WORKFLOW IS `docs/STAGES.md`** (both people, through §5 and §6 completion): every session starts with
   `start` (STAGES.md §1: sync, checks, the next eligible stage) and ends with `end-of-session` (STAGES.md §2: update
   the docs, then exactly one of CONTINUE / SEND TO PARTNER / WAIT). One stage per session. Plan files are not durable:
