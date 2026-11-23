@@ -1667,3 +1667,53 @@ Design: [m6_design.md](m6_design.md).
   - `config/` is unchanged, and the pinned protocol files equal `s56-r1.1`.
 - *Unchanged:* the D-059 rules; S56-v1; `config/`; the frozen samples and silver jobs; the stage order (C1 → G3 → ES →
   R → C1 completes the I-1 / I-3 / I-4 decisions → G4).
+
+### D-068 · G3: the Mikra supplement `mikra-s1-e134ad4c7e` (2026-11-23) · accepted (Ori, G3)
+- *Approved draw.* `loc gold supplement --corpus mikra --ident data/loc/ident/I-1+I-4-fc200448c2 --ordinal 1 --size 120
+  --approval D-068`, from the clean tree `2d31beb` (the D-067 proposal, unchanged).
+- *Result.* `mikra-s1-e134ad4c7e`: 120 items, no shortfall, `items_sha256`
+  `c79826c30e751a20e3a19903aee9ec53ce0aea67889d31adbc005f707e9a3b0c`.
+  - Split: dev 34 / validation 31 / test 55. The 1 : 1 : 2 split is applied within each stratum by rank, so small
+    strata give extra dev items (not exactly 30 / 30 / 60).
+  - By candidate: I-4 102, I-1+I-4 13, **I-1 5** (the allocation is proportional to the population: I-4 1,188 tokens,
+    I-1+I-4 146, I-1 68).
+- *Registered* in `gold.FROZEN_SUPPLEMENTS` (commit `8a40026`). A redraw from the repo and from the D-051 package gives
+  `items_match`.
+- *Stated limitation (for C1 / G4).* The I-1-only stratum is small in both supplements (Mikra 5, Modern 4 items, of
+  which only part is dev), so its "stratum dev precision ≥ 0.80" rule rests on very few items. This follows from the
+  pre-registered proportional allocation and is reported with the decision, not changed now. A second supplement
+  (ordinal 2) would need its own G3 approval.
+
+### D-069 · G3: the Modern supplement `modern-s1-62013e6a05` (2026-11-23) · accepted (Ori, G3)
+- *Approved draw.* As D-068, `--corpus modern --approval D-069`, from the clean tree `2d31beb`.
+- *Result.* `modern-s1-62013e6a05`: 120 items, no shortfall, `items_sha256`
+  `348bcb94123f958641eddb7e2c5ca19f4853c7126522baa2144be918e8027154`.
+  - Split: dev 36 / validation 30 / test 54.
+  - By candidate: I-4 96, I-1+I-4 20, I-1 4 (population: I-4 102,889, I-1+I-4 21,779, I-1 3,537 tokens).
+  - The Modern NONPAPER frame of R1 is excluded from the population, as in the code.
+- *Registered* with D-068 (commit `8a40026`); redraws from the repo and the package give `items_match`. The same
+  limitation as D-068 applies.
+
+### D-070 · G3: the I-3 sense screens `mikra-screen-a9094f8c5a` and `modern-screen-220e9ec385` (2026-11-23) · accepted (Ori, G3)
+- *Approved draws.* `loc draw screen --corpus <c> --ident data/loc/ident/I-3-506d93726d --approval D-070`, from the clean
+  tree `8a40026` (after the supplements were registered, so the screens exclude their sentences too).
+- *Results* (15 per key, 13 keys; ids only):
+  - **Mikra** `mikra-screen-a9094f8c5a`: 59 items, `items_sha256` `c1965bbc544b3dd4d477650651b3fad76baeeff7b002b64222945bac123b3c2c`.
+    Only 6 keys have Mikra tokens on their changed hosts (לקח.S 71, נשא.S 35, כפר.S 16, צרר.S 9, רוה.C 3, נזל.C 2);
+    7 keys have none. Excluded: 537 sentences and 435 paper verses.
+  - **Modern** `modern-screen-220e9ec385`: 181 items, `items_sha256` `367a8ebb9f68aad87d318a1283af2f8669590ed5a1fc4ff2ada18a6a174fb0ee`.
+    Every key is full except ידה.I (1 token in the population). Excluded: 835 sentences.
+- *Decision rule (pre-registered, unchanged).* Per key, the I-3 change applies when ≤ 3 of the screened instances are
+  the verb. A key with fewer than 15 instances is decided on what exists, and the count is reported. A key with no
+  instance in a corpus has no effect there to decide.
+- *Transfer (Ori's choice at G3).* Efrat cannot rebuild the I-1+I-4 candidate (it uses Ori's frozen `variant` job), so
+  she gets the folder `data/outbox/ori-g3/` by Drive / OneDrive / USB (never git):
+  - the candidate's `manifest.json`, `changes.csv`, `locative_verbs.yaml` and `locative_verb_forms.yaml`, without
+    its `dev/` folder (it holds dev silver labels);
+  - the two screen folders (`manifest.json` + `ids.csv`; ids only);
+  - `G3.json` (every file's sha256, the ids and `items_sha256`).
+
+  She redraws each supplement from her package (it must give `items_match`) and builds the screen jobs from the ids.
+  This matches `annotation/silver/r2/PROTOCOL_R2.md`: the screen is drawn by Ori. The STAGES.md ES row is corrected.
+- *Unchanged:* the D-059 rules; S56-v1; `config/`; the pinned protocol files (= `s56-r1.1`); the frozen samples and
+  every frozen job. No dev / validation / test silver was read: the draws read none.

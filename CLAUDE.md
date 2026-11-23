@@ -29,8 +29,10 @@ supplement / `instances` / `template` silver jobs, addendum `annotation/silver/r
 **2026-11-22: G2 DONE**: Ori approved opening the dev silver (prerequisites verified; no label read at G2).
 **2026-11-23: C1 DONE on dev** (D-067): candidates in `data/loc/ident/`; **I-2 not adopted** (9/28 = 32.1% < 50%);
 I-1/I-4 need the supplement and I-3 the sense screen. Two C0 fixes in local commits `78d4a7e` + `f946d2a`, NOT pushed.
-**Next: ★ G3**: Ori approves each draw (supplements ordinal 1 from `I-1+I-4-fc200448c2`; I-3 screens), then tag
-`s56-r1.3` + push + announcement → Efrat's ES.
+**2026-11-23: G3 DONE** (D-068 … D-070): supplements `mikra-s1-e134ad4c7e` + `modern-s1-62013e6a05` registered in
+`gold.FROZEN_SUPPLEMENTS` (commit `8a40026`); I-3 screens `mikra-screen-a9094f8c5a` + `modern-screen-220e9ec385`;
+transfer `data/outbox/ori-g3/` → Efrat (M3); tag `s56-r1.3`.
+**Next: WAIT** for Efrat's ES part 1 (supplement dev + screens) → R → C1 completes I-1 / I-3 / I-4 → ★ G4.
 - **THE ORDERED WORKFLOW IS `docs/STAGES.md`** (both people, through §5 and §6 completion): every session starts with
   `start` (STAGES.md §1: sync, checks, the next eligible stage) and ends with `end-of-session` (STAGES.md §2: update
   the docs, then exactly one of CONTINUE / SEND TO PARTNER / WAIT). One stage per session. Plan files are not durable:

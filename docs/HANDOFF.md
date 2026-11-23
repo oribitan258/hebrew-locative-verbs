@@ -1,10 +1,34 @@
-# Session Handoff: stage 3 — C1 done on dev (D-067: I-2 not adopted; I-1/I-4 supplement + I-3 screen); next ★ G3
+# Session Handoff: stage 3 — G3 done (D-068 … D-070: supplements + I-3 screens; `s56-r1.3`); next WAIT for Efrat's ES
 
 ## ★ CURRENT POSITION (read first; updated by every `end-of-session`)
 
 - **The ordered workflow is [STAGES.md](STAGES.md).** Every session: `start` (STAGES.md §1) → one stage →
   `end-of-session` (STAGES.md §2: CONTINUE / SEND TO PARTNER / WAIT).
-- **C1 DONE on dev (2026-11-23, D-067). Next: ★ G3** (Ori approves each draw).
+- **G3 DONE (2026-11-23, D-068 … D-070). Next: WAIT** for Efrat's ES part 1 (the supplement dev jobs + the two
+  screens) → R → C1 completes the I-1 / I-3 / I-4 decisions → ★ G4.
+  - `start` checks: clean tree, HEAD `2d31beb` (7 local commits ahead of origin `4cb6127`, by design); 326 tests passed;
+    `hebloc check` OK; whoami Ori; no new delivery.
+  - **Ori's G3 choices (AskUserQuestion):** all three draws approved; Efrat gets a Drive folder (she cannot rebuild the
+    I-1+I-4 candidate, which uses Ori's frozen `variant` job).
+  - **Supplements** (from `I-1+I-4-fc200448c2`, ordinal 1, size 120; drawn at clean `2d31beb`):
+    - `mikra-s1-e134ad4c7e` (D-068): dev 34 / val 31 / test 55; I-4 102, I-1+I-4 13, I-1 5; items `c79826c3…3b0c`.
+    - `modern-s1-62013e6a05` (D-069): dev 36 / val 30 / test 54; I-4 96, I-1+I-4 20, I-1 4; items `348bcb94…7154`.
+    - Registered in `gold.FROZEN_SUPPLEMENTS`, commit `8a40026`, with a test fix: the synthetic test worlds start
+      from an empty registry (autouse fixture), and a new test checks the real registry's shape. 327 tests passed.
+    - Redraws from the repo and from the D-051 package (Efrat's path) → `items_match` (scratchpad check).
+    - **Limitation:** the I-1-only stratum is tiny (5 / 4 items), so its C1 rule rests on very few dev items (D-068).
+  - **Screens** (D-070; from `I-3-506d93726d`, drawn at clean `8a40026`, so they exclude the supplements):
+    `mikra-screen-a9094f8c5a` 59 items (7 of 13 keys have no Mikra tokens); `modern-screen-220e9ec385` 181 items
+    (ידה.I has 1 token).
+  - `loc verify` OK on the 4 new folders. No silver read; `config/` and the pinned protocol files unchanged.
+  - **Transfer** `data/outbox/ori-g3/`: the candidate's manifest, `changes.csv` and two YAML files (without `dev/`,
+    which holds dev silver labels), the two screen id folders, `G3.json` (sha256 `09280ef7…7472`).
+  - **Rehearsal** of ES in a scratch clone (ff from `s56-r1.2.1`; the D-065 pinned check; the Mikra supplement
+    redrawn from the package → `items_match`; `create` of `sentence-mikra-s1-e134ad4c7e-dev` (34) and both screen jobs
+    (59, 181); nothing stepped).
+  - The §6 announcement orders ES in two parts: part 1 (supplement dev + screens) right after Efrat's running job,
+    part 2 (supplement validation + test) after E6.
+- **C1 DONE on dev (2026-11-23, D-067).**
   - `start` checks: the tree was clean, HEAD `3926c9b` (4 local commits ahead of origin `4cb6127`, by design);
     325 tests passed; `hebloc check` OK; whoami Ori; no new delivery.
   - **Candidates** (`data/loc/ident/`, built from the clean tree):

@@ -49,8 +49,16 @@ only orders the approved work, names who hands what to whom, and says when the n
       population is in D-067.
     - Two C0 code fixes, local commits `78d4a7e` and `f946d2a` (not pushed): the I-1 draft had applied nothing (the
       base → entry mapping), and `loc ident dev` mis-handled NONPAPER items.
-  - Next: **★ G3** (Ori approves each draw: the Mikra and Modern supplements, ordinal 1, and the I-3 screens; then
-    tag `s56-r1.3`, push and the §6 announcement).
+  - **G3 done (2026-11-23, D-068 … D-070):** Ori approved the three draws.
+    - Supplements `mikra-s1-e134ad4c7e` (120; dev 34) and `modern-s1-62013e6a05` (120; dev 36), from
+      `I-1+I-4-fc200448c2`, registered in `gold.FROZEN_SUPPLEMENTS` (commit `8a40026`). The I-1-only stratum is small
+      (Mikra 5, Modern 4 items): stated in D-068.
+    - Screens `mikra-screen-a9094f8c5a` (59) and `modern-screen-220e9ec385` (181).
+    - Redraws from the repo and the package give `items_match`. Efrat's path was rehearsed in a scratch clone.
+    - The transfer folder `data/outbox/ori-g3/` (candidate files without `dev/`, the screen ids, `G3.json`) goes to
+      Efrat with message M3.
+  - Next: **WAIT** for Efrat's ES-1 delivery (the supplement dev jobs + the screens) → R → C1 completes the I-1 / I-3 /
+    I-4 decisions → ★ G4.
 - §6: Efrat has done EF, E3 and **E4** (delivery 2 received). Her next stage is **E5** (validation silver); after P2's
   push and message M8, she first takes **ED** (`s56-r1.2.1`) at the start of a session. Her
   progress is in her `STATE.md`.
@@ -146,7 +154,7 @@ Claude Code does these steps in order and shows each result.
 | **C0** | O3 (reads no silver) | **Phase C build**, in Plan Mode (★ plan approval first): supplement silver jobs that do not collide (`job_id` is `sentence-<corpus>-<split>` today); I-2, I-3, I-4 code; the I-3 sense-screen draw; the §6 silver tasks (EFRAT §5.9(2) candidate review, §5.9(3) template proxy); the class/identity audit task (EFRAT §5.5, §5.6) and who runs it under D-061 | Full tests; pinned protocol files unchanged | Local code commit (pushed only at G3 or G7) | ★ APPROVAL; then DEP: dev silver | **DONE 2026-11-22**, local commit `87a106d` (not pushed). Built (D-065): `hebloc.loc.ident` (I-1 … I-4 candidate folders, I-5 report), `hebloc.loc.draws` (screen / review / template / audit ids), supplement jobs `sentence-<supplement id>-<split>`, SILVER tasks `instances` + `template`, addendum `annotation/silver/r2/PROTOCOL_R2.md`; audits → Efrat (EA); R1 path byte-identical |
 | **G2** | O3, C0, dev silver of **both** corpora + the anchor received (R) and QC-passed | — | — | — | ★ APPROVAL → C1 | **approved 2026-11-22 (Ori)**; prerequisites verified (SG2 hashes of the 3 received files, frozen configs, pinned files, tests, `hebloc check`); no label read |
 | **C1** | G2 | Identification candidates I-0 … I-5 on dev silver + the paper examples, by the **pre-registered rules** (D-059 addendum) | Each rule applied exactly as written | A decision record per candidate | ★ G3 if a supplement or sense screen is needed, else ★ G4 | **dev part DONE 2026-11-23 (D-067)**: I-2 not adopted (9 / 28 = 32.1%); I-1 / I-4 need the supplement and I-3 the screen → G3; their decisions are completed after ES → R. Local commits `78d4a7e`, `f946d2a` (not pushed) |
-| **G3** | C1 needs a supplement / screen | Ori approves each draw (decision id): the supplement first (`loc gold supplement --ident <I-1+I-4 candidate> --ordinal <n> --approval …`, then registered in `gold.FROZEN_SUPPLEMENTS`), then the I-3 screen (`loc draw screen --ident <I-3 candidate> --approval …`). Push the code + tag **`s56-r1.3`** (pinned protocol files byte-identical to `s56-r1.1`; `s56-r1.2` is the D-062 fix) + an announcement in §6 with the ids, counts and `items_sha256` | `git diff --quiet s56-r1.1 s56-r1.3 -- annotation/S56_SILVER_PROTOCOL.md annotation/S56_GUIDELINE.md annotation/silver/prompts/ annotation/silver/worked_examples.csv annotation/silver/anchor_ids.csv` (D-065; replaces the D-064 `annotation/` pathspec, which also refused additions) | **SEND TO PARTNER** (§8 M3) | DEP: Efrat's ES delivery → R → C1 | |
+| **G3** | C1 needs a supplement / screen | Ori approves each draw (decision id): the supplement first (`loc gold supplement --ident <I-1+I-4 candidate> --ordinal <n> --approval …`, then registered in `gold.FROZEN_SUPPLEMENTS`), then the I-3 screen (`loc draw screen --ident <I-3 candidate> --approval …`). Push the code + tag **`s56-r1.3`** (pinned protocol files byte-identical to `s56-r1.1`; `s56-r1.2` is the D-062 fix) + an announcement in §6 with the ids, counts and `items_sha256` | `git diff --quiet s56-r1.1 s56-r1.3 -- annotation/S56_SILVER_PROTOCOL.md annotation/S56_GUIDELINE.md annotation/silver/prompts/ annotation/silver/worked_examples.csv annotation/silver/anchor_ids.csv` (D-065; replaces the D-064 `annotation/` pathspec, which also refused additions) | **SEND TO PARTNER** (§8 M3) | DEP: Efrat's ES delivery → R → C1 | **done 2026-11-23** (D-068 … D-070): supplements `mikra-s1-e134ad4c7e`, `modern-s1-62013e6a05` (registered, `8a40026`); screens `mikra-screen-a9094f8c5a`, `modern-screen-220e9ec385`; transfer `data/outbox/ori-g3/` |
 | **G4** | C1 complete | Freeze `lexicon-v2` / `forms-v3` (P5 decided here, file level) | Tests; `loc lexicon check`; `loc verify` | Commit (★) | ★ APPROVAL → C2 | |
 | **C2** | G4 | Resolver development on dev silver + the paper examples | Determinism | Commit | DEP: validation silver (E5) received → G5 | |
 | **G5** | C2, validation silver of both corpora received | `loc score --choose` (once; ledger) | Ledger `annotation/gold/VALIDATION_CHOICE.json` written | Commit (★) | DEP: test silver (E6) received → G6 | |
@@ -171,7 +179,7 @@ CHECKPOINT 2.
 | **E4** | E2 | §9.2 step 7: Modern dev → Mikra dev → anchor → `deliver` | QC per job; frozen | **SEND TO PARTNER** (M2) | AUTO → E5 |
 | **E5** | E4 | Modern validation → Mikra validation → `deliver` | Same | **SEND TO PARTNER** (M2) | AUTO → E6 |
 | **E6** | E5 | Modern test → Mikra test → `deliver` | Same | **SEND TO PARTNER** (M2) | WAIT: a G3 announcement (→ ES) or `s56-v1` (→ E7) |
-| **ES** | A G3 announcement in §6 | `git merge --ff-only s56-r1.3`; check `git diff --quiet s56-r1.1 HEAD -- annotation/S56_SILVER_PROTOCOL.md annotation/S56_GUIDELINE.md annotation/silver/prompts/ annotation/silver/worked_examples.csv annotation/silver/anchor_ids.csv` (D-065); draw the announced supplement / screen from the package (`items_sha256` = the announced one); jobs: supplement `sentence-<supplement id>-<split>` (dev first), screen `create --task instances --purpose screen` → `deliver` | `items_match`; QC; frozen | **SEND TO PARTNER** (M2) | WAIT |
+| **ES** | A G3 announcement in §6 | `git merge --ff-only s56-r1.3`; check `git diff --quiet s56-r1.1 HEAD -- annotation/S56_SILVER_PROTOCOL.md annotation/S56_GUIDELINE.md annotation/silver/prompts/ annotation/silver/worked_examples.csv annotation/silver/anchor_ids.csv` (D-065); place Ori's G3 folder (the candidate files + the screen ids; check `G3.json`); redraw the announced supplement from the package (`items_sha256` = the announced one, `items_match`); jobs: supplement `sentence-<supplement id>-<split>` (dev first), screen `create --task instances --purpose screen --ids <Ori's screen folder>` (the screen is drawn by Ori, D-070) → `deliver` | `items_match`; QC; frozen | **SEND TO PARTNER** (M2) | WAIT |
 | **E7** | `s56-v1` announced (§8 M4) | §9.3 step 1: `git merge --ff-only s56-v1`, `uv sync`, tests, `hebpack.verify`, `loc lexicon check`, `loc silver isolation-test` | All OK; `git diff --quiet s56-v1 HEAD -- src/ config/` | — | AUTO |
 | **E8** | E7 | §9.3 steps 2–3: `loc extract --mode all-verbs` → `resolve` → `classify` → `swap` on Modern → `loc verify` | Verify OK | `results/` | AUTO |
 | **E9** | E8 | §5.9(2) candidate review (`loc draw review --input <all-verbs extract> --variant <chosen>` → `create --task instances --purpose review`) and §5.9(3) template-proxy check (`loc draw template --input <all-verbs extract>` → `create --task template`), by the silver protocol and its addendum `annotation/silver/r2/PROTOCOL_R2.md` (D-065) | QC; frozen | `silver/` | AUTO |
@@ -270,6 +278,69 @@ if Ori requests a supplement), and
   - Never rerun, edit or re-step that job; keep `QC_STOP.md` and every attempt.
   - Then continue E5: Mikra validation → `deliver` both validation jobs → M2. A STOP on Mikra validation is a new M6;
     D-066 covers only `sentence-modern-validation`.
+- **2026-11-23: `s56-r1.3` = the G3 release (D-068, D-069, D-070): two supplements and two I-3 sense screens. Take it
+  at the start of a session (stage ES), never while a `step` is running.**
+  - **What it is.**
+    - The Phase C code (C0, D-065; C1 fixes, D-067) and the registered supplements (`gold.FROZEN_SUPPLEMENTS`).
+    - `config/` now holds the frozen noun types and unit map (O3). Your sentence jobs do not read them.
+    - The pinned protocol files are byte-identical to `s56-r1.1`; `pyproject.toml` and `uv.lock` to `s56-r1.2`.
+      The Phase C additions are new files in `annotation/silver/r2/`. Every label rule and QC threshold is unchanged.
+    - Ori sends you the folder **`ori-g3`** (Drive / OneDrive / USB) with message M3. It holds ids and lexicon files
+      only: no corpus text, no labels.
+  - **Take the release (at the start of a session; finish nothing half-way: a running job stays as it is).**
+    1. `git status`: if tracked files are modified, STOP (M6).
+    2. `git fetch origin --tags`, then `git merge --ff-only s56-r1.3`.
+    3. These must all succeed, otherwise STOP (M6):
+       - `git merge-base --is-ancestor s56-r1.2.1 HEAD`;
+       - `git diff --quiet s56-r1.1 HEAD -- annotation/S56_SILVER_PROTOCOL.md annotation/S56_GUIDELINE.md annotation/silver/prompts/ annotation/silver/worked_examples.csv annotation/silver/anchor_ids.csv`;
+       - `git diff --quiet s56-r1.2 HEAD -- pyproject.toml uv.lock`;
+       - `uv sync`;
+       - `uv run python -m pytest -q` (all pass).
+    4. **Place Ori's folder** (copy, never edit):
+       - `ori-g3/ident/I-1+I-4-fc200448c2/` → `data/loc/ident/I-1+I-4-fc200448c2/`;
+       - `ori-g3/draws/screen/` → `data/loc/draws/screen/` (two folders: `mikra/mikra-screen-a9094f8c5a/`,
+         `modern/modern-screen-220e9ec385/`).
+
+       Every file's sha256 must equal the one in `ori-g3/G3.json` (`G3.json` itself has sha256
+       `09280ef7e487d2b41558e54d63225951144cc3d9837d481c70276734cc387472`). Any difference is a STOP (M6).
+    5. Record the release in `STATE.md`.
+  - **ES, part 1 (after the job you are running now is finalized, before you open the next E5 / E6 job):** the
+    supplement **dev** jobs and the two screens. Ori needs them first, to complete C1.
+    1. **Redraw both supplements from your package.** Each must print the announced id and size, and its
+       `manifest.json` must show `"frozen_check": {"items_match": true}` and the announced `items_sha256`. Anything
+       else is a STOP (M6).
+       ```
+       uv run python -m hebloc loc gold supplement --source package --package <package folder> --corpus mikra --ident data/loc/ident/I-1+I-4-fc200448c2 --ordinal 1 --size 120 --approval D-068
+       uv run python -m hebloc loc gold supplement --source package --package <package folder> --corpus modern --ident data/loc/ident/I-1+I-4-fc200448c2 --ordinal 1 --size 120 --approval D-069
+       ```
+       | Supplement | Items (dev / validation / test) | `items_sha256` |
+       |---|---|---|
+       | `mikra-s1-e134ad4c7e` | 120 (34 / 31 / 55) | `c79826c30e751a20e3a19903aee9ec53ce0aea67889d31adbc005f707e9a3b0c` |
+       | `modern-s1-62013e6a05` | 120 (36 / 30 / 54) | `348bcb94123f958641eddb7e2c5ca19f4853c7126522baa2144be918e8027154` |
+
+       The Modern draw reads all of Modern: it takes a while.
+    2. **Create and step the jobs** (the pinned sentence prompt, guideline and QC; each job finalized and frozen
+       before the next is opened):
+       ```
+       uv run python -m hebloc loc silver create --task sentence --corpus modern --split dev --sample data/loc/gold/modern/modern-s1-62013e6a05
+       uv run python -m hebloc loc silver step sentence-modern-s1-62013e6a05-dev --source package --package <package folder>
+       uv run python -m hebloc loc silver create --task sentence --corpus mikra --split dev --sample data/loc/gold/mikra/mikra-s1-e134ad4c7e
+       uv run python -m hebloc loc silver step sentence-mikra-s1-e134ad4c7e-dev --source package --package <package folder>
+       uv run python -m hebloc loc silver create --task instances --purpose screen --corpus modern --ids data/loc/draws/screen/modern/modern-screen-220e9ec385 --source package --package <package folder>
+       uv run python -m hebloc loc silver step screen-modern-367a8ebb9f --source package --package <package folder>
+       uv run python -m hebloc loc silver create --task instances --purpose screen --corpus mikra --ids data/loc/draws/screen/mikra/mikra-screen-a9094f8c5a --source package --package <package folder>
+       uv run python -m hebloc loc silver step screen-mikra-c1965bbc54 --source package --package <package folder>
+       ```
+       Repeat each `step` until `finalized` (`WAIT` = the usage limit, as before; a STOP → M6). Expected `create`
+       results (Ori's rehearsal from the package): `sentence-mikra-s1-e134ad4c7e-dev` 34 items, `items_sha256`
+       `3ca27b3b83d78c16b83a5dd2dd234e12d4a3d2c5e474b9fb0c627d305269b671`; `screen-mikra-c1965bbc54` 59 items,
+       `6e0b12a6306959d5c60d11c6a60a61cdc13bf176c1387936eb1c403025066252`; `screen-modern-367a8ebb9f` 181 items,
+       `aa82ad0988dad7087d9b9394a22274ab5c996359906b85767c36d07821d654cc`. A different count or hash is a STOP (M6).
+    3. `uv run python -m hebloc loc silver deliver sentence-modern-s1-62013e6a05-dev sentence-mikra-s1-e134ad4c7e-dev screen-modern-367a8ebb9f screen-mikra-c1965bbc54 --out data/outbox/efrat-s6 --who efrat`
+       → M2.
+    4. Then continue E5 / E6 as before.
+  - **ES, part 2 (after E6):** the supplement **validation**, then **test** jobs, Modern then Mikra, created and
+    stepped the same way (`--split validation`, then `--split test`) → `deliver` → M2.
 
 ## 7. Efrat's `STATE.md` (local: `data/outbox/efrat-s6/STATE.md`, never git)
 
