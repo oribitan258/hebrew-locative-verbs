@@ -32,7 +32,10 @@ I-1/I-4 need the supplement and I-3 the sense screen. Two C0 fixes in local comm
 **2026-11-23: G3 DONE** (D-068 … D-070): supplements `mikra-s1-e134ad4c7e` + `modern-s1-62013e6a05` registered in
 `gold.FROZEN_SUPPLEMENTS` (commit `8a40026`); I-3 screens `mikra-screen-a9094f8c5a` + `modern-screen-220e9ec385`;
 transfer `data/outbox/ori-g3/` → Efrat (M3); tag `s56-r1.3`.
-**Next: WAIT** for Efrat's ES part 1 (supplement dev + screens) → R → C1 completes I-1 / I-3 / I-4 → ★ G4.
+**2026-11-23: R DONE (delivery 3 = ES part 1):** the supplement dev silver (Modern 36, Mikra 34) and the screens
+(Modern 181, Mikra 59) were received, their hashes recorded in `FROZEN_SILVER.json`; no labels read.
+**Next: C1 part 2** (Plan Mode, ★ plan approval): complete the I-1 / I-3 / I-4 decisions by the pre-registered rules
+(no code applies them yet) → ★ G4.
 - **THE ORDERED WORKFLOW IS `docs/STAGES.md`** (both people, through §5 and §6 completion): every session starts with
   `start` (STAGES.md §1: sync, checks, the next eligible stage) and ends with `end-of-session` (STAGES.md §2: update
   the docs, then exactly one of CONTINUE / SEND TO PARTNER / WAIT). One stage per session. Plan files are not durable:

@@ -54,6 +54,58 @@
       "delivery_sha256": "acc3200bffc6b05a6acd540c4782a11b86ef85fa3439ed488a2d7c36dce81e95",
       "protocol_sha256": "a79e6ec61621b5e0dd8fc78423371746053ddd4bd70f4142bd160820fa9af945",
       "accepted_stop": null
+    },
+    "sentence-modern-s1-62013e6a05-dev": {
+      "files": {
+        "final/modern-s1-62013e6a05_dev_silver.csv": "e5ffaf7131589a2d460c4a024a4e66d5c29505ecd9650c1ac393eccd8164d0eb"
+      },
+      "placed": {
+        "modern-s1-62013e6a05_dev_silver.csv": "e5ffaf7131589a2d460c4a024a4e66d5c29505ecd9650c1ac393eccd8164d0eb"
+      },
+      "frozen_at": "2026-11-23T13:40:40+00:00",
+      "received_at": "2026-11-23T14:51:40+00:00",
+      "delivery_sha256": "002ae1820fccb2ef552d8b91f03961e5d9f32175edb3e16e50e17ef72de72572",
+      "protocol_sha256": "a79e6ec61621b5e0dd8fc78423371746053ddd4bd70f4142bd160820fa9af945",
+      "accepted_stop": null
+    },
+    "sentence-mikra-s1-e134ad4c7e-dev": {
+      "files": {
+        "final/mikra-s1-e134ad4c7e_dev_silver.csv": "5ee6da49d0ad71b8a32de4a0cc26040aad11c2f4ea03cd860fcc778ce63e15c6"
+      },
+      "placed": {
+        "mikra-s1-e134ad4c7e_dev_silver.csv": "5ee6da49d0ad71b8a32de4a0cc26040aad11c2f4ea03cd860fcc778ce63e15c6"
+      },
+      "frozen_at": "2026-11-23T13:52:04+00:00",
+      "received_at": "2026-11-23T14:51:40+00:00",
+      "delivery_sha256": "002ae1820fccb2ef552d8b91f03961e5d9f32175edb3e16e50e17ef72de72572",
+      "protocol_sha256": "a79e6ec61621b5e0dd8fc78423371746053ddd4bd70f4142bd160820fa9af945",
+      "accepted_stop": null
+    },
+    "screen-modern-367a8ebb9f": {
+      "files": {
+        "final/screen-modern-367a8ebb9f_silver.csv": "9924a68167dbfdc661e867643aa8d176f3843edc4ebb290ac1c014abf5858e97"
+      },
+      "placed": {
+        "screen-modern-367a8ebb9f_silver.csv": "9924a68167dbfdc661e867643aa8d176f3843edc4ebb290ac1c014abf5858e97"
+      },
+      "frozen_at": "2026-11-23T14:24:29+00:00",
+      "received_at": "2026-11-23T14:51:40+00:00",
+      "delivery_sha256": "002ae1820fccb2ef552d8b91f03961e5d9f32175edb3e16e50e17ef72de72572",
+      "protocol_sha256": "a79e6ec61621b5e0dd8fc78423371746053ddd4bd70f4142bd160820fa9af945",
+      "accepted_stop": null
+    },
+    "screen-mikra-c1965bbc54": {
+      "files": {
+        "final/screen-mikra-c1965bbc54_silver.csv": "869e71024a5ee04f2cee7c9bf3a2833cf666b5302ec9b387fa52496919e50004"
+      },
+      "placed": {
+        "screen-mikra-c1965bbc54_silver.csv": "869e71024a5ee04f2cee7c9bf3a2833cf666b5302ec9b387fa52496919e50004"
+      },
+      "frozen_at": "2026-11-23T14:36:28+00:00",
+      "received_at": "2026-11-23T14:51:40+00:00",
+      "delivery_sha256": "002ae1820fccb2ef552d8b91f03961e5d9f32175edb3e16e50e17ef72de72572",
+      "protocol_sha256": "a79e6ec61621b5e0dd8fc78423371746053ddd4bd70f4142bd160820fa9af945",
+      "accepted_stop": null
     }
   }
 }

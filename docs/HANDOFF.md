@@ -1,11 +1,29 @@
-# Session Handoff: stage 3 — G3 done (D-068 … D-070: supplements + I-3 screens; `s56-r1.3`); next WAIT for Efrat's ES
+# Session Handoff: stage 3 — R done (delivery 3 = ES part 1 received); next C1 part 2 (Plan Mode) → ★ G4
 
 ## ★ CURRENT POSITION (read first; updated by every `end-of-session`)
 
 - **The ordered workflow is [STAGES.md](STAGES.md).** Every session: `start` (STAGES.md §1) → one stage →
   `end-of-session` (STAGES.md §2: CONTINUE / SEND TO PARTNER / WAIT).
-- **G3 DONE (2026-11-23, D-068 … D-070). Next: WAIT** for Efrat's ES part 1 (the supplement dev jobs + the two
-  screens) → R → C1 completes the I-1 / I-3 / I-4 decisions → ★ G4.
+- **R DONE (2026-11-23): delivery 3 = Efrat's ES part 1. Next: C1 part 2** (fresh session, Plan Mode, ★ plan
+  approval) → ★ G4.
+  - Checks: tree clean, HEAD = origin/main = `2e8d660`; whoami Ori.
+  - The download `data/efrat-s6-2/efrat-s6/` (kept unchanged) was copied byte-identically (525 / 525 files) to
+    `data/incoming/efrat-s6/3/`. The `DELIVERY.json` sha256 is `002ae182…2572`, as Ori expected. 256 / 256 file hashes
+    are OK.
+  - Jobs: `sentence-modern-s1-62013e6a05-dev` 36, `sentence-mikra-s1-e134ad4c7e-dev` 34, `screen-modern-367a8ebb9f`
+    181, `screen-mikra-c1965bbc54` 59 (= the announced counts).
+    - All were made at `s56-r1.3`, clean. Protocol, guideline, prompts and `PROTOCOL_R2.md` are byte-identical to
+      Ori's; each `qc.json` = its `qc_sha256`.
+    - No STOP, none accepted; 0 breaches; 0 qc_format. First-run κ: frame 0.91–1.0, is_target_verb 1.0.
+  - `loc silver receive` → `FROZEN_SILVER.json` gained exactly these 4 jobs; the earlier entries are unchanged. The
+    placed files pass `frozen_file_ok`.
+    - Supplement dev files are in `data/loc/silver/final/dev/` (`<sid>_dev_silver.csv`); the screen files in
+      `final/other/<job>/`.
+    - The delivery 1 / 2 jobs re-sent in the folder equal their records. The extras (`STATE.md`, proposals, `code/`)
+      are not received.
+  - **No label was read.** Only metadata and QC aggregates were read.
+  - Not yet committed: `annotation/silver/FROZEN_SILVER.json` + these docs (★ Ori).
+- **G3 DONE (2026-11-23, D-068 … D-070).**
   - `start` checks: clean tree, HEAD `2d31beb` (7 local commits ahead of origin `4cb6127`, by design); 326 tests passed;
     `hebloc check` OK; whoami Ori; no new delivery.
   - **Ori's G3 choices (AskUserQuestion):** all three draws approved; Efrat gets a Drive folder (she cannot rebuild the
