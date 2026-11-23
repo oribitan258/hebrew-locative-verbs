@@ -29,6 +29,13 @@ from hebloc.store.io import file_sha256
 TSCHEMA = pa.schema([TOKENS_SCHEMA.field(c) for c in TOKEN_COLUMNS])
 GIT = {"git_commit": "test", "git_tag": None, "git_describe": "test", "dirty": False, "dev_override": False}
 
+
+@pytest.fixture(autouse=True)
+def _empty_supplement_registry(monkeypatch):
+    """The synthetic worlds start with no registered supplement (the real registry, G3 / D-068 / D-069, would refuse a
+    synthetic s1 and make the screen look for its sample); tests that need entries set them."""
+    monkeypatch.setattr(G, "FROZEN_SUPPLEMENTS", {})
+
 LEX_YAML = """
 meta: {methodology: S56-v1, stated_counts: {A: 1, A/B: 1, B: 1}, discrepancies: []}
 entries:

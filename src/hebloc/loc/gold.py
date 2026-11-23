@@ -66,10 +66,16 @@ FROZEN_SAMPLES: dict[str, dict[str, str]] = {
                "sample_sha256": "f0903a45102493c1d5783809ba4c1dac9989ade8bb2c868edef6934903c6851f"},
 }
 #: supplemental samples (S56_R1.md §3; D-059 addendum; D-065), registered by Ori at G3 with the decision that approved
-#: the draw: corpus -> {sample_id: {"items_sha256", "approval"}}. EMPTY until G3. A SILVER sentence job is made only
-#: from a frozen sample or a registered supplement; a supplement drawn again (Efrat, from the package) must give the
-#: same items (``items_match``), exactly like FROZEN_SAMPLES.
-FROZEN_SUPPLEMENTS: dict[str, dict[str, dict[str, str]]] = {}
+#: the draw: corpus -> {sample_id: {"items_sha256", "approval"}}. Registered at G3 (2026-11-23). A SILVER sentence job
+#: is made only from a frozen sample or a registered supplement; a supplement drawn again (Efrat, from the package) must
+#: give the same items (``items_match``), exactly like FROZEN_SAMPLES. Both s1 were drawn from the candidate
+#: I-1+I-4-fc200448c2 (D-067), size 120.
+FROZEN_SUPPLEMENTS: dict[str, dict[str, dict[str, str]]] = {
+    "mikra": {"mikra-s1-e134ad4c7e": {"items_sha256": "c79826c30e751a20e3a19903aee9ec53ce0aea67889d31adbc005f707e9a3b0c",
+                                      "approval": "D-068"}},
+    "modern": {"modern-s1-62013e6a05": {"items_sha256": "348bcb94123f958641eddb7e2c5ca19f4853c7126522baa2144be918e8027154",
+                                        "approval": "D-069"}},
+}
 GUIDELINE_VERSION = "S56-v1-g1"
 GOLD_DIR = DATA_DIR / "loc" / "gold"
 CAP_PER_KEY = 8

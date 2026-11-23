@@ -21,6 +21,32 @@ from hebloc.loc import score as S
 from hebloc.loc import silver as SV
 from hebloc.paths import ROOT
 
+REAL_SUPPLEMENTS = dict(G.FROZEN_SUPPLEMENTS)          # the registry as committed (read before any fixture patches it)
+
+
+@pytest.fixture(autouse=True)
+def _empty_supplement_registry(monkeypatch):
+    """Synthetic jobs start with no registered supplement (the real registry is set at G3); tests that need entries
+    set them."""
+    monkeypatch.setattr(G, "FROZEN_SUPPLEMENTS", {})
+
+
+def test_real_supplement_registry_is_well_formed():
+    """G3 (D-068, D-069): every registered supplement names a frozen corpus, its ordinal id, its items and its approval."""
+    import re
+
+    for corpus, sups in REAL_SUPPLEMENTS.items():
+        assert corpus in G.FROZEN_SAMPLES
+        ordinals = set()
+        for sid, reg in sups.items():
+            m = re.fullmatch(rf"{corpus}-s(\d+)-[0-9a-f]{{10}}", sid)
+            assert m, sid
+            assert m.group(1) not in ordinals            # an ordinal is never reused
+            ordinals.add(m.group(1))
+            assert re.fullmatch(r"[0-9a-f]{64}", reg["items_sha256"])
+            assert re.fullmatch(r"D-\d{3}", reg["approval"])
+
+
 FAKE = r'''
 import csv, json, os, sys, uuid
 from pathlib import Path
