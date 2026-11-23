@@ -41,7 +41,16 @@ only orders the approved work, names who hands what to whom, and says when the n
     for `modern_dev_silver.csv`, `mikra_dev_silver.csv`, `anchor-mikra_silver.csv`; `config/noun_types.yaml` +
     `config/verb_units.yaml` unchanged since `d75dbe5`; pinned protocol files = `s56-r1.1`; 325 tests; `hebloc check`
     OK. No label read at G2.
-  - Next: **C1** (Plan Mode; the D-059 addendum rules exactly as written).
+  - **C1 done (2026-11-23, D-067):** the candidates were built in `data/loc/ident/` and evaluated on the dev silver
+    only (`loc ident dev`).
+    - **I-2 NOT adopted:** R1 was wrong in 9 / 28 re-keyed items = 32.1% < 50%.
+    - I-0 is recorded as the baseline; I-5 is reported (Mikra 59 tokens, 0.49%).
+    - **I-1 / I-4 → supplement, I-3 → sense screen (G3).** The supplement candidate is `I-1+I-4-fc200448c2`; its
+      population is in D-067.
+    - Two C0 code fixes, local commits `78d4a7e` and `f946d2a` (not pushed): the I-1 draft had applied nothing (the
+      base → entry mapping), and `loc ident dev` mis-handled NONPAPER items.
+  - Next: **★ G3** (Ori approves each draw: the Mikra and Modern supplements, ordinal 1, and the I-3 screens; then
+    tag `s56-r1.3`, push and the §6 announcement).
 - §6: Efrat has done EF, E3 and **E4** (delivery 2 received). Her next stage is **E5** (validation silver); after P2's
   push and message M8, she first takes **ED** (`s56-r1.2.1`) at the start of a session. Her
   progress is in her `STATE.md`.
@@ -136,7 +145,7 @@ Claude Code does these steps in order and shows each result.
 | **O3** | O1, O2, Efrat's E3 received (R) | `loc nouns merge --automated` (Modern, Mikra) → historical nouns (`loc nouns list --exclude-typed`, a noun job, merge) → `loc units merge` / `audit --automated` → freeze `config/noun_types.yaml` v1 and the unit map | Merge checks; cross-corpus conflicts listed (D-061 G1 rule); `loc verify`; tests | Config commit (★ Ori approves each merged **file**, never rows) | DEP: Efrat's dev silver (E4) | done 2026-11-22: `d6f6cf9` (units + audit + Modern/Mikra nouns) and `d75dbe5` (historical nouns; `noun_types.yaml` v1 sha256 `88fb829e…6b99`); 125 conflicts → UNCLEAR; checks OK |
 | **C0** | O3 (reads no silver) | **Phase C build**, in Plan Mode (★ plan approval first): supplement silver jobs that do not collide (`job_id` is `sentence-<corpus>-<split>` today); I-2, I-3, I-4 code; the I-3 sense-screen draw; the §6 silver tasks (EFRAT §5.9(2) candidate review, §5.9(3) template proxy); the class/identity audit task (EFRAT §5.5, §5.6) and who runs it under D-061 | Full tests; pinned protocol files unchanged | Local code commit (pushed only at G3 or G7) | ★ APPROVAL; then DEP: dev silver | **DONE 2026-11-22**, local commit `87a106d` (not pushed). Built (D-065): `hebloc.loc.ident` (I-1 … I-4 candidate folders, I-5 report), `hebloc.loc.draws` (screen / review / template / audit ids), supplement jobs `sentence-<supplement id>-<split>`, SILVER tasks `instances` + `template`, addendum `annotation/silver/r2/PROTOCOL_R2.md`; audits → Efrat (EA); R1 path byte-identical |
 | **G2** | O3, C0, dev silver of **both** corpora + the anchor received (R) and QC-passed | — | — | — | ★ APPROVAL → C1 | **approved 2026-11-22 (Ori)**; prerequisites verified (SG2 hashes of the 3 received files, frozen configs, pinned files, tests, `hebloc check`); no label read |
-| **C1** | G2 | Identification candidates I-0 … I-5 on dev silver + the paper examples, by the **pre-registered rules** (D-059 addendum) | Each rule applied exactly as written | A decision record per candidate | ★ G3 if a supplement or sense screen is needed, else ★ G4 | |
+| **C1** | G2 | Identification candidates I-0 … I-5 on dev silver + the paper examples, by the **pre-registered rules** (D-059 addendum) | Each rule applied exactly as written | A decision record per candidate | ★ G3 if a supplement or sense screen is needed, else ★ G4 | **dev part DONE 2026-11-23 (D-067)**: I-2 not adopted (9 / 28 = 32.1%); I-1 / I-4 need the supplement and I-3 the screen → G3; their decisions are completed after ES → R. Local commits `78d4a7e`, `f946d2a` (not pushed) |
 | **G3** | C1 needs a supplement / screen | Ori approves each draw (decision id): the supplement first (`loc gold supplement --ident <I-1+I-4 candidate> --ordinal <n> --approval …`, then registered in `gold.FROZEN_SUPPLEMENTS`), then the I-3 screen (`loc draw screen --ident <I-3 candidate> --approval …`). Push the code + tag **`s56-r1.3`** (pinned protocol files byte-identical to `s56-r1.1`; `s56-r1.2` is the D-062 fix) + an announcement in §6 with the ids, counts and `items_sha256` | `git diff --quiet s56-r1.1 s56-r1.3 -- annotation/S56_SILVER_PROTOCOL.md annotation/S56_GUIDELINE.md annotation/silver/prompts/ annotation/silver/worked_examples.csv annotation/silver/anchor_ids.csv` (D-065; replaces the D-064 `annotation/` pathspec, which also refused additions) | **SEND TO PARTNER** (§8 M3) | DEP: Efrat's ES delivery → R → C1 | |
 | **G4** | C1 complete | Freeze `lexicon-v2` / `forms-v3` (P5 decided here, file level) | Tests; `loc lexicon check`; `loc verify` | Commit (★) | ★ APPROVAL → C2 | |
 | **C2** | G4 | Resolver development on dev silver + the paper examples | Determinism | Commit | DEP: validation silver (E5) received → G5 | |

@@ -1,9 +1,38 @@
-# Session Handoff: stage 3 — G2 done (Ori opened the dev silver); next C1 (identification candidates, Plan Mode)
+# Session Handoff: stage 3 — C1 done on dev (D-067: I-2 not adopted; I-1/I-4 supplement + I-3 screen); next ★ G3
 
 ## ★ CURRENT POSITION (read first; updated by every `end-of-session`)
 
 - **The ordered workflow is [STAGES.md](STAGES.md).** Every session: `start` (STAGES.md §1) → one stage →
   `end-of-session` (STAGES.md §2: CONTINUE / SEND TO PARTNER / WAIT).
+- **C1 DONE on dev (2026-11-23, D-067). Next: ★ G3** (Ori approves each draw).
+  - `start` checks: the tree was clean, HEAD `3926c9b` (4 local commits ahead of origin `4cb6127`, by design);
+    325 tests passed; `hebloc check` OK; whoami Ori; no new delivery.
+  - **Candidates** (`data/loc/ident/`, built from the clean tree):
+    - `I-2-d6bebab4e4`, `I-3-506d93726d`, `I-4-be620958c0`: counts equal the C0 dry runs.
+    - `I-1-e08d8a56f7`: 87 variant rows applied.
+    - `I-1+I-4-fc200448c2`: the supplement candidate.
+    - `I-1-b93a081a17` and `I-1+I-4-48bdfd6750` are SUPERSEDED (built with the C0 defect).
+  - **Dev evaluation** (`loc ident dev`; dev split + 50 dev paper examples only):
+    - I-0: R1 is the verb in Mikra 74 / 98 and Modern 84 / 101.
+    - **I-2 not adopted:** 28 re-keyed, R1 wrong 9 = 32.1% < 50%.
+    - I-3: 2 items change.
+    - I-4: 4 items re-keyed, all correct.
+    - I-1: drops MI0345 (פלט.I, silver Y), a loss for G4; MO0373 gains עמס.S.
+    - I-5: Mikra 59 tokens (0.49%).
+  - **Supplement population** (counts only, nothing drawn): Mikra I-4 1,188 / I-1 68 / I-1+I-4 146; Modern I-4
+    102,889 / I-1 3,537 / I-1+I-4 21,779 (`data/loc/ident/C1_supplement_population.json`).
+  - **Two code fixes (Ori approved each commit):**
+    - `78d4a7e`: the I-1 draft maps the variant job's base → lexicon id through `config/verb_units.yaml`. The C0 draft
+      had applied 0 rows.
+    - `f946d2a`: `loc ident dev` handles NONPAPER items.
+    - Neither is pushed: they go with G3.
+  - **Checks:** 326 tests at `78d4a7e` and the 45 R2 tests at `f946d2a`; `loc verify` OK on 14 folders; R1 Mikra
+    extract `mikra-lexicon-125c4d20d9` = 12,045 / 15,593; `config/` unchanged; pinned files = `s56-r1.1`. No
+    validation or test label read.
+  - **G3 proposal (D-067):**
+    - supplements `mikra-s1-…` and `modern-s1-…` from `I-1+I-4-fc200448c2`, size 120 (30 / 30 / 60);
+    - the I-3 screens (Mikra, Modern; 15 per key; 13 entries);
+    - each draw with its own decision id; then tag `s56-r1.3`, push, the §6 announcement and message M3 → Efrat's ES.
 - **G2 DONE (2026-11-22): Ori approved opening the dev silver. Next: C1** (Plan Mode; identification candidates
   I-0 … I-5 on the dev silver + the paper examples, by the D-059 addendum rules exactly as written; ★ G3 or G4 after).
   - `start` checks: clean tree, HEAD `164ff56` (2 local commits ahead of origin `4cb6127`, by design), 325 tests

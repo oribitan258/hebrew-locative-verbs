@@ -1583,3 +1583,87 @@ Design: [m6_design.md](m6_design.md).
   waits; each STOP gets its own decision. This decision does not pre-accept any other split.
 - *Unchanged:* the protocol, prompts, guideline, worked examples, anchor ids; `src/` (no code change); `config/`; the
   QC thresholds; every frozen job and delivery; the stage order (E5 continues with Mikra validation, then delivery 3).
+
+### D-067 · C1: the identification candidates on the dev silver (I-2 not adopted; I-1 / I-4 → supplement and I-3 → sense screen at G3) and two fixes to the C0 code (2026-11-23) · accepted (Ori: C1 plan + two in-session choices)
+- *Scope.* Stage C1 (STAGES.md §3), after G2. The pre-registered rules (D-059 addendum) were applied as written to the
+  frozen samples' **dev** items (Mikra 98, Modern 101) and the 50 dev paper examples.
+  - Read: the dev SILVER only (`mikra_dev_silver.csv` `a62809f4…eb5c`, `modern_dev_silver.csv` `b120c2b6…eaab`, both
+    = `FROZEN_SILVER.json`, through `score.load_gold`).
+  - No validation or test label was read. Nothing was drawn. `config/`, the frozen samples, every frozen job and the
+    pinned protocol files are unchanged.
+- *Two fixes to the C0 code (local commits `78d4a7e`, `f946d2a`; Ori approved each commit in the session).*
+  1. **The I-1 draft applied nothing (a C0 defect).** The variant job writes the BASE chosen among the row's
+     candidates (`נתן`), but `lexicon_v2_draft` expected a lexicon id (`נתן.S`). All 98 agreed rows were skipped as
+     `unknown_entry`, silently.
+     - Ori's choice ("exact map"): the base is mapped through the frozen `config/verb_units.yaml`
+       (sha256 `37837aab…1c0b`). The `paper_entries` of that lemma's candidate with that base gives the lexicon id.
+       - Exactly one id → applied: 87 rows (68 `dicta_lemma`, 19 `shared_lemma`).
+       - No paper id on that base → not applied: 6 rows (יושב→ישב, מוסר→מסר, מוצא→מצא, מורד→מרד, נוסח→ניסח,
+         פונה→פנה).
+       - Several ids → not applied: 5 rows (וישלח / ושלח / שלחנו / ששלח → שלח.S + שלח.I; שחטו → the two שחט.S).
+       - 38 `exclude` rows add nothing (as before); 24 rows are `undecided` (the passes disagree).
+     - The defective folders `I-1-b93a081a17` and `I-1+I-4-48bdfd6750` are kept with `SUPERSEDED.txt`, never used.
+  2. **`loc ident dev`** (new, `hebloc.loc.ident.dev_effects`): R1 vs a candidate on each dev item, using the same
+     identification function with two indexes. It reads only `split == dev` items and `status == dev` paper
+     examples. Its self-check first refused the 25 Modern `NONPAPER` items (key `lemma:<lemma>`, which has no R1
+     lexicon key by design). Fixed: for them R1 = empty, and a candidate key counts as `added`.
+- *Candidates built* (`data/loc/ident/`, from the clean tree; never the config):
+
+  | Candidate | Folder | Entry × host changes |
+  |---|---|---|
+  | I-2 | `I-2-d6bebab4e4` | 4,847 lemma partners (= the C0 dry run) |
+  | I-3 | `I-3-506d93726d` | 18 (13 removed, 5 zone changes; 13 entries) (= C0) |
+  | I-4 | `I-4-be620958c0` | 3,463 added hosts (= C0) |
+  | I-1 | `I-1-e08d8a56f7` | 323 (176 added, 103 removed, 44 zone changes); evidence `d0001abe…58d8` |
+  | I-1+I-4 | `I-1+I-4-fc200448c2` | 3,870 (the supplement candidate) |
+
+- *I-0 (R1, the baseline), on dev, SILVER `is_target_verb`:*
+  - **Mikra:** Y 74 / 98 (75.5%).
+    - By match: both 51 / 59, lemma-only 15 / 25, form-only 8 / 14.
+    - By stratum: A 21 / 28, A/B 24 / 28, B 18 / 25, HOMOGRAPH 4 / 10, MIXED 7 / 7.
+  - **Modern:** Y 84 / 101.
+    - Lexicon items 61 / 76: both 56 / 61, lemma-only 2 / 9, form-only 3 / 6.
+    - NONPAPER 23 / 25.
+  - Paper examples: R1 has the paper's verb in all 50 dev paper examples.
+- *I-2 (rule: among the dev items and paper examples it re-keys, the dev silver shows R1's key was wrong in ≥ 50%).*
+  - It re-keys 28 items: Mikra 20, Modern 3, paper examples 5. All 28 are labelled (none abstained); every one is a
+    lemma-only match.
+  - R1's key was wrong (`is_target_verb = N`) in **9 / 28 = 32.1%**: Mikra 6 / 20, Modern 3 / 3, paper 0 / 5.
+  - Stated readings (Ori, plan): abstentions are left out and counted (there are none here, so both bounds are 32.1%);
+    without the paper examples the share is 9 / 23 = 39.1%.
+  - **Decision: I-2 is NOT adopted** (32.1% < 50%). R1's lemma-only keys stay. The code stays, unused.
+- *I-3 (rule: per key, the sense screen; the change applies when ≤ 3 of 15 are the verb).*
+  - Dev effects (descriptive only):
+    - MO0252 (`צרר.S|~form`, host צריך) is dropped; the silver says it is not the verb.
+    - MI0037 (`נשא.S`, host אשא) is re-keyed to `נשא.S|~אשא|~השאיר`; the silver says it is the verb.
+  - **Decision: undecidable on dev → the sense screen at G3.** Per corpus, 15 instances per key from outside every
+    sample (`loc draw screen --ident data/loc/ident/I-3-506d93726d`).
+- *I-1 and I-4 (rule: stratum dev precision in the supplement ≥ 0.80).* The frozen samples were drawn by R1, so they
+  cannot measure new tokens. Descriptive dev effects:
+  - I-4: Mikra MI0097 (`שלח.S` → `שלח.I|שלח.S`) and MI0105 (`כרת.S` → `כרת.C|כרת.S`), both silver Y; two paper examples
+    re-keyed (R1 right).
+  - I-1: Mikra MI0345 (`פלט.I|~form|~פלט.S`, HOMOGRAPH) is **dropped, and the silver says it is the verb**, a loss
+    that G4 must see. Modern MO0373 (NONPAPER, lemma מעמיס) gains `עמס.S`; silver Y.
+  - **Decision: → the supplement at G3** (one per corpus, from `I-1+I-4-fc200448c2`).
+  - Supplement population (full view, R1 not identifying, counts only; scratch script = `score.supplement`'s SQL,
+    no selection):
+    - Mikra: I-4 1,188 tokens (A 641, A/B 425, MIXED 90, B 23, …); I-1 68 (HOMOGRAPH 39, A 21, A/B 5, …);
+      I-1+I-4 146 (A 109, HOMOGRAPH 28, …).
+    - Modern: I-4 102,889 tokens (A 86,285, A/B 11,861, B 2,522, MH 1,120, MIXED 610, HOMOGRAPH 491); I-1 3,537
+      (HOMOGRAPH 1,668, A/B 1,152, A 658, …); I-1+I-4 21,779 (A 8,633, A/B 6,932, HOMOGRAPH 5,836, MH 378).
+    - The `OTHER` stratum is never drawn (as in the code). Every candidate stratum is populated in both corpora, so
+      a 120-item supplement can fill all three candidates. Counts: `data/loc/ident/C1_supplement_population.json`.
+- *I-5 (report only).* On the R1 Mikra extract `mikra-lexicon-125c4d20d9` (R0 report): 59 lexicon tokens (0.49%) have a
+  function-predicate lemma (ניתן under נתן.S 56, צריך 2, היי 1). Modern is reported with the full Modern run.
+- *Proposal for G3 (Ori decides; nothing is drawn before):*
+  - the supplement `<corpus>-s1-<hash>` for Mikra and Modern from `I-1+I-4-fc200448c2`, ordinal 1, size 120 (the
+    D-059 proposal, 30 / 30 / 60 by the 1 : 1 : 2 split), each with its own decision id;
+  - the I-3 screen for Mikra and Modern with its decision id.
+
+  Both are pushed with tag `s56-r1.3` and announced to Efrat (ES).
+- *Checks.*
+  - 326 tests passed at `78d4a7e` and the 45 R2 tests at `f946d2a`; `loc verify` OK on all 14 new folders.
+  - The R1 Mikra lexicon extract is unchanged (`mikra-lexicon-125c4d20d9`: 12,045 instances, 15,593 arguments).
+  - `config/` is unchanged, and the pinned protocol files equal `s56-r1.1`.
+- *Unchanged:* the D-059 rules; S56-v1; `config/`; the frozen samples and silver jobs; the stage order (C1 → G3 → ES →
+  R → C1 completes the I-1 / I-3 / I-4 decisions → G4).

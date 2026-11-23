@@ -27,7 +27,10 @@ was read; local commits `d6f6cf9` + `d75dbe5`.
 supplement / `instances` / `template` silver jobs, addendum `annotation/silver/r2/`); local commit `87a106d`, NOT pushed
 (G3 or G7). No silver opened, drawn or run.
 **2026-11-22: G2 DONE**: Ori approved opening the dev silver (prerequisites verified; no label read at G2).
-**Next: C1** (Plan Mode): the identification candidates I-0 … I-5 on the dev silver, by the D-059 addendum rules.
+**2026-11-23: C1 DONE on dev** (D-067): candidates in `data/loc/ident/`; **I-2 not adopted** (9/28 = 32.1% < 50%);
+I-1/I-4 need the supplement and I-3 the sense screen. Two C0 fixes in local commits `78d4a7e` + `f946d2a`, NOT pushed.
+**Next: ★ G3**: Ori approves each draw (supplements ordinal 1 from `I-1+I-4-fc200448c2`; I-3 screens), then tag
+`s56-r1.3` + push + announcement → Efrat's ES.
 - **THE ORDERED WORKFLOW IS `docs/STAGES.md`** (both people, through §5 and §6 completion): every session starts with
   `start` (STAGES.md §1: sync, checks, the next eligible stage) and ends with `end-of-session` (STAGES.md §2: update
   the docs, then exactly one of CONTINUE / SEND TO PARTNER / WAIT). One stage per session. Plan files are not durable:
