@@ -664,7 +664,9 @@ def test_ident_dev_effects_dev_only_and_rekey_labels(r2world, tmp_path, monkeypa
         wr.writeheader()
         wr.writerows([{"item_id": "MI1", "instance_key": t1, "stratum": "lemma_only", "verb_key": "מלא.I", "split": "dev"},
                       {"item_id": "MI2", "instance_key": t2, "stratum": "both", "verb_key": "שלח.I|שלח.S", "split": "dev"},
-                      {"item_id": "MI3", "instance_key": t3, "stratum": "both", "verb_key": "שלח.S", "split": "validation"}])
+                      {"item_id": "MI3", "instance_key": t3, "stratum": "both", "verb_key": "שלח.S", "split": "validation"},
+                      {"item_id": "MI4", "instance_key": "mikra:d0:4:0|0|0", "stratum": "NONPAPER", "verb_key": "lemma:רואה",
+                       "split": "dev"}])
     paper = tmp_path / "paper.csv"
     with open(paper, "w", encoding="utf-8", newline="") as f:
         wr = csv.DictWriter(f, fieldnames=["instance_key", "entry_id", "frame", "where", "ref", "status", "frozen_split"])
@@ -674,7 +676,7 @@ def test_ident_dev_effects_dev_only_and_rekey_labels(r2world, tmp_path, monkeypa
                        "status": "excluded_frozen_test", "frozen_split": "test"}])
     monkeypatch.setattr(G, "FROZEN_SAMPLES", {"mikra": {"sample_id": "S1"}})
     items = IDN.dev_items(gold_dir=tmp_path / "gold", paper_path=paper)
-    assert sorted(x["item_id"] for x in items) == ["MI1", "MI2", "paper:ex. 1:Genesis 1:1"]          # never validation/test
+    assert sorted(x["item_id"] for x in items) == ["MI1", "MI2", "MI4", "paper:ex. 1:Genesis 1:1"]   # never validation/test
     cf = tmp_path / "cand"
     cf.mkdir()
     (cf / IDN.LEXICON_NAME).write_text(LEX_YAML, encoding="utf-8")
@@ -687,6 +689,7 @@ def test_ident_dev_effects_dev_only_and_rekey_labels(r2world, tmp_path, monkeypa
     rows = {r["item_id"]: r for r in csv.DictReader(open(cf / "dev" / "dev_effects.csv", encoding="utf-8-sig"))}
     assert rows["MI1"]["effect"] == "rekeyed" and rows["MI1"]["cand_key"] == "מלא.I|~מלא.S" and rows["MI1"]["r1_wrong"] == "yes"
     assert rows["MI2"]["effect"] == "same" and rows["MI2"]["r1_wrong"] == "no"
+    assert rows["MI4"]["r1_key"] == "" and rows["MI4"]["effect"] == "same"                          # NONPAPER: no R1 key
     assert rows["paper:ex. 1:Genesis 1:1"]["effect"] == "rekeyed" and rows["paper:ex. 1:Genesis 1:1"]["r1_wrong"] == "no"
     assert m["summary"]["sample:mikra"]["changed_r1_wrong"] == {"yes": 1, "no": 0, "unknown": 0}
     assert verify(cf / "dev") == []

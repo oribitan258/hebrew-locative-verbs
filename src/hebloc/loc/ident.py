@@ -328,7 +328,9 @@ def dev_effects(folder: Path, source, r1: L.Lexicon, *, git: dict, labels: dict[
             continue
         a, b = ID.identify(i1, *t), ID.identify(ic, *t)
         ka, kb = (a or {}).get("verb_key", ""), (b or {}).get("verb_key", "")
-        if x["kind"] == "sample" and ka != x["sample_verb_key"]:
+        # a NONPAPER item (§6, key lemma:<lemma> / form:<form>) has no R1 lexicon key; a candidate may add one
+        nonpaper = x["sample_verb_key"].startswith(("lemma:", "form:"))
+        if x["kind"] == "sample" and ka != ("" if nonpaper else x["sample_verb_key"]):
             problems.append(f"R1 key {ka!r} != the frozen sample's {x['sample_verb_key']!r} ({x['item_id']})")
         effect = ("same" if ka == kb else "dropped" if not kb else "added" if not ka else "rekeyed")
         if x["kind"] == "sample":
@@ -339,6 +341,7 @@ def dev_effects(folder: Path, source, r1: L.Lexicon, *, git: dict, labels: dict[
             itv, status = "", "paper"
             r1_wrong = "no" if x["paper_entry"] in (a or {}).get("members", []) else "yes"
         rows.append({**{k: x[k] for k in ("kind", "corpus", "item_id", "instance_key", "stratum", "paper_entry")},
+                     "sample_key": x["sample_verb_key"],
                      "lemma": t[0], "match_method_r1": (a or {}).get("match_method", ""), "r1_key": ka, "cand_key": kb,
                      "effect": effect, "is_target_verb": itv, "silver_status": status, "r1_wrong": r1_wrong})
     if problems:
