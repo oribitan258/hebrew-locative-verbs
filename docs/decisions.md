@@ -1522,3 +1522,64 @@ Design: [m6_design.md](m6_design.md).
   - `config/` and the frozen samples;
   - every frozen job and delivery;
   - the stage order (C0 → G2 → C1 …).
+
+### D-066 · SILVER: QC STOP T5 on `sentence-modern-validation` accepted with stated reliability (SG3 option 1) (2026-11-23) · accepted (Ori, E5 STOP decision)
+- *What happened (Efrat, stage E5).*
+  - Job `sentence-modern-validation` (101 items) stopped at finalize with **T5: 9/101 items (8.9%) failed the
+    format/consistency check after their one rerun (> 5%)**. `QC_STOP.md` 2026-11-22T15:08:15Z.
+  - Pass A: 22 items invalid in attempt a1, 9 still invalid after the rerun a2 → `abstained` (`qc_format`). Pass B:
+    3 invalid in a1, 0 after the rerun. 0 missing items in either pass.
+  - Diagnostic delivery (M6): `data/efrat-s6-stop-20261123T072020Z-1-001/efrat-s6-stop/`. Read by Ori's Claude Code:
+    `QC_STOP.md`, `qc.json`, `DIAGNOSTIC.json` only (aggregate counts; no row label).
+- *Reliability, stated (from `qc.json`).*
+  - First-run κ A vs B (92 pairs): frame **0.938** [0.875, 0.985]; locative 0.903 [0.824, 0.967]; is_target_verb 1.0.
+  - On the 13 agreement items: frame 1.0, locative 0.873 [0.618, 1.0], is_target_verb 1.0.
+  - Statuses: `agreed` 80, `agreed_ctx` 8, `adjudicated` 4, `abstained` 9 (all 9 are the `qc_format` items).
+    Abstention share 10.9% (≤ 30%). 0 breaches (A, B, A2, B2, C, A3, B3). T4 and the abstention rule are not hit.
+- *Cause (inferred from the dev silver; NOT verified on the validation rows).*
+  - The pinned prompt `annotation/silver/prompts/sentence_pass.md` and the checker (`hebloc.loc.silver.validate`,
+    `consistency_problems`) contradict each other in two places:
+    1. The prompt allows `none` for `locatum` / `location`. A non-locative item written `locatum = none`,
+       `location = none` fails the checker's rule "locatum and location are the same argument".
+    2. The prompt says that with `is_target_verb = N` every other label column stays empty, `confidence` included.
+       The checker requires `confidence` ∈ {high, medium, low}.
+  - Evidence (dev silver, readable since G2; only the checker messages and the failing rows' `is_target_verb`,
+    `frame`, `locatum`, `location`, `confidence` were read): all 29 first-attempt failures in `sentence-modern-dev`
+    and `sentence-mikra-dev` are these two patterns: 15 × `NON_LOCATIVE` with `none`/`none`, 14 × `is_target_verb = N`
+    with an empty `confidence`. In dev every rerun cleared them (0 `qc_format`).
+  - The validation failure reasons (`FAILURE_REASONS_CONTAINS_VALIDATION_LABELS.json`) were **not opened**. So for the
+    9 validation items the cause is the most likely explanation, not a verified one.
+- *Options assessed (SG3, `S56_SILVER_PROTOCOL.md` §5).*
+  1. Accept with stated reliability: **chosen**.
+  2. `agreed`-only primary: drops 21 items instead of 9 and does not address the cause; already reported as the
+     automatic `agreed_only` sensitivity set.
+  3. Protocol revision: **closed**. This split is already annotated, and the protocol, prompts and guideline are
+     pinned for validation and test once any dev silver has been read (protocol §6; dev silver read at G2).
+  4. Drop the split: not justified (κ high, 0 breaches).
+- *Decision.*
+  - Efrat finalizes the job unchanged:
+    `uv run python -m hebloc loc silver finalize sentence-modern-validation --accept-stop D-066`.
+    `FROZEN.json` records `"accepted_stop": "D-066"`. No rerun, no relabelling, no step after the STOP, no edit of any
+    row, pass or attempt; `QC_STOP.md` and every attempt stay on file.
+  - **Scoring (code as built, unchanged):** the 9 `qc_format` items are `abstained`, so they are left out of the frame
+    metrics and counted (`abstained_excluded`). The `agreed_only` sensitivity set is reported.
+- *Reliability limitations (reported with every validation figure for Modern).*
+  - 9/101 items (8.9%) have no two-pass frame label. If the cause is as inferred, they are non-locative or
+    non-target items, so the excluded set is not random with respect to class.
+  - The 9 rows carry pass B's single-pass answer. The scorer's identification precision uses `is_target_verb` from all
+    rows, abstained included, so for these 9 items identification rests on one unreplicated pass.
+  - The cause on the validation rows is inferred, not verified.
+  - Every figure is agreement with SILVER labels (D-061), never accuracy.
+- *Validation-exposure safeguards.*
+  - Ori's Claude Code read no validation row label. The file `FAILURE_REASONS_CONTAINS_VALIDATION_LABELS.json` is kept
+    unread in the diagnostic folder (never deleted, never opened before G5).
+  - When delivery 3 (E5) arrives, stage R records its hashes in `FROZEN_SILVER.json` before any read, and checks
+    that `sentence-modern-validation`'s `FROZEN.json` has `accepted_stop = "D-066"` and that every other job either carries no
+    accepted STOP or one that names its own recorded decision. Any difference → STOP.
+  - Validation labels are first read at G5 (`loc score --choose`, once, ledger), as before. This decision changes
+    nothing about when or how validation is read.
+- *Forward.* The prompt/checker mismatch stays in force for Mikra validation and both test splits, which are not yet
+  annotated (option 3 is closed for them too). If any of them stops on T5 (or any other rule), Efrat sends M6 and
+  waits; each STOP gets its own decision. This decision does not pre-accept any other split.
+- *Unchanged:* the protocol, prompts, guideline, worked examples, anchor ids; `src/` (no code change); `config/`; the
+  QC thresholds; every frozen job and delivery; the stage order (E5 continues with Mikra validation, then delivery 3).

@@ -45,6 +45,13 @@ only orders the approved work, names who hands what to whom, and says when the n
 - §6: Efrat has done EF, E3 and **E4** (delivery 2 received). Her next stage is **E5** (validation silver); after P2's
   push and message M8, she first takes **ED** (`s56-r1.2.1`) at the start of a session. Her
   progress is in her `STATE.md`.
+  - **E5 STOP decided (2026-11-23, D-066):** `sentence-modern-validation` stopped on **T5** (9/101 = 8.9% `qc_format`
+    after the rerun; frame κ 0.938, 0 breaches). Ori accepted it with stated reliability (SG3 option 1). Inferred
+    cause: the pinned prompt and the checker disagree (`none`/`none` on a non-locative item; empty `confidence` when
+    `is_target_verb = N`); the validation failure reasons were not opened. Efrat finalizes with
+    `--accept-stop D-066` (message M10), then continues E5 with Mikra validation → delivery 3. Diagnostic folder
+    `data/efrat-s6-stop-20261123T072020Z-1-001/` (kept; its `FAILURE_REASONS_CONTAINS_VALIDATION_LABELS.json` is never
+    opened before G5).
 
 ---
 
@@ -247,6 +254,13 @@ if Ori requests a supplement), and
     6. Record ED in `STATE.md`, then continue your current stage (E5 or E6) as before.
     7. `annotation/silver/FROZEN_SILVER.json` is now in your checkout. Never edit or use it. When Ori later updates
        only that record, your pull rule treats it as documentation.
+- **2026-11-23: D-066, Ori's decision on your E5 STOP (T5, `sentence-modern-validation`): accepted with stated
+  reliability.** Documentation only: no release, no code, protocol, prompt or `config/` change; your pin is unchanged.
+  - Run `uv run python -m hebloc loc silver finalize sentence-modern-validation --accept-stop D-066` once, at the start
+    of a session; check that `FROZEN.json` has `"accepted_stop": "D-066"`.
+  - Never rerun, edit or re-step that job; keep `QC_STOP.md` and every attempt.
+  - Then continue E5: Mikra validation → `deliver` both validation jobs → M2. A STOP on Mikra validation is a new M6;
+    D-066 covers only `sentence-modern-validation`.
 
 ## 7. Efrat's `STATE.md` (local: `data/outbox/efrat-s6/STATE.md`, never git)
 
@@ -279,6 +293,10 @@ Next: start → E<n+1>
 - **M9 (Ori → Efrat, an audit draw; D-065):** "The class / identity audit ids for `<corpus>` (`<draw id>`,
   `items_sha256` `<hash>`, `<n>` instances; ids only) are at `<link>`. At the start of your next session, type `start`:
   it runs stage EA (`create --task instances --purpose audit`), then continues your current stage."
+- **M10 (Ori → Efrat, a decision on her QC STOP; first used for D-066):** "Decision on your STOP `<rule>` on `<job>`:
+  **`<decision id>`, `<option>`**. At the start of your next session type `start`, then run
+  `uv run python -m hebloc loc silver finalize <job> --accept-stop <decision id>` and check that `FROZEN.json` shows
+  `"accepted_stop": "<decision id>"`. Do not rerun, edit or re-step the job. Then continue `<stage>` as planned."
 - **M4 (Ori → Efrat, R2):** "`s56-v1` is released. Type `start`: it fast-forwards to `s56-v1` and runs E7."
 - **M5 (Ori → Adi, R2):** "Type `start` (`docs/ADI_SECTION_5.md`)."
 - **M6 (Efrat → Ori, a STOP):** "STOP `<rule>` at `<stage>`: `<message>`; `git describe --tags --always`; `<job>`
